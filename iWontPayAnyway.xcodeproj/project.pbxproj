@@ -7,16 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6533A02723D871C700FF822B /* ServerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533A02623D871C700FF822B /* ServerCell.swift */; };
+		6533A02923D87B9D00FF822B /* BillsOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533A02823D87B9D00FF822B /* BillsOverview.swift */; };
+		6533A02B23D888B100FF822B /* BillCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533A02A23D888B100FF822B /* BillCell.swift */; };
 		65662A0323D7320000303207 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A0223D7320000303207 /* AppDelegate.swift */; };
 		65662A0523D7320000303207 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A0423D7320000303207 /* SceneDelegate.swift */; };
 		65662A0723D7320000303207 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A0623D7320000303207 /* ContentView.swift */; };
 		65662A0923D7320300303207 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65662A0823D7320300303207 /* Assets.xcassets */; };
 		65662A0C23D7320300303207 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65662A0B23D7320300303207 /* Preview Assets.xcassets */; };
 		65662A0F23D7320300303207 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65662A0D23D7320300303207 /* LaunchScreen.storyboard */; };
+		65662A1923D7322B00303207 /* Bill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A1823D7322B00303207 /* Bill.swift */; };
+		65662A1B23D733B700303207 /* CospendNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A1A23D733B700303207 /* CospendNetworkService.swift */; };
+		65662A1D23D7353400303207 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A1C23D7353400303207 /* Server.swift */; };
+		65662A2023D7389600303207 /* ServerListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A1F23D7389600303207 /* ServerListViewModel.swift */; };
+		65662A2223D75C5F00303207 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A2123D75C5F00303207 /* OnboardingView.swift */; };
+		65662A2423D83ED100303207 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A2323D83ED100303207 /* StorageService.swift */; };
+		65662A2623D8546900303207 /* ServerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A2523D8546900303207 /* ServerList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		656629FF23D7320000303207 /* iCospend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iCospend.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6533A02623D871C700FF822B /* ServerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerCell.swift; sourceTree = "<group>"; };
+		6533A02823D87B9D00FF822B /* BillsOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillsOverview.swift; sourceTree = "<group>"; };
+		6533A02A23D888B100FF822B /* BillCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillCell.swift; sourceTree = "<group>"; };
+		656629FF23D7320000303207 /* iWontPayAnyway.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iWontPayAnyway.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65662A0223D7320000303207 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		65662A0423D7320000303207 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		65662A0623D7320000303207 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -24,6 +37,13 @@
 		65662A0B23D7320300303207 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		65662A0E23D7320300303207 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		65662A1023D7320300303207 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		65662A1823D7322B00303207 /* Bill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bill.swift; sourceTree = "<group>"; };
+		65662A1A23D733B700303207 /* CospendNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CospendNetworkService.swift; sourceTree = "<group>"; };
+		65662A1C23D7353400303207 /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
+		65662A1F23D7389600303207 /* ServerListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerListViewModel.swift; sourceTree = "<group>"; };
+		65662A2123D75C5F00303207 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		65662A2323D83ED100303207 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		65662A2523D8546900303207 /* ServerList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,10 +57,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6533A02C23D88EF300FF822B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6533A02A23D888B100FF822B /* BillCell.swift */,
+				65662A2523D8546900303207 /* ServerList.swift */,
+				6533A02623D871C700FF822B /* ServerCell.swift */,
+				65662A0623D7320000303207 /* ContentView.swift */,
+				65662A2123D75C5F00303207 /* OnboardingView.swift */,
+				6533A02823D87B9D00FF822B /* BillsOverview.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		656629F623D7320000303207 = {
 			isa = PBXGroup;
 			children = (
-				65662A0123D7320000303207 /* iCospend */,
+				65662A0123D7320000303207 /* iWontPayAnyway */,
 				65662A0023D7320000303207 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -48,23 +81,26 @@
 		65662A0023D7320000303207 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				656629FF23D7320000303207 /* iCospend.app */,
+				656629FF23D7320000303207 /* iWontPayAnyway.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		65662A0123D7320000303207 /* iCospend */ = {
+		65662A0123D7320000303207 /* iWontPayAnyway */ = {
 			isa = PBXGroup;
 			children = (
+				6533A02C23D88EF300FF822B /* Views */,
+				65662A1E23D7382500303207 /* ViewModel */,
+				65662A1723D7321A00303207 /* Services */,
+				65662A1623D7321100303207 /* Model */,
 				65662A0223D7320000303207 /* AppDelegate.swift */,
 				65662A0423D7320000303207 /* SceneDelegate.swift */,
-				65662A0623D7320000303207 /* ContentView.swift */,
 				65662A0823D7320300303207 /* Assets.xcassets */,
 				65662A0D23D7320300303207 /* LaunchScreen.storyboard */,
 				65662A1023D7320300303207 /* Info.plist */,
 				65662A0A23D7320300303207 /* Preview Content */,
 			);
-			path = iCospend;
+			path = iWontPayAnyway;
 			sourceTree = "<group>";
 		};
 		65662A0A23D7320300303207 /* Preview Content */ = {
@@ -75,12 +111,38 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		65662A1623D7321100303207 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				65662A1823D7322B00303207 /* Bill.swift */,
+				65662A1C23D7353400303207 /* Server.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		65662A1723D7321A00303207 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				65662A1A23D733B700303207 /* CospendNetworkService.swift */,
+				65662A2323D83ED100303207 /* StorageService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		65662A1E23D7382500303207 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				65662A1F23D7389600303207 /* ServerListViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		656629FE23D7320000303207 /* iCospend */ = {
+		656629FE23D7320000303207 /* iWontPayAnyway */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 65662A1323D7320300303207 /* Build configuration list for PBXNativeTarget "iCospend" */;
+			buildConfigurationList = 65662A1323D7320300303207 /* Build configuration list for PBXNativeTarget "iWontPayAnyway" */;
 			buildPhases = (
 				656629FB23D7320000303207 /* Sources */,
 				656629FC23D7320000303207 /* Frameworks */,
@@ -90,9 +152,9 @@
 			);
 			dependencies = (
 			);
-			name = iCospend;
+			name = iWontPayAnyway;
 			productName = iCospend;
-			productReference = 656629FF23D7320000303207 /* iCospend.app */;
+			productReference = 656629FF23D7320000303207 /* iWontPayAnyway.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -110,7 +172,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 656629FA23D7320000303207 /* Build configuration list for PBXProject "iCospend" */;
+			buildConfigurationList = 656629FA23D7320000303207 /* Build configuration list for PBXProject "iWontPayAnyway" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -123,7 +185,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				656629FE23D7320000303207 /* iCospend */,
+				656629FE23D7320000303207 /* iWontPayAnyway */,
 			);
 		};
 /* End PBXProject section */
@@ -146,9 +208,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6533A02723D871C700FF822B /* ServerCell.swift in Sources */,
+				65662A1923D7322B00303207 /* Bill.swift in Sources */,
+				65662A2023D7389600303207 /* ServerListViewModel.swift in Sources */,
+				65662A1B23D733B700303207 /* CospendNetworkService.swift in Sources */,
 				65662A0323D7320000303207 /* AppDelegate.swift in Sources */,
+				6533A02B23D888B100FF822B /* BillCell.swift in Sources */,
 				65662A0523D7320000303207 /* SceneDelegate.swift in Sources */,
+				65662A2223D75C5F00303207 /* OnboardingView.swift in Sources */,
+				65662A2623D8546900303207 /* ServerList.swift in Sources */,
+				65662A1D23D7353400303207 /* Server.swift in Sources */,
+				65662A2423D83ED100303207 /* StorageService.swift in Sources */,
 				65662A0723D7320000303207 /* ContentView.swift in Sources */,
+				6533A02923D87B9D00FF822B /* BillsOverview.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,18 +357,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"iCospend/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"iWontPayAnyway/Preview Content\"";
 				DEVELOPMENT_TEAM = L79BTFY6FV;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = iCospend/Info.plist;
+				INFOPLIST_FILE = iWontPayAnyway/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mayflower.iCospend;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mayflower.iWontPayAnyway;
+				PRODUCT_NAME = iWontPayAnyway;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -305,25 +377,25 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"iCospend/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"iWontPayAnyway/Preview Content\"";
 				DEVELOPMENT_TEAM = L79BTFY6FV;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = iCospend/Info.plist;
+				INFOPLIST_FILE = iWontPayAnyway/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mayflower.iCospend;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mayflower.iWontPayAnyway;
+				PRODUCT_NAME = iWontPayAnyway;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		656629FA23D7320000303207 /* Build configuration list for PBXProject "iCospend" */ = {
+		656629FA23D7320000303207 /* Build configuration list for PBXProject "iWontPayAnyway" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				65662A1123D7320300303207 /* Debug */,
@@ -332,7 +404,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		65662A1323D7320300303207 /* Build configuration list for PBXNativeTarget "iCospend" */ = {
+		65662A1323D7320300303207 /* Build configuration list for PBXNativeTarget "iWontPayAnyway" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				65662A1423D7320300303207 /* Debug */,

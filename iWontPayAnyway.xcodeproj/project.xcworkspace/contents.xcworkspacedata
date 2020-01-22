@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:iCospend.xcodeproj">
+      location = "self:/Users/maxtharr/mayday/cospend/iCospend/iCospend/iWontPayAnyway.xcodeproj">
    </FileRef>
 </Workspace>
