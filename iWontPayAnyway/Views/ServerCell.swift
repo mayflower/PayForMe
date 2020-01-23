@@ -11,7 +11,7 @@ import SwiftUI
 struct ServerCell: View {
     
     @State var server: Server
-    @State var completion: (_ project: String) -> Void
+    @State var completion: (_ project: Project) -> Void
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -20,13 +20,13 @@ struct ServerCell: View {
                 Text("Projects").font(.subheadline)
                 Spacer()
                 VStack(alignment: .trailing, spacing: 5) {
-                   ForEach(server.projects.keys.sorted(), id: \.self) {
-                        key in
+                   ForEach(server.projects, id: \.name) {
+                        project in
                     Button(action: {
-                        print(key)
-                        self.completion(key)
+                        print(project)
+                        self.completion(project)
                     }) {
-                        Text(key)
+                        Text(project.name)
                         }
                     }
                 }
@@ -38,8 +38,8 @@ struct ServerCell: View {
 struct ServerCell_Previews: PreviewProvider {
     static var previews: some View {
         let server = Server(url: "https://testserver.mayflower.de", projects: [
-            "test":"test123",
-            "test2":"test45",
+            Project(name: "test1", password: "test23"),
+            Project(name: "test2", password: "test45"),
         ])
         return ServerCell(server: server, completion: {print($0)})
     }

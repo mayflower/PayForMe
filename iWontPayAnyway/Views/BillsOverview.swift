@@ -13,12 +13,18 @@ struct BillsOverview: View {
     @State
     var bills: [Bill]
     
+    @State
+    private var addBills = false
+    
     var body: some View {
         VStack {
             Button(action: {
-                print("Add Entry")
+                self.addBills.toggle()
             }) {
                 Text("Add Bill")
+            }
+            if (addBills) {
+                AddBillView()
             }
             List(bills) {
                 BillCell(bill: $0)

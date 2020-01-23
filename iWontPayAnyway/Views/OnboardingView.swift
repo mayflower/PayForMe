@@ -32,7 +32,7 @@ struct OnboardingView: View {
             Text("Project password")
             TextField("Enter project password", text: $projectPassword)
             Button(action: {
-                self.serversModel.addServer(server: Server(url: self.serverName, projects: [self.projectName: self.projectPassword]))
+                self.serversModel.addServer(server: Server(url: self.serverName, projects: [Project(name: self.projectName, password: self.projectPassword)]))
             }) {
                 Text("Add project")
             }

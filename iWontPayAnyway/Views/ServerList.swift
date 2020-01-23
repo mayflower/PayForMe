@@ -30,7 +30,7 @@ struct ServerList: View {
                         server in
                         ServerCell(server: server) {
                             project in
-                            print("Projekt: \(project)")
+                            print("Projekt: \(project.name)")
                             CospendNetworkService.instance.updateBills(server: server, project: project) { (bills) in
                                 self.bills = bills
                                 self.current = 1
@@ -38,11 +38,18 @@ struct ServerList: View {
                         }
                     }
                 }
-            }
-            Button(action: {
-                self.serversModel.addingServer = true
-            }) {
-                Text("Add server")
+                HStack {
+                    Button(action: {
+                        self.serversModel.addingServer = true
+                    }) {
+                        Text("Add server")
+                    }
+                    Button(action: {
+                        self.serversModel.eraseServers()
+                    }) {
+                        Image(systemName: "trash")
+                    }
+                }
             }
         }
     }
@@ -52,8 +59,8 @@ struct ServerList_Previews: PreviewProvider {
     static var previews: some View {
         let serversModel = ServerListViewModel()
         let server = Server(url: "https://testserver.mayflower.de", projects: [
-            "test":"test123",
-            "test2":"test45",
+            Project(name: "test1", password: "test23"),
+            Project(name: "test2", password: "test45"),
         ])
         serversModel.addServer(server: server)
         return ServerList(serversModel: serversModel)

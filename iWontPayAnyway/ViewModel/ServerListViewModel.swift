@@ -16,7 +16,7 @@ class ServerListViewModel: ObservableObject {
         for server in servers {
             print("Server: \(server.url)")
             for project in server.projects {
-                print("    Project: \(project.key)")
+                print("    Project: \(project.name)")
             }
         }
     }
@@ -43,6 +43,12 @@ class ServerListViewModel: ObservableObject {
         servers.append(server)
         StorageService.instance.storeServers(servers: servers)
         addingServer = false
+        didChange.send(self)
+    }
+    
+    func eraseServers() {
+        servers = []
+        StorageService.instance.storeServers(servers: servers)
         didChange.send(self)
     }
     
