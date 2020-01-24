@@ -20,3 +20,5 @@ class Project: Codable {
     
     var bills: [Bill] = []
 }
+
+let previewProject = Project(name: "TestProject", password: "TestPassword")

@@ -9,7 +9,11 @@
 import SwiftUI
 
 struct BillCell: View {
-    @State var bill: Bill
+    @Binding
+    var project: Project
+    
+    @State
+    var bill: Bill
     
     var body: some View {
         HStack(alignment: .top, spacing: 10) {
@@ -17,7 +21,7 @@ struct BillCell: View {
             VStack(alignment: .leading, spacing: 5) {
                 Text(bill.what).font(.headline)
                 HStack {
-                    Text(" \(bill.payer_id) -> \(bill.owers.compactMap({$0.name}).joined(separator: ", "))").font(.subheadline)
+                    Text(" \(project.members.first{$0.id == bill.payer_id}?.name ?? bill.payer_id.description) -> \(bill.owers.compactMap({$0.name}).joined(separator: ", "))").font(.subheadline)
                 }
             }
             Spacer()
@@ -31,6 +35,8 @@ struct BillCell: View {
 
 struct BillCell_Previews: PreviewProvider {
     static var previews: some View {
-        BillCell(bill: previewBills[0])
+        previewProject.bills = previewBills
+        previewProject.members = [previewPerson]
+        return BillCell(project: .constant(previewProject), bill: previewBills[0])
     }
 }

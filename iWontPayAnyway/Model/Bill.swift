@@ -40,3 +40,5 @@ let previewBills = [
     ], repeat: "n", lastchanged: 1231234),
     
 ]
+
+let previewPerson = Person(id: 1, weight: 1, name: "TestUser", activated: true)
