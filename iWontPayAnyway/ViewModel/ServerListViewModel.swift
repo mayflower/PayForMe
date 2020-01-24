@@ -39,11 +39,34 @@ class ServerListViewModel: ObservableObject {
         }
     }
     
-    func addServer(server: Server) {
-        servers.append(server)
-        StorageService.instance.storeServers(servers: servers)
-        addingServer = false
-        didChange.send(self)
+    func addServer(newServer: Server) {
+        let listedServer = servers.first { (listedServer) -> Bool in
+            listedServer.url == newServer.url
+        }
+        // In this case we know the server already
+        if let server = listedServer {
+            let project = server.projects.first { (listedProject) -> Bool in
+                listedProject.name == newServer.projects[0].name
+            }
+            if project != nil {
+                // Project also exists, do nothing
+                return
+            } else {
+                DispatchQueue.main.async {
+                    server.projects.append(contentsOf: newServer.projects)
+                    StorageService.instance.storeServers(servers: self.servers)
+                    self.addingServer = false
+                    self.didChange.send(self)
+                }
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.servers.append(newServer)
+                StorageService.instance.storeServers(servers: self.servers)
+                self.addingServer = false
+                self.didChange.send(self)
+            }
+        }
     }
     
     func eraseServers() {

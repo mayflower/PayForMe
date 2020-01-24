@@ -9,10 +9,12 @@
 import Foundation
 
 class Server: Codable {
+    let name: String
     let url: String
-    let projects: [Project]
+    var projects: [Project]
     
-    init(url: String, projects: [Project]) {
+    init(name: String, url: String, projects: [Project]) {
+        self.name = name
         self.url = url
         self.projects = projects
     }

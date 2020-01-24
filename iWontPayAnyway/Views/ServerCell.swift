@@ -11,36 +11,26 @@ import SwiftUI
 struct ServerCell: View {
     
     @State var server: Server
-    @State var completion: (_ project: Project) -> Void
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(server.url).font(.headline)
-            HStack(alignment: .top) {
-                Text("Projects").font(.subheadline)
-                Spacer()
-                VStack(alignment: .trailing, spacing: 5) {
-                   ForEach(server.projects, id: \.name) {
-                        project in
-                    Button(action: {
-                        print(project)
-                        self.completion(project)
-                    }) {
+        NavigationView {
+            List {
+                ForEach(server.projects, id: \.name) {
+                    project in
+                    NavigationLink(destination: BillsOverview(server: self.server, project: project)) {
                         Text(project.name)
-                        }
                     }
                 }
-            }
+            }.navigationBarTitle(server.name)
         }
     }
 }
 
 struct ServerCell_Previews: PreviewProvider {
     static var previews: some View {
-        let server = Server(url: "https://testserver.mayflower.de", projects: [
-            Project(name: "test1", password: "test23"),
-            Project(name: "test2", password: "test45"),
-        ])
-        return ServerCell(server: server, completion: {print($0)})
+        let project = Project(name: "test1", password: "test23")
+        project.bills = previewBills
+        let server = Server(name: "test", url: "https://testserver.mayflower.de", projects: [project])
+        return ServerCell(server: server)
     }
 }

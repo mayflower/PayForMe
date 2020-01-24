@@ -14,7 +14,10 @@ struct OnboardingView: View {
     var serversModel: ServerListViewModel
     
     @State
-    var serverName = "https://mynextcloud.org"
+    var serverName = ""
+    
+    @State
+    var serverAddress = "https://mynextcloud.org"
     
     @State
     var projectName = ""
@@ -25,19 +28,40 @@ struct OnboardingView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
             Text("Hi, to get you going, please add a server & project").font(.headline)
-            Text("Server")
-            TextField("Enter server name", text: $serverName)
+            Text("Server Name")
+            TextField("Enter catchy name", text: $serverName)
+            Text("Server Address")
+            TextField("Enter server address", text: $serverAddress).autocapitalization(.none)
             Text("Project Name")
-            TextField("Enter project name", text: $projectName)
+            TextField("Enter project name", text: $projectName).autocapitalization(.none)
             Text("Project password")
-            TextField("Enter project password", text: $projectPassword)
-            Button(action: {
-                self.serversModel.addServer(server: Server(url: self.serverName, projects: [Project(name: self.projectName, password: self.projectPassword)]))
-            }) {
-                Text("Add project")
-            }
+            TextField("Enter project password", text: $projectPassword).autocapitalization(.none)
+            HStack(spacing: 30) {
+                Button(action: {
+                    self.serversModel.addingServer = false
+                }) {
+                    Text("Cancel")
+                }
+                Button(action: addButton) {
+                    Text("Add project")
+                }            }
         }
         .multilineTextAlignment(.center)
+    }
+    
+    func addButton() {
+        let server = Server(
+            name: self.serverName,
+            url: self.serverAddress,
+            projects: [Project(name: self.projectName, password: self.projectPassword)])
+        CospendNetworkService.instance.getMembers(server: server, project: server.projects[0]) {
+            successful in
+            if successful {
+                self.serversModel.addServer(newServer: server)
+            } else {
+                print("Server wrong")
+            }
+        }
     }
 }
 

@@ -12,18 +12,19 @@ struct BillCell: View {
     @State var bill: Bill
     
     var body: some View {
-        HStack(alignment: .top) {
+        HStack(alignment: .top, spacing: 10) {
             Image(systemName: "tortoise.fill").resizable().frame(width: 50, height: 30, alignment: .leading)
-            Spacer()
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 5) {
                 Text(bill.what).font(.headline)
                 HStack {
-                    Text("\(String(format: "%.2f €", bill.amount))").font(.headline)
                     Text(" \(bill.payer_id) -> \(bill.owers.compactMap({$0.name}).joined(separator: ", "))").font(.subheadline)
                 }
             }
             Spacer()
-            Text(bill.date).font(.caption)
+            VStack(alignment: .trailing, spacing: 5) {
+                Text("\(String(format: "%.2f €", bill.amount))").font(.headline)
+                Text(bill.date).font(.caption)
+            }
             }.padding()
     }
 }

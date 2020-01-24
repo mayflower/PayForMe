@@ -18,37 +18,25 @@ struct ServerList: View {
     private var current: Int? = nil
     
     var body: some View {
-        
-        NavigationView {
+        VStack {
+            Text("Known Servers")
             VStack {
-                NavigationLink(destination: BillsOverview(bills: bills), tag: 1, selection: $current) {
-                    EmptyView()
+                ForEach(serversModel.servers, id: \.url) {
+                    server in
+                    ServerCell(server: server)
                 }
-                Text("Known Servers")
-                List {
-                    ForEach(serversModel.servers, id: \.url) {
-                        server in
-                        ServerCell(server: server) {
-                            project in
-                            print("Projekt: \(project.name)")
-                            CospendNetworkService.instance.updateBills(server: server, project: project) { (bills) in
-                                self.bills = bills
-                                self.current = 1
-                            }
-                        }
-                    }
+            }
+            Spacer()
+            HStack {
+                Button(action: {
+                    self.serversModel.addingServer = true
+                }) {
+                    Text("Add server")
                 }
-                HStack {
-                    Button(action: {
-                        self.serversModel.addingServer = true
-                    }) {
-                        Text("Add server")
-                    }
-                    Button(action: {
-                        self.serversModel.eraseServers()
-                    }) {
-                        Image(systemName: "trash")
-                    }
+                Button(action: {
+                    self.serversModel.eraseServers()
+                }) {
+                    Image(systemName: "trash")
                 }
             }
         }
@@ -58,11 +46,11 @@ struct ServerList: View {
 struct ServerList_Previews: PreviewProvider {
     static var previews: some View {
         let serversModel = ServerListViewModel()
-        let server = Server(url: "https://testserver.mayflower.de", projects: [
+        let server = Server(name: "test", url: "https://testserver.mayflower.de", projects: [
             Project(name: "test1", password: "test23"),
             Project(name: "test2", password: "test45"),
         ])
-        serversModel.addServer(server: server)
+        serversModel.addServer(newServer: server)
         return ServerList(serversModel: serversModel)
     }
 }

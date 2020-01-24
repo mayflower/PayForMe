@@ -28,21 +28,39 @@ class CospendNetworkService {
                 return }
             guard let bills = try? JSONDecoder().decode([Bill].self, from: data) else {
                 print("Could not decode data")
-                return }
+                return
+            }
     
             completion(bills)
             }).resume()
     }
     
-    func getMembers(server: Server, project: Project) {
+    func getMembers(server: Server, project: Project, completion: @escaping (Bool) -> ()) {
         guard let url = buildURL(server, project, "members") else {
             print("Couldn't unwrap url on server \(server.url) with project \(project)")
+            completion(false)
             return
         }
+        URLSession.shared.dataTask(with: url, completionHandler: {
+            data, response, error in
+            guard let data = data else {
+                print("Could not load data")
+                completion(false)
+                return
+            }
+            guard let members = try? JSONDecoder().decode([Person].self, from: data) else {
+                print("Could not decode data")
+                completion(false)
+                return
+            }
+            
+            project.members = members
+            completion(true)
+            }).resume()
         
     }
     
-    private func buildURL(_ server: Server, _ project: Project, _ suffix: String) -> URL? {
+    func buildURL(_ server: Server, _ project: Project, _ suffix: String) -> URL? {
         let path = "\(server.url)\(staticpath)\(project.name)/\(project.password)/\(suffix)"
         print("Building \(path)")
         return URL(string: path)
