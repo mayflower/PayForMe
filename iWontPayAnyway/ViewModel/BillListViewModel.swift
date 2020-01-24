@@ -21,15 +21,27 @@ class BillListViewModel: ObservableObject {
         }
     }
     
+    var cancellable: AnyCancellable?
+    
     init(server: Server, project: Project) {
         self.server = server
         self.project = project
-        CospendNetworkService.instance.updateBills(server: server, project: project
-            , completion: {
-                bills in
-                project.bills = bills
-                self.didChange.send(self)
-        })
+        
+        let url = CospendNetworkService.instance.buildURL(server, project, "bills")!
+        cancellable = URLSession.shared.dataTaskPublisher(for: url)
+            .compactMap{
+                data, response -> Data? in
+                guard let httpResponse = response as? HTTPURLResponse,
+                    httpResponse.statusCode == 200 else { print("Network error"); return nil }
+                return data
+        }
+        .decode(type: [Bill].self, decoder: JSONDecoder())
+        .replaceError(with: [])
+        .sink{
+            bills in
+            self.project.bills = bills
+            self.didChange.send(self)
+        }
     }
     
     let didChange = PassthroughSubject<BillListViewModel,Never>()

@@ -17,7 +17,7 @@ struct ServerCell: View {
             List {
                 ForEach(server.projects, id: \.name) {
                     project in
-                    NavigationLink(destination: BillsOverview(server: self.server, project: project)) {
+                    NavigationLink(destination: BillsOverview(viewModel: BillListViewModel(server: self.server, project: project))) {
                         Text(project.name)
                     }
                 }

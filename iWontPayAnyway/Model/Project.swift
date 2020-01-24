@@ -16,7 +16,7 @@ class Project: Codable {
         self.name = name
         self.password = password
     }
-    
     var members: [Person] = []
+    
     var bills: [Bill] = []
 }
