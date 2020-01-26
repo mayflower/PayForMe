@@ -7,8 +7,15 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct AddBillView: View {
+    @Binding
+    var addBillToggle: Bool
+    
+    @Binding
+    var server: Server
+    
     @Binding
     var project: Project
     
@@ -31,7 +38,9 @@ struct AddBillView: View {
     var body: some View {
         Form {
             Text("New bill")
-            WhoPaidView(members: $project.members, selectedPayer: $selectedPayer)
+            WhoPaidView(members: $project.members, selectedPayer: $selectedPayer).onAppear(perform: {
+                self.selectedPayer = self.project.members[0].id
+            })
             TextField("What was paid?", text: $what)
             TextField("How much?", text: $amount).keyboardType(.numberPad)
             Section {
@@ -59,7 +68,43 @@ struct AddBillView: View {
                     }
                 }
             }.onAppear(perform: initOwers)
+            Section {
+                Button(action: sendBillToServer) {
+                    Text("Send to server")
+                }
+            }
         }
+    }
+    
+    func sendBillToServer() {
+        guard let newBill = self.createBill() else {
+            print("Could not create bill")
+            return
+        }
+        CospendNetworkService.instance.postNewBill(
+            server: self.server,
+            project: self.project,
+            bill: newBill,
+            completion: {
+                CospendNetworkService.instance.updateBills(server: self.server, project: self.project, completion: {self.project.bills = $0})
+                self.addBillToggle = !$0
+        })
+    }
+    
+    func createBill() -> Bill? {
+        guard let doubleAmount = Double(amount) else {
+            amount = "Please write a number"
+            return nil
+        }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        let date = dateFormatter.string(from: Date())
+        let actualOwers = owers.filter {$0.isOwing}
+            .map {
+                Person(id: $0.id, weight: 1, name: $0.name, activated: true)
+        }
+        
+        return Bill(id: 99, amount: doubleAmount, what: what, date: date, payer_id: selectedPayer, owers: actualOwers, repeat: "n", lastchanged: 0)
     }
     
     func initOwers() {
@@ -70,6 +115,9 @@ struct AddBillView: View {
 struct AddBillView_Previews: PreviewProvider {
     static var previews: some View {
         previewProject.members = previewPersons
-        return AddBillView(project: .constant(previewProject))
+        let project = Project(name: "test1", password: "test23")
+        project.bills = previewBills
+        let server = Server(name: "test", url: "https://testserver.mayflower.de", projects: [project])
+        return AddBillView(addBillToggle: .constant(false), server: .constant(server), project: .constant(previewProject))
     }
 }

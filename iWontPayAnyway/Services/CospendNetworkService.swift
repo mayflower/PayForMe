@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class CospendNetworkService {
     
@@ -15,6 +16,8 @@ class CospendNetworkService {
     private init(){}
     
     let staticpath = "/index.php/apps/cospend/api/projects/"
+    
+    var cancellable: AnyCancellable?
     
     func updateBills(server: Server, project: Project, completion: @escaping ([Bill]) -> ()) {
         guard let url = buildURL(server, project, "bills") else {
@@ -60,9 +63,65 @@ class CospendNetworkService {
         
     }
     
+    func postNewBill(server: Server, project: Project, bill: Bill, completion: @escaping (Bool) -> ()) {
+        guard let baseURL = buildURL(server, project, "bills") else {
+            print("💣 Did not build URL")
+            return
+        }
+        var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false)
+        let params = [
+            "date": bill.date,
+            "what": bill.what,
+            "payer": bill.payer_id.description,
+            "amount": bill.amount.description,
+            "payed_for": bill.owers.map{$0.id.description}.joined(separator: ","),
+            "repeat": "n",
+            "paymentmode": "n",
+            "categoryid": "0"
+        ]
+        urlComponents?.queryItems = params.map{URLQueryItem(name: $0, value: $1)}
+        guard let url = urlComponents?.url else {
+            completion(false)
+            return
+        }
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "POST"
+        
+        cancellable = URLSession.shared.dataTaskPublisher(for: urlRequest)
+            .tryMap {
+                output in
+                guard let response = output.response as? HTTPURLResponse,
+                    response.statusCode == 200 else {
+                        throw HTTPError.statuscode
+                }
+                return output.data
+        }
+        .sink(receiveCompletion: {
+            httpCompletion in
+            switch httpCompletion {
+                case .finished:
+                print("Successful")
+                completion(true)
+                break
+                case .failure:
+                completion(false)
+                break
+            }
+        }, receiveValue: {
+            data in
+            print(data)
+        })
+        
+        
+    }
+    
     func buildURL(_ server: Server, _ project: Project, _ suffix: String) -> URL? {
         let path = "\(server.url)\(staticpath)\(project.name)/\(project.password)/\(suffix)"
         print("Building \(path)")
         return URL(string: path)
+    }
+    
+    enum HTTPError: LocalizedError {
+        case statuscode
     }
 }

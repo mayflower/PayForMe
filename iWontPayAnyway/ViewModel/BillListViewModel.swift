@@ -12,7 +12,8 @@ import SwiftUI
 
 class BillListViewModel: ObservableObject {
     
-    let server: Server
+    @Published
+    var server: Server
     
     @Published
     var project: Project {
