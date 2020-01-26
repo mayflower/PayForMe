@@ -28,7 +28,7 @@ struct BillsOverview: View {
                 Text("Add Bill")
             }
             if (addBills) {
-                AddBillView(project: .constant(viewModel.project))
+                AddBillView(project: $viewModel.project)
             }
             if billsLoaded {
                 List(viewModel.project.bills) {
