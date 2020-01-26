@@ -25,17 +25,13 @@ struct AddBillView: View {
     var owers: [Ower] = []
     
     @State
-    var noneAllToggle = false
+    var noneAllToggle = 1
     
     
     var body: some View {
         Form {
             Text("New bill")
-            Picker(selection: $selectedPayer, label: Text("Who paid?")) {
-                ForEach(project.members) {
-                    Text($0.name)
-                }
-            }
+            WhoPaidView(members: $project.members, selectedPayer: $selectedPayer)
             TextField("What was paid?", text: $what)
             TextField("How much?", text: $amount).keyboardType(.numberPad)
             Section {
