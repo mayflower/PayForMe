@@ -17,9 +17,15 @@ class ServerListViewModel: ObservableObject {
             print("Server: \(server.url)")
             for project in server.projects {
                 print("    Project: \(project.name)")
+                CospendNetworkService.instance.getMembers(server: server, project: project, completion: {
+                    let answer = $0 ?
+                        "🚀🚀🚀 Loaded project \(project)" :
+                        "💣💣💣 Error loading project \(project)"
+                    print(answer)
+                })
+
             }
-        }
-    }
+        }    }
     
     func showServerAdding() -> Bool {
         return servers.isEmpty || addingServer
