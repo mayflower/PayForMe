@@ -16,20 +16,38 @@ struct BillCell: View {
     var bill: Bill
     
     var body: some View {
-        HStack(alignment: .top, spacing: 10) {
-            Image(systemName: "tortoise.fill").resizable().frame(width: 50, height: 30, alignment: .leading)
-            VStack(alignment: .leading, spacing: 5) {
-                Text(bill.what).font(.headline)
-                HStack {
-                    Text(" \(project.members.first{$0.id == bill.payer_id}?.name ?? bill.payer_id.description) -> \(bill.owers.compactMap({$0.name}).joined(separator: ", "))").font(.subheadline)
+        VStack {
+            HStack(alignment: .top, spacing: 10) {
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(bill.what).font(.headline)
+                    HStack {
+                        Text(paymentString()).font(.subheadline)
+                    }
                 }
-            }
-            Spacer()
-            VStack(alignment: .trailing, spacing: 5) {
-                Text("\(String(format: "%.2f €", bill.amount))").font(.headline)
-                Text(bill.date).font(.caption)
-            }
+                Spacer()
+                VStack(alignment: .trailing, spacing: 5) {
+                    Text(amountString()).font(.headline)
+                    Text(bill.date).font(.caption)
+                }
             }.padding()
+            Divider().background(Color.white)
+        }.background(backgroundColor())
+    }
+    
+    func paymentString() -> String {
+        let payer = project.members.first{$0.id == bill.payer_id}?.name ?? bill.payer_id.description
+        let owers = bill.owers.compactMap({$0.name}).joined(separator: ", ")
+        return "\(payer) -> \(owers)"
+    }
+    
+    func amountString() -> String {
+        return "\(String(format: "%.2f €", bill.amount))"
+    }
+    
+    func backgroundColor() -> Color {
+        guard let payer = project.members.first(where: {$0.id == bill.payer_id}),
+        let color = payer.color else { return Color.white }
+        return Color(red: Double(color.r)/255, green: Double(color.g)/255, blue: Double(color.b)/255, opacity: 0.5)
     }
 }
 

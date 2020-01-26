@@ -10,6 +10,7 @@
 		650059FC23DDE1C300D1D599 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650059FB23DDE1C300D1D599 /* Person.swift */; };
 		650059FE23DDE7FE00D1D599 /* Ower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650059FD23DDE7FE00D1D599 /* Ower.swift */; };
 		65005A0223DDFB1A00D1D599 /* WhoPaidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65005A0123DDFB1A00D1D599 /* WhoPaidView.swift */; };
+		65005A0423DE0C5C00D1D599 /* BillsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65005A0323DE0C5C00D1D599 /* BillsList.swift */; };
 		6533A02723D871C700FF822B /* ServerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533A02623D871C700FF822B /* ServerCell.swift */; };
 		6533A02923D87B9D00FF822B /* BillsOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533A02823D87B9D00FF822B /* BillsOverview.swift */; };
 		6533A02B23D888B100FF822B /* BillCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533A02A23D888B100FF822B /* BillCell.swift */; };
@@ -35,6 +36,7 @@
 		650059FB23DDE1C300D1D599 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		650059FD23DDE7FE00D1D599 /* Ower.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ower.swift; sourceTree = "<group>"; };
 		65005A0123DDFB1A00D1D599 /* WhoPaidView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WhoPaidView.swift; path = iWontPayAnyway/Views/WhoPaidView.swift; sourceTree = "<group>"; };
+		65005A0323DE0C5C00D1D599 /* BillsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillsList.swift; sourceTree = "<group>"; };
 		6533A02623D871C700FF822B /* ServerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerCell.swift; sourceTree = "<group>"; };
 		6533A02823D87B9D00FF822B /* BillsOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillsOverview.swift; sourceTree = "<group>"; };
 		6533A02A23D888B100FF822B /* BillCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillCell.swift; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 				65662A0623D7320000303207 /* ContentView.swift */,
 				65662A2123D75C5F00303207 /* OnboardingView.swift */,
 				6533A02823D87B9D00FF822B /* BillsOverview.swift */,
+				65005A0323DE0C5C00D1D599 /* BillsList.swift */,
 				656E8CB323D9C3DA00B3ED10 /* AddBillView.swift */,
 			);
 			path = Views;
@@ -238,6 +241,7 @@
 				656E8CB623D9C88A00B3ED10 /* Project.swift in Sources */,
 				65662A2223D75C5F00303207 /* OnboardingView.swift in Sources */,
 				65662A2623D8546900303207 /* ServerList.swift in Sources */,
+				65005A0423DE0C5C00D1D599 /* BillsList.swift in Sources */,
 				65662A1D23D7353400303207 /* Server.swift in Sources */,
 				65662A2423D83ED100303207 /* StorageService.swift in Sources */,
 				656E8CB823D9FDA300B3ED10 /* BillListViewModel.swift in Sources */,

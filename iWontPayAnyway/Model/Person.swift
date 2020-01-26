@@ -13,9 +13,16 @@ struct Person: Codable, Identifiable {
     var weight: Int
     var name: String
     var activated: Bool
+    var color: PersonColor?
+}
+struct PersonColor: Codable {
+    var r: Int
+    var g: Int
+    var b: Int
 }
 
-let previewPerson = Person(id: 1, weight: 1, name: "Pikachu", activated: true)
+
+let previewPerson = Person(id: 1, weight: 1, name: "Pikachu", activated: true, color: PersonColor(r: 0, g: 255, b: 0))
 let previewPersons = [
     previewPerson,
     Person(id: 2, weight: 1, name: "Schiggy", activated: true),

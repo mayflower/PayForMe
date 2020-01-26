@@ -29,14 +29,14 @@ struct BillsOverview: View {
             }
             if (addBills) {
                 AddBillView(project: $viewModel.project)
-            }
-            if billsLoaded {
-                List(viewModel.project.bills) {
-                    BillCell(project: self.$viewModel.project,bill: $0)
-                }
             } else {
-                Image(systemName: "arrow.2.circlepath").resizable().frame(width: 50, height: 50)
-                Text("Loading Bills, please wait")
+                if billsLoaded {
+                    BillsList(viewModel: viewModel)
+                    
+                } else {
+                    Image(systemName: "arrow.2.circlepath").resizable().frame(width: 50, height: 50)
+                    Text("Loading Bills, please wait")
+                }
             }
         }
     }
@@ -46,6 +46,7 @@ struct BillsOverview_Previews: PreviewProvider {
     static var previews: some View {
         let project = Project(name: "TestProject", password: "TestPassword")
         project.bills = previewBills
+        project.members = previewPersons
         let server = Server(name: "test", url: "https://testserver.mayflower.de", projects: [project])
         let viewModel = BillListViewModel(server: server, project: project)
         return BillsOverview(viewModel: viewModel)
