@@ -15,7 +15,9 @@ struct BillsList: View {
     var body: some View {
         ScrollView {
             VStack {
-                ForEach(viewModel.project.bills) {
+                ForEach(viewModel.project.bills.sorted(by: {
+                    $0.lastchanged > $1.lastchanged
+                })) {
                     BillCell(project: self.$viewModel.project,bill: $0)
                 }
             }
