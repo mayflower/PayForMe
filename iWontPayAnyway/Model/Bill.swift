@@ -20,12 +20,7 @@ struct Bill: Codable, Identifiable {
     
 }
 
-struct Person: Codable, Identifiable {
-    var id: Int
-    var weight: Int
-    var name: String
-    var activated: Bool
-}
+
 
 let previewBills = [
     Bill(id: 1, amount: 5, what: "Erdnüsse", date: "21-12-2019", payer_id: 1, owers: [
@@ -40,5 +35,3 @@ let previewBills = [
     ], repeat: "n", lastchanged: 1231234),
     
 ]
-
-let previewPerson = Person(id: 1, weight: 1, name: "TestUser", activated: true)
