@@ -26,27 +26,31 @@ struct OnboardingView: View {
     var projectPassword = ""
     
     var body: some View {
-        VStack(alignment: .center, spacing: 10) {
-            Text("Hi, to get you going, please add a server & project").font(.headline)
-            Text("Server Name")
-            TextField("Enter catchy name", text: $serverName)
-            Text("Server Address")
-            TextField("Enter server address", text: $serverAddress).autocapitalization(.none)
-            Text("Project Name")
-            TextField("Enter project name", text: $projectName).autocapitalization(.none)
-            Text("Project password")
-            TextField("Enter project password", text: $projectPassword).autocapitalization(.none)
-            HStack(spacing: 30) {
-                Button(action: {
-                    self.serversModel.addingServer = false
-                }) {
-                    Text("Cancel")
+        VStack {
+            VStack(alignment: .center, spacing: 10) {
+                Text("Hi, to get you going, please add a server & project").font(.headline)
+                Text("Server Name")
+                TextField("Enter catchy name", text: $serverName)
+                Text("Server Address")
+                TextField("Enter server address", text: $serverAddress).autocapitalization(.none)
+                Text("Project Name")
+                TextField("Enter project name", text: $projectName).autocapitalization(.none)
+                Text("Project password")
+                TextField("Enter project password", text: $projectPassword).autocapitalization(.none)
+                HStack(spacing: 30) {
+                    Button(action: {
+                        self.serversModel.addingServer = false
+                    }) {
+                        Text("Cancel")
+                    }
+                    Button(action: addButton) {
+                        Text("Add project")
+                    }
                 }
-                Button(action: addButton) {
-                    Text("Add project")
-                }            }
-        }
-        .multilineTextAlignment(.center)
+            }
+            .multilineTextAlignment(.center)
+            Spacer()
+        }.padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
     }
     
     func addButton() {
