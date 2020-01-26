@@ -32,7 +32,7 @@ struct BillsOverview: View {
             }
             if billsLoaded {
                 List(viewModel.project.bills) {
-                    BillCell(project: .constant(self.viewModel.project),bill: $0)
+                    BillCell(project: self.$viewModel.project,bill: $0)
                 }
             } else {
                 Image(systemName: "arrow.2.circlepath").resizable().frame(width: 50, height: 50)
