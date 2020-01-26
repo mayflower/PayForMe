@@ -23,12 +23,12 @@ struct BillsOverview: View {
     var body: some View {
         VStack {
             Button(action: {
-                self.addBills.toggle()
+                withAnimation{ self.addBills.toggle()}
             }) {
                 Text("Add Bill")
             }
             if (addBills) {
-                AddBillView()
+                AddBillView(project: .constant(viewModel.project))
             }
             if billsLoaded {
                 List(viewModel.project.bills) {
