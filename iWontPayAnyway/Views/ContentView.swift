@@ -20,14 +20,27 @@ struct ContentView: View {
     var bills = [Bill]()
     
     var body: some View {
-        Group {
-            if serversModel.showServerAdding() {
-                OnboardingView(serversModel: serversModel)
-            } else {
-                ServerList(serversModel: serversModel)
-            }
+        TabView(selection: $serversModel.tabBarState) {
+            ServerList(serversModel: serversModel)
+            .tabItem({
+                Image(systemName: "archivebox")
+                Text("Servers")
+            }).tag(tabBarItems.ServerList)
+            OnboardingView(serversModel: serversModel)
+            .tabItem({
+                Image(systemName: "rectangle.stack.badge.plus")
+                Text("Add server")
+            }).tag(tabBarItems.AddServer)
         }
     }
+}
+
+enum tabBarItems: Int {
+    case ServerList
+    case BillList
+    case AddServer
+    case Balance
+    case AddBill
 }
 
 struct ContentView_Previews: PreviewProvider {

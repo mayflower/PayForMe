@@ -19,24 +19,19 @@ struct ServerList: View {
     
     var body: some View {
         VStack {
-            Text("Known Servers")
+            HStack(spacing: 50) {
+                Text("Known Servers")
+                Button(action: {
+                    self.serversModel.eraseServers()
+                }, label: {
+                    Text("Erase all")
+                    Image(systemName: "trash")
+                })
+            }
             VStack {
                 ForEach(serversModel.servers, id: \.url) {
                     server in
                     ServerCell(server: server)
-                }
-            }
-            Spacer()
-            HStack {
-                Button(action: {
-                    self.serversModel.addingServer = true
-                }) {
-                    Text("Add server")
-                }
-                Button(action: {
-                    self.serversModel.eraseServers()
-                }) {
-                    Image(systemName: "trash")
                 }
             }
         }

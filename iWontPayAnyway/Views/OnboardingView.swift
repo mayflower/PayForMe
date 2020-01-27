@@ -37,15 +37,8 @@ struct OnboardingView: View {
                 TextField("Enter project name", text: $projectName).autocapitalization(.none)
                 Text("Project password")
                 TextField("Enter project password", text: $projectPassword).autocapitalization(.none)
-                HStack(spacing: 30) {
-                    Button(action: {
-                        self.serversModel.addingServer = false
-                    }) {
-                        Text("Cancel")
-                    }
-                    Button(action: addButton) {
-                        Text("Add project")
-                    }
+                Button(action: addButton) {
+                    Text("Add project")
                 }
             }
             .multilineTextAlignment(.center)

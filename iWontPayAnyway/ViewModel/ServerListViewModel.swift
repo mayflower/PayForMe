@@ -25,15 +25,16 @@ class ServerListViewModel: ObservableObject {
                 })
 
             }
-        }    }
-    
-    func showServerAdding() -> Bool {
-        return servers.isEmpty || addingServer
+        }
+        
     }
     
     @Published
-    var addingServer = false {
+    var tabBarState = tabBarItems.BillList {
         didSet {
+            if servers.isEmpty && tabBarState != tabBarItems.AddServer{
+                tabBarState = tabBarItems.AddServer
+            }
             didChange.send(self)
         }
     }
@@ -61,16 +62,14 @@ class ServerListViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     server.projects.append(contentsOf: newServer.projects)
                     StorageService.instance.storeServers(servers: self.servers)
-                    self.addingServer = false
-                    self.didChange.send(self)
+                    self.tabBarState = tabBarItems.ServerList
                 }
             }
         } else {
             DispatchQueue.main.async {
                 self.servers.append(newServer)
                 StorageService.instance.storeServers(servers: self.servers)
-                self.addingServer = false
-                self.didChange.send(self)
+                self.tabBarState = tabBarItems.ServerList
             }
         }
     }
@@ -82,4 +81,5 @@ class ServerListViewModel: ObservableObject {
     }
     
     let didChange = PassthroughSubject<ServerListViewModel,Never>()
+    
 }
