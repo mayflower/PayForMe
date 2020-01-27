@@ -31,13 +31,14 @@ struct BillsOverview: View {
                 AddBillView(addBillToggle: $addBills,
                             server: $viewModel.server,
                             project: $viewModel.project)
-            }
-            if billsLoaded {
-                BillsList(viewModel: viewModel)
-                
             } else {
-                Image(systemName: "arrow.2.circlepath").resizable().frame(width: 50, height: 50)
-                Text("Loading Bills, please wait")
+                if billsLoaded {
+                    BillsList(viewModel: viewModel)
+                    
+                } else {
+                    Image(systemName: "arrow.2.circlepath").resizable().frame(width: 50, height: 50)
+                    Text("Loading Bills, please wait")
+                }
             }
         }
     }
