@@ -18,20 +18,20 @@ struct BillCell: View {
     var body: some View {
         VStack {
             HStack(alignment: .top, spacing: 10) {
-                VStack(alignment: .leading, spacing: 5) {
+                VStack(alignment: .leading, spacing: 10) {
                     Text(bill.what).font(.headline)
                     HStack {
                         Text(paymentString()).font(.subheadline)
                     }
                 }
                 Spacer()
-                VStack(alignment: .trailing, spacing: 5) {
+                VStack(alignment: .trailing, spacing: 10) {
                     Text(amountString()).font(.headline)
-                    Text(bill.date).font(.caption)
+                    Text(bill.date).font(.subheadline)
                 }
             }.padding()
             Divider().background(Color.white)
-        }.background(backgroundColor())
+        }.background(backgroundColor()).foregroundColor(Color.white)
     }
     
     func paymentString() -> String {
@@ -47,7 +47,7 @@ struct BillCell: View {
     func backgroundColor() -> Color {
         guard let payer = project.members.first(where: {$0.id == bill.payer_id}),
         let color = payer.color else { return Color.white }
-        return Color(red: Double(color.r)/255, green: Double(color.g)/255, blue: Double(color.b)/255, opacity: 0.5)
+        return Color(red: Double(color.r)/255, green: Double(color.g)/255, blue: Double(color.b)/255, opacity: 1)
     }
 }
 
