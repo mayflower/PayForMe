@@ -39,7 +39,9 @@ struct AddBillView: View {
         Form {
             Text("New bill")
             WhoPaidView(members: $project.members, selectedPayer: $selectedPayer).onAppear(perform: {
-                self.selectedPayer = self.project.members[0].id
+                if !self.project.members.contains(where: { $0.id == self.selectedPayer }) {
+                    self.selectedPayer = self.project.members[0].id
+                }
             })
             TextField("What was paid?", text: $what)
             TextField("How much?", text: $amount).keyboardType(.numberPad)
