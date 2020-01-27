@@ -14,9 +14,6 @@ struct AddBillView: View {
     var addBillToggle: Bool
     
     @Binding
-    var server: Server
-    
-    @Binding
     var project: Project
     
     @State
@@ -81,11 +78,10 @@ struct AddBillView: View {
             return
         }
         CospendNetworkService.instance.postNewBill(
-            server: self.server,
             project: self.project,
             bill: newBill,
             completion: {
-                CospendNetworkService.instance.updateBills(server: self.server, project: self.project, completion: {self.project.bills = $0})
+                CospendNetworkService.instance.updateBills(project: self.project, completion: {self.project.bills = $0})
                 self.addBillToggle = !$0
         })
     }
@@ -114,9 +110,7 @@ struct AddBillView: View {
 struct AddBillView_Previews: PreviewProvider {
     static var previews: some View {
         previewProject.members = previewPersons
-        let project = Project(name: "test1", password: "test23")
-        project.bills = previewBills
-        let server = Server(name: "test", url: "https://testserver.mayflower.de", projects: [project])
-        return AddBillView(addBillToggle: .constant(false), server: .constant(server), project: .constant(previewProject))
+        previewProject.bills = previewBills
+        return AddBillView(addBillToggle: .constant(false), project: .constant(previewProject))
     }
 }

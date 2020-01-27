@@ -10,7 +10,7 @@ import SwiftUI
 
 struct OnboardingView: View {
     
-    @ObservedObject
+    @EnvironmentObject
     var serversModel: ServerManager
     
     @State
@@ -47,14 +47,11 @@ struct OnboardingView: View {
     }
     
     func addButton() {
-        let server = Server(
-            name: self.serverName,
-            url: self.serverAddress,
-            projects: [Project(name: self.projectName, password: self.projectPassword)])
-        CospendNetworkService.instance.getMembers(server: server, project: server.projects[0]) {
+        let project = Project(name: self.projectName, password: self.projectPassword, url: self.serverAddress)
+        CospendNetworkService.instance.getMembers(project: project) {
             successful in
             if successful {
-                self.serversModel.addServer(newServer: server)
+                self.serversModel.addProject(newProject: project)
             } else {
                 print("Server wrong")
             }
@@ -64,6 +61,6 @@ struct OnboardingView: View {
 
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
-        OnboardingView(serversModel: ServerManager())
+        OnboardingView().environmentObject(ServerManager())
     }
 }

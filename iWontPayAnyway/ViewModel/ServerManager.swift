@@ -12,19 +12,17 @@ import Combine
 class ServerManager: ObservableObject {
     
     init() {
-        self.servers = StorageService.instance.loadServers()
-        for server in servers {
-            print("Server: \(server.url)")
-            for project in server.projects {
+        self.projects = StorageService.instance.loadProjects()
+        for project in projects {
+            print("Server: \(project.url)")
                 print("    Project: \(project.name)")
-                CospendNetworkService.instance.getMembers(server: server, project: project, completion: {
+                CospendNetworkService.instance.getMembers(project: project, completion: {
                     let answer = $0 ?
                         "🚀🚀🚀 Loaded project \(project)" :
                         "💣💣💣 Error loading project \(project)"
                     print(answer)
                 })
 
-            }
         }
         
     }
@@ -32,7 +30,7 @@ class ServerManager: ObservableObject {
     @Published
     var tabBarState = tabBarItems.BillList {
         didSet {
-            if servers.isEmpty && tabBarState != tabBarItems.AddServer{
+            if projects.isEmpty && tabBarState != tabBarItems.AddServer{
                 tabBarState = tabBarItems.AddServer
             }
             didChange.send(self)
@@ -40,43 +38,32 @@ class ServerManager: ObservableObject {
     }
     
     @Published
-    var servers = [Server]() {
+    var projects = [Project]() {
         didSet {
             didChange.send(self)
         }
     }
     
-    func addServer(newServer: Server) {
-        let listedServer = servers.first { (listedServer) -> Bool in
-            listedServer.url == newServer.url
-        }
-        // In this case we know the server already
-        if let server = listedServer {
-            let project = server.projects.first { (listedProject) -> Bool in
-                listedProject.name == newServer.projects[0].name
+    func addProject(newProject: Project) {
+        
+            let project = projects.first { (listedProject) -> Bool in
+                listedProject.name == newProject.name && listedProject.url == newProject.url
             }
             if project != nil {
-                // Project also exists, do nothing
+                // Project exists, do nothing
                 return
             } else {
                 DispatchQueue.main.async {
-                    server.projects.append(contentsOf: newServer.projects)
-                    StorageService.instance.storeServers(servers: self.servers)
+                    self.projects.append(newProject)
+                    StorageService.instance.storeProjects(projects: self.projects)
                     self.tabBarState = tabBarItems.ServerList
                 }
             }
-        } else {
-            DispatchQueue.main.async {
-                self.servers.append(newServer)
-                StorageService.instance.storeServers(servers: self.servers)
-                self.tabBarState = tabBarItems.ServerList
-            }
-        }
     }
     
     func eraseServers() {
-        servers = []
-        StorageService.instance.storeServers(servers: servers)
+        projects = []
+        StorageService.instance.storeProjects(projects: self.projects)
         didChange.send(self)
     }
     

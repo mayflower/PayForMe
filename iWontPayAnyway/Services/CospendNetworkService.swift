@@ -19,9 +19,9 @@ class CospendNetworkService {
     
     var cancellable: AnyCancellable?
     
-    func updateBills(server: Server, project: Project, completion: @escaping ([Bill]) -> ()) {
-        guard let url = buildURL(server, project, "bills") else {
-            print("Couldn't unwrap url on server \(server.url) with project \(project.name)")
+    func updateBills(project: Project, completion: @escaping ([Bill]) -> ()) {
+        guard let url = buildURL(project, "bills") else {
+            print("Couldn't unwrap url on server \(project.url) with project \(project.name)")
             return
         }
         URLSession.shared.dataTask(with: url, completionHandler: {
@@ -38,9 +38,9 @@ class CospendNetworkService {
             }).resume()
     }
     
-    func getMembers(server: Server, project: Project, completion: @escaping (Bool) -> ()) {
-        guard let url = buildURL(server, project, "members") else {
-            print("Couldn't unwrap url on server \(server.url) with project \(project)")
+    func getMembers(project: Project, completion: @escaping (Bool) -> ()) {
+        guard let url = buildURL(project, "members") else {
+            print("Couldn't unwrap url on server \(project.url) with project \(project)")
             completion(false)
             return
         }
@@ -63,8 +63,8 @@ class CospendNetworkService {
         
     }
     
-    func postNewBill(server: Server, project: Project, bill: Bill, completion: @escaping (Bool) -> ()) {
-        guard let baseURL = buildURL(server, project, "bills") else {
+    func postNewBill(project: Project, bill: Bill, completion: @escaping (Bool) -> ()) {
+        guard let baseURL = buildURL(project, "bills") else {
             print("💣 Did not build URL")
             return
         }
@@ -115,8 +115,8 @@ class CospendNetworkService {
         
     }
     
-    func buildURL(_ server: Server, _ project: Project, _ suffix: String) -> URL? {
-        let path = "\(server.url)\(staticpath)\(project.name)/\(project.password)/\(suffix)"
+    func buildURL(_ project: Project, _ suffix: String) -> URL? {
+        let path = "\(project.url)\(staticpath)\(project.name)/\(project.password)/\(suffix)"
         print("Building \(path)")
         return URL(string: path)
     }

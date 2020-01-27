@@ -11,7 +11,6 @@
 		650059FE23DDE7FE00D1D599 /* Ower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650059FD23DDE7FE00D1D599 /* Ower.swift */; };
 		65005A0223DDFB1A00D1D599 /* WhoPaidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65005A0123DDFB1A00D1D599 /* WhoPaidView.swift */; };
 		65005A0423DE0C5C00D1D599 /* BillsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65005A0323DE0C5C00D1D599 /* BillsList.swift */; };
-		6533A02723D871C700FF822B /* ServerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533A02623D871C700FF822B /* ServerCell.swift */; };
 		6533A02923D87B9D00FF822B /* BillsOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533A02823D87B9D00FF822B /* BillsOverview.swift */; };
 		6533A02B23D888B100FF822B /* BillCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533A02A23D888B100FF822B /* BillCell.swift */; };
 		65662A0323D7320000303207 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A0223D7320000303207 /* AppDelegate.swift */; };
@@ -37,7 +36,6 @@
 		650059FD23DDE7FE00D1D599 /* Ower.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ower.swift; sourceTree = "<group>"; };
 		65005A0123DDFB1A00D1D599 /* WhoPaidView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WhoPaidView.swift; path = iWontPayAnyway/Views/WhoPaidView.swift; sourceTree = "<group>"; };
 		65005A0323DE0C5C00D1D599 /* BillsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillsList.swift; sourceTree = "<group>"; };
-		6533A02623D871C700FF822B /* ServerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerCell.swift; sourceTree = "<group>"; };
 		6533A02823D87B9D00FF822B /* BillsOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillsOverview.swift; sourceTree = "<group>"; };
 		6533A02A23D888B100FF822B /* BillCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillCell.swift; sourceTree = "<group>"; };
 		656629FF23D7320000303207 /* iWontPayAnyway.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iWontPayAnyway.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -76,7 +74,6 @@
 			children = (
 				6533A02A23D888B100FF822B /* BillCell.swift */,
 				65662A2523D8546900303207 /* ServerList.swift */,
-				6533A02623D871C700FF822B /* ServerCell.swift */,
 				65662A0623D7320000303207 /* ContentView.swift */,
 				65662A2123D75C5F00303207 /* OnboardingView.swift */,
 				6533A02823D87B9D00FF822B /* BillsOverview.swift */,
@@ -229,7 +226,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6533A02723D871C700FF822B /* ServerCell.swift in Sources */,
 				656E8CB423D9C3DA00B3ED10 /* AddBillView.swift in Sources */,
 				65662A1923D7322B00303207 /* Bill.swift in Sources */,
 				65662A2023D7389600303207 /* ServerManager.swift in Sources */,

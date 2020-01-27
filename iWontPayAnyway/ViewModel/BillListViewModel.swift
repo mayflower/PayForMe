@@ -13,9 +13,6 @@ import SwiftUI
 class BillListViewModel: ObservableObject {
     
     @Published
-    var server: Server
-    
-    @Published
     var project: Project {
         didSet {
             didChange.send(self)
@@ -24,11 +21,10 @@ class BillListViewModel: ObservableObject {
     
     var cancellable: AnyCancellable?
     
-    init(server: Server, project: Project) {
-        self.server = server
+    init(project: Project) {
         self.project = project
         
-        let url = CospendNetworkService.instance.buildURL(server, project, "bills")!
+        let url = CospendNetworkService.instance.buildURL(project, "bills")!
         cancellable = URLSession.shared.dataTaskPublisher(for: url)
             .compactMap{
                 data, response -> Data? in

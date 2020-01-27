@@ -12,21 +12,28 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @ObservedObject
-    var serversModel = ServerManager()
+    @EnvironmentObject
+    var serverManager: ServerManager
     
     @State private var name: String = "https:mynextcloud.com"
     
     var bills = [Bill]()
     
     var body: some View {
-        TabView(selection: $serversModel.tabBarState) {
-            ServerList(serversModel: serversModel)
-            .tabItem({
-                Image(systemName: "archivebox")
-                Text("Servers")
-            }).tag(tabBarItems.ServerList)
-            OnboardingView(serversModel: serversModel)
+        TabView {
+            if !serverManager.projects.isEmpty {
+                ServerList()
+                    .tabItem({
+                        Image(systemName: "archivebox")
+                        Text("Projects")
+                    }).tag(tabBarItems.ServerList)
+                BillsOverview(viewModel: BillListViewModel(project: serverManager.projects[0]))
+                    .tabItem({
+                        Image(systemName: "rectangle.stack")
+                        Text("Bills")
+                    }).tag(tabBarItems.BillList)
+            }
+            OnboardingView()
             .tabItem({
                 Image(systemName: "rectangle.stack.badge.plus")
                 Text("Add server")
@@ -45,6 +52,6 @@ enum tabBarItems: Int {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        return ContentView()
+        return ContentView().environmentObject(ServerManager())
     }
 }

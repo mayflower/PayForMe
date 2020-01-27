@@ -11,6 +11,9 @@ import Combine
 
 struct BillsOverview: View {
     
+    @EnvironmentObject
+    var serverManager: ServerManager
+    
     @ObservedObject
     var viewModel: BillListViewModel
     
@@ -29,7 +32,6 @@ struct BillsOverview: View {
             }
             if (addBills) {
                 AddBillView(addBillToggle: $addBills,
-                            server: $viewModel.server,
                             project: $viewModel.project)
             } else {
                 if billsLoaded {
@@ -46,11 +48,10 @@ struct BillsOverview: View {
 
 struct BillsOverview_Previews: PreviewProvider {
     static var previews: some View {
-        let project = Project(name: "TestProject", password: "TestPassword")
+        let project = Project(name: "TestProject", password: "TestPassword", url: "https://testserver.mayflower.de")
         project.bills = previewBills
         project.members = previewPersons
-        let server = Server(name: "test", url: "https://testserver.mayflower.de", projects: [project])
-        let viewModel = BillListViewModel(server: server, project: project)
-        return BillsOverview(viewModel: viewModel)
+        let viewModel = BillListViewModel(project: project)
+        return BillsOverview(viewModel: viewModel).environmentObject(ServerManager())
     }
 }

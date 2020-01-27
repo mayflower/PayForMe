@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct ServerList: View {
-    @ObservedObject
+    @EnvironmentObject
     var serversModel: ServerManager
     
     @State
@@ -20,7 +20,7 @@ struct ServerList: View {
     var body: some View {
         VStack {
             HStack(spacing: 50) {
-                Text("Known Servers")
+                Text("Known Projects")
                 Button(action: {
                     self.serversModel.eraseServers()
                 }, label: {
@@ -29,9 +29,9 @@ struct ServerList: View {
                 })
             }
             VStack {
-                ForEach(serversModel.servers, id: \.url) {
-                    server in
-                    ServerCell(server: server)
+                ForEach(serversModel.projects, id: \.url) {
+                    project in
+                    Text("Project")
                 }
             }
         }
@@ -41,11 +41,9 @@ struct ServerList: View {
 struct ServerList_Previews: PreviewProvider {
     static var previews: some View {
         let serversModel = ServerManager()
-        let server = Server(name: "test", url: "https://testserver.mayflower.de", projects: [
-            Project(name: "test1", password: "test23"),
-            Project(name: "test2", password: "test45"),
-        ])
-        serversModel.addServer(newServer: server)
-        return ServerList(serversModel: serversModel)
+        for project in previewProjects {
+            serversModel.addProject(newProject: project)
+        }
+        return ServerList().environmentObject(serversModel)
     }
 }

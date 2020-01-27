@@ -13,7 +13,7 @@ class StorageService {
     let encoder = JSONEncoder()
     let decoder = JSONDecoder()
     
-    private let serversPath = getFilePath()
+    private let projectsPath = getFilePath()
     
     static let instance = StorageService()
     
@@ -21,25 +21,25 @@ class StorageService {
         print("Storage service initialized")
     }
     
-    func storeServers(servers: [Server]) {
-        let data  = try? encoder.encode(servers)
-        try? data?.write(to: serversPath)
+    func storeProjects(projects: [Project]) {
+        let data  = try? encoder.encode(projects)
+        try? data?.write(to: projectsPath)
     }
     
-    func loadServers() -> [Server]{
-        guard let data = try? Data(contentsOf: serversPath) else {
+    func loadProjects() -> [Project]{
+        guard let data = try? Data(contentsOf: projectsPath) else {
             print("Could not open file URL")
-            return [Server]()
+            return [Project]()
         }
-        let servers = try? decoder.decode([Server].self, from: data)
-        if let servers = servers {
-            return servers
+        let projects = try? decoder.decode([Project].self, from: data)
+        if let projects = projects {
+            return projects
         } else {
-            return [Server]()
+            return [Project]()
         }
     }
 }
 
 func getFilePath() -> URL {
-    return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("Server.json")
+    return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("Projects.json")
 }
