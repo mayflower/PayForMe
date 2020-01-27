@@ -49,15 +49,12 @@ struct AddBillView: View {
                 Text("Owers:")
                 HStack {
                     Button(action: {
-                        print("none")
                         self.owers = self.owers.map{Ower(id: $0.id, name: $0.name, isOwing: false)}
                     }) {
                         Text("None")
                     }.buttonStyle(BorderlessButtonStyle())
                     Spacer()
                     Button(action: {
-                        print("all")
-
                         self.owers = self.owers.map{Ower(id: $0.id, name: $0.name, isOwing: true)}
                     }) {
                         Text("All")
