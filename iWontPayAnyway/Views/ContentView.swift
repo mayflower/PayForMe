@@ -13,7 +13,7 @@ import SwiftUI
 struct ContentView: View {
     
     @ObservedObject
-    var serversModel = ServerListViewModel()
+    var serversModel = ServerManager()
     
     @State private var name: String = "https:mynextcloud.com"
     

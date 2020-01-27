@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class ServerListViewModel: ObservableObject {
+class ServerManager: ObservableObject {
     
     init() {
         self.servers = StorageService.instance.loadServers()
@@ -80,6 +80,6 @@ class ServerListViewModel: ObservableObject {
         didChange.send(self)
     }
     
-    let didChange = PassthroughSubject<ServerListViewModel,Never>()
+    let didChange = PassthroughSubject<ServerManager,Never>()
     
 }

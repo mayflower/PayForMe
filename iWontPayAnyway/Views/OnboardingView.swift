@@ -11,7 +11,7 @@ import SwiftUI
 struct OnboardingView: View {
     
     @ObservedObject
-    var serversModel: ServerListViewModel
+    var serversModel: ServerManager
     
     @State
     var serverName = ""
@@ -64,6 +64,6 @@ struct OnboardingView: View {
 
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
-        OnboardingView(serversModel: ServerListViewModel())
+        OnboardingView(serversModel: ServerManager())
     }
 }

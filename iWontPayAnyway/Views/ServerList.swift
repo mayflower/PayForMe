@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ServerList: View {
     @ObservedObject
-    var serversModel: ServerListViewModel
+    var serversModel: ServerManager
     
     @State
     private var bills: [Bill] = []
@@ -40,7 +40,7 @@ struct ServerList: View {
 
 struct ServerList_Previews: PreviewProvider {
     static var previews: some View {
-        let serversModel = ServerListViewModel()
+        let serversModel = ServerManager()
         let server = Server(name: "test", url: "https://testserver.mayflower.de", projects: [
             Project(name: "test1", password: "test23"),
             Project(name: "test2", password: "test45"),
