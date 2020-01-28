@@ -23,22 +23,21 @@ struct OnboardingView: View {
     var projectPassword = ""
     
     var body: some View {
-        VStack {
-            VStack(alignment: .center, spacing: 10) {
-                Text("Hi, to get you going, please add a project").font(.headline)
-                Text("Server Address")
-                TextField("Enter server address", text: $serverAddress).autocapitalization(.none)
-                Text("Project Name")
-                TextField("Enter project name", text: $projectName).autocapitalization(.none)
-                Text("Project password")
-                TextField("Enter project password", text: $projectPassword).autocapitalization(.none)
+            Form {
+                Text("Add new project").font(.title)
+                Section(header: Text("Server Address")) {
+                    TextField("Enter server address", text: $serverAddress).autocapitalization(.none)
+                }
+                Section(header: Text("Project Name & Password")) {
+                    TextField("Enter project name", text: $projectName).autocapitalization(.none)
+                    
+                    SecureField("Enter project password", text: $projectPassword)
+                }
+                
                 Button(action: addButton) {
                     Text("Add project")
                 }
             }
-            .multilineTextAlignment(.center)
-            Spacer()
-        }.padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
     }
     
     func addButton() {
