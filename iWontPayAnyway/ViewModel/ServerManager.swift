@@ -15,14 +15,14 @@ class ServerManager: ObservableObject {
         self.projects = StorageService.instance.loadProjects()
         for project in projects {
             print("Server: \(project.url)")
-                print("    Project: \(project.name)")
-                CospendNetworkService.instance.getMembers(project: project, completion: {
-                    let answer = $0 ?
-                        "🚀🚀🚀 Loaded project \(project)" :
-                        "💣💣💣 Error loading project \(project)"
-                    print(answer)
-                })
-
+            print("    Project: \(project.name)")
+            CospendNetworkService.instance.getMembers(project: project, completion: {
+                let answer = $0 ?
+                    "🚀🚀🚀 Loaded project \(project)" :
+                "💣💣💣 Error loading project \(project)"
+                print(answer)
+            })
+            
         }
         
     }
@@ -46,19 +46,26 @@ class ServerManager: ObservableObject {
     
     func addProject(newProject: Project) {
         
-            let project = projects.first { (listedProject) -> Bool in
-                listedProject.name == newProject.name && listedProject.url == newProject.url
-            }
-            if project != nil {
-                // Project exists, do nothing
-                return
-            } else {
-                DispatchQueue.main.async {
-                    self.projects.append(newProject)
-                    StorageService.instance.storeProjects(projects: self.projects)
-                    self.tabBarState = tabBarItems.ServerList
-                }
-            }
+        guard !projects.contains(newProject) else {
+            print("Project already exists")
+            return
+        }
+        
+        DispatchQueue.main.async {
+            self.projects.append(newProject)
+            StorageService.instance.storeProjects(projects: self.projects)
+            self.tabBarState = tabBarItems.ServerList
+        }
+    }
+    
+    func removeProject(project: Project) {
+        let updatedProjects = projects.filter {
+            $0 != project
+        }
+        DispatchQueue.main.async {
+            self.projects = updatedProjects
+            StorageService.instance.storeProjects(projects: updatedProjects)
+        }
     }
     
     func eraseServers() {
