@@ -12,15 +12,24 @@ class Project: Codable {
     let name: String
     let password: String
     let url: String
+    let id: UUID
     
     init(name: String, password: String, url: String) {
         self.name = name
         self.password = password
         self.url = url
+        
+        self.id = UUID()
     }
     var members: [Person] = []
     
     var bills: [Bill] = []
+}
+
+extension Project: Equatable {
+    static func == (lhs: Project, rhs: Project) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
 
 let previewProject = Project(name: "TestProject", password: "TestPassword", url: "https://testserver.de")
