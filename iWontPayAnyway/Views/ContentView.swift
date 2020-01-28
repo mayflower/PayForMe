@@ -17,26 +17,30 @@ struct ContentView: View {
     
     @State private var name: String = "https:mynextcloud.com"
     
+    @State
+    var tabBarIndex = tabBarItems.BillList
+    
     var bills = [Bill]()
     
     var body: some View {
-        TabView {
+        TabView(selection: $tabBarIndex){
             if !serverManager.projects.isEmpty {
                 ServerList()
                     .tabItem({
                         Image(systemName: "archivebox")
-                        Text("Projects")
                     }).tag(tabBarItems.ServerList)
-                BillsOverview(viewModel: BillListViewModel(project: serverManager.projects[0]))
+                BillsOverview(viewModel: BillListViewModel(project: serverManager.selectedProject!))
                     .tabItem({
                         Image(systemName: "rectangle.stack")
-                        Text("Bills")
                     }).tag(tabBarItems.BillList)
+                AddBillView(viewModel: BillListViewModel(project: serverManager.selectedProject!))
+                    .tabItem({
+                        Image(systemName: "rectangle.stack.badge.plus")
+                    }).tag(tabBarItems.AddBill)
             }
             OnboardingView()
             .tabItem({
-                Image(systemName: "rectangle.stack.badge.plus")
-                Text("Add server")
+                Image(systemName: "folder.badge.plus")
             }).tag(tabBarItems.AddServer)
         }
     }
@@ -52,6 +56,9 @@ enum tabBarItems: Int {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        return ContentView().environmentObject(ServerManager())
+        let serverManager = ServerManager()
+        serverManager.projects = previewProjects
+        serverManager.selectedProject = previewProject
+        return ContentView().environmentObject(serverManager)
     }
 }

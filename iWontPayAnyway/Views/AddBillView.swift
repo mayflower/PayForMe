@@ -10,11 +10,11 @@ import SwiftUI
 import Foundation
 
 struct AddBillView: View {
-    @Binding
-    var addBillToggle: Bool
+//    @Binding
+//    var tabBarIndex: tabBarItems
     
-    @Binding
-    var project: Project
+    @ObservedObject
+    var viewModel: BillListViewModel
     
     @State
     var selectedPayer = 1
@@ -35,9 +35,9 @@ struct AddBillView: View {
     var body: some View {
         Form {
             Text("New bill")
-            WhoPaidView(members: $project.members, selectedPayer: $selectedPayer).onAppear(perform: {
-                if !self.project.members.contains(where: { $0.id == self.selectedPayer }) {
-                    self.selectedPayer = self.project.members[0].id
+            WhoPaidView(members: $viewModel.project.members, selectedPayer: $selectedPayer).onAppear(perform: {
+                if !self.viewModel.project.members.contains(where: { $0.id == self.selectedPayer }) {
+                    self.selectedPayer = self.viewModel.project.members[0].id
                 }
             })
             TextField("What was paid?", text: $what)
@@ -78,11 +78,13 @@ struct AddBillView: View {
             return
         }
         CospendNetworkService.instance.postNewBill(
-            project: self.project,
+            project: self.viewModel.project,
             bill: newBill,
             completion: {
-                CospendNetworkService.instance.updateBills(project: self.project, completion: {self.project.bills = $0})
-                self.addBillToggle = !$0
+                CospendNetworkService.instance.updateBills(project: self.viewModel.project, completion: {self.viewModel.project.bills = $0})
+                if $0 {
+//                    self.tabBarIndex = tabBarItems.BillList
+                }
         })
     }
     
@@ -103,7 +105,7 @@ struct AddBillView: View {
     }
     
     func initOwers() {
-        owers = project.members.map{Ower(id: $0.id, name: $0.name, isOwing: false)}
+        owers = viewModel.project.members.map{Ower(id: $0.id, name: $0.name, isOwing: false)}
     }
 }
 
@@ -111,6 +113,6 @@ struct AddBillView_Previews: PreviewProvider {
     static var previews: some View {
         previewProject.members = previewPersons
         previewProject.bills = previewBills
-        return AddBillView(addBillToggle: .constant(false), project: .constant(previewProject))
+        return AddBillView(viewModel: BillListViewModel(project: previewProject))
     }
 }

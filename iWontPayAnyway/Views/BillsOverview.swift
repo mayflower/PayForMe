@@ -18,29 +18,16 @@ struct BillsOverview: View {
     var viewModel: BillListViewModel
     
     @State
-    private var addBills = false
-    
-    @State
     private var billsLoaded = true
     
     var body: some View {
         VStack {
-            Button(action: {
-                withAnimation{ self.addBills.toggle()}
-            }) {
-                Text("Add Bill")
-            }
-            if (addBills) {
-                AddBillView(addBillToggle: $addBills,
-                            project: $viewModel.project)
+            if billsLoaded {
+                BillsList(viewModel: viewModel)
+                
             } else {
-                if billsLoaded {
-                    BillsList(viewModel: viewModel)
-                    
-                } else {
-                    Image(systemName: "arrow.2.circlepath").resizable().frame(width: 50, height: 50)
-                    Text("Loading Bills, please wait")
-                }
+                Image(systemName: "arrow.2.circlepath").resizable().frame(width: 50, height: 50)
+                Text("Loading Bills, please wait")
             }
         }
     }
