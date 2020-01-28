@@ -24,7 +24,8 @@ struct WhoPaidView: View {
                 }
             }.pickerStyle(SegmentedPickerStyle()))
         } else {
-            return AnyView(Picker(selection: $selectedPayer, label: Text("Who paid")) {
+            return AnyView(
+                Picker(selection: $selectedPayer, label: Text("Who paid")) {
                 ForEach(members) {
                     member in
                     Text(member.name)
@@ -36,6 +37,11 @@ struct WhoPaidView: View {
 
 struct WhoPaidView_Previews: PreviewProvider {
     static var previews: some View {
-        WhoPaidView(members: .constant(previewPersons), selectedPayer: .constant(1))
+        var manyPersons = [Person]()
+        manyPersons.append(contentsOf: previewPersons)
+        manyPersons.append(contentsOf: previewPersons)
+        manyPersons.append(contentsOf: previewPersons)
+        
+        return WhoPaidView(members: .constant(manyPersons), selectedPayer: .constant(1))
     }
 }

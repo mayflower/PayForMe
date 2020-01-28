@@ -33,40 +33,40 @@ struct AddBillView: View {
     
     
     var body: some View {
-        Form {
-            Text("New bill")
-            WhoPaidView(members: $viewModel.project.members, selectedPayer: $selectedPayer).onAppear(perform: {
-                if !self.viewModel.project.members.contains(where: { $0.id == self.selectedPayer }) {
-                    self.selectedPayer = self.viewModel.project.members[0].id
-                }
-            })
-            TextField("What was paid?", text: $what)
-            TextField("How much?", text: $amount).keyboardType(.numberPad)
-            Section {
-                Text("Owers:")
-                HStack {
-                    Button(action: {
-                        self.owers = self.owers.map{Ower(id: $0.id, name: $0.name, isOwing: false)}
-                    }) {
-                        Text("None")
-                    }.buttonStyle(BorderlessButtonStyle())
-                    Spacer()
-                    Button(action: {
-                        self.owers = self.owers.map{Ower(id: $0.id, name: $0.name, isOwing: true)}
-                    }) {
-                        Text("All")
-                    }.buttonStyle(BorderlessButtonStyle())
-                }.padding(16)
-                ForEach(owers.indices, id: \.self) {
-                    index in
-                    Toggle(isOn: self.$owers[index].isOwing) {
-                        Text(self.owers[index].name)
+        NavigationView {
+            Form {
+                WhoPaidView(members: $viewModel.project.members, selectedPayer: $selectedPayer).onAppear(perform: {
+                    if !self.viewModel.project.members.contains(where: { $0.id == self.selectedPayer }) {
+                        self.selectedPayer = self.viewModel.project.members[0].id
                     }
-                }
-            }.onAppear(perform: initOwers)
-            Section {
-                Button(action: sendBillToServer) {
-                    Text("Send to server")
+                })
+                TextField("What was paid?", text: $what)
+                TextField("How much?", text: $amount).keyboardType(.numberPad)
+                Section {
+                    HStack {
+                        Button(action: {
+                            self.owers = self.owers.map{Ower(id: $0.id, name: $0.name, isOwing: false)}
+                        }) {
+                            Text("None")
+                        }.buttonStyle(BorderlessButtonStyle())
+                        Spacer()
+                        Button(action: {
+                            self.owers = self.owers.map{Ower(id: $0.id, name: $0.name, isOwing: true)}
+                        }) {
+                            Text("All")
+                        }.buttonStyle(BorderlessButtonStyle())
+                    }.padding(16)
+                    ForEach(owers.indices, id: \.self) {
+                        index in
+                        Toggle(isOn: self.$owers[index].isOwing) {
+                            Text(self.owers[index].name)
+                        }
+                    }
+                }.onAppear(perform: initOwers)
+                Section {
+                    Button(action: sendBillToServer) {
+                        Text("Send to server")
+                    }
                 }
             }
         }
