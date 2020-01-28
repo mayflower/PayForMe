@@ -61,12 +61,6 @@ class ServerManager: ObservableObject {
         }
     }
     
-    func eraseServers() {
-        projects = []
-        StorageService.instance.storeProjects(projects: self.projects)
-        didChange.send(self)
-    }
-    
     let didChange = PassthroughSubject<ServerManager,Never>()
     
 }

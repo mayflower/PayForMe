@@ -22,12 +22,7 @@ struct ServerList: View {
     
     var body: some View {
         VStack {
-            Button(action: {
-                self.serversModel.eraseServers()
-            }, label: {
-                Text("Erase all")
-                Image(systemName: "trash")
-            })
+            Text("Known projects").font(.title)
             List {
                 ForEach(serversModel.projects) { project in
                     Text(project.name)
