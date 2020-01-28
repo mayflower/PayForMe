@@ -11,22 +11,6 @@ import Combine
 
 class ServerManager: ObservableObject {
     
-    init() {
-        self.projects = StorageService.instance.loadProjects()
-        for project in projects {
-            print("Server: \(project.url)")
-            print("    Project: \(project.name)")
-            CospendNetworkService.instance.getMembers(project: project, completion: {
-                let answer = $0 ?
-                    "🚀🚀🚀 Loaded project \(project)" :
-                "💣💣💣 Error loading project \(project)"
-                print(answer)
-            })
-            
-        }
-        
-    }
-    
     @Published
     var tabBarState = tabBarItems.BillList {
         didSet {
@@ -41,6 +25,20 @@ class ServerManager: ObservableObject {
     var projects = [Project]() {
         didSet {
             didChange.send(self)
+        }
+    }
+    
+    init() {
+        self.projects = StorageService.instance.loadProjects()
+        for project in projects {
+            print("Server: \(project.url)")
+            print("    Project: \(project.name)")
+            CospendNetworkService.instance.getMembers(project: project, completion: {
+                let answer = $0 ?
+                    "🚀🚀🚀 Loaded project \(project)" :
+                "💣💣💣 Error loading project \(project)"
+                print(answer)
+            })
         }
     }
     
