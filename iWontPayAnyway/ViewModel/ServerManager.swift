@@ -55,6 +55,14 @@ class ServerManager: ObservableObject {
         let updatedProjects = projects.filter {
             $0 != project
         }
+        if project == selectedProject {
+            if projects.isEmpty {
+                selectedProject = nil
+            } else {
+                selectedProject = projects[0]
+            }
+            didChange.send(self)
+        }
         DispatchQueue.main.async {
             self.projects = updatedProjects
             StorageService.instance.storeProjects(projects: updatedProjects)
