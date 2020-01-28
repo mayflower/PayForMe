@@ -34,11 +34,7 @@ class BillListViewModel: ObservableObject {
         }
         .decode(type: [Bill].self, decoder: JSONDecoder())
         .replaceError(with: [])
-        .sink{
-            bills in
-            self.project.bills = bills
-            self.didChange.send(self)
-        }
+        .assign(to: \.bills, on: project)
     }
     
     let didChange = PassthroughSubject<BillListViewModel,Never>()
