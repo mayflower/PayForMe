@@ -22,16 +22,24 @@ struct ServerList: View {
     
     var body: some View {
         VStack {
-                Button(action: {
-                    self.serversModel.eraseServers()
-                }, label: {
-                    Text("Erase all")
-                    Image(systemName: "trash")
-                })
-            List(serversModel.projects, selection: $current) {
-                project in
-                Text(project.name)
+            Button(action: {
+                self.serversModel.eraseServers()
+            }, label: {
+                Text("Erase all")
+                Image(systemName: "trash")
+            })
+            List {
+                ForEach(serversModel.projects) { project in
+                    Text(project.name)
+                }
+                .onDelete(perform: deleteProject)
             }
+        }
+    }
+    
+    func deleteProject(at offsets: IndexSet) {
+        for index in offsets {
+            serversModel.removeProject(project: serversModel.projects[index])
         }
     }
 }
