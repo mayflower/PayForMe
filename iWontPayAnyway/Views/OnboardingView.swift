@@ -14,9 +14,6 @@ struct OnboardingView: View {
     var serversModel: ServerManager
     
     @State
-    var serverName = ""
-    
-    @State
     var serverAddress = "https://mynextcloud.org"
     
     @State
@@ -28,9 +25,7 @@ struct OnboardingView: View {
     var body: some View {
         VStack {
             VStack(alignment: .center, spacing: 10) {
-                Text("Hi, to get you going, please add a server & project").font(.headline)
-                Text("Server Name")
-                TextField("Enter catchy name", text: $serverName)
+                Text("Hi, to get you going, please add a project").font(.headline)
                 Text("Server Address")
                 TextField("Enter server address", text: $serverAddress).autocapitalization(.none)
                 Text("Project Name")
