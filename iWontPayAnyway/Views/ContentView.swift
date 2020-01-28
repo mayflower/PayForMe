@@ -18,7 +18,7 @@ struct ContentView: View {
     @State private var name: String = "https:mynextcloud.com"
     
     @State
-    var tabBarIndex = tabBarItems.BillList
+    var tabBarIndex = tabBarItems.ServerList
     
     var bills = [Bill]()
     

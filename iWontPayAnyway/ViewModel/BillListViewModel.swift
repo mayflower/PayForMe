@@ -24,21 +24,9 @@ class BillListViewModel: ObservableObject {
     init(project: Project) {
         self.project = project
         
-        let url = CospendNetworkService.instance.buildURL(project, "bills")!
-        cancellable = URLSession.shared.dataTaskPublisher(for: url)
-            .compactMap{
-                data, response -> Data? in
-                guard let httpResponse = response as? HTTPURLResponse,
-                    httpResponse.statusCode == 200 else { print("Network error"); return nil }
-                return data
-        }
-        .decode(type: [Bill].self, decoder: JSONDecoder())
-        .replaceError(with: [])
-        .sink{
-            bills in
-            self.project.bills = bills
+        CospendNetworkService.instance.loadBills(project: project, completion: {
             self.didChange.send(self)
-        }
+        })
     }
     
     let didChange = PassthroughSubject<BillListViewModel,Never>()
