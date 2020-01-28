@@ -81,9 +81,13 @@ struct AddBillView: View {
             project: self.viewModel.project,
             bill: newBill,
             completion: {
-                CospendNetworkService.instance.updateBills(project: self.viewModel.project, completion: {self.viewModel.project.bills = $0})
-                if $0 {
-                    self.tabBarIndex = tabBarItems.BillList
+                success in
+                if success {
+                    CospendNetworkService.instance.updateBills(project: self.viewModel.project, completion: {
+                        self.viewModel.project.bills = $0
+                        self.tabBarIndex = tabBarItems.BillList
+                        
+                    })
                 }
         })
     }
