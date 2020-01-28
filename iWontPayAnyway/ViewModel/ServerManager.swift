@@ -47,6 +47,7 @@ class ServerManager: ObservableObject {
     func addProject(newProject: Project) {
         
         guard !projects.contains(newProject) else {
+            print("Project already exists")
             return
         }
         
