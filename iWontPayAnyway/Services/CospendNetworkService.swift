@@ -17,25 +17,28 @@ class CospendNetworkService {
     
     let staticpath = "/index.php/apps/cospend/api/projects/"
     
-    var cancellable: AnyCancellable?
+    var cancellables = [AnyCancellable]()
     
-    func updateBills(project: Project, completion: @escaping ([Bill]) -> ()) {
+    func loadBills(project: Project, completion: @escaping () -> () = {}) {
         guard let url = buildURL(project, "bills") else {
             print("Couldn't unwrap url on server \(project.url) with project \(project.name)")
             return
         }
-        URLSession.shared.dataTask(with: url, completionHandler: {
-            data, response, error in
-            guard let data = data else {
-                print("Could not unwarp data")
-                return }
-            guard let bills = try? JSONDecoder().decode([Bill].self, from: data) else {
-                print("Could not decode data")
-                return
-            }
-    
-            completion(bills)
-            }).resume()
+        let cancellable = URLSession.shared.dataTaskPublisher(for: url)
+            .compactMap{
+                data, response -> Data? in
+                guard let httpResponse = response as? HTTPURLResponse,
+                    httpResponse.statusCode == 200 else { print("Network error"); return nil }
+                return data
+        }
+        .decode(type: [Bill].self, decoder: JSONDecoder())
+        .replaceError(with: [])
+        .map{
+            completion()
+            return $0
+        }
+        .assign(to: \.bills, on: project)
+        self.cancellables.append(cancellable)
     }
     
     func getMembers(project: Project, completion: @escaping (Bool) -> ()) {
@@ -87,7 +90,7 @@ class CospendNetworkService {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "POST"
         
-        cancellable = URLSession.shared.dataTaskPublisher(for: urlRequest)
+        let cancellable = URLSession.shared.dataTaskPublisher(for: urlRequest)
             .tryMap {
                 output in
                 guard let response = output.response as? HTTPURLResponse,
@@ -112,6 +115,7 @@ class CospendNetworkService {
             print(data)
         })
         
+        self.cancellables.append(cancellable)
         
     }
     
