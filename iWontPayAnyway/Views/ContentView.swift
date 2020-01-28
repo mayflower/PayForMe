@@ -33,7 +33,7 @@ struct ContentView: View {
                     .tabItem({
                         Image(systemName: "rectangle.stack")
                     }).tag(tabBarItems.BillList)
-                AddBillView(viewModel: BillListViewModel(project: serverManager.selectedProject!))
+                AddBillView(tabBarIndex: $tabBarIndex, viewModel: BillListViewModel(project: serverManager.selectedProject!))
                     .tabItem({
                         Image(systemName: "rectangle.stack.badge.plus")
                     }).tag(tabBarItems.AddBill)

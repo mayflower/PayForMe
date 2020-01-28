@@ -10,8 +10,8 @@ import SwiftUI
 import Foundation
 
 struct AddBillView: View {
-//    @Binding
-//    var tabBarIndex: tabBarItems
+    @Binding
+    var tabBarIndex: tabBarItems
     
     @ObservedObject
     var viewModel: BillListViewModel
@@ -83,7 +83,7 @@ struct AddBillView: View {
             completion: {
                 CospendNetworkService.instance.updateBills(project: self.viewModel.project, completion: {self.viewModel.project.bills = $0})
                 if $0 {
-//                    self.tabBarIndex = tabBarItems.BillList
+                    self.tabBarIndex = tabBarItems.BillList
                 }
         })
     }
@@ -113,6 +113,6 @@ struct AddBillView_Previews: PreviewProvider {
     static var previews: some View {
         previewProject.members = previewPersons
         previewProject.bills = previewBills
-        return AddBillView(viewModel: BillListViewModel(project: previewProject))
+        return AddBillView(tabBarIndex: .constant(tabBarItems.AddBill), viewModel: BillListViewModel(project: previewProject))
     }
 }
