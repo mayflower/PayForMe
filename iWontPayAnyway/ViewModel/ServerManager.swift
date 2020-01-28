@@ -18,7 +18,8 @@ class ServerManager: ObservableObject {
         }
     }
     
-    
+    @Published
+    var selectedProject: Project?
     
     init() {
         self.projects = StorageService.instance.loadProjects()
@@ -31,6 +32,9 @@ class ServerManager: ObservableObject {
                 "💣💣💣 Error loading project \(project)"
                 print(answer)
             })
+        }
+        if !projects.isEmpty {
+            selectedProject = projects[0]
         }
     }
     
