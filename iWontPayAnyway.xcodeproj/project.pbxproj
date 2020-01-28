@@ -34,7 +34,7 @@
 /* Begin PBXFileReference section */
 		650059FB23DDE1C300D1D599 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		650059FD23DDE7FE00D1D599 /* Ower.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ower.swift; sourceTree = "<group>"; };
-		65005A0123DDFB1A00D1D599 /* WhoPaidView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WhoPaidView.swift; path = iWontPayAnyway/Views/WhoPaidView.swift; sourceTree = "<group>"; };
+		65005A0123DDFB1A00D1D599 /* WhoPaidView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoPaidView.swift; sourceTree = "<group>"; };
 		65005A0323DE0C5C00D1D599 /* BillsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillsList.swift; sourceTree = "<group>"; };
 		6533A02823D87B9D00FF822B /* BillsOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillsOverview.swift; sourceTree = "<group>"; };
 		6533A02A23D888B100FF822B /* BillCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillCell.swift; sourceTree = "<group>"; };
@@ -72,6 +72,7 @@
 		6533A02C23D88EF300FF822B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				65005A0123DDFB1A00D1D599 /* WhoPaidView.swift */,
 				6533A02A23D888B100FF822B /* BillCell.swift */,
 				65662A2523D8546900303207 /* ServerList.swift */,
 				65662A0623D7320000303207 /* ContentView.swift */,
@@ -86,7 +87,6 @@
 		656629F623D7320000303207 = {
 			isa = PBXGroup;
 			children = (
-				65005A0123DDFB1A00D1D599 /* WhoPaidView.swift */,
 				65662A0123D7320000303207 /* iWontPayAnyway */,
 				65662A0023D7320000303207 /* Products */,
 			);
