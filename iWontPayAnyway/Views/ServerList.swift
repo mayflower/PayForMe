@@ -13,26 +13,24 @@ struct ServerList: View {
     var serversModel: ServerManager
     
     @State
-    private var bills: [Bill] = []
-    @State
-    private var current: Int? = nil
+    private var current: Int? = nil {
+        didSet {
+            print(_current)
+        }
+    }
+
     
     var body: some View {
         VStack {
-            HStack(spacing: 50) {
-                Text("Known Projects")
                 Button(action: {
                     self.serversModel.eraseServers()
                 }, label: {
                     Text("Erase all")
                     Image(systemName: "trash")
                 })
-            }
-            VStack {
-                ForEach(serversModel.projects, id: \.url) {
-                    project in
-                    Text("Project")
-                }
+            List(serversModel.projects, selection: $current) {
+                project in
+                Text(project.name)
             }
         }
     }
