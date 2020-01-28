@@ -25,7 +25,17 @@ struct ServerList: View {
             Text("Known projects").font(.title)
             List {
                 ForEach(serversModel.projects) { project in
-                    Text(project.name)
+                    Button(action: {
+                        self.serversModel.selectedProject = project
+                    }, label: {
+                        HStack {
+                            Text(project.name)
+                            if self.serversModel.selectedProject == project {
+                                Spacer()
+                                Image(systemName: "checkmark").padding(.trailing)
+                            }
+                        }
+                    })
                 }
                 .onDelete(perform: deleteProject)
             }
