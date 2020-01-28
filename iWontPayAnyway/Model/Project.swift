@@ -28,7 +28,7 @@ class Project: Codable {
 
 extension Project: Equatable {
     static func == (lhs: Project, rhs: Project) -> Bool {
-        return (lhs.id == rhs.id) || (lhs.url == rhs.url && lhs.password == rhs.password)
+        return (lhs.id == rhs.id) || (lhs.url == rhs.url && lhs.name == rhs.name)
     }
 }
 
