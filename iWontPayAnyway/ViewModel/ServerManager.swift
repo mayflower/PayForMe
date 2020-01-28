@@ -12,21 +12,13 @@ import Combine
 class ServerManager: ObservableObject {
     
     @Published
-    var tabBarState = tabBarItems.BillList {
-        didSet {
-            if projects.isEmpty && tabBarState != tabBarItems.AddServer{
-                tabBarState = tabBarItems.AddServer
-            }
-            didChange.send(self)
-        }
-    }
-    
-    @Published
     var projects = [Project]() {
         didSet {
             didChange.send(self)
         }
     }
+    
+    
     
     init() {
         self.projects = StorageService.instance.loadProjects()
@@ -52,7 +44,6 @@ class ServerManager: ObservableObject {
         DispatchQueue.main.async {
             self.projects.append(newProject)
             StorageService.instance.storeProjects(projects: self.projects)
-            self.tabBarState = tabBarItems.ServerList
         }
     }
     
