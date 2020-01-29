@@ -26,7 +26,7 @@ struct OnboardingView: View {
             Form {
                 Text("Add new project").font(.title)
                 Section(header: Text("Server Address")) {
-                    TextField("Enter server address", text: $serverAddress).autocapitalization(.none)
+                    TextField("Enter server address", text: $serverAddress).autocapitalization(.none).keyboardType(.URL)
                 }
                 Section(header: Text("Project Name & Password")) {
                     TextField("Enter project name", text: $projectName).autocapitalization(.none)
