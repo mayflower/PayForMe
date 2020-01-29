@@ -47,7 +47,7 @@ struct BillCell: View {
     func backgroundColor() -> Color {
         guard let payer = project.members.first(where: {$0.id == bill.payer_id}),
         let color = payer.color else { return Color.white }
-        return Color(red: Double(color.r)/255, green: Double(color.g)/255, blue: Double(color.b)/255, opacity: 1)
+        return Color(color)
     }
 }
 
