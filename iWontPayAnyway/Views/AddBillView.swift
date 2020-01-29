@@ -38,14 +38,16 @@ struct AddBillView: View {
     var body: some View {
         NavigationView {
             Form {
-                WhoPaidView(members: $viewModel.project.members, selectedPayer: $selectedPayer).onAppear(perform: {
-                    if !self.viewModel.project.members.contains(where: { $0.id == self.selectedPayer }) {
-                        self.selectedPayer = self.viewModel.project.members[0].id
-                    }
-                })
-                TextField("What was paid?", text: $viewModel.topic)
-                TextField("How much?", text: $viewModel.amount).keyboardType(.numberPad)
-                Section {
+                Section(header: Text("Payer")) {
+                    WhoPaidView(members: $viewModel.project.members, selectedPayer: $selectedPayer).onAppear(perform: {
+                        if !self.viewModel.project.members.contains(where: { $0.id == self.selectedPayer }) {
+                            self.selectedPayer = self.viewModel.project.members[0].id
+                        }
+                    })
+                    TextField("What was paid?", text: $viewModel.topic)
+                    TextField("How much?", text: $viewModel.amount).keyboardType(.numberPad)
+                }
+                Section(header: Text("Owers")) {
                     HStack {
                         Button(action: {
                             self.owers = self.owers.map{Ower(id: $0.id, name: $0.name, isOwing: false)}
