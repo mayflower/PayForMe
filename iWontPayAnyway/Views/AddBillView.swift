@@ -84,7 +84,7 @@ struct AddBillView: View {
             print("Could not create bill")
             return
         }
-        CospendNetworkService.instance.postNewBill(
+        CospendNetworkService.instance.postBill(
             project: self.viewModel.project,
             bill: newBill,
             completion: {

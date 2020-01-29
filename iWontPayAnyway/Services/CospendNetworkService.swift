@@ -63,14 +63,26 @@ class CospendNetworkService {
             project.members = members
             completion(true)
             }).resume()
-        
     }
     
-    func postNewBill(project: Project, bill: Bill, completion: @escaping (Bool) -> ()) {
+    func updateBill(project: Project, bill: Bill, completion: @escaping (Bool) -> ()) {
+        guard let baseURL = buildURL(project, "bills/\(bill.id)") else {
+            print("💣 Did not build URL")
+            return
+        }
+        sendBill(project: project, bill: bill, baseURL: baseURL, httpMethod: "PUT", completion: completion)
+    }
+    
+    func postBill(project: Project, bill: Bill, completion: @escaping (Bool) -> ()) {
         guard let baseURL = buildURL(project, "bills") else {
             print("💣 Did not build URL")
             return
         }
+        sendBill(project: project, bill: bill, baseURL: baseURL, httpMethod: "POST", completion: completion)
+    }
+    
+    private func sendBill(project: Project, bill: Bill, baseURL: URL, httpMethod: String, completion: @escaping (Bool) -> ()) {
+        
         var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false)
         let params = [
             "date": bill.date,
