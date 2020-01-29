@@ -19,6 +19,27 @@ class BillListViewModel: ObservableObject {
         }
     }
     
+    @Published
+    var topic = ""
+    
+    @Published
+    var amount = ""
+        
+    var validatedInput: AnyPublisher<Bool, Never> {
+        return Publishers.CombineLatest($topic, validatedAmount)
+            .map { topic, validatedAmount in
+                return !topic.isEmpty && validatedAmount
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    var validatedAmount: AnyPublisher<Bool, Never> {
+        return $amount.map { amount in
+            return Double(amount) != nil
+        }
+        .eraseToAnyPublisher()
+    }
+    
     var cancellable: AnyCancellable?
     
     init(project: Project) {

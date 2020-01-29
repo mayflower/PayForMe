@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Foundation
+import Combine
 
 struct AddBillView: View {
     @Binding
@@ -20,7 +21,7 @@ struct AddBillView: View {
     var selectedPayer = 1
     
     @State
-    var what = ""
+    var topic = ""
     
     @State
     var amount = ""
@@ -31,6 +32,8 @@ struct AddBillView: View {
     @State
     var noneAllToggle = 1
     
+    @State
+    var sendBillButtonDisabled = true
     
     var body: some View {
         NavigationView {
@@ -40,8 +43,8 @@ struct AddBillView: View {
                         self.selectedPayer = self.viewModel.project.members[0].id
                     }
                 })
-                TextField("What was paid?", text: $what)
-                TextField("How much?", text: $amount).keyboardType(.numberPad)
+                TextField("What was paid?", text: $viewModel.topic)
+                TextField("How much?", text: $viewModel.amount).keyboardType(.numberPad)
                 Section {
                     HStack {
                         Button(action: {
@@ -66,6 +69,10 @@ struct AddBillView: View {
                 Section {
                     Button(action: sendBillToServer) {
                         Text("Send to server")
+                    }
+                    .disabled($sendBillButtonDisabled.wrappedValue)
+                    .onReceive(self.viewModel.validatedInput) {
+                        self.sendBillButtonDisabled = !$0
                     }
                 }
             }
@@ -104,7 +111,7 @@ struct AddBillView: View {
                 Person(id: $0.id, weight: 1, name: $0.name, activated: true)
         }
         
-        return Bill(id: 99, amount: doubleAmount, what: what, date: date, payer_id: selectedPayer, owers: actualOwers, repeat: "n", lastchanged: 0)
+        return Bill(id: 99, amount: doubleAmount, what: topic, date: date, payer_id: selectedPayer, owers: actualOwers, repeat: "n", lastchanged: 0)
     }
     
     func initOwers() {
