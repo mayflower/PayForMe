@@ -37,11 +37,12 @@ struct ContentView: View {
                     .tabItem({
                         Image(systemName: "rectangle.stack.badge.plus")
                     }).tag(tabBarItems.AddBill)
+            } else {
+                OnboardingView()
+                    .tabItem({
+                        Image(systemName: "folder.badge.plus")
+                    }).tag(tabBarItems.AddServer)
             }
-            OnboardingView()
-            .tabItem({
-                Image(systemName: "folder.badge.plus")
-            }).tag(tabBarItems.AddServer)
         }
     }
 }

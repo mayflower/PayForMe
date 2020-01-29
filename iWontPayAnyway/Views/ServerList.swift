@@ -21,24 +21,30 @@ struct ServerList: View {
 
     
     var body: some View {
-        VStack {
-            Text("Known projects").font(.title)
-            List {
-                ForEach(serversModel.projects) { project in
-                    Button(action: {
-                        self.serversModel.selectedProject = project
-                    }, label: {
-                        HStack {
-                            Text(project.name)
-                            if self.serversModel.selectedProject == project {
-                                Spacer()
-                                Image(systemName: "checkmark").padding(.trailing)
+        NavigationView {
+            VStack {
+                List {
+                    ForEach(serversModel.projects) { project in
+                        Button(action: {
+                            self.serversModel.selectedProject = project
+                        }, label: {
+                            HStack {
+                                Text(project.name)
+                                if self.serversModel.selectedProject == project {
+                                    Spacer()
+                                    Image(systemName: "checkmark").padding(.trailing)
+                                }
                             }
-                        }
-                    })
+                        })
+                    }
+                    .onDelete(perform: deleteProject)
                 }
-                .onDelete(perform: deleteProject)
-            }
+            }.navigationBarItems(trailing:
+                NavigationLink(destination: OnboardingView()) {
+                    Image(systemName: "plus")
+                }
+            )
+            .navigationBarTitle("Known Projects")
         }
     }
     
