@@ -8,12 +8,21 @@
 
 import Foundation
 
-struct Person: Codable, Identifiable {
+struct Person: Hashable, Codable, Identifiable {
+    
     var id: Int
     var weight: Int
     var name: String
     var activated: Bool
     var color: PersonColor?
+    
+    static func == (lhs: Person, rhs: Person) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }
 struct PersonColor: Codable {
     var r: Int
