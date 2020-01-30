@@ -14,12 +14,22 @@ struct BalanceList: View {
     var viewModel: BalanceViewModel
     
     var body: some View {
-        List {
+        VStack() {
             ForEach(viewModel.balances) {
                 balance in
-                Text("\(balance.name) paid \(String(format:"%.2f",balance.amount)) €")
+                HStack {
+                    Text("\(balance.name)")
+                    Spacer()
+                    Text(" \(String(format:"%.2f",balance.amount)) €").fontWeight(.bold)
+                }.padding().background(self.backGroundColor(
+                    balance))
             }
+            Spacer()
         }
+    }
+    
+    func backGroundColor(_ balance: Balance) -> LinearGradient {
+        return LinearGradient(gradient: Gradient(colors: [Color(balance.color),Color.white]), startPoint: .leading, endPoint: .trailing)
     }
 }
 

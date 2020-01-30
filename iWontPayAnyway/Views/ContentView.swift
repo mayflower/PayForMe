@@ -29,6 +29,10 @@ struct ContentView: View {
                     .tabItem({
                         Image(systemName: "archivebox")
                     }).tag(tabBarItems.ServerList)
+                BalanceList(viewModel: BalanceViewModel(project: serverManager.selectedProject!))
+                    .tabItem({
+                        Image(systemName: "arrow.right.arrow.left")
+                    }).tag(tabBarItems.Balance)
                 BillsOverview(viewModel: BillListViewModel(project: serverManager.selectedProject!))
                     .tabItem({
                         Image(systemName: "rectangle.stack")
