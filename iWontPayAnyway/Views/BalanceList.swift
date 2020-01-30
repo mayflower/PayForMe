@@ -14,22 +14,23 @@ struct BalanceList: View {
     var viewModel: BalanceViewModel
     
     var body: some View {
-        VStack() {
-            ForEach(viewModel.balances) {
-                balance in
-                HStack {
-                    Text("\(balance.name)")
-                    Spacer()
-                    Text(" \(String(format:"%.2f",balance.amount)) €").fontWeight(.bold)
-                }.padding().background(self.backGroundColor(
-                    balance))
+        ScrollView {
+            VStack() {
+                ForEach(viewModel.balances.sorted(by: { $0.amount > $1.amount })) {
+                    balance in
+                    VStack {
+                        HStack {
+                            Circle().foregroundColor(Color(balance.color)).frame(width: 25, height: 25)
+                            Spacer()
+                            Text("\(balance.name)").font(.headline)
+                            Text(" \(String(format:"%.2f",balance.amount)) €")
+                        }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
+                        Divider()
+                    }
+                }
+                Spacer()
             }
-            Spacer()
         }
-    }
-    
-    func backGroundColor(_ balance: Balance) -> LinearGradient {
-        return LinearGradient(gradient: Gradient(colors: [Color(balance.color),Color.white]), startPoint: .leading, endPoint: .trailing)
     }
 }
 
