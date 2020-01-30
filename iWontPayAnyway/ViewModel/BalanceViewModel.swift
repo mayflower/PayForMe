@@ -12,22 +12,7 @@ import Combine
 class BalanceViewModel: ObservableObject {
     
     @Published
-    var project: Project {
-        didSet {
-            print(project.bills.count)
-            print(project.members.count)
-            let payers = Dictionary(grouping: project.bills, by: { $0.payer_id } )
-            
-            let payersAmount = payers.map {($0.key, $0.value.map{bill in bill.amount}.reduce(0.0, +))}
-            balances = payersAmount.compactMap{(id,amount) in
-                guard let person = project.members.first(where: {$0.id == id}) else { return nil }
-                var color = PersonColor(r: 255, g: 255, b: 255)
-                if let savedColor = person.color {
-                    color = savedColor
-                }
-                return Balance(id: id, name: person.name, amount: amount, color: color)}
-        }
-    }
+    var project: Project
     
     @Published
     var balances = [Balance]() {
@@ -40,10 +25,43 @@ class BalanceViewModel: ObservableObject {
         self.project = project
         CospendNetworkService.instance.getMembers(project: project, completion: {_ in 
             self.didChange.send(self)
+            self.setBalances()
         })
         CospendNetworkService.instance.loadBills(project: project, completion: {
             self.didChange.send(self)
+            self.setBalances()
         })
+    }
+    
+    func setBalances() {
+        print(project.bills.count)
+        print(project.members.count)
+        let payers = Dictionary(grouping: project.bills, by: { $0.payer_id } )
+        
+        let payersAmount = payers.map {($0.key, $0.value.map{bill in bill.amount}.reduce(0.0, +))}
+        balances = payersAmount.compactMap{(id,amount) in
+            guard let person = project.members.first(where: {$0.id == id}) else { return nil }
+            var color = PersonColor(r: 255, g: 255, b: 255)
+            if let savedColor = person.color {
+                color = savedColor
+            }
+            return Balance(id: id, name: person.name, amount: amount, color: color)
+        }
+        
+        let owers = project.bills.flatMap({bill in
+            bill.owers.map{ower in (ower.id, bill.amount ,bill.owers.count)}
+        })
+        
+        let owersDict = Dictionary(grouping: owers, by: {$0.0})
+        let owingBalance = owersDict.map { ower in (ower.key, ower.value.map{ $0.1 / Double($0.2) }.reduce(0.0, +)) }
+        
+        owersDict.forEach { ower in
+            print("Ower: \(ower.key)")
+            ower.value.forEach {
+                print("      \($0.0), amount: \($0.1), owers_count: \($0.2)")
+            }
+        }
+        owingBalance.forEach{ print("ID: \($0.0), owing: \($0.1)")}
     }
     
     let didChange = PassthroughSubject<BalanceViewModel,Never>()
