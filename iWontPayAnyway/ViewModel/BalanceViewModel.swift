@@ -55,13 +55,10 @@ class BalanceViewModel: ObservableObject {
         let owersDict = Dictionary(grouping: owers, by: {$0.0})
         let owingBalance = owersDict.map { ower in (ower.key, ower.value.map{ $0.1 / Double($0.2) }.reduce(0.0, +)) }
         
-        owersDict.forEach { ower in
-            print("Ower: \(ower.key)")
-            ower.value.forEach {
-                print("      \($0.0), amount: \($0.1), owers_count: \($0.2)")
-            }
+        balances = balances.map { balance in
+            let amount = balance.amount - (owingBalance.first(where: {ower in ower.0 == balance.id})?.1 ?? 0.0)
+            return Balance(id: balance.id, name: balance.name, amount: amount, color: balance.color)
         }
-        owingBalance.forEach{ print("ID: \($0.0), owing: \($0.1)")}
     }
     
     let didChange = PassthroughSubject<BalanceViewModel,Never>()
@@ -70,6 +67,6 @@ class BalanceViewModel: ObservableObject {
 struct Balance: Identifiable {
     let id: Int
     let name: String
-    let amount: Double
+    var amount: Double
     let color: PersonColor
 }
