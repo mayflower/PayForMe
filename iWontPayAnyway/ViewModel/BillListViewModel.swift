@@ -44,7 +44,6 @@ class BillListViewModel: ObservableObject {
     
     init(project: Project) {
         self.project = project
-        
         CospendNetworkService.instance.loadBills(project: project, completion: {
             self.didChange.send(self)
         })

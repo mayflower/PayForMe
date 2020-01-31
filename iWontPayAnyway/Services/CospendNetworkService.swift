@@ -100,7 +100,7 @@ class CospendNetworkService {
             return
         }
         var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = "POST"
+        urlRequest.httpMethod = httpMethod
         
         let cancellable = URLSession.shared.dataTaskPublisher(for: urlRequest)
             .tryMap {

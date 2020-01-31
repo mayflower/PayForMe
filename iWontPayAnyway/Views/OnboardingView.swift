@@ -46,6 +46,11 @@ struct OnboardingView: View {
             successful in
             if successful {
                 self.serversModel.addProject(newProject: project)
+                if self.serversModel.selectedProject == nil {
+                    DispatchQueue.main.async {
+                        self.serversModel.selectedProject = project
+                    }
+                }
             } else {
                 print("Server wrong")
             }

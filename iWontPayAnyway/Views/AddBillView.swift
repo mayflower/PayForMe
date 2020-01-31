@@ -14,6 +14,8 @@ struct AddBillView: View {
     @Binding
     var tabBarIndex: tabBarItems
     
+    var currentBill: Bill?
+    
     @ObservedObject
     var viewModel: BillListViewModel
     
@@ -67,7 +69,7 @@ struct AddBillView: View {
                             Text(self.owers[index].name)
                         }
                     }
-                }.onAppear(perform: initOwers)
+                }
                 Section {
                     Button(action: sendBillToServer) {
                         Text("Send to server")
@@ -79,6 +81,20 @@ struct AddBillView: View {
                 }
             }
         }
+        .onAppear {
+            self.prefillData()
+        }
+    }
+    
+    func prefillData() {
+        self.initOwers()
+        
+        guard let bill = currentBill else { return }
+                
+        self.viewModel.topic = bill.what
+        self.viewModel.amount = String(bill.amount)
+        
+        self.selectedPayer = bill.payer_id
     }
     
     func sendBillToServer() {
@@ -86,38 +102,87 @@ struct AddBillView: View {
             print("Could not create bill")
             return
         }
-        CospendNetworkService.instance.postBill(
-            project: self.viewModel.project,
-            bill: newBill,
-            completion: {
-                success in
-                if success {
-                    CospendNetworkService.instance.loadBills(project: self.viewModel.project, completion: {
-                        self.tabBarIndex = tabBarItems.BillList
-                        
-                    })
-                }
-        })
+        
+        if currentBill != nil {
+            CospendNetworkService.instance.updateBill(
+                project: self.viewModel.project,
+                bill: newBill) { success in
+                    if success {
+                        CospendNetworkService.instance.loadBills(project: self.viewModel.project, completion: {
+                            self.tabBarIndex = tabBarItems.BillList
+                            
+                        })
+                    }
+            }
+        } else {
+            CospendNetworkService.instance.postBill(
+                project: self.viewModel.project,
+                bill: newBill,
+                completion: {
+                    success in
+                    if success {
+                        CospendNetworkService.instance.loadBills(project: self.viewModel.project, completion: {
+                            self.tabBarIndex = tabBarItems.BillList
+                            
+                        })
+                    }
+            })
+        }
     }
     
     func createBill() -> Bill? {
-        guard let doubleAmount = Double(amount) else {
+        guard let doubleAmount = Double(viewModel.amount) else {
             amount = "Please write a number"
             return nil
         }
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
-        let date = dateFormatter.string(from: Date())
+        
+        let billID: Int
+        let date: String
+        
+        if let currentBill = self.currentBill {
+            billID = currentBill.id
+            date = currentBill.date
+        } else {
+            billID = 99
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd-MM-yyyy"
+            
+            date = dateFormatter.string(from: Date())
+        }
+        
         let actualOwers = owers.filter {$0.isOwing}
             .map {
                 Person(id: $0.id, weight: 1, name: $0.name, activated: true)
         }
         
-        return Bill(id: 99, amount: doubleAmount, what: topic, date: date, payer_id: selectedPayer, owers: actualOwers, repeat: "n", lastchanged: 0)
+        
+        
+        return Bill(id: billID, amount: doubleAmount, what: viewModel.topic, date: date, payer_id: selectedPayer, owers: actualOwers, repeat: "n", lastchanged: 0)
+        
     }
     
     func initOwers() {
-        owers = viewModel.project.members.map{Ower(id: $0.id, name: $0.name, isOwing: false)}
+        guard let selectedOwers = currentBill?.owers else {
+            self.owers = viewModel.project.members.map{Ower(id: $0.id, name: $0.name, isOwing: false)}
+            return
+        }
+        
+        var owers = selectedOwers.map {
+            Ower(id: $0.id, name: $0.name, isOwing: true)
+        }
+        let activeOwerIDs = owers.map {
+            $0.id
+        }
+        let inactiveOwers = viewModel.project.members.map({
+            Ower(id: $0.id, name: $0.name, isOwing: false)
+        }).filter {
+            !activeOwerIDs.contains($0.id)
+        }
+        
+        owers.append(contentsOf: inactiveOwers)
+        
+        self.owers = owers
     }
 }
 
