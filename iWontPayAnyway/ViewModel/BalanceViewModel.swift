@@ -34,30 +34,13 @@ class BalanceViewModel: ObservableObject {
     }
     
     func setBalances() {
-        print(project.bills.count)
-        print(project.members.count)
-        let payers = Dictionary(grouping: project.bills, by: { $0.payer_id } )
-        
-        let payersAmount = payers.map {($0.key, $0.value.map{bill in bill.amount}.reduce(0.0, +))}
-        balances = payersAmount.compactMap{(id,amount) in
-            guard let person = project.members.first(where: {$0.id == id}) else { return nil }
-            var color = PersonColor(r: 255, g: 255, b: 255)
-            if let savedColor = person.color {
-                color = savedColor
-            }
-            return Balance(id: id, name: person.name, amount: amount, color: color)
-        }
-        
-        let owers = project.bills.flatMap({bill in
-            bill.owers.map{ower in (ower.id, bill.amount ,bill.owers.count)}
-        })
-        
-        let owersDict = Dictionary(grouping: owers, by: {$0.0})
-        let owingBalance = owersDict.map { ower in (ower.key, ower.value.map{ $0.1 / Double($0.2) }.reduce(0.0, +)) }
-        
-        balances = balances.map { balance in
-            let amount = balance.amount - (owingBalance.first(where: {ower in ower.0 == balance.id})?.1 ?? 0.0)
-            return Balance(id: balance.id, name: balance.name, amount: amount, color: balance.color)
+        balances = project.members.map {
+            member in
+            let paid = project.bills.filter { $0.payer_id == member.id }.map { $0.amount }.reduce(0.0, +)
+            let owes = project.bills.compactMap { bill in
+                bill.owers.first { ower in ower.id == member.id } == nil ? nil : bill.amount / Double( bill.owers.count) }
+                .reduce(0.0, -)
+            return Balance(id: member.id, name: member.name, amount: paid + owes, color: member.color ?? PersonColor(r: 255, g: 255, b: 255) )
         }
     }
     
