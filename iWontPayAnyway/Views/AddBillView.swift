@@ -146,7 +146,7 @@ struct AddBillView: View {
             billID = 99
             
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd-MM-yyyy"
+            dateFormatter.dateFormat = "yyyy-MM-dd"
             
             date = dateFormatter.string(from: Date())
         }
