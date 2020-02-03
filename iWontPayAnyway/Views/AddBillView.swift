@@ -41,13 +41,13 @@ struct AddBillView: View {
         NavigationView {
             Form {
                 Section(header: Text("Payer")) {
-                    WhoPaidView(members: $viewModel.project.members, selectedPayer: $selectedPayer).onAppear(perform: {
+                    WhoPaidView(members: self.$viewModel.project.members, selectedPayer: self.$selectedPayer).onAppear(perform: {
                         if !self.viewModel.project.members.contains(where: { $0.id == self.selectedPayer }) {
                             self.selectedPayer = self.viewModel.project.members[0].id
                         }
                     })
-                    TextField("What was paid?", text: $viewModel.topic)
-                    TextField("How much?", text: $viewModel.amount).keyboardType(.numberPad)
+                    TextField("What was paid?", text: self.$viewModel.topic)
+                    TextField("How much?", text: self.$viewModel.amount).keyboardType(.decimalPad)
                 }
                 Section(header: Text("Owers")) {
                     HStack {
@@ -63,7 +63,7 @@ struct AddBillView: View {
                             Text("All")
                         }.buttonStyle(BorderlessButtonStyle())
                     }.padding(16)
-                    ForEach(owers.indices, id: \.self) {
+                    ForEach(self.owers.indices, id: \.self) {
                         index in
                         Toggle(isOn: self.$owers[index].isOwing) {
                             Text(self.owers[index].name)
@@ -71,15 +71,16 @@ struct AddBillView: View {
                     }
                 }
                 Section {
-                    Button(action: sendBillToServer) {
+                    Button(action: self.sendBillToServer) {
                         Text("Send to server")
                     }
-                    .disabled($sendBillButtonDisabled.wrappedValue)
+                    .disabled(self.$sendBillButtonDisabled.wrappedValue)
                     .onReceive(self.viewModel.validatedInput) {
                         self.sendBillButtonDisabled = !$0
                     }
                 }
             }
+            .modifier(DismissingKeyboard())
         }
         .onAppear {
             self.prefillData()
@@ -90,7 +91,7 @@ struct AddBillView: View {
         self.initOwers()
         
         guard let bill = currentBill else { return }
-                
+        
         self.viewModel.topic = bill.what
         self.viewModel.amount = String(bill.amount)
         
@@ -191,5 +192,20 @@ struct AddBillView_Previews: PreviewProvider {
         previewProject.members = previewPersons
         previewProject.bills = previewBills
         return AddBillView(tabBarIndex: .constant(tabBarItems.AddBill), viewModel: BillListViewModel(project: previewProject))
+    }
+}
+
+struct DismissingKeyboard: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .onTapGesture {
+                let keyWindow = UIApplication.shared.connectedScenes
+                    .filter({$0.activationState == .foregroundActive})
+                    .map({$0 as? UIWindowScene})
+                    .compactMap({$0})
+                    .first?.windows
+                    .filter({$0.isKeyWindow}).first
+                keyWindow?.endEditing(true)
+        }
     }
 }
