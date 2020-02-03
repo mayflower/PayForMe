@@ -14,22 +14,25 @@ struct BalanceList: View {
     var viewModel: BalanceViewModel
     
     var body: some View {
-        ScrollView {
-            VStack() {
-                ForEach(viewModel.balances.sorted(by: { $0.amount > $1.amount })) {
-                    balance in
-                    VStack {
-                        HStack {
-                            Circle().foregroundColor(Color(balance.color)).frame(width: 25, height: 25)
-                            Spacer()
-                            Text("\(balance.name)").font(.headline)
-                            Text(" \(String(format:"%.2f",balance.amount)) €")
-                        }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
-                        Divider()
+        NavigationView {
+            ScrollView {
+                VStack() {
+                    ForEach(viewModel.balances.sorted(by: { $0.amount > $1.amount })) {
+                        balance in
+                        VStack {
+                            HStack {
+                                Circle().foregroundColor(Color(balance.color)).frame(width: 25, height: 25)
+                                Spacer()
+                                Text("\(balance.name)").font(.headline)
+                                Text(" \(String(format:"%.2f",balance.amount)) €")
+                            }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
+                            Divider()
+                        }
                     }
+                    Spacer()
                 }
-                Spacer()
             }
+            .navigationBarTitle("Balance")
         }
     }
 }

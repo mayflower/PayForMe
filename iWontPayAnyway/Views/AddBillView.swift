@@ -16,6 +16,8 @@ struct AddBillView: View {
     
     var currentBill: Bill?
     
+    var navBarTitle = "Add Bill"
+    
     @ObservedObject
     var viewModel: BillListViewModel
     
@@ -80,6 +82,7 @@ struct AddBillView: View {
                     }
                 }
             }
+            .navigationBarTitle(navBarTitle)
             .modifier(DismissingKeyboard())
         }
         .onAppear {

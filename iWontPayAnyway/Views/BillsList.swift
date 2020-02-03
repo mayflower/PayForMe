@@ -23,12 +23,13 @@ struct BillsList: View {
                     ForEach(viewModel.project.bills.sorted(by: {
                         $0.lastchanged > $1.lastchanged
                     })) { bill in
-                        NavigationLink(destination: AddBillView(tabBarIndex: self.$tabBarIndex, currentBill: bill, viewModel: self.viewModel)) {
+                        NavigationLink(destination: AddBillView(tabBarIndex: self.$tabBarIndex, currentBill: bill, navBarTitle: "Edit Bill", viewModel: self.viewModel)) {
                             BillCell(project: self.$viewModel.project, bill: bill)
                         }
                     }
                 }
             }
+            .navigationBarTitle("Bills")
         }
     }
     
