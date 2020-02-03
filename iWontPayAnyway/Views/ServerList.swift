@@ -42,6 +42,7 @@ struct ServerList: View {
             }.navigationBarItems(trailing:
                 NavigationLink(destination: OnboardingView()) {
                     Image(systemName: "plus")
+                        .frame(width: 20.0, height: 20.0)
                 }
             )
             .navigationBarTitle("Known Projects")
