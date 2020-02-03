@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		487107FF23E8157E003CAE96 /* KeyboardAvoider in Frameworks */ = {isa = PBXBuildFile; productRef = 487107FE23E8157E003CAE96 /* KeyboardAvoider */; };
 		489D35FA23E081120029F59F /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489D35F923E081120029F59F /* Util.swift */; };
 		650059FC23DDE1C300D1D599 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650059FB23DDE1C300D1D599 /* Person.swift */; };
 		650059FE23DDE7FE00D1D599 /* Ower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650059FD23DDE7FE00D1D599 /* Ower.swift */; };
@@ -69,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				487107FF23E8157E003CAE96 /* KeyboardAvoider in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,6 +182,9 @@
 			dependencies = (
 			);
 			name = iWontPayAnyway;
+			packageProductDependencies = (
+				487107FE23E8157E003CAE96 /* KeyboardAvoider */,
+			);
 			productName = iCospend;
 			productReference = 656629FF23D7320000303207 /* iWontPayAnyway.app */;
 			productType = "com.apple.product-type.application";
@@ -208,6 +213,9 @@
 				Base,
 			);
 			mainGroup = 656629F623D7320000303207;
+			packageReferences = (
+				487107FD23E8157E003CAE96 /* XCRemoteSwiftPackageReference "KeyboardAvoider" */,
+			);
 			productRefGroup = 65662A0023D7320000303207 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -454,6 +462,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		487107FD23E8157E003CAE96 /* XCRemoteSwiftPackageReference "KeyboardAvoider" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/michaelhenry/KeyboardAvoider.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		487107FE23E8157E003CAE96 /* KeyboardAvoider */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 487107FD23E8157E003CAE96 /* XCRemoteSwiftPackageReference "KeyboardAvoider" */;
+			productName = KeyboardAvoider;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 656629F723D7320000303207 /* Project object */;
 }
