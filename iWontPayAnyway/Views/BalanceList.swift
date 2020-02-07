@@ -46,8 +46,6 @@ struct BalanceList: View {
 
 struct BalanceList_Previews: PreviewProvider {
     static var previews: some View {
-        previewProject.bills = previewBills
-        previewProject.members = previewPersons
         return BalanceList(viewModel: BalanceViewModel(project: previewProject))
     }
 }

@@ -49,6 +49,8 @@ struct ContentView: View {
                         Image(systemName: "folder.badge.plus")
                     }).tag(tabBarItems.AddServer)
             }
+        }.onAppear {
+            DataManager.shared.updateProjects()
         }
     }
 }

@@ -23,7 +23,7 @@
 		65662A0C23D7320300303207 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65662A0B23D7320300303207 /* Preview Assets.xcassets */; };
 		65662A0F23D7320300303207 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65662A0D23D7320300303207 /* LaunchScreen.storyboard */; };
 		65662A1923D7322B00303207 /* Bill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A1823D7322B00303207 /* Bill.swift */; };
-		65662A1B23D733B700303207 /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A1A23D733B700303207 /* NetworkingManager.swift */; };
+		65662A1B23D733B700303207 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A1A23D733B700303207 /* NetworkService.swift */; };
 		65662A1D23D7353400303207 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A1C23D7353400303207 /* Server.swift */; };
 		65662A2023D7389600303207 /* ServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A1F23D7389600303207 /* ServerManager.swift */; };
 		65662A2223D75C5F00303207 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A2123D75C5F00303207 /* OnboardingView.swift */; };
@@ -55,7 +55,7 @@
 		65662A0E23D7320300303207 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		65662A1023D7320300303207 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65662A1823D7322B00303207 /* Bill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bill.swift; sourceTree = "<group>"; };
-		65662A1A23D733B700303207 /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
+		65662A1A23D733B700303207 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		65662A1C23D7353400303207 /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 		65662A1F23D7389600303207 /* ServerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerManager.swift; sourceTree = "<group>"; };
 		65662A2123D75C5F00303207 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -82,14 +82,10 @@
 		6533A02C23D88EF300FF822B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				65005A0123DDFB1A00D1D599 /* WhoPaidView.swift */,
-				6533A02A23D888B100FF822B /* BillCell.swift */,
-				65662A2523D8546900303207 /* ServerList.swift */,
+				6596D4E423ED9CBD0079DD5B /* BillList */,
+				6596D4E323ED9C8B0079DD5B /* KnownProjects */,
+				6596D4E223ED9C520079DD5B /* BillDetail */,
 				65662A0623D7320000303207 /* ContentView.swift */,
-				65662A2123D75C5F00303207 /* OnboardingView.swift */,
-				6533A02823D87B9D00FF822B /* BillsOverview.swift */,
-				65005A0323DE0C5C00D1D599 /* BillsList.swift */,
-				656E8CB323D9C3DA00B3ED10 /* AddBillView.swift */,
 				65C9E2CD23E1B8F500814B37 /* BalanceList.swift */,
 			);
 			path = Views;
@@ -152,7 +148,7 @@
 		65662A1723D7321A00303207 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				65662A1A23D733B700303207 /* NetworkingManager.swift */,
+				65662A1A23D733B700303207 /* NetworkService.swift */,
 				65662A2323D83ED100303207 /* StorageService.swift */,
 				481FB4FA23E964C8003BD108 /* DataManager.swift */,
 			);
@@ -168,6 +164,34 @@
 				65C9E2CF23E1B96B00814B37 /* BalanceViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		6596D4E223ED9C520079DD5B /* BillDetail */ = {
+			isa = PBXGroup;
+			children = (
+				65005A0123DDFB1A00D1D599 /* WhoPaidView.swift */,
+				656E8CB323D9C3DA00B3ED10 /* AddBillView.swift */,
+			);
+			path = BillDetail;
+			sourceTree = "<group>";
+		};
+		6596D4E323ED9C8B0079DD5B /* KnownProjects */ = {
+			isa = PBXGroup;
+			children = (
+				65662A2523D8546900303207 /* ServerList.swift */,
+				65662A2123D75C5F00303207 /* OnboardingView.swift */,
+			);
+			path = KnownProjects;
+			sourceTree = "<group>";
+		};
+		6596D4E423ED9CBD0079DD5B /* BillList */ = {
+			isa = PBXGroup;
+			children = (
+				6533A02823D87B9D00FF822B /* BillsOverview.swift */,
+				65005A0323DE0C5C00D1D599 /* BillsList.swift */,
+				6533A02A23D888B100FF822B /* BillCell.swift */,
+			);
+			path = BillList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -249,7 +273,7 @@
 				481FB4FB23E964C8003BD108 /* DataManager.swift in Sources */,
 				65662A1923D7322B00303207 /* Bill.swift in Sources */,
 				65662A2023D7389600303207 /* ServerManager.swift in Sources */,
-				65662A1B23D733B700303207 /* NetworkingManager.swift in Sources */,
+				65662A1B23D733B700303207 /* NetworkService.swift in Sources */,
 				65C9E2CE23E1B8F500814B37 /* BalanceList.swift in Sources */,
 				650059FC23DDE1C300D1D599 /* Person.swift in Sources */,
 				65662A0323D7320000303207 /* AppDelegate.swift in Sources */,

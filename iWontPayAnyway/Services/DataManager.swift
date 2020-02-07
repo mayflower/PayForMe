@@ -11,17 +11,11 @@ import Combine
 
 class DataManager: ObservableObject {
     
-    private let decoder = JSONDecoder()
-    private let encoder = JSONEncoder()
     private let dispatchGroup = DispatchGroup()
     private let notificationCenter = NotificationCenter.default
     private let defaults = UserDefaults.standard
     
-    private let didChange = PassthroughSubject<DataManager, Never>()
-    
-    private var savePath: URL {
-        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("Projects2.json")
-    }
+    var cancellables = [Cancellable]()
     
     @Published
     private(set) var projects = [Project]()
@@ -48,48 +42,38 @@ class DataManager: ObservableObject {
     
     // MARK: Data Persistence
     
-    private func loadData() -> Bool {
-        guard   let data = try? Data(contentsOf: savePath),
-                let decodedProjects = try? decoder.decode([Project].self, from: data) else {
-                
-                print("data not loaded")
-                return false
-        }
-        print("data loaded")
-        self.projects = decodedProjects
-        return true
+    private func loadData() {
+        self.projects = StorageService.shared.loadProjects()
     }
     
     private func saveData() {
-        guard let encodedData = try? encoder.encode(projects) else {
-            print("data not saved")
-            return
-        }
-        do {
-            try encodedData.write(to: savePath)
-            print("data saved")
-        } catch let error {
-            print("data not saved")
-            print(error)
-        }
+        StorageService.shared.storeProjects(projects: self.projects)
     }
     
     // MARK: Server Communication
     
-    private func updateProjects() {
+    func updateProjects() {
         for project in self.projects {
             updateProject(project)
         }
     }
     
     private func updateProject(_ project: Project) {
-        NetworkingManager.shared.getMembers(project: project)
-        NetworkingManager.shared.loadBills(project: project)
+        cancellables.append(
+            NetworkService.shared.loadBillsPublisher
+            .receive(on: RunLoop.main)
+            .assign(to: \.currentProject.bills, on: self)
+        )
+        cancellables.append(
+            NetworkService.shared.loadMembersPublisher
+                .receive(on: RunLoop.main)
+                .assign(to: \.currentProject.members, on: self)
+        )
     }
     
     private func sendBillToServer(bill: Bill, update: Bool) {
         if update {
-            NetworkingManager.shared.updateBill(project: currentProject, bill: bill) { (success, _) in
+            NetworkService.shared.updateBill(project: currentProject, bill: bill) { (success, _) in
                 if success {
                     self.saveData()
                 } else {
@@ -99,7 +83,7 @@ class DataManager: ObservableObject {
                 }
             }
         } else {
-            NetworkingManager.shared.postBill(project: currentProject, bill: bill) { (success, id) in
+            NetworkService.shared.postBill(project: currentProject, bill: bill) { (success, id) in
                 guard success else {
                     self.currentProject.bills.removeAll {
                         $0.id == bill.id

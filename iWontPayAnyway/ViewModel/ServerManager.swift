@@ -22,11 +22,10 @@ class ServerManager: ObservableObject {
     var selectedProject: Project?
     
     init() {
-        self.projects = StorageService.instance.loadProjects()
+        self.projects = StorageService.shared.loadProjects()
         for project in projects {
             print("Server: \(project.url)")
             print("    Project: \(project.name)")
-            NetworkingManager.shared.getMembers(project: project)
         }
         if !projects.isEmpty {
             selectedProject = projects[0]
@@ -42,7 +41,7 @@ class ServerManager: ObservableObject {
         
         DispatchQueue.main.async {
             self.projects.append(newProject)
-            StorageService.instance.storeProjects(projects: self.projects)
+            StorageService.shared.storeProjects(projects: self.projects)
         }
     }
     
@@ -60,7 +59,7 @@ class ServerManager: ObservableObject {
         }
         DispatchQueue.main.async {
             self.projects = updatedProjects
-            StorageService.instance.storeProjects(projects: updatedProjects)
+            StorageService.shared.storeProjects(projects: updatedProjects)
         }
     }
     

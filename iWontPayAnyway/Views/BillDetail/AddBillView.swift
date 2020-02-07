@@ -104,26 +104,7 @@ struct AddBillView: View {
             print("Could not create bill")
             return
         }
-        
-        if currentBill != nil {
-            NetworkingManager.shared.updateBill(
-                project: manager.currentProject,
-                bill: newBill) { (success, _) in
-                    if success {
-                        NetworkingManager.shared.loadBills(project: self.manager.currentProject)
-                    }
-            }
-        } else {
-            NetworkingManager.shared.postBill(
-                project: manager.currentProject,
-                bill: newBill,
-                completion: {
-                    (success, _) in
-                    if success {
-                        NetworkingManager.shared.loadBills(project: self.manager.currentProject)
-                    }
-            })
-        }
+        manager.saveBill(newBill)
     }
     
     func createBill() -> Bill? {
