@@ -13,13 +13,6 @@ import SwiftUI
 class BillListViewModel: ObservableObject {
     
     @Published
-    var project: Project {
-        didSet {
-            didChange.send(self)
-        }
-    }
-    
-    @Published
     var topic = ""
     
     @Published
@@ -40,14 +33,4 @@ class BillListViewModel: ObservableObject {
         .eraseToAnyPublisher()
     }
     
-    var cancellable: AnyCancellable?
-    
-    init(project: Project) {
-        self.project = project
-        CospendNetworkService.instance.loadBills(project: project, completion: {
-            self.didChange.send(self)
-        })
-    }
-    
-    let didChange = PassthroughSubject<BillListViewModel,Never>()
 }

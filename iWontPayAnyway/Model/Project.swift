@@ -23,7 +23,11 @@ class Project: Codable, Identifiable {
     }
     var members: [Person] = []
     
-    var bills: [Bill] = []
+    var bills: [Bill] = [] {
+        didSet {
+            print("Set bills for \(name): \(bills)")
+        }
+    }
 }
 
 extension Project: Equatable {

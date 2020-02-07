@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		481FB4FB23E964C8003BD108 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481FB4FA23E964C8003BD108 /* DataManager.swift */; };
+		481FB4FD23EAD78F003BD108 /* AddServerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481FB4FC23EAD78F003BD108 /* AddServerModel.swift */; };
 		489D35FA23E081120029F59F /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489D35F923E081120029F59F /* Util.swift */; };
 		650059FC23DDE1C300D1D599 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650059FB23DDE1C300D1D599 /* Person.swift */; };
 		650059FE23DDE7FE00D1D599 /* Ower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650059FD23DDE7FE00D1D599 /* Ower.swift */; };
@@ -21,7 +23,7 @@
 		65662A0C23D7320300303207 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65662A0B23D7320300303207 /* Preview Assets.xcassets */; };
 		65662A0F23D7320300303207 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65662A0D23D7320300303207 /* LaunchScreen.storyboard */; };
 		65662A1923D7322B00303207 /* Bill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A1823D7322B00303207 /* Bill.swift */; };
-		65662A1B23D733B700303207 /* CospendNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A1A23D733B700303207 /* CospendNetworkService.swift */; };
+		65662A1B23D733B700303207 /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A1A23D733B700303207 /* NetworkingManager.swift */; };
 		65662A1D23D7353400303207 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A1C23D7353400303207 /* Server.swift */; };
 		65662A2023D7389600303207 /* ServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A1F23D7389600303207 /* ServerManager.swift */; };
 		65662A2223D75C5F00303207 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A2123D75C5F00303207 /* OnboardingView.swift */; };
@@ -35,6 +37,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		481FB4FA23E964C8003BD108 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		481FB4FC23EAD78F003BD108 /* AddServerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddServerModel.swift; sourceTree = "<group>"; };
 		489D35F923E081120029F59F /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		650059FB23DDE1C300D1D599 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		650059FD23DDE7FE00D1D599 /* Ower.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ower.swift; sourceTree = "<group>"; };
@@ -51,7 +55,7 @@
 		65662A0E23D7320300303207 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		65662A1023D7320300303207 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65662A1823D7322B00303207 /* Bill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bill.swift; sourceTree = "<group>"; };
-		65662A1A23D733B700303207 /* CospendNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CospendNetworkService.swift; sourceTree = "<group>"; };
+		65662A1A23D733B700303207 /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
 		65662A1C23D7353400303207 /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 		65662A1F23D7389600303207 /* ServerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerManager.swift; sourceTree = "<group>"; };
 		65662A2123D75C5F00303207 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -148,8 +152,9 @@
 		65662A1723D7321A00303207 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				65662A1A23D733B700303207 /* CospendNetworkService.swift */,
+				65662A1A23D733B700303207 /* NetworkingManager.swift */,
 				65662A2323D83ED100303207 /* StorageService.swift */,
+				481FB4FA23E964C8003BD108 /* DataManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -157,6 +162,7 @@
 		65662A1E23D7382500303207 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				481FB4FC23EAD78F003BD108 /* AddServerModel.swift */,
 				65662A1F23D7389600303207 /* ServerManager.swift */,
 				656E8CB723D9FDA300B3ED10 /* BillListViewModel.swift */,
 				65C9E2CF23E1B96B00814B37 /* BalanceViewModel.swift */,
@@ -240,9 +246,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				656E8CB423D9C3DA00B3ED10 /* AddBillView.swift in Sources */,
+				481FB4FB23E964C8003BD108 /* DataManager.swift in Sources */,
 				65662A1923D7322B00303207 /* Bill.swift in Sources */,
 				65662A2023D7389600303207 /* ServerManager.swift in Sources */,
-				65662A1B23D733B700303207 /* CospendNetworkService.swift in Sources */,
+				65662A1B23D733B700303207 /* NetworkingManager.swift in Sources */,
 				65C9E2CE23E1B8F500814B37 /* BalanceList.swift in Sources */,
 				650059FC23DDE1C300D1D599 /* Person.swift in Sources */,
 				65662A0323D7320000303207 /* AppDelegate.swift in Sources */,
@@ -254,6 +261,7 @@
 				65662A2623D8546900303207 /* ServerList.swift in Sources */,
 				65005A0423DE0C5C00D1D599 /* BillsList.swift in Sources */,
 				65662A1D23D7353400303207 /* Server.swift in Sources */,
+				481FB4FD23EAD78F003BD108 /* AddServerModel.swift in Sources */,
 				65662A2423D83ED100303207 /* StorageService.swift in Sources */,
 				656E8CB823D9FDA300B3ED10 /* BillListViewModel.swift in Sources */,
 				65C9E2D023E1B96B00814B37 /* BalanceViewModel.swift in Sources */,

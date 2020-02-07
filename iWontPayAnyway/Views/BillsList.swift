@@ -11,7 +11,7 @@ import SwiftUI
 struct BillsList: View {
     
     @ObservedObject
-    var viewModel: BillListViewModel
+    var manager = DataManager.shared
     
     @State
     var tabBarIndex = tabBarItems.AddBill
@@ -20,11 +20,11 @@ struct BillsList: View {
         NavigationView {
             ScrollView {
                 VStack {
-                    ForEach(viewModel.project.bills.sorted(by: {
+                    ForEach(manager.currentBills.sorted(by: {
                         $0.lastchanged > $1.lastchanged
                     })) { bill in
-                        NavigationLink(destination: AddBillView(tabBarIndex: self.$tabBarIndex, currentBill: bill, navBarTitle: "Edit Bill", viewModel: self.viewModel)) {
-                            BillCell(project: self.$viewModel.project, bill: bill)
+                        NavigationLink(destination: AddBillView(tabBarIndex: self.$tabBarIndex, viewModel: BillListViewModel(), currentBill: bill, navBarTitle: "Edit Bill")) {
+                            BillCell(bill: bill)
                         }
                     }
                 }

@@ -15,6 +15,8 @@ struct ContentView: View {
     @EnvironmentObject
     var serverManager: ServerManager
     
+    var manager = DataManager.shared
+    
     @State private var name: String = "https:mynextcloud.com"
     
     @State
@@ -24,25 +26,25 @@ struct ContentView: View {
     
     var body: some View {
         TabView(selection: $tabBarIndex){
-            if !serverManager.projects.isEmpty {
+            if !manager.projects.isEmpty {
                 ServerList()
                     .tabItem({
                         Image(systemName: "archivebox")
                     }).tag(tabBarItems.ServerList)
-                BalanceList(viewModel: BalanceViewModel(project: serverManager.selectedProject!))
+                BalanceList(viewModel: BalanceViewModel(project: manager.currentProject))
                     .tabItem({
                         Image(systemName: "arrow.right.arrow.left")
                     }).tag(tabBarItems.Balance)
-                BillsOverview(viewModel: BillListViewModel(project: serverManager.selectedProject!))
+                BillsOverview()
                     .tabItem({
                         Image(systemName: "rectangle.stack")
                     }).tag(tabBarItems.BillList)
-                AddBillView(tabBarIndex: $tabBarIndex, viewModel: BillListViewModel(project: serverManager.selectedProject!))
+                AddBillView(tabBarIndex: $tabBarIndex, viewModel: BillListViewModel())
                     .tabItem({
                         Image(systemName: "rectangle.stack.badge.plus")
                     }).tag(tabBarItems.AddBill)
             } else {
-                OnboardingView()
+                OnboardingView(addServerModel: AddServerModel())
                     .tabItem({
                         Image(systemName: "folder.badge.plus")
                     }).tag(tabBarItems.AddServer)

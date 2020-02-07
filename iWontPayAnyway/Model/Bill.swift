@@ -8,7 +8,8 @@
 
 import Foundation
 
-struct Bill: Codable, Identifiable {
+class Bill: Codable, Identifiable {
+    
     var id: Int
     var amount: Double
     var what: String
@@ -17,10 +18,19 @@ struct Bill: Codable, Identifiable {
     var owers: [Person]
     var `repeat`: String
     var lastchanged: Int
+
+    init(id: Int, amount: Double, what: String, date: String, payer_id: Int, owers: [Person], repeat: String, lastchanged: Int) {
+        self.id = id
+        self.amount = amount
+        self.what = what
+        self.date = date
+        self.payer_id = payer_id
+        self.owers = owers
+        self.repeat = `repeat`
+        self.lastchanged = lastchanged
+    }
     
 }
-
-
 
 let previewBills = [
     Bill(id: 1, amount: 5, what: "Erdnüsse", date: "21-12-2019", payer_id: 1, owers: [

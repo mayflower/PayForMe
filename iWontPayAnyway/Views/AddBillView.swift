@@ -14,21 +14,18 @@ struct AddBillView: View {
     @Binding
     var tabBarIndex: tabBarItems
     
-    var currentBill: Bill?
-    
-    var navBarTitle = "Add Bill"
+    @ObservedObject
+    var manager = DataManager.shared
     
     @ObservedObject
     var viewModel: BillListViewModel
     
+    var currentBill: Bill?
+    
+    var navBarTitle = "Add Bill"
+    
     @State
     var selectedPayer = 1
-    
-    @State
-    var topic = ""
-    
-    @State
-    var amount = ""
     
     @State
     var owers: [Ower] = []
@@ -43,11 +40,12 @@ struct AddBillView: View {
         NavigationView {
             Form {
                 Section(header: Text("Payer")) {
-                    WhoPaidView(members: self.$viewModel.project.members, selectedPayer: self.$selectedPayer).onAppear(perform: {
-                        if !self.viewModel.project.members.contains(where: { $0.id == self.selectedPayer }) {
-                            self.selectedPayer = self.viewModel.project.members[0].id
+                    WhoPaidView(members: $manager.currentProject.members, selectedPayer: self.$selectedPayer).onAppear {
+                        if !self.manager.currentProject.members.contains(where: { $0.id == self.selectedPayer }) {
+                            guard let id = self.manager.currentProject.members[safe: 0]?.id else { return }
+                            self.selectedPayer = id
                         }
-                    })
+                    }
                     TextField("What was paid?", text: self.$viewModel.topic)
                     TextField("How much?", text: self.$viewModel.amount).keyboardType(.decimalPad)
                 }
@@ -108,27 +106,21 @@ struct AddBillView: View {
         }
         
         if currentBill != nil {
-            CospendNetworkService.instance.updateBill(
-                project: self.viewModel.project,
-                bill: newBill) { success in
+            NetworkingManager.shared.updateBill(
+                project: manager.currentProject,
+                bill: newBill) { (success, _) in
                     if success {
-                        CospendNetworkService.instance.loadBills(project: self.viewModel.project, completion: {
-                            self.tabBarIndex = tabBarItems.BillList
-                            
-                        })
+                        NetworkingManager.shared.loadBills(project: self.manager.currentProject)
                     }
             }
         } else {
-            CospendNetworkService.instance.postBill(
-                project: self.viewModel.project,
+            NetworkingManager.shared.postBill(
+                project: manager.currentProject,
                 bill: newBill,
                 completion: {
-                    success in
+                    (success, _) in
                     if success {
-                        CospendNetworkService.instance.loadBills(project: self.viewModel.project, completion: {
-                            self.tabBarIndex = tabBarItems.BillList
-                            
-                        })
+                        NetworkingManager.shared.loadBills(project: self.manager.currentProject)
                     }
             })
         }
@@ -136,7 +128,6 @@ struct AddBillView: View {
     
     func createBill() -> Bill? {
         guard let doubleAmount = Double(viewModel.amount) else {
-            amount = "Please write a number"
             return nil
         }
         
@@ -168,7 +159,7 @@ struct AddBillView: View {
     
     func initOwers() {
         guard let selectedOwers = currentBill?.owers else {
-            self.owers = viewModel.project.members.map{Ower(id: $0.id, name: $0.name, isOwing: false)}
+            self.owers = manager.currentProject.members.map{Ower(id: $0.id, name: $0.name, isOwing: false)}
             return
         }
         
@@ -178,7 +169,7 @@ struct AddBillView: View {
         let activeOwerIDs = owers.map {
             $0.id
         }
-        let inactiveOwers = viewModel.project.members.map({
+        let inactiveOwers = manager.currentProject.members.map({
             Ower(id: $0.id, name: $0.name, isOwing: false)
         }).filter {
             !activeOwerIDs.contains($0.id)
@@ -190,13 +181,13 @@ struct AddBillView: View {
     }
 }
 
-struct AddBillView_Previews: PreviewProvider {
-    static var previews: some View {
-        previewProject.members = previewPersons
-        previewProject.bills = previewBills
-        return AddBillView(tabBarIndex: .constant(tabBarItems.AddBill), viewModel: BillListViewModel(project: previewProject))
-    }
-}
+//struct AddBillView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        previewProject.members = previewPersons
+//        previewProject.bills = previewBills
+//        return AddBillView(tabBarIndex: .constant(tabBarItems.AddBill), viewModel: BillListViewModel(project: previewProject))
+//    }
+//}
 
 struct DismissingKeyboard: ViewModifier {
     func body(content: Content) -> some View {

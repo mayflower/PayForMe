@@ -9,8 +9,8 @@
 import SwiftUI
 
 struct BillCell: View {
-    @Binding
-    var project: Project
+    @ObservedObject
+    var manager = DataManager.shared
     
     @State
     var bill: Bill
@@ -35,7 +35,7 @@ struct BillCell: View {
     }
     
     func paymentString() -> String {
-        let payer = project.members.first{$0.id == bill.payer_id}?.name ?? bill.payer_id.description
+        let payer = manager.currentProject.members.first{$0.id == bill.payer_id}?.name ?? bill.payer_id.description
         let owers = bill.owers.compactMap({$0.name}).joined(separator: ", ")
         return "\(payer) -> \(owers)"
     }
@@ -45,16 +45,16 @@ struct BillCell: View {
     }
     
     func backgroundColor() -> Color {
-        guard let payer = project.members.first(where: {$0.id == bill.payer_id}),
+        guard let payer = manager.currentProject.members.first(where: {$0.id == bill.payer_id}),
         let color = payer.color else { return Color.white }
         return Color(color)
     }
 }
 
-struct BillCell_Previews: PreviewProvider {
-    static var previews: some View {
-        previewProject.bills = previewBills
-        previewProject.members = [previewPerson]
-        return BillCell(project: .constant(previewProject), bill: previewBills[0])
-    }
-}
+//struct BillCell_Previews: PreviewProvider {
+//    static var previews: some View {
+//        previewProject.bills = previewBills
+//        previewProject.members = [previewPerson]
+//        return BillCell(project: .constant(previewProject), bill: previewBills[0])
+//    }
+//}

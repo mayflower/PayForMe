@@ -9,28 +9,21 @@
 import SwiftUI
 
 struct ServerList: View {
-    @EnvironmentObject
-    var serversModel: ServerManager
     
-    @State
-    private var current: Int? = nil {
-        didSet {
-            print(_current)
-        }
-    }
-
+    @ObservedObject
+    var manager = DataManager.shared
     
     var body: some View {
         NavigationView {
             VStack {
                 List {
-                    ForEach(serversModel.projects) { project in
+                    ForEach(manager.projects) { project in
                         Button(action: {
-                            self.serversModel.selectedProject = project
+                            self.manager.setCurrentProject(project)
                         }, label: {
                             HStack {
                                 Text(project.name)
-                                if self.serversModel.selectedProject == project {
+                                if self.manager.currentProject == project {
                                     Spacer()
                                     Image(systemName: "checkmark").padding(.trailing)
                                 }
@@ -40,7 +33,7 @@ struct ServerList: View {
                     .onDelete(perform: deleteProject)
                 }
             }.navigationBarItems(trailing:
-                NavigationLink(destination: OnboardingView()) {
+                NavigationLink(destination: OnboardingView(addServerModel: AddServerModel())) {
                     Image(systemName: "plus")
                         .frame(width: 20.0, height: 20.0)
                 }
@@ -51,7 +44,7 @@ struct ServerList: View {
     
     func deleteProject(at offsets: IndexSet) {
         for index in offsets {
-            serversModel.removeProject(project: serversModel.projects[index])
+            manager.deleteProject(manager.projects[index])
         }
     }
 }

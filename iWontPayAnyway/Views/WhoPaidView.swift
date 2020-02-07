@@ -16,6 +16,7 @@ struct WhoPaidView: View {
     var selectedPayer: Int
     
     var body: some View {
+        
         if members.count <= 4 {
             return AnyView(Picker(selection: $selectedPayer, label: Text("Who paid")) {
                 ForEach(members) {

@@ -7,59 +7,50 @@
 //
 
 import SwiftUI
+import Combine
 
 struct OnboardingView: View {
     
-    @EnvironmentObject
-    var serversModel: ServerManager
+    @Environment(\.presentationMode)
+    var presentationMode: Binding<PresentationMode>
+    
+    @ObservedObject
+    var addServerModel: AddServerModel
     
     @State
-    var serverAddress = "https://"
-    
-    @State
-    var projectName = ""
-    
-    @State
-    var projectPassword = ""
+    var addServerButtonDisabled = true
     
     var body: some View {
             Form {
                 Text("Add new project").font(.title)
                 Section(header: Text("Server Address")) {
-                    TextField("https://mynextcloud.org", text: $serverAddress).autocapitalization(.none).keyboardType(.URL)
+                    TextField("https://mynextcloud.org", text: self.$addServerModel.serverAddress).autocapitalization(.none).keyboardType(.URL)
                 }
                 Section(header: Text("Project Name & Password")) {
-                    TextField("Enter project name", text: $projectName).autocapitalization(.none)
+                    TextField("Enter project name", text: self.$addServerModel.projectName).autocapitalization(.none)
                     
-                    SecureField("Enter project password", text: $projectPassword)
+                    SecureField("Enter project password", text: self.$addServerModel.projectPassword)
                 }
                 
                 Button(action: addButton) {
                     Text("Add project")
                 }
+                .disabled($addServerButtonDisabled.wrappedValue)
+                .onReceive(addServerModel.validatedInput) {
+                    self.addServerButtonDisabled = !$0
+                }
             }
     }
     
     func addButton() {
-        let project = Project(name: self.projectName, password: self.projectPassword, url: self.serverAddress)
-        CospendNetworkService.instance.getMembers(project: project) {
-            successful in
-            if successful {
-                self.serversModel.addProject(newProject: project)
-                if self.serversModel.selectedProject == nil {
-                    DispatchQueue.main.async {
-                        self.serversModel.selectedProject = project
-                    }
-                }
-            } else {
-                print("Server wrong")
-            }
-        }
+        let project = Project(name: addServerModel.projectName, password: addServerModel.projectPassword, url: addServerModel.serverAddress)
+        DataManager.shared.addProject(project)
+        self.presentationMode.wrappedValue.dismiss()
     }
 }
 
-struct OnboardingView_Previews: PreviewProvider {
-    static var previews: some View {
-        OnboardingView().environmentObject(ServerManager())
-    }
-}
+//struct OnboardingView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        OnboardingView().environmentObject(ServerManager())
+//    }
+//}

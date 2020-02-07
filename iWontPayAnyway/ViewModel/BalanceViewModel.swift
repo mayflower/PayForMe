@@ -23,14 +23,15 @@ class BalanceViewModel: ObservableObject {
     
     init(project: Project) {
         self.project = project
-        CospendNetworkService.instance.getMembers(project: project, completion: {_ in 
-            self.didChange.send(self)
-            self.setBalances()
-        })
-        CospendNetworkService.instance.loadBills(project: project, completion: {
-            self.didChange.send(self)
-            self.setBalances()
-        })
+        self.setBalances()
+//        NetworkingManager.shared.getMembers(project: project, completion: {(_, _) in
+//            self.didChange.send(self)
+//            self.setBalances()
+//        })
+//        NetworkingManager.shared.loadBills(project: project, completion: {
+//            self.didChange.send(self)
+//            self.setBalances()
+//        })
     }
     
     func setBalances() {

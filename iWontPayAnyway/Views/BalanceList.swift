@@ -13,6 +13,9 @@ struct BalanceList: View {
     @ObservedObject
     var viewModel: BalanceViewModel
     
+    @ObservedObject
+    var manager = DataManager.shared
+    
     var body: some View {
         NavigationView {
             ScrollView {
@@ -33,6 +36,10 @@ struct BalanceList: View {
                 }
             }
             .navigationBarTitle("Balance")
+        }
+        .onAppear {
+            self.viewModel.project = self.manager.currentProject
+            self.viewModel.setBalances()
         }
     }
 }

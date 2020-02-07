@@ -26,12 +26,7 @@ class ServerManager: ObservableObject {
         for project in projects {
             print("Server: \(project.url)")
             print("    Project: \(project.name)")
-            CospendNetworkService.instance.getMembers(project: project, completion: {
-                let answer = $0 ?
-                    "🚀🚀🚀 Loaded project \(project)" :
-                "💣💣💣 Error loading project \(project)"
-                print(answer)
-            })
+            NetworkingManager.shared.getMembers(project: project)
         }
         if !projects.isEmpty {
             selectedProject = projects[0]

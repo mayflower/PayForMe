@@ -21,3 +21,13 @@ extension Color {
         self.init(red: Double(pc.r)/255, green: Double(pc.g)/255, blue: Double(pc.b)/255, opacity: 1)
     }
 }
+
+extension String {
+    var isValidURL: Bool {
+        let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+        if let match = detector.firstMatch(in: self, options: [], range: NSRange(location: 0, length: self.utf16.count)) {
+            return (match.range.length == self.utf16.count) && (self.contains("https://") || self.contains("http://"))
+        }
+        return false
+    }
+}
