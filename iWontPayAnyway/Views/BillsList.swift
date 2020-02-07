@@ -20,7 +20,7 @@ struct BillsList: View {
         NavigationView {
             ScrollView {
                 VStack {
-                    ForEach(manager.currentBills.sorted(by: {
+                    ForEach(manager.currentProject.bills.sorted(by: {
                         $0.lastchanged > $1.lastchanged
                     })) { bill in
                         NavigationLink(destination: AddBillView(tabBarIndex: self.$tabBarIndex, viewModel: BillListViewModel(), currentBill: bill, navBarTitle: "Edit Bill")) {

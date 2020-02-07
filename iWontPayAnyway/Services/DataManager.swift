@@ -28,10 +28,7 @@ class DataManager: ObservableObject {
     
     @Published
     var currentProject: Project = Project(name: "", password: "", url: "")
-    
-    @Published
-    private(set) var currentBills = [Bill]()
-    
+        
     static let shared = DataManager()
     private init() {
         print("init")
@@ -96,7 +93,7 @@ class DataManager: ObservableObject {
                 if success {
                     self.saveData()
                 } else {
-                    self.currentBills.removeAll {
+                    self.currentProject.bills.removeAll {
                         $0.id == bill.id
                     }
                 }
@@ -104,17 +101,17 @@ class DataManager: ObservableObject {
         } else {
             NetworkingManager.shared.postBill(project: currentProject, bill: bill) { (success, id) in
                 guard success else {
-                    self.currentBills.removeAll {
+                    self.currentProject.bills.removeAll {
                         $0.id == bill.id
                     }
                     return
                 }
                 
-                guard let id = id, let index = self.currentBills.firstIndex(where: { $0.id == bill.id }) else {
+                guard let id = id, let index = self.currentProject.bills.firstIndex(where: { $0.id == bill.id }) else {
                     return
                 }
                 
-                self.currentBills[index].id = id
+                self.currentProject.bills[index].id = id
                 self.saveData()
             }
         }
@@ -148,21 +145,21 @@ extension DataManager {
             if let nextProject = projects.first {
                 setCurrentProject(nextProject)
             } else {
-                currentBills = []
+                self.currentProject.bills = []
             }
         }
     }
     
     func saveBill(_ bill: Bill) {
-        if let index = currentBills.firstIndex(where: {
+        if let index = self.currentProject.bills.firstIndex(where: {
             $0.id == bill.id
         }) {
-            currentBills.remove(at: index)
-            currentBills.append(bill)
+            self.currentProject.bills.remove(at: index)
+            self.currentProject.bills.append(bill)
             
             sendBillToServer(bill: bill, update: true)
         } else {
-            currentBills.append(bill)
+            self.currentProject.bills.append(bill)
             sendBillToServer(bill: bill, update: false)
         }
     }
@@ -179,7 +176,7 @@ extension DataManager {
         }
         self.currentProject = project
         updateProject(project)
-        self.currentBills = project.bills
+        self.currentProject.bills = project.bills
         defaults.set(project.id.uuidString, forKey: "projectID")
     }
     
