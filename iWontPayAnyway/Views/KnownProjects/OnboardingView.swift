@@ -40,6 +40,7 @@ struct OnboardingView: View {
                     self.addServerButtonDisabled = !$0
                 }
             }
+            .modifier(DismissingKeyboard())
     }
     
     func addButton() {
