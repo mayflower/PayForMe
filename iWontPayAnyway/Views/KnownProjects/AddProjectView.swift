@@ -21,6 +21,7 @@ struct AddProjectView: View {
     var addServerButtonDisabled = true
     
     var body: some View {
+        NavigationView {
             Form {
                 Text("Add new project").font(.title)
                 Section(header: Text("Server Address")) {
@@ -31,16 +32,17 @@ struct AddProjectView: View {
                     
                     SecureField("Enter project password", text: self.$addServerModel.projectPassword)
                 }
-                
-                Button(action: addButton) {
-                    Text("Add project")
-                }
-                .disabled($addServerButtonDisabled.wrappedValue)
-                .onReceive(addServerModel.validatedInput) {
-                    self.addServerButtonDisabled = !$0
+                Section {
+                    Button(action: self.addButton) {
+                        Text("Add project")
+                    }
+                    .disabled($addServerButtonDisabled.wrappedValue)
+                    .onReceive(addServerModel.validatedInput) {
+                        self.addServerButtonDisabled = !$0
+                    }
                 }
             }
-            .modifier(DismissingKeyboard())
+        }
     }
     
     func addButton() {

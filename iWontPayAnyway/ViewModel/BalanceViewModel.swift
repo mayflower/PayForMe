@@ -11,18 +11,19 @@ import Combine
 
 class BalanceViewModel: ObservableObject {
     
-    @Published
-    var project: Project
+    var manager = ProjectManager.shared
+    var cancellables = [AnyCancellable]()
     
     @Published
-    var balances = [Balance]() {
-        didSet {
-            didChange.send(self)
-        }
-    }
+    var currentProject: Project
     
-    init(project: Project) {
-        self.project = project
+    @Published
+    var balances = [Balance]()
+    
+    init() {
+        self.currentProject = manager.currentProject
+        self.cancellables.append(currentProjectChanged)
+        
         self.setBalances()
 //        NetworkingManager.shared.getMembers(project: project, completion: {(_, _) in
 //            self.didChange.send(self)
@@ -34,18 +35,21 @@ class BalanceViewModel: ObservableObject {
 //        })
     }
     
+    var currentProjectChanged: AnyCancellable {
+        manager.$currentProject
+            .assign(to: \.currentProject, on: self)
+    }
+    
     func setBalances() {
-        balances = project.members.map {
+        balances = currentProject.members.map {
             member in
-            let paid = project.bills.filter { $0.payer_id == member.id }.map { $0.amount }.reduce(0.0, +)
-            let owes = project.bills.compactMap { bill in
+            let paid = currentProject.bills.filter { $0.payer_id == member.id }.map { $0.amount }.reduce(0.0, +)
+            let owes = currentProject.bills.compactMap { bill in
                 bill.owers.first { ower in ower.id == member.id } == nil ? nil : bill.amount / Double( bill.owers.count) }
                 .reduce(0.0, -)
             return Balance(id: member.id, name: member.name, amount: paid + owes, color: member.color ?? PersonColor(r: 255, g: 255, b: 255) )
         }
     }
-    
-    let didChange = PassthroughSubject<BalanceViewModel,Never>()
 }
 
 struct Balance: Identifiable {

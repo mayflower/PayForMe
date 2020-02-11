@@ -8,15 +8,30 @@
 
 import Foundation
 import Combine
-import SwiftUI
 
 class BillListViewModel: ObservableObject {
+    
+    var manager = ProjectManager.shared
+    var cancellables = [AnyCancellable]()
     
     @Published
     var topic = ""
     
     @Published
     var amount = ""
+    
+    @Published
+    var currentProject: Project
+    
+    init() {
+        self.currentProject = manager.currentProject
+        self.cancellables.append(currentProjectChanged)
+    }
+    
+    var currentProjectChanged: AnyCancellable {
+        manager.$currentProject
+            .assign(to: \.currentProject, on: self)
+    }
         
     var validatedInput: AnyPublisher<Bool, Never> {
         return Publishers.CombineLatest($topic, validatedAmount)

@@ -9,8 +9,9 @@
 import SwiftUI
 
 struct BillCell: View {
+    
     @ObservedObject
-    var manager = ProjectManager.shared
+    var viewModel: BillListViewModel
     
     @State
     var bill: Bill
@@ -27,7 +28,8 @@ struct BillCell: View {
                 Spacer()
                 VStack(alignment: .trailing, spacing: 10) {
                     Text(amountString()).font(.headline)
-                    Text(bill.date).font(.subheadline)
+                    Text(DateFormatter.cospend.string(from: bill.date)).font(.subheadline)
+                    Text("\(bill.id)").font(.subheadline)
                 }
             }.padding()
             Divider().background(Color.white)
@@ -35,7 +37,7 @@ struct BillCell: View {
     }
     
     func paymentString() -> String {
-        let payer = manager.currentProject.members.first{$0.id == bill.payer_id}?.name ?? bill.payer_id.description
+        let payer = viewModel.currentProject.members.first{$0.id == bill.payer_id}?.name ?? bill.payer_id.description
         let owers = bill.owers.compactMap({$0.name}).joined(separator: ", ")
         return "\(payer) -> \(owers)"
     }
@@ -45,7 +47,7 @@ struct BillCell: View {
     }
     
     func backgroundColor() -> Color {
-        guard let payer = manager.currentProject.members.first(where: {$0.id == bill.payer_id}),
+        guard let payer = viewModel.currentProject.members.first(where: {$0.id == bill.payer_id}),
         let color = payer.color else { return Color.white }
         return Color(color)
     }

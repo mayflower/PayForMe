@@ -31,3 +31,12 @@ extension String {
         return false
     }
 }
+
+extension DateFormatter {
+    static let cospend: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        
+        return formatter
+    }()
+}

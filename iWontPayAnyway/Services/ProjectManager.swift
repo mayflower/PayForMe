@@ -11,8 +11,6 @@ import Combine
 
 class ProjectManager: ObservableObject {
     
-    private let dispatchGroup = DispatchGroup()
-    private let notificationCenter = NotificationCenter.default
     private let defaults = UserDefaults.standard
     
     var cancellables = [Cancellable]()
@@ -61,8 +59,8 @@ class ProjectManager: ObservableObject {
     private func updateProject(_ project: Project) {
         cancellables.append(
             NetworkService.shared.loadBillsPublisher
-            .receive(on: RunLoop.main)
-            .assign(to: \.currentProject.bills, on: self)
+                .receive(on: RunLoop.main)
+                .assign(to: \.currentProject.bills, on: self)
         )
         cancellables.append(
             NetworkService.shared.loadMembersPublisher
@@ -73,34 +71,30 @@ class ProjectManager: ObservableObject {
     
     private func sendBillToServer(bill: Bill, update: Bool) {
         if update {
-            NetworkService.shared.updateBill(project: currentProject, bill: bill) { (success, _) in
-                if success {
-                    self.saveData()
-                } else {
-                    self.currentProject.bills.removeAll {
-                        $0.id == bill.id
-                    }
+            cancellables.append(
+                NetworkService.shared.postBillPublisher(bill: bill)
+                    .sink { success in
+                        if success {
+                            print("Bill id\(bill.id) updated")
+                        } else {
+                            print("error updating bill id\(bill.id)")
+                        }
                 }
-            }
+            )
         } else {
-            NetworkService.shared.postBill(project: currentProject, bill: bill) { (success, id) in
-                guard success else {
-                    self.currentProject.bills.removeAll {
-                        $0.id == bill.id
-                    }
-                    return
+            cancellables.append(
+                NetworkService.shared.postBillPublisher(bill: bill)
+                    .sink { success in
+                        if success {
+                            print("Bill posted")
+                        } else {
+                            print("Error posting bill")
+                        }
                 }
                 
-                guard let id = id, let index = self.currentProject.bills.firstIndex(where: { $0.id == bill.id }) else {
-                    return
-                }
-                
-                self.currentProject.bills[index].id = id
-                self.saveData()
-            }
+            )
         }
     }
-    
 }
 
 extension ProjectManager {
@@ -160,7 +154,6 @@ extension ProjectManager {
         }
         self.currentProject = project
         updateProject(project)
-        self.currentProject.bills = project.bills
         defaults.set(project.id.uuidString, forKey: "projectID")
     }
     

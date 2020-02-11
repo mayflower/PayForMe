@@ -25,7 +25,6 @@
 		65662A1923D7322B00303207 /* Bill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A1823D7322B00303207 /* Bill.swift */; };
 		65662A1B23D733B700303207 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A1A23D733B700303207 /* NetworkService.swift */; };
 		65662A1D23D7353400303207 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A1C23D7353400303207 /* Server.swift */; };
-		65662A2023D7389600303207 /* ServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A1F23D7389600303207 /* ServerManager.swift */; };
 		65662A2223D75C5F00303207 /* AddProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A2123D75C5F00303207 /* AddProjectView.swift */; };
 		65662A2423D83ED100303207 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A2323D83ED100303207 /* StorageService.swift */; };
 		65662A2623D8546900303207 /* ProjectList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A2523D8546900303207 /* ProjectList.swift */; };
@@ -57,7 +56,6 @@
 		65662A1823D7322B00303207 /* Bill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bill.swift; sourceTree = "<group>"; };
 		65662A1A23D733B700303207 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		65662A1C23D7353400303207 /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
-		65662A1F23D7389600303207 /* ServerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerManager.swift; sourceTree = "<group>"; };
 		65662A2123D75C5F00303207 /* AddProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectView.swift; sourceTree = "<group>"; };
 		65662A2323D83ED100303207 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		65662A2523D8546900303207 /* ProjectList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectList.swift; sourceTree = "<group>"; };
@@ -159,7 +157,6 @@
 			isa = PBXGroup;
 			children = (
 				481FB4FC23EAD78F003BD108 /* AddServerModel.swift */,
-				65662A1F23D7389600303207 /* ServerManager.swift */,
 				656E8CB723D9FDA300B3ED10 /* BillListViewModel.swift */,
 				65C9E2CF23E1B96B00814B37 /* BalanceViewModel.swift */,
 			);
@@ -272,7 +269,6 @@
 				656E8CB423D9C3DA00B3ED10 /* AddBillView.swift in Sources */,
 				481FB4FB23E964C8003BD108 /* ProjectManager.swift in Sources */,
 				65662A1923D7322B00303207 /* Bill.swift in Sources */,
-				65662A2023D7389600303207 /* ServerManager.swift in Sources */,
 				65662A1B23D733B700303207 /* NetworkService.swift in Sources */,
 				65C9E2CE23E1B8F500814B37 /* BalanceList.swift in Sources */,
 				650059FC23DDE1C300D1D599 /* Person.swift in Sources */,

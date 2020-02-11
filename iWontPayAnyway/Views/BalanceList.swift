@@ -12,10 +12,7 @@ struct BalanceList: View {
     
     @ObservedObject
     var viewModel: BalanceViewModel
-    
-    @ObservedObject
-    var manager = ProjectManager.shared
-    
+        
     var body: some View {
         NavigationView {
             ScrollView {
@@ -38,7 +35,6 @@ struct BalanceList: View {
             .navigationBarTitle("Balance")
         }
         .onAppear {
-            self.viewModel.project = self.manager.currentProject
             self.viewModel.setBalances()
         }
     }
@@ -46,6 +42,6 @@ struct BalanceList: View {
 
 struct BalanceList_Previews: PreviewProvider {
     static var previews: some View {
-        return BalanceList(viewModel: BalanceViewModel(project: previewProject))
+        return BalanceList(viewModel: BalanceViewModel())
     }
 }

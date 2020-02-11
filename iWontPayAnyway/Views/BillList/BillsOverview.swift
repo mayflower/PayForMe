@@ -13,7 +13,7 @@ struct BillsOverview: View {
     
     var body: some View {
         VStack {
-            BillsList()
+            BillsList(viewModel: BillListViewModel())
         }
     }
 }

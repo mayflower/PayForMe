@@ -11,10 +11,7 @@ import SwiftUI
 
 
 struct ContentView: View {
-    
-    @EnvironmentObject
-    var serverManager: ServerManager
-    
+        
     var manager = ProjectManager.shared
     
     @State private var name: String = "https:mynextcloud.com"
@@ -31,7 +28,7 @@ struct ContentView: View {
                     .tabItem({
                         Image(systemName: "archivebox")
                     }).tag(tabBarItems.ServerList)
-                BalanceList(viewModel: BalanceViewModel(project: manager.currentProject))
+                BalanceList(viewModel: BalanceViewModel())
                     .tabItem({
                         Image(systemName: "arrow.right.arrow.left")
                     }).tag(tabBarItems.Balance)
@@ -50,7 +47,7 @@ struct ContentView: View {
                     }).tag(tabBarItems.AddServer)
             }
         }.onAppear {
-            ProjectManager.shared.updateProjects()
+            self.manager.updateProjects()
         }
     }
 }
@@ -63,11 +60,10 @@ enum tabBarItems: Int {
     case AddBill
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        let serverManager = ServerManager()
-        serverManager.projects = previewProjects
-        serverManager.selectedProject = previewProject
-        return ContentView().environmentObject(serverManager)
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        serverManager.projects = previewProjects
+//        serverManager.selectedProject = previewProject
+//        return ContentView().environmentObject(serverManager)
+//    }
+//}

@@ -15,9 +15,6 @@ struct AddBillView: View {
     var tabBarIndex: tabBarItems
     
     @ObservedObject
-    var manager = ProjectManager.shared
-    
-    @ObservedObject
     var viewModel: BillListViewModel
     
     var currentBill: Bill?
@@ -40,9 +37,9 @@ struct AddBillView: View {
         NavigationView {
             Form {
                 Section(header: Text("Payer")) {
-                    WhoPaidView(members: $manager.currentProject.members, selectedPayer: self.$selectedPayer).onAppear {
-                        if !self.manager.currentProject.members.contains(where: { $0.id == self.selectedPayer }) {
-                            guard let id = self.manager.currentProject.members[safe: 0]?.id else { return }
+                    WhoPaidView(members: $viewModel.currentProject.members, selectedPayer: self.$selectedPayer).onAppear {
+                        if !self.viewModel.currentProject.members.contains(where: { $0.id == self.selectedPayer }) {
+                            guard let id = self.viewModel.currentProject.members[safe: 0]?.id else { return }
                             self.selectedPayer = id
                         }
                     }
@@ -81,7 +78,6 @@ struct AddBillView: View {
                 }
             }
             .navigationBarTitle(navBarTitle)
-            .modifier(DismissingKeyboard())
         }
         .onAppear {
             self.prefillData()
@@ -104,7 +100,7 @@ struct AddBillView: View {
             print("Could not create bill")
             return
         }
-        manager.saveBill(newBill)
+        ProjectManager.shared.saveBill(newBill)
     }
     
     func createBill() -> Bill? {
@@ -113,7 +109,7 @@ struct AddBillView: View {
         }
         
         let billID: Int
-        let date: String
+        let date: Date
         
         if let currentBill = self.currentBill {
             billID = currentBill.id
@@ -124,7 +120,7 @@ struct AddBillView: View {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
             
-            date = dateFormatter.string(from: Date())
+            date = Date()
         }
         
         let actualOwers = owers.filter {$0.isOwing}
@@ -140,7 +136,7 @@ struct AddBillView: View {
     
     func initOwers() {
         guard let selectedOwers = currentBill?.owers else {
-            self.owers = manager.currentProject.members.map{Ower(id: $0.id, name: $0.name, isOwing: false)}
+            self.owers = viewModel.currentProject.members.map{Ower(id: $0.id, name: $0.name, isOwing: false)}
             return
         }
         
@@ -150,7 +146,7 @@ struct AddBillView: View {
         let activeOwerIDs = owers.map {
             $0.id
         }
-        let inactiveOwers = manager.currentProject.members.map({
+        let inactiveOwers = viewModel.currentProject.members.map({
             Ower(id: $0.id, name: $0.name, isOwing: false)
         }).filter {
             !activeOwerIDs.contains($0.id)
@@ -170,17 +166,3 @@ struct AddBillView: View {
 //    }
 //}
 
-struct DismissingKeyboard: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .onTapGesture {
-                let keyWindow = UIApplication.shared.connectedScenes
-                    .filter({$0.activationState == .foregroundActive})
-                    .map({$0 as? UIWindowScene})
-                    .compactMap({$0})
-                    .first?.windows
-                    .filter({$0.isKeyWindow}).first
-                keyWindow?.endEditing(true)
-        }
-    }
-}

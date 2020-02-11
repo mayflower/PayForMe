@@ -49,12 +49,11 @@ struct ProjectList: View {
     }
 }
 
-struct ServerList_Previews: PreviewProvider {
-    static var previews: some View {
-        let serversModel = ServerManager()
-        for project in previewProjects {
-            serversModel.addProject(newProject: project)
-        }
-        return ProjectList().environmentObject(serversModel)
-    }
-}
+//struct ServerList_Previews: PreviewProvider {
+//    static var previews: some View {
+//        for project in previewProjects {
+//            serversModel.addProject(newProject: project)
+//        }
+//        return ProjectList().environmentObject(serversModel)
+//    }
+//}
