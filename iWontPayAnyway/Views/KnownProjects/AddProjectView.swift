@@ -9,7 +9,7 @@
 import SwiftUI
 import Combine
 
-struct OnboardingView: View {
+struct AddProjectView: View {
     
     @Environment(\.presentationMode)
     var presentationMode: Binding<PresentationMode>
@@ -45,7 +45,7 @@ struct OnboardingView: View {
     
     func addButton() {
         let project = Project(name: addServerModel.projectName, password: addServerModel.projectPassword, url: addServerModel.serverAddress)
-        DataManager.shared.addProject(project)
+        ProjectManager.shared.addProject(project)
         self.presentationMode.wrappedValue.dismiss()
     }
 }

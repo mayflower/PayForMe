@@ -20,7 +20,7 @@ class NetworkService {
     var cancellables = [AnyCancellable]()
     
     var loadBillsPublisher: AnyPublisher<[Bill],Never> {
-        let url = buildURL(DataManager.shared.currentProject, "bills")!
+        let url = buildURL(ProjectManager.shared.currentProject, "bills")!
         return URLSession.shared.dataTaskPublisher(for: url)
             .compactMap{
                 data, response -> Data? in
@@ -34,7 +34,7 @@ class NetworkService {
     }
     
     var loadMembersPublisher: AnyPublisher<[Person],Never> {
-        let url = buildURL(DataManager.shared.currentProject, "members")!
+        let url = buildURL(ProjectManager.shared.currentProject, "members")!
         return URLSession.shared.dataTaskPublisher(for: url)
             .compactMap { data, response -> Data? in
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {

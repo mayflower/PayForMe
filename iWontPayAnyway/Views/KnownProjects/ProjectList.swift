@@ -8,10 +8,10 @@
 
 import SwiftUI
 
-struct ServerList: View {
+struct ProjectList: View {
     
     @ObservedObject
-    var manager = DataManager.shared
+    var manager = ProjectManager.shared
     
     var body: some View {
         NavigationView {
@@ -33,7 +33,7 @@ struct ServerList: View {
                     .onDelete(perform: deleteProject)
                 }
             }.navigationBarItems(trailing:
-                NavigationLink(destination: OnboardingView(addServerModel: AddServerModel())) {
+                NavigationLink(destination: AddProjectView(addServerModel: AddServerModel())) {
                     Image(systemName: "plus")
                         .frame(width: 20.0, height: 20.0)
                 }
@@ -55,6 +55,6 @@ struct ServerList_Previews: PreviewProvider {
         for project in previewProjects {
             serversModel.addProject(newProject: project)
         }
-        return ServerList().environmentObject(serversModel)
+        return ProjectList().environmentObject(serversModel)
     }
 }

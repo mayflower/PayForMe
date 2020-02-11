@@ -11,7 +11,7 @@ import SwiftUI
 struct BillsList: View {
     
     @ObservedObject
-    var manager = DataManager.shared
+    var manager = ProjectManager.shared
     
     @State
     var tabBarIndex = tabBarItems.AddBill

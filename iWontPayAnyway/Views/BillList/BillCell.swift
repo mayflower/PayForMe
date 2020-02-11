@@ -10,7 +10,7 @@ import SwiftUI
 
 struct BillCell: View {
     @ObservedObject
-    var manager = DataManager.shared
+    var manager = ProjectManager.shared
     
     @State
     var bill: Bill

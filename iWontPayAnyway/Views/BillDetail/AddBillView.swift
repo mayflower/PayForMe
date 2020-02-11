@@ -15,7 +15,7 @@ struct AddBillView: View {
     var tabBarIndex: tabBarItems
     
     @ObservedObject
-    var manager = DataManager.shared
+    var manager = ProjectManager.shared
     
     @ObservedObject
     var viewModel: BillListViewModel

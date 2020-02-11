@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class DataManager: ObservableObject {
+class ProjectManager: ObservableObject {
     
     private let dispatchGroup = DispatchGroup()
     private let notificationCenter = NotificationCenter.default
@@ -23,7 +23,7 @@ class DataManager: ObservableObject {
     @Published
     var currentProject: Project = Project(name: "", password: "", url: "")
         
-    static let shared = DataManager()
+    static let shared = ProjectManager()
     private init() {
         print("init")
         _ = loadData()
@@ -103,7 +103,7 @@ class DataManager: ObservableObject {
     
 }
 
-extension DataManager {
+extension ProjectManager {
     
     func addProject(_ project: Project) {
         guard !projects.contains(project) else { print("project not added") ; return }

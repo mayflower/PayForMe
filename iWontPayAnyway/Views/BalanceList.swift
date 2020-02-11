@@ -14,7 +14,7 @@ struct BalanceList: View {
     var viewModel: BalanceViewModel
     
     @ObservedObject
-    var manager = DataManager.shared
+    var manager = ProjectManager.shared
     
     var body: some View {
         NavigationView {
