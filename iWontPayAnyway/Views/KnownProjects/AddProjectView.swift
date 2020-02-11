@@ -25,7 +25,11 @@ struct AddProjectView: View {
             Form {
                 Text("Add new project").font(.title)
                 Section(header: Text("Server Address")) {
-                    TextField("https://mynextcloud.org", text: self.$addServerModel.serverAddress).autocapitalization(.none).keyboardType(.URL)
+                    TextFieldContainer("https://mynextcloud.org", text: self.$addServerModel.serverAddress).autocapitalization(.none).keyboardType(.URL).onTapGesture {
+                        if self.addServerModel.serverAddress.isEmpty {
+                            self.addServerModel.serverAddress = "https://"
+                        }
+                    }
                 }
                 Section(header: Text("Project Name & Password")) {
                     TextField("Enter project name", text: self.$addServerModel.projectName).autocapitalization(.none)
@@ -50,6 +54,7 @@ struct AddProjectView: View {
         ProjectManager.shared.addProject(project)
         self.presentationMode.wrappedValue.dismiss()
     }
+    
 }
 
 //struct OnboardingView_Previews: PreviewProvider {
