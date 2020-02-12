@@ -33,7 +33,7 @@ struct ContentView: View {
                     .tabItem({
                         Image(systemName: "arrow.right.arrow.left")
                     }).tag(tabBarItems.Balance)
-                BillsOverview()
+                BillsList(viewModel: BillListViewModel())
                     .tabItem({
                         Image(systemName: "rectangle.stack")
                     }).tag(tabBarItems.BillList)
