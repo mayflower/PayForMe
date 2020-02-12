@@ -32,6 +32,20 @@ extension String {
     }
 }
 
+extension JSONDecoder {
+    convenience init(dateFormatter: DateFormatter) {
+        self.init()
+        self.dateDecodingStrategy = .formatted(dateFormatter)
+    }
+}
+
+extension JSONEncoder {
+    convenience init(dateFormatter: DateFormatter) {
+        self.init()
+        self.dateEncodingStrategy = .formatted(dateFormatter)
+    }
+}
+
 extension DateFormatter {
     static let cospend: DateFormatter = {
         let formatter = DateFormatter()
