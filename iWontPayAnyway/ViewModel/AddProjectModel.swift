@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Combine
 
-class AddServerModel: ObservableObject {
+class AddProjectModel: ObservableObject {
     
     @Published
     var serverAddress = ""

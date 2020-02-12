@@ -33,7 +33,7 @@ struct ProjectList: View {
                     .onDelete(perform: deleteProject)
                 }
             }.navigationBarItems(trailing:
-                NavigationLink(destination: AddProjectView(addServerModel: AddServerModel())) {
+                NavigationLink(destination: AddProjectView(addProjectModel: AddProjectModel())) {
                     Image(systemName: "plus")
                         .frame(width: 20.0, height: 20.0)
                 }

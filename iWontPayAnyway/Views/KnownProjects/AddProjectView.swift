@@ -15,34 +15,34 @@ struct AddProjectView: View {
     var presentationMode: Binding<PresentationMode>
     
     @ObservedObject
-    var addServerModel: AddServerModel
+    var addProjectModel: AddProjectModel
     
     @State
-    var addServerButtonDisabled = true
+    var addProjectButtonDisabled = true
     
     var body: some View {
         NavigationView {
             Form {
                 Text("Add new project").font(.title)
                 Section(header: Text("Server Address")) {
-                    TextFieldContainer("https://mynextcloud.org", text: self.$addServerModel.serverAddress).autocapitalization(.none).keyboardType(.URL).onTapGesture {
-                        if self.addServerModel.serverAddress.isEmpty {
-                            self.addServerModel.serverAddress = "https://"
+                    TextFieldContainer("https://mynextcloud.org", text: self.$addProjectModel.serverAddress).autocapitalization(.none).keyboardType(.URL).onTapGesture {
+                        if self.addProjectModel.serverAddress.isEmpty {
+                            self.addProjectModel.serverAddress = "https://"
                         }
                     }
                 }
                 Section(header: Text("Project Name & Password")) {
-                    TextField("Enter project name", text: self.$addServerModel.projectName).autocapitalization(.none)
+                    TextField("Enter project name", text: self.$addProjectModel.projectName).autocapitalization(.none)
                     
-                    SecureField("Enter project password", text: self.$addServerModel.projectPassword)
+                    SecureField("Enter project password", text: self.$addProjectModel.projectPassword)
                 }
                 Section {
                     Button(action: self.addButton) {
                         Text("Add project")
                     }
-                    .disabled($addServerButtonDisabled.wrappedValue)
-                    .onReceive(addServerModel.validatedInput) {
-                        self.addServerButtonDisabled = !$0
+                    .disabled($addProjectButtonDisabled.wrappedValue)
+                    .onReceive(addProjectModel.validatedInput) {
+                        self.addProjectButtonDisabled = !$0
                     }
                 }
             }
@@ -50,7 +50,7 @@ struct AddProjectView: View {
     }
     
     func addButton() {
-        let project = Project(name: addServerModel.projectName, password: addServerModel.projectPassword, url: addServerModel.serverAddress)
+        let project = Project(name: addProjectModel.projectName, password: addProjectModel.projectPassword, url: addProjectModel.serverAddress)
         ProjectManager.shared.addProject(project)
         self.presentationMode.wrappedValue.dismiss()
     }

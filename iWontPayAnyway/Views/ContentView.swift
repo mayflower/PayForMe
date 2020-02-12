@@ -11,7 +11,8 @@ import SwiftUI
 
 
 struct ContentView: View {
-        
+    
+    @ObservedObject
     var manager = ProjectManager.shared
     
     @State private var name: String = "https:mynextcloud.com"
@@ -41,7 +42,7 @@ struct ContentView: View {
                         Image(systemName: "rectangle.stack.badge.plus")
                     }).tag(tabBarItems.AddBill)
             } else {
-                AddProjectView(addServerModel: AddServerModel())
+                AddProjectView(addProjectModel: AddProjectModel())
                     .tabItem({
                         Image(systemName: "folder.badge.plus")
                     }).tag(tabBarItems.AddServer)
