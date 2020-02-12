@@ -69,7 +69,7 @@ class ProjectManager: ObservableObject {
         )
     }
     
-    private func sendBillToServer(bill: Bill, update: Bool) {
+    private func sendBillToServer(bill: Bill, update: Bool, completion: @escaping () -> Void) {
         if update {
             cancellables.append(
                 NetworkService.shared.postBillPublisher(bill: bill)
@@ -79,6 +79,7 @@ class ProjectManager: ObservableObject {
                         } else {
                             print("error updating bill id\(bill.id)")
                         }
+                        completion()
                 }
             )
         } else {
@@ -90,6 +91,7 @@ class ProjectManager: ObservableObject {
                         } else {
                             print("Error posting bill")
                         }
+                        completion()
                 }
                 
             )
@@ -128,17 +130,17 @@ extension ProjectManager {
         }
     }
     
-    func saveBill(_ bill: Bill) {
+    func saveBill(_ bill: Bill, completion: @escaping () -> Void) {
         if let index = self.currentProject.bills.firstIndex(where: {
             $0.id == bill.id
         }) {
             self.currentProject.bills.remove(at: index)
             self.currentProject.bills.append(bill)
             
-            sendBillToServer(bill: bill, update: true)
+            sendBillToServer(bill: bill, update: true, completion: completion)
         } else {
             self.currentProject.bills.append(bill)
-            sendBillToServer(bill: bill, update: false)
+            sendBillToServer(bill: bill, update: false, completion: completion)
         }
     }
     

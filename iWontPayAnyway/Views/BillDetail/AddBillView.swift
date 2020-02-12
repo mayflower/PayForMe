@@ -33,51 +33,61 @@ struct AddBillView: View {
     @State
     var sendBillButtonDisabled = true
     
+    @State
+    var sendingInProgress = false
+    
     var body: some View {
         NavigationView {
-            Form {
-                Section(header: Text("Payer")) {
-                    WhoPaidView(members: $viewModel.currentProject.members, selectedPayer: self.$selectedPayer).onAppear {
-                        if !self.viewModel.currentProject.members.contains(where: { $0.id == self.selectedPayer }) {
-                            guard let id = self.viewModel.currentProject.members[safe: 0]?.id else { return }
-                            self.selectedPayer = id
+            ZStack {
+                Form {
+                    Section(header: Text("Payer")) {
+                        WhoPaidView(members: $viewModel.currentProject.members, selectedPayer: self.$selectedPayer).onAppear {
+                            if !self.viewModel.currentProject.members.contains(where: { $0.id == self.selectedPayer }) {
+                                guard let id = self.viewModel.currentProject.members[safe: 0]?.id else { return }
+                                self.selectedPayer = id
+                            }
+                        }
+                        TextField("What was paid?", text: self.$viewModel.topic)
+                        TextField("How much?", text: self.$viewModel.amount).keyboardType(.decimalPad)
+                    }
+                    Section(header: Text("Owers")) {
+                        HStack {
+                            Button(action: {
+                                self.owers = self.owers.map{Ower(id: $0.id, name: $0.name, isOwing: false)}
+                            }) {
+                                Text("None")
+                            }.buttonStyle(BorderlessButtonStyle())
+                            Spacer()
+                            Button(action: {
+                                self.owers = self.owers.map{Ower(id: $0.id, name: $0.name, isOwing: true)}
+                            }) {
+                                Text("All")
+                            }.buttonStyle(BorderlessButtonStyle())
+                        }.padding(16)
+                        ForEach(self.owers.indices, id: \.self) {
+                            index in
+                            Toggle(isOn: self.$owers[index].isOwing) {
+                                Text(self.owers[index].name)
+                            }
                         }
                     }
-                    TextField("What was paid?", text: self.$viewModel.topic)
-                    TextField("How much?", text: self.$viewModel.amount).keyboardType(.decimalPad)
-                }
-                Section(header: Text("Owers")) {
-                    HStack {
-                        Button(action: {
-                            self.owers = self.owers.map{Ower(id: $0.id, name: $0.name, isOwing: false)}
-                        }) {
-                            Text("None")
-                        }.buttonStyle(BorderlessButtonStyle())
-                        Spacer()
-                        Button(action: {
-                            self.owers = self.owers.map{Ower(id: $0.id, name: $0.name, isOwing: true)}
-                        }) {
-                            Text("All")
-                        }.buttonStyle(BorderlessButtonStyle())
-                    }.padding(16)
-                    ForEach(self.owers.indices, id: \.self) {
-                        index in
-                        Toggle(isOn: self.$owers[index].isOwing) {
-                            Text(self.owers[index].name)
+                    Section {
+                        Button(action: self.sendBillToServer) {
+                            Text("Send to server")
+                        }
+                        .disabled(self.$sendBillButtonDisabled.wrappedValue)
+                        .onReceive(self.viewModel.validatedInput) {
+                            self.sendBillButtonDisabled = !$0
                         }
                     }
                 }
-                Section {
-                    Button(action: self.sendBillToServer) {
-                        Text("Send to server")
-                    }
-                    .disabled(self.$sendBillButtonDisabled.wrappedValue)
-                    .onReceive(self.viewModel.validatedInput) {
-                        self.sendBillButtonDisabled = !$0
-                    }
+                .navigationBarTitle(navBarTitle)
+                if sendingInProgress {
+                    Image(systemName: "arrow.2.circlepath.circle")
+                        .resizable()
+                        .frame(width: 256, height: 256)
                 }
             }
-            .navigationBarTitle(navBarTitle)
         }
         .onAppear {
             self.prefillData()
@@ -100,7 +110,11 @@ struct AddBillView: View {
             print("Could not create bill")
             return
         }
-        ProjectManager.shared.saveBill(newBill)
+        sendingInProgress = true
+        ProjectManager.shared.saveBill(newBill, completion: {
+            self.sendingInProgress = false
+            self.tabBarIndex = tabBarItems.BillList
+        })
     }
     
     func createBill() -> Bill? {
@@ -158,11 +172,9 @@ struct AddBillView: View {
     }
 }
 
-//struct AddBillView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        previewProject.members = previewPersons
-//        previewProject.bills = previewBills
-//        return AddBillView(tabBarIndex: .constant(tabBarItems.AddBill), viewModel: BillListViewModel(project: previewProject))
-//    }
-//}
+struct AddBillView_Previews: PreviewProvider {
+    static var previews: some View {
+        return AddBillView(tabBarIndex: .constant(tabBarItems.AddBill), viewModel: BillListViewModel())
+    }
+}
 
