@@ -50,8 +50,10 @@ struct ContentView: View {
                     self.showModal.toggle()
                 }) {
                     Image(systemName: "plus.circle")
-                    .resizable()
-                    .frame(width: 92, height: 92)
+                        .resizable()
+                        .frame(width: 92, height: 92)
+                        .foregroundColor(Color.primary)
+                        .shadow(radius: 10)
                 }
             }.padding(EdgeInsets(top: 0, leading: 32, bottom: 64, trailing: 32))
         }.sheet(isPresented: $showModal) {
