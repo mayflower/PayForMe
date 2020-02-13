@@ -50,7 +50,7 @@ struct BalanceCell: View {
             Circle().foregroundColor(Color(balance.color)).frame(width: 25, height: 25)
             Spacer()
             Text("\(balance.name)").font(.headline)
-            Text(" \(String(format:"%.2f",balance.amount)) €")
+            Text(" \(String(format:"%.2f",balance.amount)) €").foregroundColor( balance.amount > 0 ? Color.primary : Color.red)
         }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
     }
 }
