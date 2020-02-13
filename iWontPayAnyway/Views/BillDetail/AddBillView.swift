@@ -12,7 +12,7 @@ import Combine
 
 struct AddBillView: View {
     @Binding
-    var tabBarIndex: tabBarItems
+    var showModal: Bool
     
     @ObservedObject
     var viewModel: BillListViewModel
@@ -113,7 +113,7 @@ struct AddBillView: View {
         sendingInProgress = true
         ProjectManager.shared.saveBill(newBill, completion: {
             self.sendingInProgress = false
-            self.tabBarIndex = tabBarItems.BillList
+            self.showModal.toggle()
         })
     }
     
@@ -174,7 +174,7 @@ struct AddBillView: View {
 
 struct AddBillView_Previews: PreviewProvider {
     static var previews: some View {
-        return AddBillView(tabBarIndex: .constant(tabBarItems.AddBill), viewModel: BillListViewModel())
+        return AddBillView(showModal: .constant(true), viewModel: BillListViewModel())
     }
 }
 

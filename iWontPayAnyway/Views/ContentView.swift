@@ -16,33 +16,46 @@ struct ContentView: View {
     @State
     var tabBarIndex = tabBarItems.ServerList
     
+    @State
+    var showModal = false
+    
     var bills = [Bill]()
     
     var body: some View {
-        TabView(selection: $tabBarIndex){
-            if !manager.projects.isEmpty {
-                ProjectList()
-                    .tabItem({
-                        Image(systemName: "archivebox")
-                    }).tag(tabBarItems.ServerList)
-                BalanceList(viewModel: BalanceViewModel())
-                    .tabItem({
-                        Image(systemName: "arrow.right.arrow.left")
-                    }).tag(tabBarItems.Balance)
-                BillsList(viewModel: BillListViewModel())
-                    .tabItem({
-                        Image(systemName: "rectangle.stack")
-                    }).tag(tabBarItems.BillList)
-                AddBillView(tabBarIndex: $tabBarIndex, viewModel: BillListViewModel())
-                    .tabItem({
-                        Image(systemName: "rectangle.stack.badge.plus")
-                    }).tag(tabBarItems.AddBill)
-            } else {
-                AddProjectView(addProjectModel: AddProjectModel())
-                    .tabItem({
-                        Image(systemName: "folder.badge.plus")
-                    }).tag(tabBarItems.AddServer)
+        ZStack {
+            TabView(selection: $tabBarIndex){
+                if !manager.projects.isEmpty {
+                    ProjectList()
+                        .tabItem({
+                            Image(systemName: "archivebox")
+                        }).tag(tabBarItems.ServerList)
+                    BalanceList(viewModel: BalanceViewModel())
+                        .tabItem({
+                            Image(systemName: "arrow.right.arrow.left")
+                        }).tag(tabBarItems.Balance)
+                    BillsList(viewModel: BillListViewModel())
+                        .tabItem({
+                            Image(systemName: "rectangle.stack")
+                        }).tag(tabBarItems.BillList)
+                } else {
+                    AddProjectView(addProjectModel: AddProjectModel())
+                        .tabItem({
+                            Image(systemName: "folder.badge.plus")
+                        }).tag(tabBarItems.AddServer)
+                }
             }
+            VStack {
+                Spacer()
+                Button(action: {
+                    self.showModal.toggle()
+                }) {
+                    Image(systemName: "plus.circle")
+                    .resizable()
+                    .frame(width: 92, height: 92)
+                }
+            }.padding(EdgeInsets(top: 0, leading: 32, bottom: 64, trailing: 32))
+        }.sheet(isPresented: $showModal) {
+            AddBillView(showModal: self.$showModal, viewModel: BillListViewModel())
         }
     }
 }
@@ -55,10 +68,9 @@ enum tabBarItems: Int {
     case AddBill
 }
 
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        serverManager.projects = previewProjects
-//        serverManager.selectedProject = previewProject
-//        return ContentView().environmentObject(serverManager)
-//    }
-//}
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        
+        return ContentView()
+    }
+}

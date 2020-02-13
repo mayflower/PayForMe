@@ -17,19 +17,16 @@ struct BillsList: View {
     var tabBarIndex = tabBarItems.AddBill
     
     var body: some View {
-        NavigationView {
-            ScrollView {
-                VStack {
-                    ForEach(viewModel.currentProject.bills.sorted(by: {
-                        $0.lastchanged > $1.lastchanged
-                    })) { bill in
-                        NavigationLink(destination: AddBillView(tabBarIndex: self.$tabBarIndex, viewModel: self.viewModel, currentBill: bill, navBarTitle: "Edit Bill")) {
-                            BillCell(viewModel: self.viewModel, bill: bill)
-                        }
-                    }
+        
+        ScrollView {
+            VStack {
+                ForEach(viewModel.currentProject.bills.sorted(by: {
+                    $0.lastchanged > $1.lastchanged
+                })) { bill in
+                    
+                    BillCell(viewModel: self.viewModel, bill: bill)
                 }
             }
-            .navigationBarTitle("Bills")
         }
         .onAppear {
             ProjectManager.shared.updateCurrentProject()
