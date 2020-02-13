@@ -78,11 +78,11 @@
 		6533A02C23D88EF300FF822B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				656913EB23F59A0300FA196E /* Balance */,
 				6596D4E423ED9CBD0079DD5B /* BillList */,
 				6596D4E323ED9C8B0079DD5B /* KnownProjects */,
 				6596D4E223ED9C520079DD5B /* BillDetail */,
 				65662A0623D7320000303207 /* ContentView.swift */,
-				65C9E2CD23E1B8F500814B37 /* BalanceList.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -159,6 +159,14 @@
 				65C9E2CF23E1B96B00814B37 /* BalanceViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		656913EB23F59A0300FA196E /* Balance */ = {
+			isa = PBXGroup;
+			children = (
+				65C9E2CD23E1B8F500814B37 /* BalanceList.swift */,
+			);
+			path = Balance;
 			sourceTree = "<group>";
 		};
 		6596D4E223ED9C520079DD5B /* BillDetail */ = {
