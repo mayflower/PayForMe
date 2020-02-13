@@ -47,10 +47,11 @@ struct BalanceCell: View {
     
     var body: some View {
         HStack {
-            Circle().foregroundColor(Color(balance.color)).frame(width: 25, height: 25)
+                ColorIndicator(color: Color(balance.color), name: balance.name)
             Spacer()
-            Text("\(balance.name)").font(.headline)
-            Text(" \(String(format:"%.2f",balance.amount)) €").foregroundColor( balance.amount > 0 ? Color.primary : Color.red)
+            Text(" \(String(format:"%.2f",balance.amount)) €")
+                .font(.headline)
+                .foregroundColor( balance.amount > 0 ? Color.primary : Color.red)
         }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
     }
 }
