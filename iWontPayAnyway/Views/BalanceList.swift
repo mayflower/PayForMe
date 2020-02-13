@@ -20,12 +20,7 @@ struct BalanceList: View {
                     ForEach(viewModel.balances.sorted(by: { $0.amount > $1.amount })) {
                         balance in
                         VStack {
-                            HStack {
-                                Circle().foregroundColor(Color(balance.color)).frame(width: 25, height: 25)
-                                Spacer()
-                                Text("\(balance.name)").font(.headline)
-                                Text(" \(String(format:"%.2f",balance.amount)) €")
-                            }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
+                            BalanceCell(balance: balance)
                             Divider()
                         }
                     }
@@ -43,5 +38,19 @@ struct BalanceList: View {
 struct BalanceList_Previews: PreviewProvider {
     static var previews: some View {
         return BalanceList(viewModel: BalanceViewModel())
+    }
+}
+
+struct BalanceCell: View {
+    @State
+    var balance: Balance
+    
+    var body: some View {
+        HStack {
+            Circle().foregroundColor(Color(balance.color)).frame(width: 25, height: 25)
+            Spacer()
+            Text("\(balance.name)").font(.headline)
+            Text(" \(String(format:"%.2f",balance.amount)) €")
+        }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
     }
 }
