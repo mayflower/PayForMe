@@ -46,6 +46,10 @@ class ProjectManager: ObservableObject {
     }
     
     private func saveData() {
+        projects.removeAll {
+            $0 == self.currentProject
+        }
+        projects.append(self.currentProject)
         StorageService.shared.storeProjects(projects: self.projects)
     }
     
