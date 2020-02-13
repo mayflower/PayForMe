@@ -12,7 +12,7 @@ import Combine
 class BillListViewModel: ObservableObject {
     
     var manager = ProjectManager.shared
-    var cancellables = [AnyCancellable]()
+    var cancellable: Cancellable?
     
     @Published
     var topic = ""
@@ -25,7 +25,7 @@ class BillListViewModel: ObservableObject {
     
     init() {
         self.currentProject = manager.currentProject
-        self.cancellables.append(currentProjectChanged)
+        self.cancellable = currentProjectChanged
     }
     
     var currentProjectChanged: AnyCancellable {

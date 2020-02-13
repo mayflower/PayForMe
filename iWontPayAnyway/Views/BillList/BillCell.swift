@@ -29,7 +29,6 @@ struct BillCell: View {
                 VStack(alignment: .trailing, spacing: 10) {
                     Text(amountString()).font(.headline)
                     Text(DateFormatter.cospend.string(from: bill.date)).font(.subheadline)
-                    Text("\(bill.id)").font(.subheadline)
                 }
             }.padding()
             Divider().background(Color.white)

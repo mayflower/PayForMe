@@ -21,7 +21,7 @@ struct BillsList: View {
             ScrollView {
                 VStack {
                     ForEach(viewModel.currentProject.bills.sorted(by: {
-                        $0.date > $1.date
+                        $0.lastchanged > $1.lastchanged
                     })) { bill in
                         NavigationLink(destination: AddBillView(tabBarIndex: self.$tabBarIndex, viewModel: self.viewModel, currentBill: bill, navBarTitle: "Edit Bill")) {
                             BillCell(viewModel: self.viewModel, bill: bill)
@@ -30,6 +30,9 @@ struct BillsList: View {
                 }
             }
             .navigationBarTitle("Bills")
+        }
+        .onAppear {
+            ProjectManager.shared.updateCurrentProject()
         }
     }
     

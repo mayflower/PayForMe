@@ -13,7 +13,7 @@ class ProjectManager: ObservableObject {
     
     private let defaults = UserDefaults.standard
     
-    var cancellables = [Cancellable]()
+    private var cancellable: Cancellable?
     
     @Published
     private(set) var projects = [Project]()
@@ -31,6 +31,7 @@ class ProjectManager: ObservableObject {
                 $0.id.uuidString == id
             }){
             self.currentProject = project
+            updateCurrentProject()
         }
     }
     
@@ -50,51 +51,49 @@ class ProjectManager: ObservableObject {
     
     // MARK: Server Communication
     
-    func updateProjects() {
-        for project in self.projects {
-            updateProject(project)
-        }
-    }
-    
-    private func updateProject(_ project: Project) {
-        cancellables.append(
-            NetworkService.shared.loadBillsPublisher
-                .receive(on: RunLoop.main)
-                .assign(to: \.currentProject.bills, on: self)
-        )
-        cancellables.append(
-            NetworkService.shared.loadMembersPublisher
-                .receive(on: RunLoop.main)
-                .assign(to: \.currentProject.members, on: self)
-        )
+    @discardableResult func updateCurrentProject() -> Cancellable {
+        cancellable?.cancel()
+        cancellable = nil
+        
+        let a = NetworkService.shared.loadBillsPublisher(currentProject)
+        let b = NetworkService.shared.loadMembersPublisher(currentProject)
+        
+        let newCancellable = Publishers.Zip(a, b)
+            .map { bills, members in
+                return Project(name: self.currentProject.name, password: self.currentProject.password, url: self.currentProject.url, members: members, bills: bills)
+            }
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.currentProject, on: self)
+        
+        cancellable = newCancellable
+        return newCancellable
     }
     
     private func sendBillToServer(bill: Bill, update: Bool, completion: @escaping () -> Void) {
+        cancellable?.cancel()
+        cancellable = nil
+        
         if update {
-            cancellables.append(
-                NetworkService.shared.postBillPublisher(bill: bill)
-                    .sink { success in
-                        if success {
-                            print("Bill id\(bill.id) updated")
-                        } else {
-                            print("error updating bill id\(bill.id)")
-                        }
-                        completion()
-                }
-            )
+            cancellable = NetworkService.shared.postBillPublisher(bill: bill)
+                .sink { success in
+                    if success {
+                        print("Bill id\(bill.id) updated")
+                    } else {
+                        print("error updating bill id\(bill.id)")
+                    }
+                    completion()
+            }
         } else {
-            cancellables.append(
-                NetworkService.shared.postBillPublisher(bill: bill)
-                    .sink { success in
-                        if success {
-                            print("Bill posted")
-                        } else {
-                            print("Error posting bill")
-                        }
-                        completion()
-                }
-                
-            )
+            cancellable = NetworkService.shared.postBillPublisher(bill: bill)
+                .sink { success in
+                    if success {
+                        print("Bill posted")
+                    } else {
+                        print("Error posting bill")
+                    }
+                    completion()
+            }
+            
         }
     }
 }
@@ -103,9 +102,7 @@ extension ProjectManager {
     
     func addProject(_ project: Project) {
         guard !projects.contains(project) else { print("project not added") ; return }
-        
-        updateProject(project)
-        
+                
         if self.projects.isEmpty {
             self.projects.append(project)
             setCurrentProject(project)
@@ -155,7 +152,7 @@ extension ProjectManager {
             return
         }
         self.currentProject = project
-        updateProject(project)
+        updateCurrentProject()
         defaults.set(project.id.uuidString, forKey: "projectID")
     }
     

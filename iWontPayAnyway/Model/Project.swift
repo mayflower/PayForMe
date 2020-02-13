@@ -8,22 +8,25 @@
 
 import Foundation
 
-struct Project: Codable, Identifiable {
+class Project: Codable, Identifiable {
     let name: String
     let password: String
     let url: String
     let id: UUID
     
-    init(name: String, password: String, url: String) {
+    init(name: String, password: String, url: String, members: [Person] = [], bills: [Bill] = []) {
         self.name = name
         self.password = password
         self.url = url
         
+        self.members = members
+        self.bills = bills
+        
         self.id = UUID()
     }
-    var members: [Person] = []
+    var members: [Person]
     
-    var bills: [Bill] = [] {
+    var bills: [Bill] {
         didSet {
             print("Set bills for \(name): \(bills)")
         }

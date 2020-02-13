@@ -8,15 +8,11 @@
 
 import SwiftUI
 
-
-
 struct ContentView: View {
     
     @ObservedObject
     var manager = ProjectManager.shared
-    
-    @State private var name: String = "https:mynextcloud.com"
-    
+        
     @State
     var tabBarIndex = tabBarItems.ServerList
     
@@ -47,8 +43,6 @@ struct ContentView: View {
                         Image(systemName: "folder.badge.plus")
                     }).tag(tabBarItems.AddServer)
             }
-        }.onAppear {
-            self.manager.updateProjects()
         }
     }
 }

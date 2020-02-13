@@ -12,7 +12,7 @@ import Combine
 class BalanceViewModel: ObservableObject {
     
     var manager = ProjectManager.shared
-    var cancellables = [AnyCancellable]()
+    var cancellable: Cancellable?
     
     @Published
     var currentProject: Project
@@ -22,22 +22,17 @@ class BalanceViewModel: ObservableObject {
     
     init() {
         self.currentProject = manager.currentProject
-        self.cancellables.append(currentProjectChanged)
-        
         self.setBalances()
-//        NetworkingManager.shared.getMembers(project: project, completion: {(_, _) in
-//            self.didChange.send(self)
-//            self.setBalances()
-//        })
-//        NetworkingManager.shared.loadBills(project: project, completion: {
-//            self.didChange.send(self)
-//            self.setBalances()
-//        })
+        
+        self.cancellable = currentProjectChanged
     }
     
     var currentProjectChanged: AnyCancellable {
         manager.$currentProject
-            .assign(to: \.currentProject, on: self)
+            .sink {
+                self.currentProject = $0
+                self.setBalances()
+            }
     }
     
     func setBalances() {

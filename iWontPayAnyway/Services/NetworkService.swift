@@ -22,31 +22,26 @@ class NetworkService {
     
     let staticpath = "/index.php/apps/cospend/api/projects/"
         
-    var loadBillsPublisher: AnyPublisher<[Bill],Never> {
-        let url = buildURL(ProjectManager.shared.currentProject, "bills")!
+    func loadBillsPublisher(_ project: Project) -> AnyPublisher<[Bill], Never> {
+        let url = buildURL(project, "bills")!
         return URLSession.shared.dataTaskPublisher(for: url)
-            .compactMap{
-                data, response -> Data? in
-                guard let httpResponse = response as? HTTPURLResponse,
-                    httpResponse.statusCode == 200 else { print("Network error"); return nil }
+            .compactMap { data, response -> Data? in
+                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else { print("Network Error"); return nil }
                 return data
         }
         .decode(type: [Bill].self, decoder: decoder)
         .replaceError(with: [])
         .eraseToAnyPublisher()
     }
-    
-    var loadMembersPublisher: AnyPublisher<[Person],Never> {
-        let url = buildURL(ProjectManager.shared.currentProject, "members")!
+
+    func loadMembersPublisher(_ project: Project) -> AnyPublisher<[Person], Never> {
+        let url = buildURL(project, "members")!
         return URLSession.shared.dataTaskPublisher(for: url)
             .compactMap { data, response -> Data? in
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                print("Network Error")
-                return nil
-            }
-            return data
-            }
-        .decode(type: [Person].self, decoder: JSONDecoder())
+                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else { print("Network Error"); return nil }
+                return data
+        }
+        .decode(type: [Person].self, decoder: decoder)
         .replaceError(with: [])
         .eraseToAnyPublisher()
     }

@@ -35,7 +35,7 @@ struct BalanceList: View {
             .navigationBarTitle("Balance")
         }
         .onAppear {
-            self.viewModel.setBalances()
+            ProjectManager.shared.updateCurrentProject()
         }
     }
 }
