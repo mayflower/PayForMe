@@ -24,11 +24,12 @@ struct BillsList: View {
                         $0.lastchanged > $1.lastchanged
                     })) { bill in
                         NavigationLink(destination:
-                            AddBillView(showModal: .constant(false),
-                                    viewModel: self.viewModel,
-                                    currentBill: bill,
-                                    navBarTitle: "Edit Bill")) {
-                            BillCell(viewModel: self.viewModel, bill: bill)
+                            BillDetailView(showModal: .constant(false),
+                                           viewModel: self.viewModel,
+                                           currentBill: bill,
+                                           navBarTitle: "Edit Bill",
+                                           owers: self.viewModel.initOwers(currentBill: bill))) {
+                                            BillCell(viewModel: self.viewModel, bill: bill)
                         }
                     }
                 }

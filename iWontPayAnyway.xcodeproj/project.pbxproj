@@ -10,6 +10,7 @@
 		481FB4FB23E964C8003BD108 /* ProjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481FB4FA23E964C8003BD108 /* ProjectManager.swift */; };
 		481FB4FD23EAD78F003BD108 /* AddProjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481FB4FC23EAD78F003BD108 /* AddProjectModel.swift */; };
 		489D35FA23E081120029F59F /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489D35F923E081120029F59F /* Util.swift */; };
+		48CC8F7423F5C16D00DCE3D8 /* AddBillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CC8F7323F5C16D00DCE3D8 /* AddBillView.swift */; };
 		650059FC23DDE1C300D1D599 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650059FB23DDE1C300D1D599 /* Person.swift */; };
 		650059FE23DDE7FE00D1D599 /* Ower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650059FD23DDE7FE00D1D599 /* Ower.swift */; };
 		65005A0223DDFB1A00D1D599 /* WhoPaidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65005A0123DDFB1A00D1D599 /* WhoPaidView.swift */; };
@@ -28,7 +29,7 @@
 		65662A2423D83ED100303207 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A2323D83ED100303207 /* StorageService.swift */; };
 		65662A2623D8546900303207 /* ProjectList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A2523D8546900303207 /* ProjectList.swift */; };
 		656913ED23F59A4D00FA196E /* ColorIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656913EC23F59A4D00FA196E /* ColorIndicator.swift */; };
-		656E8CB423D9C3DA00B3ED10 /* AddBillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656E8CB323D9C3DA00B3ED10 /* AddBillView.swift */; };
+		656E8CB423D9C3DA00B3ED10 /* BillDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656E8CB323D9C3DA00B3ED10 /* BillDetailView.swift */; };
 		656E8CB623D9C88A00B3ED10 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656E8CB523D9C88A00B3ED10 /* Project.swift */; };
 		656E8CB823D9FDA300B3ED10 /* BillListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656E8CB723D9FDA300B3ED10 /* BillListViewModel.swift */; };
 		65C9E2CE23E1B8F500814B37 /* BalanceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C9E2CD23E1B8F500814B37 /* BalanceList.swift */; };
@@ -39,6 +40,7 @@
 		481FB4FA23E964C8003BD108 /* ProjectManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectManager.swift; sourceTree = "<group>"; };
 		481FB4FC23EAD78F003BD108 /* AddProjectModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectModel.swift; sourceTree = "<group>"; };
 		489D35F923E081120029F59F /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		48CC8F7323F5C16D00DCE3D8 /* AddBillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBillView.swift; sourceTree = "<group>"; };
 		650059FB23DDE1C300D1D599 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		650059FD23DDE7FE00D1D599 /* Ower.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ower.swift; sourceTree = "<group>"; };
 		65005A0123DDFB1A00D1D599 /* WhoPaidView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoPaidView.swift; sourceTree = "<group>"; };
@@ -59,7 +61,7 @@
 		65662A2323D83ED100303207 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		65662A2523D8546900303207 /* ProjectList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectList.swift; sourceTree = "<group>"; };
 		656913EC23F59A4D00FA196E /* ColorIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorIndicator.swift; sourceTree = "<group>"; };
-		656E8CB323D9C3DA00B3ED10 /* AddBillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBillView.swift; sourceTree = "<group>"; };
+		656E8CB323D9C3DA00B3ED10 /* BillDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillDetailView.swift; sourceTree = "<group>"; };
 		656E8CB523D9C88A00B3ED10 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		656E8CB723D9FDA300B3ED10 /* BillListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillListViewModel.swift; sourceTree = "<group>"; };
 		65C9E2CD23E1B8F500814B37 /* BalanceList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceList.swift; sourceTree = "<group>"; };
@@ -176,7 +178,8 @@
 			isa = PBXGroup;
 			children = (
 				65005A0123DDFB1A00D1D599 /* WhoPaidView.swift */,
-				656E8CB323D9C3DA00B3ED10 /* AddBillView.swift */,
+				656E8CB323D9C3DA00B3ED10 /* BillDetailView.swift */,
+				48CC8F7323F5C16D00DCE3D8 /* AddBillView.swift */,
 			);
 			path = BillDetail;
 			sourceTree = "<group>";
@@ -274,9 +277,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				656E8CB423D9C3DA00B3ED10 /* AddBillView.swift in Sources */,
+				656E8CB423D9C3DA00B3ED10 /* BillDetailView.swift in Sources */,
 				481FB4FB23E964C8003BD108 /* ProjectManager.swift in Sources */,
 				65662A1923D7322B00303207 /* Bill.swift in Sources */,
+				48CC8F7423F5C16D00DCE3D8 /* AddBillView.swift in Sources */,
 				65662A1B23D733B700303207 /* NetworkService.swift in Sources */,
 				65C9E2CE23E1B8F500814B37 /* BalanceList.swift in Sources */,
 				650059FC23DDE1C300D1D599 /* Person.swift in Sources */,

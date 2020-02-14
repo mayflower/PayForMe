@@ -14,7 +14,7 @@ struct ContentView: View {
     var manager = ProjectManager.shared
         
     @State
-    var tabBarIndex = tabBarItems.ServerList
+    var tabBarIndex = tabBarItems.BillList
     
     @State
     var showModal = false
