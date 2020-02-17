@@ -100,6 +100,21 @@ class ProjectManager: ObservableObject {
             
         }
     }
+    
+    private func deleteBillFromServer(bill: Bill) {
+        cancellable?.cancel()
+        cancellable = nil
+        
+        cancellable = NetworkService.shared.deleteBillPublisher(bill: bill)
+            .sink { success in
+                if success {
+                    print("Bill successfully deleted")
+                    self.updateCurrentProject()
+                } else {
+                    print("Error deleting bill")
+                }
+        }
+    }
 }
 
 extension ProjectManager {
@@ -146,7 +161,10 @@ extension ProjectManager {
     }
     
     func deleteBill(_ bill: Bill) {
-        
+        self.currentProject.bills.removeAll {
+            $0.id == bill.id
+        }
+        self.deleteBillFromServer(bill: bill)
     }
     
     func setCurrentProject(_ project: Project) {

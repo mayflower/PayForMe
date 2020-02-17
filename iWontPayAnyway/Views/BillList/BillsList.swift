@@ -18,8 +18,8 @@ struct BillsList: View {
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack {
+//            ScrollView {
+            List {
                     ForEach(viewModel.currentProject.bills.sorted(by: {
                         $0.lastchanged > $1.lastchanged
                     })) { bill in
@@ -32,12 +32,25 @@ struct BillsList: View {
                                             BillCell(viewModel: self.viewModel, bill: bill)
                         }
                     }
+                .onDelete(perform: deleteBill)
                 }
-            }
+                
+//            }
             .navigationBarTitle("Bills")
         }
         .onAppear {
             ProjectManager.shared.updateCurrentProject()
+        }
+    }
+    
+    func deleteBill(at offsets: IndexSet) {
+        for offset in offsets {
+            guard let bill = viewModel.currentProject.bills.sorted(by: {
+                $0.lastchanged > $1.lastchanged
+            })[safe: offset] else {
+                return
+            }
+            ProjectManager.shared.deleteBill(bill)
         }
     }
     

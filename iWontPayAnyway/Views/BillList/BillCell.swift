@@ -17,8 +17,7 @@ struct BillCell: View {
     var bill: Bill
     
     var body: some View {
-        VStack {
-            HStack(alignment: .top, spacing: 10) {
+            HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 10) {
                     Text(bill.what).font(.headline)
                     HStack {
@@ -30,9 +29,7 @@ struct BillCell: View {
                     Text(amountString()).font(.headline)
                     Text(DateFormatter.cospend.string(from: bill.date)).font(.subheadline)
                 }
-            }.padding()
-            Divider().background(Color.white)
-        }.background(backgroundColor()).foregroundColor(Color.white)
+            }
     }
     
     func paymentString() -> String {

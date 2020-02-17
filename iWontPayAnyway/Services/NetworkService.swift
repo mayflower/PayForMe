@@ -56,6 +56,23 @@ class NetworkService {
         return sendBillPublisher(bill: bill, baseURL: baseURL, httpMethod: "PUT")
     }
     
+    func deleteBillPublisher(bill: Bill) -> AnyPublisher<Bool, Never> {
+        let baseURL = buildURL(ProjectManager.shared.currentProject, "bills/\(bill.id)")!
+        
+        var request = URLRequest(url: baseURL)
+        request.httpMethod = "DELETE"
+        
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .tryMap { output in
+                guard let response = String(data: output.data, encoding: .utf8), response.contains("OK") else {
+                    return false
+                }
+                return true
+            }
+            .replaceError(with: false)
+            .eraseToAnyPublisher()
+    }
+    
     private func sendBillPublisher(bill: Bill, baseURL: URL, httpMethod: String) -> AnyPublisher<Bool, Never> {
         var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false)
         let params = [
