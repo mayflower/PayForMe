@@ -16,6 +16,9 @@ struct BillList: View {
     @State
     var tabBarIndex = tabBarItems.AddBill
     
+    @Binding
+    var hidePlusButton: Bool
+    
     var body: some View {
         NavigationView {
             List {
@@ -24,6 +27,7 @@ struct BillList: View {
                 })) { bill in
                     NavigationLink(destination:
                         BillDetailView(showModal: .constant(false),
+                                       hidePlusButton: self.$hidePlusButton,
                                        viewModel: self.viewModel,
                                        currentBill: bill,
                                        navBarTitle: "Edit Bill",
@@ -60,6 +64,6 @@ struct BillList_Previews: PreviewProvider {
         previewProject.bills = previewBills
         previewProject.members = previewPersons
         viewModel.currentProject = previewProject
-        return BillList(viewModel: viewModel, tabBarIndex: .BillList)
+        return BillList(viewModel: viewModel, tabBarIndex: .BillList, hidePlusButton: .constant(false))
     }
 }

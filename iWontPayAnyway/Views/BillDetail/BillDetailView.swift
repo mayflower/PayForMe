@@ -14,6 +14,9 @@ struct BillDetailView: View {
     @Binding
     var showModal: Bool
     
+    @Binding
+    var hidePlusButton: Bool
+    
     @ObservedObject
     var viewModel: BillListViewModel
     
@@ -88,7 +91,11 @@ struct BillDetailView: View {
                 }
             }
         .onAppear {
+            self.hidePlusButton = true
             self.prefillData()
+        }
+            .onDisappear {
+                self.hidePlusButton = false
         }
     }
     
@@ -147,7 +154,7 @@ struct BillDetailView: View {
 
 struct BillDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        return BillDetailView(showModal: .constant(true), viewModel: BillListViewModel())
+        return BillDetailView(showModal: .constant(true), hidePlusButton: .constant(true), viewModel: BillListViewModel())
     }
 }
 
