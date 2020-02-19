@@ -18,7 +18,6 @@ struct BillsList: View {
     
     var body: some View {
         NavigationView {
-//            ScrollView {
             List {
                     ForEach(viewModel.currentProject.bills.sorted(by: {
                         $0.lastchanged > $1.lastchanged
@@ -34,8 +33,6 @@ struct BillsList: View {
                     }
                 .onDelete(perform: deleteBill)
                 }
-                
-//            }
             .navigationBarTitle("Bills")
         }
         .onAppear {
@@ -54,4 +51,14 @@ struct BillsList: View {
         }
     }
     
+}
+
+struct BillList_Previews: PreviewProvider {
+    static var previews: some View {
+        let viewModel = BillListViewModel()
+        previewProject.bills = previewBills
+        previewProject.members = previewPersons
+        viewModel.currentProject = previewProject
+        return BillsList(viewModel: viewModel, tabBarIndex: .BillList)
+    }
 }
