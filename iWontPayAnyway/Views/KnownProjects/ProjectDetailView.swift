@@ -48,7 +48,10 @@ struct ProjectDetailView: View {
     }
     
     func addButton() {
-        let project = Project(name: addProjectModel.projectName, password: addProjectModel.projectPassword, url: addProjectModel.serverAddress)
+        
+        guard let url = URL(string: addProjectModel.serverAddress) else { return }
+        
+        let project = Project(name: addProjectModel.projectName, password: addProjectModel.projectPassword, url: url)
         ProjectManager.shared.addProject(project)
         self.presentationMode.wrappedValue.dismiss()
     }

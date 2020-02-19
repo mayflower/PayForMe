@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct BillsList: View {
+struct BillList: View {
     
     @ObservedObject
     var viewModel: BillListViewModel
@@ -21,7 +21,7 @@ struct BillsList: View {
 //            ScrollView {
             List {
                     ForEach(viewModel.currentProject.bills.sorted(by: {
-                        $0.lastchanged > $1.lastchanged
+                        $0.date > $1.date
                     })) { bill in
                         NavigationLink(destination:
                             BillDetailView(showModal: .constant(false),
@@ -46,7 +46,7 @@ struct BillsList: View {
     func deleteBill(at offsets: IndexSet) {
         for offset in offsets {
             guard let bill = viewModel.currentProject.bills.sorted(by: {
-                $0.lastchanged > $1.lastchanged
+                $0.date > $1.date
             })[safe: offset] else {
                 return
             }

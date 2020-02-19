@@ -19,7 +19,7 @@ class ProjectManager: ObservableObject {
     private(set) var projects = [Project]()
     
     @Published
-    var currentProject: Project = Project(name: "", password: "", url: "")
+    var currentProject: Project = Project(name: "", password: "", url: URL(fileURLWithPath: ""))
         
     static let shared = ProjectManager()
     private init() {
@@ -78,7 +78,7 @@ class ProjectManager: ObservableObject {
         cancellable = nil
         
         if update {
-            cancellable = NetworkService.shared.postBillPublisher(bill: bill)
+            cancellable = NetworkService.shared.updateBillPublisher(bill: bill)
                 .sink { success in
                     if success {
                         print("Bill id\(bill.id) updated")

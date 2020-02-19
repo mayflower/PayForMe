@@ -16,8 +16,21 @@ struct Bill: Codable, Identifiable {
     var date: Date
     var payer_id: Int
     var owers: [Person]
-    var `repeat`: String
-    var lastchanged: Int
+    var `repeat`: String?
+    var lastchanged: Int?
+ 
+    var params: [String: String] {
+        return [
+            "date": DateFormatter.cospend.string(from: self.date),
+            "what": self.what,
+            "payer": self.payer_id.description,
+            "amount": self.amount.description,
+            "payed_for": self.owers.map{$0.id.description}.joined(separator: ","),
+            "repeat": "n",
+            "paymentmode": "n",
+            "categoryid": "0"
+        ]
+    }
     
 }
 

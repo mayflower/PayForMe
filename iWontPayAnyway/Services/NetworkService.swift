@@ -20,11 +20,18 @@ class NetworkService {
         decoder.dateDecodingStrategy = .formatted(DateFormatter.cospend)
     }
     
-    let staticpath = "/index.php/apps/cospend/api/projects/"
+    private let cospendStaticPath = "/index.php/apps/cospend/api/projects"
+    private let iHateMoneyStaticPath = "/api/projects"
+    
+    private var currentProject: Project {
+        get {
+            return ProjectManager.shared.currentProject
+        }
+    }
         
     func loadBillsPublisher(_ project: Project) -> AnyPublisher<[Bill], Never> {
-        let url = buildURL(project, "bills")!
-        return URLSession.shared.dataTaskPublisher(for: url)
+        let request = self.buildURLRequest("bills", params: [:], project: project)
+        return URLSession.shared.dataTaskPublisher(for: request)
             .compactMap { data, response -> Data? in
                 guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else { print("Network Error"); return nil }
                 return data
@@ -35,8 +42,8 @@ class NetworkService {
     }
 
     func loadMembersPublisher(_ project: Project) -> AnyPublisher<[Person], Never> {
-        let url = buildURL(project, "members")!
-        return URLSession.shared.dataTaskPublisher(for: url)
+        let request = buildURLRequest("members", params: [:], project: project)
+        return URLSession.shared.dataTaskPublisher(for: request)
             .compactMap { data, response -> Data? in
                 guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else { print("Network Error"); return nil }
                 return data
@@ -47,50 +54,23 @@ class NetworkService {
     }
     
     func postBillPublisher(bill: Bill) -> AnyPublisher<Bool, Never> {
-        let baseURL = buildURL(ProjectManager.shared.currentProject, "bills")!
-        return sendBillPublisher(bill: bill, baseURL: baseURL, httpMethod: "POST")
+        let request = buildURLRequest("bills", params: bill.params, project: currentProject, httpMethod: "POST")
+        return sendBillPublisher(request: request)
     }
     
     func updateBillPublisher(bill: Bill) -> AnyPublisher<Bool, Never> {
-        let baseURL = buildURL(ProjectManager.shared.currentProject, "bills/\(bill.id)")!
-        return sendBillPublisher(bill: bill, baseURL: baseURL, httpMethod: "PUT")
+        let request = buildURLRequest("bills/\(bill.id)", params: bill.params, project: currentProject, httpMethod: "PUT")
+        return sendBillPublisher(request: request)
     }
     
     func deleteBillPublisher(bill: Bill) -> AnyPublisher<Bool, Never> {
-        let baseURL = buildURL(ProjectManager.shared.currentProject, "bills/\(bill.id)")!
-        
-        var request = URLRequest(url: baseURL)
-        request.httpMethod = "DELETE"
-        
-        return URLSession.shared.dataTaskPublisher(for: request)
-            .tryMap { output in
-                guard let response = String(data: output.data, encoding: .utf8), response.contains("OK") else {
-                    return false
-                }
-                return true
-            }
-            .replaceError(with: false)
-            .eraseToAnyPublisher()
+        let request = buildURLRequest("bills/\(bill.id)", params: [:], project: currentProject, httpMethod: "DELETE")
+        return sendBillPublisher(request: request)
     }
     
-    private func sendBillPublisher(bill: Bill, baseURL: URL, httpMethod: String) -> AnyPublisher<Bool, Never> {
-        var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false)
-        let params = [
-            "date": DateFormatter.cospend.string(from: bill.date),
-            "what": bill.what,
-            "payer": bill.payer_id.description,
-            "amount": bill.amount.description,
-            "payed_for": bill.owers.map{$0.id.description}.joined(separator: ","),
-            "repeat": "n",
-            "paymentmode": "n",
-            "categoryid": "0"
-        ]
-        urlComponents?.queryItems = params.map{URLQueryItem(name: $0, value: $1)}
-        let url = urlComponents!.url!
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = httpMethod
-        
-        return URLSession.shared.dataTaskPublisher(for: urlRequest)
+    private func sendBillPublisher(request: URLRequest) -> AnyPublisher<Bool, Never> {
+                
+        return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { output in
                 guard let response = output.response as? HTTPURLResponse, response.statusCode == 200 else {
                     return false
@@ -101,10 +81,41 @@ class NetworkService {
             .eraseToAnyPublisher()
     }
     
-    func buildURL(_ project: Project, _ suffix: String) -> URL? {
-        let path = "\(project.url)\(staticpath)\(project.name)/\(project.password)/\(suffix)"
-        print("Building \(path)")
-        return URL(string: path)
+    private func baseURLFor(_ project: Project, suffix: String) -> URL {
+        switch project.backend {
+            case .cospend:
+                return project.url.appendingPathComponent("\(cospendStaticPath)/\(project.name)/\(project.password)/\(suffix)")
+            case .iHateMoney:
+                return project.url.appendingPathComponent("\(iHateMoneyStaticPath)/\(project.name)/\(suffix)")
+        }
+    }
+    
+    private func buildURLRequest(_ suffix: String = "", params: [String: String] = [:], project: Project = ProjectManager.shared.currentProject, httpMethod: String = "GET") -> URLRequest {
+        
+        let requestURL: URL
+        var request: URLRequest
+        
+        if !params.isEmpty {
+            let baseURL = baseURLFor(project, suffix: suffix)
+            
+            var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false)
+            urlComponents?.queryItems = params.map { URLQueryItem(name: $0, value: $1) }
+            
+            requestURL = urlComponents!.url!
+        } else {
+            requestURL = baseURLFor(project, suffix: suffix)
+        }
+        
+        request = URLRequest(url: requestURL)
+        
+        if project.backend == .iHateMoney {
+            guard let authString = "\(project.name):\(project.password)".data(using: .utf8)?.base64EncodedString() else { fatalError("error generating authString. THIS SHOULD NOT HAPPEN") }
+            request.setValue("Basic \(authString)", forHTTPHeaderField: "Authorization")
+        }
+        
+        request.httpMethod = httpMethod
+        
+        return request
     }
     
     enum HTTPError: LocalizedError {
