@@ -47,7 +47,7 @@ struct BalanceCell: View {
     
     var body: some View {
         HStack {
-                ColorIndicator(color: Color(balance.color), name: balance.name)
+                ColorIndicator(color: balance.color, name: balance.name)
             Spacer()
             Text(" \(String(format:"%.2f",balance.amount)) €")
                 .font(.headline)

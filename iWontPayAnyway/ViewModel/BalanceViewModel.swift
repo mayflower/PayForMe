@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class BalanceViewModel: ObservableObject {
     
@@ -42,7 +43,11 @@ class BalanceViewModel: ObservableObject {
             let owes = currentProject.bills.compactMap { bill in
                 bill.owers.first { ower in ower.id == member.id } == nil ? nil : bill.amount / Double( bill.owers.count) }
                 .reduce(0.0, -)
-            return Balance(id: member.id, name: member.name, amount: paid + owes, color: member.color ?? PersonColor(r: 255, g: 255, b: 255) )
+            var color = Color.standardColorById(id: member.id)
+            if let pc = member.color {
+                color = Color(pc)
+            }
+            return Balance(id: member.id, name: member.name, amount: paid + owes, color: color)
         }
     }
 }
@@ -51,5 +56,5 @@ struct Balance: Identifiable {
     let id: Int
     let name: String
     var amount: Double
-    let color: PersonColor
+    let color: Color
 }
