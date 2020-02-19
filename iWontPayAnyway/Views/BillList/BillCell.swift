@@ -20,39 +20,75 @@ struct BillCell: View {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 10) {
                     Text(bill.what).font(.headline)
-                    HStack {
-                        Text(paymentString()).font(.subheadline)
-                    }
+                    HStack(spacing: 5) {
+                        payerText()
+                        Image(systemName: "arrow.right")
+                        owersTexts()
+                        }.font(.headline)
                 }
                 Spacer()
                 VStack(alignment: .trailing, spacing: 10) {
                     Text(amountString()).font(.headline)
                     Text(DateFormatter.cospend.string(from: bill.date)).font(.subheadline)
                 }
-            }
+        }
     }
     
-    func paymentString() -> String {
-        let payer = viewModel.currentProject.members.first{$0.id == bill.payer_id}?.name ?? bill.payer_id.description
-        let owers = bill.owers.compactMap({$0.name}).joined(separator: ", ")
-        return "\(payer) -> \(owers)"
+    func payerText() -> some View {
+        personText(payer)
+    }
+    
+    func owersTexts() -> some View {
+        HStack(spacing: 1) {
+            ForEach(bill.owers) {
+                ower in
+                self.personText(ower)
+                if self.bill.owers.last != ower {
+                    Text(", ")
+                }
+            }
+        }.padding(0)
+    }
+    
+    func personText(_ person: Person) -> some View {
+        Text(person.name)
+            .padding(2)
+            .background(colorOfPerson(person))
+            .foregroundColor(Color.white)
+            .cornerRadius(5)
+            .fixedSize(horizontal: true, vertical: true)
     }
     
     func amountString() -> String {
         return "\(String(format: "%.2f €", bill.amount))"
     }
     
-    func backgroundColor() -> Color {
-        guard let payer = viewModel.currentProject.members.first(where: {$0.id == bill.payer_id}),
-        let color = payer.color else { return Color.white }
+    func colorOfPerson(_ person: Person) -> Color {
+        guard let realPerson = viewModel.currentProject.members.first(where: {$0.id == person.id}),
+            let color = realPerson.color else { return Color.white}
+        
         return Color(color)
+    }
+    
+    var payer: Person {
+        get {
+            viewModel.currentProject.members.first {
+                $0.id == bill.payer_id
+                } ?? Person(id: 1, weight: 1, name: "Unknown", activated: true)
+        }
+    }
+    
+    func backgroundColor() -> Color {
+        return colorOfPerson(payer)
     }
 }
 
-//struct BillCell_Previews: PreviewProvider {
-//    static var previews: some View {
-//        previewProject.bills = previewBills
-//        previewProject.members = [previewPerson]
-//        return BillCell(project: .constant(previewProject), bill: previewBills[0])
-//    }
-//}
+struct BillCell_Previews: PreviewProvider {
+    static var previews: some View {
+        let viewModel = BillListViewModel()
+        previewProject.bills = previewBills
+        previewProject.members = previewPersons
+        viewModel.currentProject = previewProject
+        return BillsList(viewModel: viewModel, tabBarIndex: .BillList)
+    }
+}
