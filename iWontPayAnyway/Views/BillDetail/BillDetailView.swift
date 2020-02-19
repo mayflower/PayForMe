@@ -11,6 +11,10 @@ import Foundation
 import Combine
 
 struct BillDetailView: View {
+    
+    @Environment(\.presentationMode)
+    var presentationMode: Binding<PresentationMode>
+    
     @Binding
     var showModal: Bool
     
@@ -20,6 +24,7 @@ struct BillDetailView: View {
     var currentBill: Bill?
     
     var navBarTitle = "Add Bill"
+    var sendButtonTitle = "Create Bill"
     
     @State
     var selectedPayer = 1
@@ -72,7 +77,7 @@ struct BillDetailView: View {
                     }
                     Section {
                         Button(action: self.sendBillToServer) {
-                            Text("Send to server")
+                            Text(sendButtonTitle)
                         }
                         .disabled(self.$sendBillButtonDisabled.wrappedValue)
                         .onReceive(self.viewModel.validatedInput) {
@@ -110,6 +115,9 @@ struct BillDetailView: View {
         ProjectManager.shared.saveBill(newBill, completion: {
             self.sendingInProgress = false
             self.showModal.toggle()
+            DispatchQueue.main.async {
+                self.presentationMode.wrappedValue.dismiss()
+            }
         })
     }
     
