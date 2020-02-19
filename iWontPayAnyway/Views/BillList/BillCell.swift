@@ -30,7 +30,7 @@ struct BillCell: View {
                 VStack(alignment: .trailing, spacing: 10) {
                     Text(amountString()).font(.headline)
                     Text(DateFormatter.cospend.string(from: bill.date)).font(.subheadline)
-                }
+                }.fixedSize(horizontal: true, vertical: true)
         }
     }
     
