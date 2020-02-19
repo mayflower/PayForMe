@@ -31,6 +31,7 @@ struct BillList: View {
                                        viewModel: self.viewModel,
                                        currentBill: bill,
                                        navBarTitle: "Edit Bill",
+                                       sendButtonTitle: "Update Bill",
                                        owers: self.viewModel.initOwers(currentBill: bill))) {
                                         BillCell(viewModel: self.viewModel, bill: bill)
                     }
