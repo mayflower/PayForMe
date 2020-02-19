@@ -19,6 +19,9 @@ struct ContentView: View {
     @State
     var showModal = false
     
+    @State
+    var hidePlusButton = false
+    
     var bills = [Bill]()
     
     var body: some View {
@@ -33,7 +36,7 @@ struct ContentView: View {
                         .tabItem({
                             Image(systemName: "arrow.right.arrow.left")
                         }).tag(tabBarItems.Balance)
-                    BillList(viewModel: BillListViewModel())
+                    BillList(viewModel: BillListViewModel(), hidePlusButton: self.$hidePlusButton)
                         .tabItem({
                             Image(systemName: "rectangle.stack")
                         }).tag(tabBarItems.BillList)
@@ -49,11 +52,15 @@ struct ContentView: View {
                 Button(action: {
                     self.showModal.toggle()
                 }) {
-                    Image(systemName: "plus.circle")
-                        .resizable()
-                        .frame(width: 64, height: 64)
-                        .foregroundColor(Color.secondary)
-                        .shadow(radius: 20)
+                    if !hidePlusButton {
+                        Image(systemName: "plus.circle")
+                            .resizable()
+                            .frame(width: 64, height: 64)
+                            .foregroundColor(Color.secondary)
+                            .shadow(radius: 20)
+                    } else {
+                        EmptyView()
+                    }
                 }
             }.padding(EdgeInsets(top: 0, leading: 32, bottom: 64, trailing: 32))
         }.sheet(isPresented: $showModal) {
