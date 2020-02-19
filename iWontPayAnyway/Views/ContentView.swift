@@ -51,9 +51,9 @@ struct ContentView: View {
                 }) {
                     Image(systemName: "plus.circle")
                         .resizable()
-                        .frame(width: 92, height: 92)
-                        .foregroundColor(Color.primary)
-                        .shadow(radius: 10)
+                        .frame(width: 64, height: 64)
+                        .foregroundColor(Color.secondary)
+                        .shadow(radius: 20)
                 }
             }.padding(EdgeInsets(top: 0, leading: 32, bottom: 64, trailing: 32))
         }.sheet(isPresented: $showModal) {
