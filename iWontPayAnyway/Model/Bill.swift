@@ -38,29 +38,27 @@ let date = DateFormatter.cospend.date(from: "2019-12-21")!
 
 let previewBills = [
     Bill(id: 1, amount: 5, what: "Erdnüsse", date: date, payer_id: 1, owers: [
-        Person(id: 1, weight: 1, name: "Rolle", activated: true),
-        Person(id: 2, weight: 1, name: "Rolle2", activated: true),
-        Person(id: 3, weight: 1, name: "Rolle4", activated: true)
+        Person(id: 1, weight: 1, name: "Pikachu", activated: true),
+        Person(id: 2, weight: 1, name: "Schiggy", activated: true),
+        Person(id: 3, weight: 1, name: "Bisasam", activated: true)
     ], repeat: "n", lastchanged: 1231234),
     Bill(id: 2, amount: 5, what: "Nochmal Erdnüsse", date: date, payer_id: 1, owers: [
-        Person(id: 1, weight: 1, name: "Rolle", activated: true),
-        Person(id: 2, weight: 1, name: "Rolle2", activated: true),
-        Person(id: 3, weight: 1, name: "Rolle4", activated: true)
+        Person(id: 1, weight: 1, name: "Pikachu", activated: true),
+        Person(id: 2, weight: 1, name: "Schiggy", activated: true),
+        Person(id: 3, weight: 1, name: "Bisasam", activated: true)
     ], repeat: "n", lastchanged: 1231234),
     Bill(id: 3, amount: 5, what: "Nochmal Erdnüsse", date: date, payer_id: 2, owers: [
-        Person(id: 1, weight: 1, name: "Rolle", activated: true),
-        Person(id: 2, weight: 1, name: "Rolle2", activated: true),
-        Person(id: 3, weight: 1, name: "Rolle4", activated: true)
+        Person(id: 1, weight: 1, name: "Pikachu", activated: true),
+        Person(id: 2, weight: 1, name: "Schiggy", activated: true),
+        Person(id: 3, weight: 1, name: "Bisasam", activated: true)
     ], repeat: "n", lastchanged: 1231234),
     Bill(id: 4, amount: 5, what: "Nochmal Erdnüsse", date: date, payer_id: 3, owers: [
-        Person(id: 1, weight: 1, name: "Rolle", activated: true),
-        Person(id: 2, weight: 1, name: "Rolle2", activated: true),
-        Person(id: 3, weight: 1, name: "Rolle4", activated: true)
+        Person(id: 1, weight: 1, name: "Pikachu", activated: true),
+        Person(id: 2, weight: 1, name: "Schiggy", activated: true),
+        Person(id: 4, weight: 1, name: "Glumanda", activated: true)
     ], repeat: "n", lastchanged: 1231234),
     Bill(id: 5, amount: 5, what: "Nochmal Erdnüsse", date: date, payer_id: 1, owers: [
-        Person(id: 1, weight: 1, name: "Rolle", activated: true),
-        Person(id: 2, weight: 1, name: "Rolle2", activated: true),
-        Person(id: 3, weight: 1, name: "Rolle4", activated: true)
+        Person(id: 3, weight: 1, name: "Bisasam", activated: true)
     ], repeat: "n", lastchanged: 1231234),
     
 ]
