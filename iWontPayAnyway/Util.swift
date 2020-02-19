@@ -20,6 +20,25 @@ extension Color {
     init(_ pc: PersonColor) {
         self.init(red: Double(pc.r)/255, green: Double(pc.g)/255, blue: Double(pc.b)/255, opacity: 1)
     }
+    
+    
+    static func standardColorById(id: Int) -> Color {
+        let colors = [
+            rgb(88,86,214),
+            rgb(52,170,220),
+            rgb(90,200,250),
+            rgb(76,217,100),
+            rgb(255,59,48),
+            rgb(255,59,48),
+            rgb(255,149,0),
+            rgb(255,204,0)
+        ]
+        return colors[id % colors.count]
+    }
+    
+    private static func rgb(_ r: Int, _ g: Int, _ b: Int) -> Color {
+        Color(red: Double(r)/255.0, green: Double(g)/255.0, blue: Double(b)/255.0, opacity: 1)
+    }
 }
 
 extension String {

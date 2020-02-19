@@ -65,7 +65,9 @@ struct BillCell: View {
     
     func colorOfPerson(_ person: Person) -> Color {
         guard let realPerson = viewModel.currentProject.members.first(where: {$0.id == person.id}),
-            let color = realPerson.color else { return Color.white}
+            let color = realPerson.color else {
+                return Color.standardColorById(id: person.id)
+        }
         
         return Color(color)
     }
