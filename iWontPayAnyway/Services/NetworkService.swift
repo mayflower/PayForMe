@@ -28,6 +28,9 @@ class NetworkService {
             return ProjectManager.shared.currentProject
         }
     }
+    
+    let networkActivityPublisher = PassthroughSubject<Bool, Never>()
+
         
     func loadBillsPublisher(_ project: Project) -> AnyPublisher<[Bill], Never> {
         let request = self.buildURLRequest("bills", params: [:], project: project)
@@ -51,6 +54,25 @@ class NetworkService {
         .decode(type: [Person].self, decoder: decoder)
         .replaceError(with: [])
         .eraseToAnyPublisher()
+    }
+    
+    func testProject(_ project: Project) -> AnyPublisher<Bool, Never> {
+        let request = buildURLRequest("members", params: [:], project: project)
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .handleEvents(receiveSubscription: { _ in
+                self.networkActivityPublisher.send(true)
+            }, receiveCompletion: { _ in
+                self.networkActivityPublisher.send(false)
+            }, receiveCancel: {
+                self.networkActivityPublisher.send(false)
+            })
+            .compactMap { _, response -> Bool in
+                guard let httpResponse = response as? HTTPURLResponse,
+                    httpResponse.statusCode == 200 else { print("Network Error"); return false }
+                return true
+            }
+            .replaceError(with: false)
+            .eraseToAnyPublisher()
     }
     
     func postBillPublisher(bill: Bill) -> AnyPublisher<Bool, Never> {

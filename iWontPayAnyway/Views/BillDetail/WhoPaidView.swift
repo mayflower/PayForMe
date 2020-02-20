@@ -40,8 +40,6 @@ struct WhoPaidView_Previews: PreviewProvider {
     static var previews: some View {
         var manyPersons = [Person]()
         manyPersons.append(contentsOf: previewPersons)
-        manyPersons.append(contentsOf: previewPersons)
-        manyPersons.append(contentsOf: previewPersons)
         
         return WhoPaidView(members: .constant(manyPersons), selectedPayer: .constant(1))
     }

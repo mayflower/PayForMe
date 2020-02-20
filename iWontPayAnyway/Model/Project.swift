@@ -43,8 +43,8 @@ extension Project: Equatable {
 }
 
 enum ProjectBackend: Int, Codable {
-    case cospend
-    case iHateMoney
+    case cospend = 0
+    case iHateMoney = 1
 }
 
 let previewProject = Project(name: "TestProject", password: "TestPassword", url: URL(string: "https://testserver.de")!)

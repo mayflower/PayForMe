@@ -20,26 +20,41 @@ struct ProjectDetailView: View {
     @State
     var addProjectButtonDisabled = true
     
+    
     var body: some View {
         Form {
-            Section(header: Text("Server Address")) {
-                TextFieldContainer("https://mynextcloud.org", text: self.$addProjectModel.serverAddress).autocapitalization(.none).keyboardType(.URL).onTapGesture {
-                    if self.addProjectModel.serverAddress.isEmpty {
-                        self.addProjectModel.serverAddress = "https://"
+            Picker(selection: $addProjectModel.projectType, label: Text("snens")) {
+                Text("Cospend").tag(ProjectBackend.cospend)
+                Text("iHateMoney").tag(ProjectBackend.iHateMoney)
+            }.pickerStyle(SegmentedPickerStyle())
+            if self.addProjectModel.projectType == .cospend {
+                Section(header: Text("Server Address")) {
+                    TextFieldContainer("https://mynextcloud.org",
+                                       text: self.$addProjectModel.serverAddress)
+                        .autocapitalization(.none).keyboardType(.URL)
+                        .onTapGesture {
+                            if self.addProjectModel.serverAddress.isEmpty {
+                                self.addProjectModel.serverAddress = "https://"
+                            }
                     }
                 }
             }
             Section(header: Text("Project Name & Password")) {
-                TextField("Enter project name", text: self.$addProjectModel.projectName).autocapitalization(.none)
-                
+                TextField("Enter project name",
+                          text: self.$addProjectModel.projectName)
+                    .autocapitalization(.none)
+
                 SecureField("Enter project password", text: self.$addProjectModel.projectPassword)
+            }
+            if addProjectModel.networkTestInProgress {
+                Text("Confirming project")
             }
             Section {
                 Button(action: self.addButton) {
                     Text("Add project")
                 }
                 .disabled($addProjectButtonDisabled.wrappedValue)
-                .onReceive(addProjectModel.validatedInput) {
+                .onReceive(addProjectModel.validatedServer) {
                     self.addProjectButtonDisabled = !$0
                 }
             }
