@@ -20,8 +20,8 @@ struct AddProjectView: View {
     }
 }
 
-//struct AddProjectView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AddProjectView()
-//    }
-//}
+struct AddProjectView_Previews: PreviewProvider {
+    static var previews: some View {
+        AddProjectView(addProjectModel: AddProjectModel())
+    }
+}

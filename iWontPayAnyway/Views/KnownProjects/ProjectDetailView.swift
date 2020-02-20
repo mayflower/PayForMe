@@ -58,8 +58,8 @@ struct ProjectDetailView: View {
     
 }
 
-//struct OnboardingView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        OnboardingView().environmentObject(ServerManager())
-//    }
-//}
+struct OnboardingView_Previews: PreviewProvider {
+    static var previews: some View {
+        ProjectDetailView(addProjectModel: AddProjectModel())
+    }
+}
