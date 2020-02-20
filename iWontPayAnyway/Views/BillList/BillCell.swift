@@ -35,53 +35,29 @@ struct BillCell: View {
     }
     
     func payerText() -> some View {
-        personText(payer)
+        PersonText(person: payer)
     }
     
     func owersTexts() -> some View {
         HStack(spacing: 1) {
             ForEach(bill.owers) {
                 ower in
-                self.personText(ower)
-                if self.bill.owers.last != ower {
-                    Text(", ")
-                }
+                PersonText(person: ower)
+//                if self.bill.owers.last != ower {
+//                    Text(", ")
+//                }
             }
         }.padding(0)
-    }
-    
-    func personText(_ person: Person) -> some View {
-        Text(person.name)
-            .padding(2)
-            .background(colorOfPerson(person))
-            .foregroundColor(Color.white)
-            .cornerRadius(5)
-            .fixedSize(horizontal: true, vertical: true)
     }
     
     func amountString() -> String {
         return "\(String(format: "%.2f €", bill.amount))"
     }
     
-    func colorOfPerson(_ person: Person) -> Color {
-        guard let realPerson = viewModel.currentProject.members.first(where: {$0.id == person.id}),
-            let color = realPerson.color else {
-                return Color.standardColorById(id: person.id)
-        }
-        
-        return Color(color)
-    }
-    
     var payer: Person {
         get {
-            viewModel.currentProject.members.first {
-                $0.id == bill.payer_id
-                } ?? Person(id: 1, weight: 1, name: "Unknown", activated: true)
+            viewModel.currentProject.members[bill.payer_id] ?? Person(id: 1, weight: 1, name: "Unknown", activated: true)
         }
-    }
-    
-    func backgroundColor() -> Color {
-        return colorOfPerson(payer)
     }
 }
 

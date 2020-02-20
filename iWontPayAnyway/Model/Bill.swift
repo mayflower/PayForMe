@@ -49,8 +49,7 @@ let previewBills = [
     ], repeat: "n", lastchanged: 1231234),
     Bill(id: 3, amount: 5, what: "Nochmal Erdnüsse", date: date, payer_id: 2, owers: [
         Person(id: 1, weight: 1, name: "Pikachu", activated: true),
-        Person(id: 2, weight: 1, name: "Schiggy", activated: true),
-        Person(id: 3, weight: 1, name: "Bisasam", activated: true)
+        Person(id: 2, weight: 1, name: "Schiggy", activated: true)
     ], repeat: "n", lastchanged: 1231234),
     Bill(id: 4, amount: 5, what: "Nochmal Erdnüsse", date: date, payer_id: 3, owers: [
         Person(id: 1, weight: 1, name: "Pikachu", activated: true),

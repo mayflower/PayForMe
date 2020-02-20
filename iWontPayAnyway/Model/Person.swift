@@ -33,9 +33,9 @@ struct PersonColor: Codable {
 
 let previewPerson = Person(id: 1, weight: 1, name: "Pikachu", activated: true, color: PersonColor(r: 60, g: 110, b: 186))
 let previewPersons = [
-    previewPerson,
-    Person(id: 2, weight: 1, name: "Schiggy", activated: true, color: PersonColor(r: 60, g: 110, b: 186)),
-    Person(id: 3, weight: 1, name: "Bisasam", activated: true),
-    Person(id: 4, weight: 1, name: "Glumanda", activated: true),
+    1:previewPerson,
+    2:Person(id: 2, weight: 1, name: "Schiggy", activated: true, color: PersonColor(r: 60, g: 110, b: 186)),
+    3:Person(id: 3, weight: 1, name: "Bisasam", activated: true),
+    4:Person(id: 4, weight: 1, name: "Glumanda", activated: true),
 ]
 

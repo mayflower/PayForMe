@@ -15,7 +15,7 @@ class Project: Codable, Identifiable {
     let id: UUID
     let backend: ProjectBackend
     
-    init(name: String, password: String, url: URL, members: [Person] = [], bills: [Bill] = []) {
+    init(name: String, password: String, url: URL, members: [Int:Person] = [:], bills: [Bill] = []) {
         self.name = name
         self.password = password
         self.url = url
@@ -31,7 +31,7 @@ class Project: Codable, Identifiable {
             self.backend = .cospend
         }
     }
-    var members: [Person]
+    var members: [Int:Person]
     
     var bills: [Bill]
 }
@@ -47,7 +47,7 @@ enum ProjectBackend: Int, Codable {
     case iHateMoney = 1
 }
 
-let previewProject = Project(name: "TestProject", password: "TestPassword", url: URL(string: "https://testserver.de")!)
+let previewProject = Project(name: "TestProject", password: "TestPassword", url: URL(string: "https://testserver.de")!, members: previewPersons, bills: previewBills)
 let previewProjects = [
     previewProject,
     Project(name: "test1", password: "test23", url: URL(string: "https://testserver.de")!),

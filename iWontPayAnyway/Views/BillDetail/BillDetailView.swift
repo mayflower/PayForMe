@@ -48,9 +48,9 @@ struct BillDetailView: View {
             ZStack {
                 Form {
                     Section(header: Text("Payer")) {
-                        WhoPaidView(members: $viewModel.currentProject.members, selectedPayer: self.$selectedPayer).onAppear {
-                            if !self.viewModel.currentProject.members.contains(where: { $0.id == self.selectedPayer }) {
-                                guard let id = self.viewModel.currentProject.members[safe: 0]?.id else { return }
+                        WhoPaidView(members: viewModel.currentProject.members.map {$0.value}, selectedPayer: self.$selectedPayer).onAppear {
+                            if self.viewModel.currentProject.members[self.selectedPayer] == nil {
+                                guard let id = self.viewModel.currentProject.members.first?.key else { return }
                                 self.selectedPayer = id
                             }
                         }
@@ -162,7 +162,9 @@ struct BillDetailView: View {
 
 struct BillDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        return BillDetailView(showModal: .constant(true), hidePlusButton: .constant(true), viewModel: BillListViewModel())
+        let vm = BillListViewModel()
+        vm.currentProject = previewProject
+        return BillDetailView(showModal: .constant(true), hidePlusButton: .constant(true), viewModel: vm)
     }
 }
 

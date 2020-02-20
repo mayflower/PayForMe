@@ -18,7 +18,7 @@ struct AddBillView: View {
     
     var body: some View {
         NavigationView {
-            BillDetailView(showModal: $showModal, hidePlusButton: .constant(false), viewModel: viewModel, navBarTitle: "Add Bill", owers: viewModel.currentProject.members.map{Ower(id: $0.id, name: $0.name, isOwing: false)})
+            BillDetailView(showModal: $showModal, hidePlusButton: .constant(false), viewModel: viewModel, navBarTitle: "Add Bill", owers: viewModel.currentProject.members.map{Ower(id: $0.key, name: $0.value.name, isOwing: false)})
         }
     }
 }

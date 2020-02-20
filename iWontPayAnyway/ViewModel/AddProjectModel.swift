@@ -73,8 +73,5 @@ class AddProjectModel: ObservableObject {
         }
         .receive(on: RunLoop.main)
         .eraseToAnyPublisher()
-    }
-    
-    
-    
+    }  
 }

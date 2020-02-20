@@ -50,7 +50,7 @@ class BillListViewModel: ObservableObject {
     
     func initOwers(currentBill: Bill) -> [Ower] {
         guard !currentBill.owers.isEmpty else {
-            return self.currentProject.members.map{Ower(id: $0.id, name: $0.name, isOwing: false)}
+            return self.currentProject.members.values.map{Ower(id: $0.id, name: $0.name, isOwing: false)}
         }
         
         var owers = currentBill.owers.map {
@@ -59,7 +59,7 @@ class BillListViewModel: ObservableObject {
         let activeOwerIDs = owers.map {
             $0.id
         }
-        let inactiveOwers = self.currentProject.members.map({
+        let inactiveOwers = self.currentProject.members.values.map({
             Ower(id: $0.id, name: $0.name, isOwing: false)
         }).filter {
             !activeOwerIDs.contains($0.id)

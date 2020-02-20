@@ -37,7 +37,7 @@ class BalanceViewModel: ObservableObject {
     }
     
     func setBalances() {
-        balances = currentProject.members.map {
+        balances = currentProject.members.values.map {
             member in
             let paid = currentProject.bills.filter { $0.payer_id == member.id }.map { $0.amount }.reduce(0.0, +)
             let owes = currentProject.bills.compactMap { bill in

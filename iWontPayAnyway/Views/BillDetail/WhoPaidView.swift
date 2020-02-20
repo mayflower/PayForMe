@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct WhoPaidView: View {
-    @Binding
+    @State
     var members: [Person]
     
     @Binding
@@ -27,9 +27,9 @@ struct WhoPaidView: View {
         } else {
             return AnyView(
                 Picker(selection: $selectedPayer, label: Text("Who paid")) {
-                ForEach(members) {
+                    ForEach(members) {
                     member in
-                    Text(member.name)
+                        Text(member.name)
                 }
             }.pickerStyle(DefaultPickerStyle()))
         }
@@ -39,8 +39,7 @@ struct WhoPaidView: View {
 struct WhoPaidView_Previews: PreviewProvider {
     static var previews: some View {
         var manyPersons = [Person]()
-        manyPersons.append(contentsOf: previewPersons)
         
-        return WhoPaidView(members: .constant(manyPersons), selectedPayer: .constant(1))
+        return WhoPaidView(members: Array(previewPersons.values), selectedPayer: .constant(1))
     }
 }

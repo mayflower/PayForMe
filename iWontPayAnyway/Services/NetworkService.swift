@@ -44,7 +44,7 @@ class NetworkService {
         .eraseToAnyPublisher()
     }
 
-    func loadMembersPublisher(_ project: Project) -> AnyPublisher<[Person], Never> {
+    func loadMembersPublisher(_ project: Project) -> AnyPublisher<[Int:Person], Never> {
         let request = buildURLRequest("members", params: [:], project: project)
         return URLSession.shared.dataTaskPublisher(for: request)
             .compactMap { data, response -> Data? in
@@ -53,6 +53,10 @@ class NetworkService {
         }
         .decode(type: [Person].self, decoder: decoder)
         .replaceError(with: [])
+        .map {
+            members in
+            Dictionary(members.map {($0.id, $0)}) {a,_ in a }
+        }
         .eraseToAnyPublisher()
     }
     
