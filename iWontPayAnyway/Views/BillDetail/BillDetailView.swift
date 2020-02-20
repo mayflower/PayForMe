@@ -74,7 +74,7 @@ struct BillDetailView: View {
                         ForEach(self.owers.indices, id: \.self) {
                             index in
                             Toggle(isOn: self.$owers[index].isOwing) {
-                                Text(self.owers[index].name)
+                                PersonText(person: self.viewModel.currentProject.members[self.owers[index].id]!)
                             }
                         }
                     }

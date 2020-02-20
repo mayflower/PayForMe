@@ -29,7 +29,7 @@ struct WhoPaidView: View {
                 Picker(selection: $selectedPayer, label: Text("Who paid")) {
                     ForEach(members) {
                     member in
-                        Text(member.name)
+                        PersonText(person: member)
                 }
             }.pickerStyle(DefaultPickerStyle()))
         }
