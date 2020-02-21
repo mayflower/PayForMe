@@ -19,7 +19,7 @@ class ProjectManager: ObservableObject {
     private(set) var projects = [Project]()
     
     @Published
-    var currentProject: Project = Project(name: "", password: "", url: URL(fileURLWithPath: ""))
+    var currentProject: Project = Project(name: "", password: "", backend: .iHateMoney)
         
     static let shared = ProjectManager()
     private init() {
@@ -64,7 +64,7 @@ class ProjectManager: ObservableObject {
         
         let newCancellable = Publishers.Zip(a, b)
             .map { bills, members in
-                return Project(name: self.currentProject.name, password: self.currentProject.password, url: self.currentProject.url, members: members, bills: bills)
+                return Project(name: self.currentProject.name, password: self.currentProject.password, backend: self.currentProject.backend, url: self.currentProject.url, members: members, bills: bills)
             }
             .receive(on: DispatchQueue.main)
             .assign(to: \.currentProject, on: self)

@@ -15,21 +15,21 @@ class Project: Codable, Identifiable {
     let id: UUID
     let backend: ProjectBackend
     
-    init(name: String, password: String, url: URL, members: [Int:Person] = [:], bills: [Bill] = []) {
+    init(name: String, password: String, backend: ProjectBackend, url: URL? = nil, members: [Int:Person] = [:], bills: [Bill] = []) {
         self.name = name
         self.password = password
-        self.url = url
+        self.backend = backend
+        
+        if let cospendURL = url, backend == .cospend {
+            self.url = cospendURL
+        } else {
+            self.url = URL(string: "https://ihatemoney.org")!
+        }
         
         self.members = members
         self.bills = bills
         
         self.id = UUID()
-        
-        if url.relativeString.lowercased().contains("ihatemoney") {
-            self.backend = .iHateMoney
-        } else {
-            self.backend = .cospend
-        }
     }
     var members: [Int:Person]
     
@@ -47,9 +47,9 @@ enum ProjectBackend: Int, Codable {
     case iHateMoney = 1
 }
 
-let previewProject = Project(name: "TestProject", password: "TestPassword", url: URL(string: "https://testserver.de")!, members: previewPersons, bills: previewBills)
+let previewProject = Project(name: "TestProject", password: "TestPassword", backend: .cospend, url: URL(string: "https://testserver.de"), members: previewPersons, bills: previewBills)
 let previewProjects = [
     previewProject,
-    Project(name: "test1", password: "test23", url: URL(string: "https://testserver.de")!),
-    Project(name: "test2", password: "test45", url: URL(string: "https://testserver.de")!),
+    Project(name: "test1", password: "test23", backend: .cospend, url: URL(string: "https://testserver.de")),
+    Project(name: "test2", password: "test45", backend: .cospend, url: URL(string: "https://testserver.de")),
 ]

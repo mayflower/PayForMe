@@ -89,7 +89,7 @@
 				650504A023FEA461000E5F9C /* PersonText.swift */,
 				656913EB23F59A0300FA196E /* Balance */,
 				6596D4E423ED9CBD0079DD5B /* BillList */,
-				6596D4E323ED9C8B0079DD5B /* KnownProjects */,
+				6596D4E323ED9C8B0079DD5B /* Projects */,
 				6596D4E223ED9C520079DD5B /* BillDetail */,
 				65662A0623D7320000303207 /* ContentView.swift */,
 			);
@@ -189,14 +189,14 @@
 			path = BillDetail;
 			sourceTree = "<group>";
 		};
-		6596D4E323ED9C8B0079DD5B /* KnownProjects */ = {
+		6596D4E323ED9C8B0079DD5B /* Projects */ = {
 			isa = PBXGroup;
 			children = (
 				65662A2523D8546900303207 /* ProjectList.swift */,
 				489995D923F6EC6F008B7E38 /* AddProjectView.swift */,
 				65662A2123D75C5F00303207 /* ProjectDetailView.swift */,
 			);
-			path = KnownProjects;
+			path = Projects;
 			sourceTree = "<group>";
 		};
 		6596D4E423ED9CBD0079DD5B /* BillList */ = {

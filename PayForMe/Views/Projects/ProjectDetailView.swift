@@ -64,10 +64,17 @@ struct ProjectDetailView: View {
     
     func addButton() {
         
-        guard let url = URL(string: addProjectModel.serverAddress) else { return }
+        let project: Project
         
-        let project = Project(name: addProjectModel.projectName, password: addProjectModel.projectPassword, url: url)
+        if addProjectModel.projectType == .cospend {
+            guard let url = URL(string: addProjectModel.serverAddress) else { return }
+            project = Project(name: addProjectModel.projectName, password: addProjectModel.projectPassword, backend: .cospend, url: url)
+        } else {
+            project = Project(name: addProjectModel.projectName, password: addProjectModel.projectPassword, backend: .iHateMoney)
+        }
+        
         ProjectManager.shared.addProject(project)
+        
         self.presentationMode.wrappedValue.dismiss()
     }
     
