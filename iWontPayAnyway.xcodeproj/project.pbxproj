@@ -50,7 +50,7 @@
 		65005A0323DE0C5C00D1D599 /* BillList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillList.swift; sourceTree = "<group>"; };
 		650504A023FEA461000E5F9C /* PersonText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonText.swift; sourceTree = "<group>"; };
 		6533A02A23D888B100FF822B /* BillCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillCell.swift; sourceTree = "<group>"; };
-		656629FF23D7320000303207 /* iWontPayAnyway.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iWontPayAnyway.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		656629FF23D7320000303207 /* PayForMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PayForMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65662A0223D7320000303207 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		65662A0423D7320000303207 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		65662A0623D7320000303207 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -107,7 +107,7 @@
 		65662A0023D7320000303207 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				656629FF23D7320000303207 /* iWontPayAnyway.app */,
+				656629FF23D7320000303207 /* PayForMe.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -227,7 +227,7 @@
 			packageProductDependencies = (
 			);
 			productName = iCospend;
-			productReference = 656629FF23D7320000303207 /* iWontPayAnyway.app */;
+			productReference = 656629FF23D7320000303207 /* PayForMe.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -456,8 +456,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.3;
-				PRODUCT_BUNDLE_IDENTIFIER = de.mayflower.iWontPayAnyway;
-				PRODUCT_NAME = iWontPayAnyway;
+				PRODUCT_BUNDLE_IDENTIFIER = de.mayflower.PayForMe;
+				PRODUCT_NAME = PayForMe;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -479,8 +479,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.3;
-				PRODUCT_BUNDLE_IDENTIFIER = de.mayflower.iWontPayAnyway;
-				PRODUCT_NAME = iWontPayAnyway;
+				PRODUCT_BUNDLE_IDENTIFIER = de.mayflower.PayForMe;
+				PRODUCT_NAME = PayForMe;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
