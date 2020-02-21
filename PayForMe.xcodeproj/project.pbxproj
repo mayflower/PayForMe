@@ -99,7 +99,7 @@
 		656629F623D7320000303207 = {
 			isa = PBXGroup;
 			children = (
-				65662A0123D7320000303207 /* iWontPayAnyway */,
+				65662A0123D7320000303207 /* PayForMe */,
 				65662A0023D7320000303207 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -112,7 +112,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		65662A0123D7320000303207 /* iWontPayAnyway */ = {
+		65662A0123D7320000303207 /* PayForMe */ = {
 			isa = PBXGroup;
 			children = (
 				6533A02C23D88EF300FF822B /* Views */,
@@ -126,7 +126,7 @@
 				65662A0A23D7320300303207 /* Preview Content */,
 				489D35F923E081120029F59F /* Util.swift */,
 			);
-			path = iWontPayAnyway;
+			path = PayForMe;
 			sourceTree = "<group>";
 		};
 		65662A0A23D7320300303207 /* Preview Content */ = {
@@ -211,9 +211,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		656629FE23D7320000303207 /* iWontPayAnyway */ = {
+		656629FE23D7320000303207 /* PayForMe */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 65662A1323D7320300303207 /* Build configuration list for PBXNativeTarget "iWontPayAnyway" */;
+			buildConfigurationList = 65662A1323D7320300303207 /* Build configuration list for PBXNativeTarget "PayForMe" */;
 			buildPhases = (
 				656629FB23D7320000303207 /* Sources */,
 				656629FC23D7320000303207 /* Frameworks */,
@@ -223,7 +223,7 @@
 			);
 			dependencies = (
 			);
-			name = iWontPayAnyway;
+			name = PayForMe;
 			packageProductDependencies = (
 			);
 			productName = iCospend;
@@ -245,7 +245,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 656629FA23D7320000303207 /* Build configuration list for PBXProject "iWontPayAnyway" */;
+			buildConfigurationList = 656629FA23D7320000303207 /* Build configuration list for PBXProject "PayForMe" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -260,7 +260,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				656629FE23D7320000303207 /* iWontPayAnyway */,
+				656629FE23D7320000303207 /* PayForMe */,
 			);
 		};
 /* End PBXProject section */
@@ -446,10 +446,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 23;
-				DEVELOPMENT_ASSET_PATHS = "\"iWontPayAnyway/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"PayForMe/Preview Content\"";
 				DEVELOPMENT_TEAM = L79BTFY6FV;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = iWontPayAnyway/Info.plist;
+				INFOPLIST_FILE = PayForMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -469,10 +469,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 23;
-				DEVELOPMENT_ASSET_PATHS = "\"iWontPayAnyway/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"PayForMe/Preview Content\"";
 				DEVELOPMENT_TEAM = L79BTFY6FV;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = iWontPayAnyway/Info.plist;
+				INFOPLIST_FILE = PayForMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -489,7 +489,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		656629FA23D7320000303207 /* Build configuration list for PBXProject "iWontPayAnyway" */ = {
+		656629FA23D7320000303207 /* Build configuration list for PBXProject "PayForMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				65662A1123D7320300303207 /* Debug */,
@@ -498,7 +498,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		65662A1323D7320300303207 /* Build configuration list for PBXNativeTarget "iWontPayAnyway" */ = {
+		65662A1323D7320300303207 /* Build configuration list for PBXNativeTarget "PayForMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				65662A1423D7320300303207 /* Debug */,
