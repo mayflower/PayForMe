@@ -12,6 +12,7 @@
 		489995DA23F6EC6F008B7E38 /* AddProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489995D923F6EC6F008B7E38 /* AddProjectView.swift */; };
 		489D35FA23E081120029F59F /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489D35F923E081120029F59F /* Util.swift */; };
 		48CC8F7423F5C16D00DCE3D8 /* AddBillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CC8F7323F5C16D00DCE3D8 /* AddBillView.swift */; };
+		48E7F75B2403FD6B000CE4E6 /* FancyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E7F75A2403FD6B000CE4E6 /* FancyButton.swift */; };
 		650059FC23DDE1C300D1D599 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650059FB23DDE1C300D1D599 /* Person.swift */; };
 		650059FE23DDE7FE00D1D599 /* Ower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650059FD23DDE7FE00D1D599 /* Ower.swift */; };
 		65005A0223DDFB1A00D1D599 /* WhoPaidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65005A0123DDFB1A00D1D599 /* WhoPaidView.swift */; };
@@ -44,6 +45,7 @@
 		489995D923F6EC6F008B7E38 /* AddProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectView.swift; sourceTree = "<group>"; };
 		489D35F923E081120029F59F /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		48CC8F7323F5C16D00DCE3D8 /* AddBillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBillView.swift; sourceTree = "<group>"; };
+		48E7F75A2403FD6B000CE4E6 /* FancyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FancyButton.swift; sourceTree = "<group>"; };
 		650059FB23DDE1C300D1D599 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		650059FD23DDE7FE00D1D599 /* Ower.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ower.swift; sourceTree = "<group>"; };
 		65005A0123DDFB1A00D1D599 /* WhoPaidView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoPaidView.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 				6596D4E323ED9C8B0079DD5B /* Projects */,
 				6596D4E223ED9C520079DD5B /* BillDetail */,
 				65662A0623D7320000303207 /* ContentView.swift */,
+				48E7F75A2403FD6B000CE4E6 /* FancyButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 				656913ED23F59A4D00FA196E /* ColorIndicator.swift in Sources */,
 				65005A0423DE0C5C00D1D599 /* BillList.swift in Sources */,
 				65662A1D23D7353400303207 /* Server.swift in Sources */,
+				48E7F75B2403FD6B000CE4E6 /* FancyButton.swift in Sources */,
 				481FB4FD23EAD78F003BD108 /* AddProjectModel.swift in Sources */,
 				65662A2423D83ED100303207 /* StorageService.swift in Sources */,
 				656E8CB823D9FDA300B3ED10 /* BillListViewModel.swift in Sources */,

@@ -15,48 +15,59 @@ struct ProjectDetailView: View {
     var presentationMode: Binding<PresentationMode>
     
     @ObservedObject
-    var addProjectModel: AddProjectModel
+    var addProjectModel = AddProjectModel.shared
     
     @State
     var addProjectButtonDisabled = true
     
+    @Binding
+    var hidePlusButton: Bool
     
     var body: some View {
-        Form {
-            Picker(selection: $addProjectModel.projectType, label: Text("snens")) {
-                Text("Cospend").tag(ProjectBackend.cospend)
-                Text("iHateMoney").tag(ProjectBackend.iHateMoney)
-            }.pickerStyle(SegmentedPickerStyle())
-            if self.addProjectModel.projectType == .cospend {
-                Section(header: Text("Server Address")) {
-                    TextFieldContainer("https://mynextcloud.org",
-                                       text: self.$addProjectModel.serverAddress)
-                        .autocapitalization(.none).keyboardType(.URL)
-                        .onTapGesture {
-                            if self.addProjectModel.serverAddress.isEmpty {
-                                self.addProjectModel.serverAddress = "https://"
-                            }
+        VStack {
+            Form {
+                Picker(selection: $addProjectModel.projectType, label: Text("snens")) {
+                    Text("Cospend").tag(ProjectBackend.cospend)
+                    Text("iHateMoney").tag(ProjectBackend.iHateMoney)
+                }.pickerStyle(SegmentedPickerStyle())
+                if self.addProjectModel.projectType == .cospend {
+                    Section(header: Text("Server Address")) {
+                        TextFieldContainer("https://mynextcloud.org",
+                                           text: self.$addProjectModel.serverAddress)
+//                            .autocapitalization(.none).keyboardType(.URL)
+                            .onTapGesture {
+                                if self.addProjectModel.serverAddress.isEmpty {
+                                    DispatchQueue.main.async {
+                                        self.addProjectModel.serverAddress = "https://"
+                                    }
+                                }
+                        }
+                    }
+                }
+                Section(header: Text("Project Name & Password")) {
+                    TextField("Enter project name",
+                              text: self.$addProjectModel.projectName)
+                        .autocapitalization(.none)
+                    
+                    SecureField("Enter project password", text: self.$addProjectModel.projectPassword)
+                }
+                Section {
+                    HStack {
+                        Spacer()
+                        FancyButton(isDisabled: $addProjectButtonDisabled, action: addButton, text: "Add Project")
+                        Spacer()
                     }
                 }
             }
-            Section(header: Text("Project Name & Password")) {
-                TextField("Enter project name",
-                          text: self.$addProjectModel.projectName)
-                    .autocapitalization(.none)
-
-                SecureField("Enter project password", text: self.$addProjectModel.projectPassword)
-            }
-            Section {
-                Button(action: self.addButton) {
-                    Text("Add project")
-                }
-                .disabled($addProjectButtonDisabled.wrappedValue)
-                .onReceive(addProjectModel.validatedServer) {
-                    self.addProjectButtonDisabled = !$0
-                }
-            }
+            
         }
         .navigationBarTitle("Add Project")
+        .onAppear {
+            self.hidePlusButton = true
+        }
+        .onDisappear {
+            self.hidePlusButton = false
+        }
     }
     
     func addButton() {
@@ -79,6 +90,6 @@ struct ProjectDetailView: View {
 
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectDetailView(addProjectModel: AddProjectModel())
+        ProjectDetailView(addProjectModel: AddProjectModel.shared, hidePlusButton: .constant(false))
     }
 }

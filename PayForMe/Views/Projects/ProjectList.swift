@@ -13,6 +13,9 @@ struct ProjectList: View {
     @ObservedObject
     var manager = ProjectManager.shared
     
+    @Binding
+    var hidePlusButton: Bool
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -33,7 +36,7 @@ struct ProjectList: View {
                     .onDelete(perform: deleteProject)
                 }
             }.navigationBarItems(trailing:
-                NavigationLink(destination: ProjectDetailView(addProjectModel: AddProjectModel())) {
+                NavigationLink(destination: ProjectDetailView(addProjectModel: AddProjectModel.shared, hidePlusButton: self.$hidePlusButton)) {
                     Image(systemName: "plus")
                         .frame(width: 20.0, height: 20.0)
                 }
@@ -51,6 +54,6 @@ struct ProjectList: View {
 
 struct ServerList_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectList()
+        ProjectList(hidePlusButton: .constant(false))
     }
 }

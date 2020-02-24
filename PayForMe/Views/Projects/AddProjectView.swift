@@ -10,18 +10,18 @@ import SwiftUI
 
 struct AddProjectView: View {
     
-    @ObservedObject
-    var addProjectModel: AddProjectModel
+    @Binding
+    var hidePlusButton: Bool
     
     var body: some View {
         NavigationView {
-            ProjectDetailView(addProjectModel: addProjectModel)
+            ProjectDetailView(hidePlusButton: self.$hidePlusButton)
         }
     }
 }
 
 struct AddProjectView_Previews: PreviewProvider {
     static var previews: some View {
-        AddProjectView(addProjectModel: AddProjectModel())
+        AddProjectView(hidePlusButton: .constant(false))
     }
 }

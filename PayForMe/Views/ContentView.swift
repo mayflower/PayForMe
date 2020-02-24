@@ -28,7 +28,7 @@ struct ContentView: View {
         ZStack {
             TabView(selection: $tabBarIndex){
                 if !manager.projects.isEmpty {
-                    ProjectList()
+                    ProjectList(hidePlusButton: self.$hidePlusButton)
                         .tabItem({
                             Image(systemName: "archivebox")
                         }).tag(tabBarItems.ServerList)
@@ -41,7 +41,7 @@ struct ContentView: View {
                             Image(systemName: "rectangle.stack")
                         }).tag(tabBarItems.BillList)
                 } else {
-                    AddProjectView(addProjectModel: AddProjectModel())
+                    AddProjectView(hidePlusButton: self.$hidePlusButton)
                         .tabItem({
                             Image(systemName: "folder.badge.plus")
                         }).tag(tabBarItems.AddServer)

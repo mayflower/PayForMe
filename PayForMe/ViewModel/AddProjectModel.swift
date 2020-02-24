@@ -30,7 +30,9 @@ class AddProjectModel: ObservableObject {
     var cancellable: AnyCancellable?
     
     
-    init() {
+    static let shared = AddProjectModel()
+    
+    private init() {
         cancellable = NetworkService.shared.networkActivityPublisher.assign(to: \.networkTestInProgress, on: self)
     }
     var validatedAddress: AnyPublisher<(ProjectBackend, String?), Never> {
