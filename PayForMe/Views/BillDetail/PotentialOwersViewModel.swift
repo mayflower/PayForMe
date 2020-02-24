@@ -27,6 +27,13 @@ class PotentialOwersViewModel: ObservableObject {
     
     var owersCancellable: AnyCancellable?
     
+    var anyOwers: AnyPublisher<Bool,Never> {
+        return Publishers.Map(upstream: $isOwing) {
+            isOwing in
+            isOwing.contains(true)
+        }.eraseToAnyPublisher()
+    }
+    
     init(members: [Int:Person]) {
         self.members = Array(members.values)
         isOwing = [Bool].init(repeating: false, count: members.count)

@@ -44,9 +44,9 @@ class BillDetailViewModel: ObservableObject {
     }
     
     var validatedInput: AnyPublisher<Bool, Never> {
-        return Publishers.CombineLatest($topic, validatedAmount)
-            .map { topic, validatedAmount in
-                return !topic.isEmpty && validatedAmount
+        return Publishers.CombineLatest3($topic, validatedAmount, povm.anyOwers)
+            .map { topic, validatedAmount, anyOwers in
+                return !topic.isEmpty && validatedAmount && anyOwers
         }
         .eraseToAnyPublisher()
     }
