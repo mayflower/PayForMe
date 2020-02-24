@@ -64,7 +64,7 @@ struct ContentView: View {
                 }
             }.padding(EdgeInsets(top: 0, leading: 32, bottom: 64, trailing: 32))
         }.sheet(isPresented: $showModal) {
-            AddBillView(showModal: self.$showModal, viewModel: BillListViewModel())
+            AddBillView(showModal: self.$showModal)
         }
     }
 }

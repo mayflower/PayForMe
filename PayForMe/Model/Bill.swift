@@ -32,6 +32,9 @@ struct Bill: Codable, Identifiable {
         ]
     }
     
+    static func newBill() -> Bill {
+        Bill(id: 99, amount: 0, what: "", date: Date(), payer_id: 0, owers: [], repeat: "n")
+    }
 }
 
 let date = DateFormatter.cospend.date(from: "2019-12-21")!
