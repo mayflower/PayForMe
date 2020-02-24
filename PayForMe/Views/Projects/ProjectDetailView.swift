@@ -46,9 +46,6 @@ struct ProjectDetailView: View {
 
                 SecureField("Enter project password", text: self.$addProjectModel.projectPassword)
             }
-            if addProjectModel.networkTestInProgress {
-                Text("Confirming project")
-            }
             Section {
                 Button(action: self.addButton) {
                     Text("Add project")
