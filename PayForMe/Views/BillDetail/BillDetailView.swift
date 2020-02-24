@@ -38,29 +38,28 @@ struct BillDetailView: View {
     
     var body: some View {
             ZStack {
-                Form {
-                    Section(header: Text("Payer")) {
-                        WhoPaidView(members: viewModel.currentProject.members.map {$0.value}, selectedPayer: self.$viewModel.selectedPayer).onAppear {
-                            if self.viewModel.currentProject.members[self.viewModel.selectedPayer] == nil {
-                                guard let id = self.viewModel.currentProject.members.first?.key else { return }
-                                self.viewModel.selectedPayer = id
+                VStack {
+                    Form {
+                        Section(header: Text("Payer")) {
+                            WhoPaidView(members: viewModel.currentProject.members.map {$0.value}, selectedPayer: self.$viewModel.selectedPayer).onAppear {
+                                if self.viewModel.currentProject.members[self.viewModel.selectedPayer] == nil {
+                                    guard let id = self.viewModel.currentProject.members.first?.key else { return }
+                                    self.viewModel.selectedPayer = id
+                                }
                             }
+                            TextField("What was paid?", text: self.$viewModel.topic)
+                            TextField("How much?", text: self.$viewModel.amount).keyboardType(.decimalPad)
                         }
-                        TextField("What was paid?", text: self.$viewModel.topic)
-                        TextField("How much?", text: self.$viewModel.amount).keyboardType(.decimalPad)
-                    }
-                    Section(header: Text("Owers")) {
-                        PotentialOwersView(vm: viewModel.povm)
-                    }
-                    Section {
-                        Button(action: self.sendBillToServer) {
-                            Text(sendButtonTitle)
+                        Section(header: Text("Owers")) {
+                            PotentialOwersView(vm: viewModel.povm)
                         }
-                        .disabled(self.$sendBillButtonDisabled.wrappedValue)
+                            
+                    }.scaledToFit()
+                    FancyButton(isDisabled: $sendBillButtonDisabled, action: self.sendBillToServer, text: "Create Bill")
                         .onReceive(self.viewModel.validatedInput) {
                             self.sendBillButtonDisabled = !$0
-                        }
                     }
+                    Spacer()
                 }
                 .navigationBarTitle(navBarTitle)
                 if sendingInProgress {
