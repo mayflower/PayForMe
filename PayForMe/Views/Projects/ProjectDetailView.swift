@@ -52,10 +52,12 @@ struct ProjectDetailView: View {
                     SecureField("Enter project password", text: self.$addProjectModel.projectPassword)
                 }
             }
+            .scaledToFit()
             FancyButton(isDisabled: $addProjectButtonDisabled, action: addButton, text: "Add Project")
                 .onReceive(addProjectModel.validatedServer) {
                     self.addProjectButtonDisabled = !$0
             }
+            Spacer()
             
         }
         .navigationBarTitle("Add Project")
