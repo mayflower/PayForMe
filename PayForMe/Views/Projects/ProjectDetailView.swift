@@ -51,13 +51,10 @@ struct ProjectDetailView: View {
                     
                     SecureField("Enter project password", text: self.$addProjectModel.projectPassword)
                 }
-                Section {
-                    HStack {
-                        Spacer()
-                        FancyButton(isDisabled: $addProjectButtonDisabled, action: addButton, text: "Add Project")
-                        Spacer()
-                    }
-                }
+            }
+            FancyButton(isDisabled: $addProjectButtonDisabled, action: addButton, text: "Add Project")
+                .onReceive(addProjectModel.validatedServer) {
+                    self.addProjectButtonDisabled = !$0
             }
             
         }

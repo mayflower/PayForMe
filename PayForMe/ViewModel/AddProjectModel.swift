@@ -35,6 +35,7 @@ class AddProjectModel: ObservableObject {
     private init() {
         cancellable = NetworkService.shared.networkActivityPublisher.assign(to: \.networkTestInProgress, on: self)
     }
+    
     var validatedAddress: AnyPublisher<(ProjectBackend, String?), Never> {
         return Publishers.CombineLatest($projectType, $serverAddress)
             .map {
