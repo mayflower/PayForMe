@@ -25,12 +25,7 @@ class AddProjectModel: ObservableObject {
     @Published
     var projectPassword = ""
     
-//    @Published
-    var networkTestInProgress = false {
-        didSet {
-            print(self.networkTestInProgress)
-        }
-    }
+    var networkTestInProgress = false
     
     var cancellable: AnyCancellable?
     
