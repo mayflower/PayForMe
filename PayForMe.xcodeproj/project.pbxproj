@@ -50,7 +50,7 @@
 		65005A0323DE0C5C00D1D599 /* BillList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillList.swift; sourceTree = "<group>"; };
 		650504A023FEA461000E5F9C /* PersonText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonText.swift; sourceTree = "<group>"; };
 		6533A02A23D888B100FF822B /* BillCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillCell.swift; sourceTree = "<group>"; };
-		656629FF23D7320000303207 /* iWontPayAnyway.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iWontPayAnyway.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		656629FF23D7320000303207 /* PayForMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PayForMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65662A0223D7320000303207 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		65662A0423D7320000303207 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		65662A0623D7320000303207 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -89,7 +89,7 @@
 				650504A023FEA461000E5F9C /* PersonText.swift */,
 				656913EB23F59A0300FA196E /* Balance */,
 				6596D4E423ED9CBD0079DD5B /* BillList */,
-				6596D4E323ED9C8B0079DD5B /* KnownProjects */,
+				6596D4E323ED9C8B0079DD5B /* Projects */,
 				6596D4E223ED9C520079DD5B /* BillDetail */,
 				65662A0623D7320000303207 /* ContentView.swift */,
 			);
@@ -99,7 +99,7 @@
 		656629F623D7320000303207 = {
 			isa = PBXGroup;
 			children = (
-				65662A0123D7320000303207 /* iWontPayAnyway */,
+				65662A0123D7320000303207 /* PayForMe */,
 				65662A0023D7320000303207 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -107,12 +107,12 @@
 		65662A0023D7320000303207 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				656629FF23D7320000303207 /* iWontPayAnyway.app */,
+				656629FF23D7320000303207 /* PayForMe.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		65662A0123D7320000303207 /* iWontPayAnyway */ = {
+		65662A0123D7320000303207 /* PayForMe */ = {
 			isa = PBXGroup;
 			children = (
 				6533A02C23D88EF300FF822B /* Views */,
@@ -126,7 +126,7 @@
 				65662A0A23D7320300303207 /* Preview Content */,
 				489D35F923E081120029F59F /* Util.swift */,
 			);
-			path = iWontPayAnyway;
+			path = PayForMe;
 			sourceTree = "<group>";
 		};
 		65662A0A23D7320300303207 /* Preview Content */ = {
@@ -189,14 +189,14 @@
 			path = BillDetail;
 			sourceTree = "<group>";
 		};
-		6596D4E323ED9C8B0079DD5B /* KnownProjects */ = {
+		6596D4E323ED9C8B0079DD5B /* Projects */ = {
 			isa = PBXGroup;
 			children = (
 				65662A2523D8546900303207 /* ProjectList.swift */,
 				489995D923F6EC6F008B7E38 /* AddProjectView.swift */,
 				65662A2123D75C5F00303207 /* ProjectDetailView.swift */,
 			);
-			path = KnownProjects;
+			path = Projects;
 			sourceTree = "<group>";
 		};
 		6596D4E423ED9CBD0079DD5B /* BillList */ = {
@@ -211,9 +211,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		656629FE23D7320000303207 /* iWontPayAnyway */ = {
+		656629FE23D7320000303207 /* PayForMe */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 65662A1323D7320300303207 /* Build configuration list for PBXNativeTarget "iWontPayAnyway" */;
+			buildConfigurationList = 65662A1323D7320300303207 /* Build configuration list for PBXNativeTarget "PayForMe" */;
 			buildPhases = (
 				656629FB23D7320000303207 /* Sources */,
 				656629FC23D7320000303207 /* Frameworks */,
@@ -223,11 +223,11 @@
 			);
 			dependencies = (
 			);
-			name = iWontPayAnyway;
+			name = PayForMe;
 			packageProductDependencies = (
 			);
 			productName = iCospend;
-			productReference = 656629FF23D7320000303207 /* iWontPayAnyway.app */;
+			productReference = 656629FF23D7320000303207 /* PayForMe.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -245,7 +245,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 656629FA23D7320000303207 /* Build configuration list for PBXProject "iWontPayAnyway" */;
+			buildConfigurationList = 656629FA23D7320000303207 /* Build configuration list for PBXProject "PayForMe" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -260,7 +260,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				656629FE23D7320000303207 /* iWontPayAnyway */,
+				656629FE23D7320000303207 /* PayForMe */,
 			);
 		};
 /* End PBXProject section */
@@ -445,19 +445,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 24;
-				DEVELOPMENT_ASSET_PATHS = "\"iWontPayAnyway/Preview Content\"";
+				CURRENT_PROJECT_VERSION = 23;
+				DEVELOPMENT_ASSET_PATHS = "\"PayForMe/Preview Content\"";
 				DEVELOPMENT_TEAM = L79BTFY6FV;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = iWontPayAnyway/Info.plist;
+				INFOPLIST_FILE = PayForMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.3;
-				PRODUCT_BUNDLE_IDENTIFIER = de.mayflower.iWontPayAnyway;
-				PRODUCT_NAME = iWontPayAnyway;
+				PRODUCT_BUNDLE_IDENTIFIER = de.mayflower.PayForMe;
+				PRODUCT_NAME = PayForMe;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -468,19 +468,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 24;
-				DEVELOPMENT_ASSET_PATHS = "\"iWontPayAnyway/Preview Content\"";
+				CURRENT_PROJECT_VERSION = 23;
+				DEVELOPMENT_ASSET_PATHS = "\"PayForMe/Preview Content\"";
 				DEVELOPMENT_TEAM = L79BTFY6FV;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = iWontPayAnyway/Info.plist;
+				INFOPLIST_FILE = PayForMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.3;
-				PRODUCT_BUNDLE_IDENTIFIER = de.mayflower.iWontPayAnyway;
-				PRODUCT_NAME = iWontPayAnyway;
+				PRODUCT_BUNDLE_IDENTIFIER = de.mayflower.PayForMe;
+				PRODUCT_NAME = PayForMe;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -489,7 +489,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		656629FA23D7320000303207 /* Build configuration list for PBXProject "iWontPayAnyway" */ = {
+		656629FA23D7320000303207 /* Build configuration list for PBXProject "PayForMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				65662A1123D7320300303207 /* Debug */,
@@ -498,7 +498,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		65662A1323D7320300303207 /* Build configuration list for PBXNativeTarget "iWontPayAnyway" */ = {
+		65662A1323D7320300303207 /* Build configuration list for PBXNativeTarget "PayForMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				65662A1423D7320300303207 /* Debug */,

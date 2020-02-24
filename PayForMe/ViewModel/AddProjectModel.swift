@@ -25,12 +25,7 @@ class AddProjectModel: ObservableObject {
     @Published
     var projectPassword = ""
     
-//    @Published
-    var networkTestInProgress = false {
-        didSet {
-            print(self.networkTestInProgress)
-        }
-    }
+    var networkTestInProgress = false
     
     var cancellable: AnyCancellable?
     
@@ -38,14 +33,14 @@ class AddProjectModel: ObservableObject {
     init() {
         cancellable = NetworkService.shared.networkActivityPublisher.assign(to: \.networkTestInProgress, on: self)
     }
-    var validatedAddress: AnyPublisher<String, Never> {
+    var validatedAddress: AnyPublisher<(ProjectBackend, String?), Never> {
         return Publishers.CombineLatest($projectType, $serverAddress)
             .map {
                 type, serverAddress in
                 if type == .cospend {
-                    return serverAddress
+                    return (type, serverAddress)
                 } else {
-                    return "https://ihatemoney.org"
+                    return (type, nil)
                 }
         }
         .eraseToAnyPublisher()
@@ -54,12 +49,12 @@ class AddProjectModel: ObservableObject {
     var validatedInput: AnyPublisher<Project, Never> {
         return Publishers.CombineLatest3(validatedAddress, $projectName, $projectPassword)
             .debounce(for: 1, scheduler: DispatchQueue.main)
-            .compactMap { address, name, password in
-                if address.isValidURL && !name.isEmpty && !password.isEmpty {
+            .compactMap { server, name, password in
+                if let address = server.1, address.isValidURL && !name.isEmpty && !password.isEmpty {
                     guard let url = URL(string: address) else { return nil }
-                    return Project(name: name, password: password, url: url)
+                    return Project(name: name, password: password, backend: server.0, url: url)
                 } else {
-                    return nil
+                    return Project(name: name, password: password, backend: server.0)
                 }
             }
             .removeDuplicates()
