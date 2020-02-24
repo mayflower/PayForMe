@@ -17,7 +17,7 @@ struct BalanceList: View {
         NavigationView {
             ScrollView {
                 VStack() {
-                    ForEach(viewModel.balances.sorted(by: { $0.amount > $1.amount })) {
+                    ForEach(viewModel.balances.sorted(by: { ($0.amount > $1.amount) || (($0.amount == $1.amount) && ($0.name < $1.name)) })) {
                         balance in
                         VStack {
                             BalanceCell(balance: balance)
