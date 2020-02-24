@@ -17,7 +17,7 @@ struct BalanceList: View {
         NavigationView {
             ScrollView {
                 VStack() {
-                    ForEach(viewModel.balances.sorted(by: { ($0.amount > $1.amount) || (($0.amount == $1.amount) && ($0.name < $1.name)) })) {
+                    ForEach(viewModel.balances.sorted(by: { ($0.amount > $1.amount) || (($0.amount == $1.amount) && ($0.person.name < $1.person.name)) })) {
                         balance in
                         VStack {
                             BalanceCell(balance: balance)
@@ -37,7 +37,9 @@ struct BalanceList: View {
 
 struct BalanceList_Previews: PreviewProvider {
     static var previews: some View {
-        return BalanceList(viewModel: BalanceViewModel())
+        let vm = BalanceViewModel()
+        vm.currentProject = previewProject
+        return BalanceList(viewModel: vm)
     }
 }
 
@@ -47,7 +49,7 @@ struct BalanceCell: View {
     
     var body: some View {
         HStack {
-                ColorIndicator(color: balance.color, name: balance.name)
+            PersonText(person: balance.person)
             Spacer()
             Text(" \(String(format:"%.2f",balance.amount)) €")
                 .font(.headline)

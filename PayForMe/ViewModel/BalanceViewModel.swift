@@ -43,18 +43,14 @@ class BalanceViewModel: ObservableObject {
             let owes = currentProject.bills.compactMap { bill in
                 bill.owers.first { ower in ower.id == member.id } == nil ? nil : bill.amount / Double( bill.owers.count) }
                 .reduce(0.0, -)
-            var color = Color.standardColorById(id: member.id)
-            if let pc = member.color {
-                color = Color(pc)
-            }
-            return Balance(id: member.id, name: member.name, amount: paid + owes, color: color)
+            
+            return Balance(id: member.id, amount: paid + owes, person: member)
         }
     }
 }
 
 struct Balance: Identifiable {
     let id: Int
-    let name: String
     var amount: Double
-    let color: Color
+    let person: Person
 }

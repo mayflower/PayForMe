@@ -42,7 +42,7 @@ struct BillCell: View {
         HStack(spacing: 1) {
             ForEach(bill.owers) {
                 ower in
-                PersonText(person: ower)
+                PersonText(person: self.realPerson(ower))
 //                if self.bill.owers.last != ower {
 //                    Text(", ")
 //                }
@@ -52,6 +52,13 @@ struct BillCell: View {
     
     func amountString() -> String {
         return "\(String(format: "%.2f €", bill.amount))"
+    }
+    
+    func realPerson(_ ower: Person) -> Person {
+        guard let person =  viewModel.currentProject.members[ower.id] else {
+            return ower
+        }
+        return person
     }
     
     var payer: Person {
