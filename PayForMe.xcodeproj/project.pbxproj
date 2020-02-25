@@ -36,6 +36,7 @@
 		6591C8DD2403F84E0054BA24 /* PotentialOwersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6591C8DC2403F84E0054BA24 /* PotentialOwersView.swift */; };
 		6591C8DF2403F8740054BA24 /* PotentialOwersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6591C8DE2403F8740054BA24 /* PotentialOwersViewModel.swift */; };
 		6591C8E12404109A0054BA24 /* BillDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6591C8E02404109A0054BA24 /* BillDetailViewModel.swift */; };
+		6591C8E3240527750054BA24 /* PersonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6591C8E2240527750054BA24 /* PersonsView.swift */; };
 		65C9E2CE23E1B8F500814B37 /* BalanceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C9E2CD23E1B8F500814B37 /* BalanceList.swift */; };
 		65C9E2D023E1B96B00814B37 /* BalanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C9E2CF23E1B96B00814B37 /* BalanceViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -72,6 +73,7 @@
 		6591C8DC2403F84E0054BA24 /* PotentialOwersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PotentialOwersView.swift; sourceTree = "<group>"; };
 		6591C8DE2403F8740054BA24 /* PotentialOwersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PotentialOwersViewModel.swift; sourceTree = "<group>"; };
 		6591C8E02404109A0054BA24 /* BillDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillDetailViewModel.swift; sourceTree = "<group>"; };
+		6591C8E2240527750054BA24 /* PersonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonsView.swift; sourceTree = "<group>"; };
 		65C9E2CD23E1B8F500814B37 /* BalanceList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceList.swift; sourceTree = "<group>"; };
 		65C9E2CF23E1B96B00814B37 /* BalanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -90,12 +92,12 @@
 		6533A02C23D88EF300FF822B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				650504A023FEA461000E5F9C /* PersonText.swift */,
 				656913EB23F59A0300FA196E /* Balance */,
 				6596D4E423ED9CBD0079DD5B /* BillList */,
 				6596D4E323ED9C8B0079DD5B /* Projects */,
 				6596D4E223ED9C520079DD5B /* BillDetail */,
 				65662A0623D7320000303207 /* ContentView.swift */,
+				650504A023FEA461000E5F9C /* PersonText.swift */,
 				48E7F75A2403FD6B000CE4E6 /* FancyButton.swift */,
 			);
 			path = Views;
@@ -210,6 +212,7 @@
 			children = (
 				65005A0323DE0C5C00D1D599 /* BillList.swift */,
 				6533A02A23D888B100FF822B /* BillCell.swift */,
+				6591C8E2240527750054BA24 /* PersonsView.swift */,
 			);
 			path = BillList;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 				65662A1923D7322B00303207 /* Bill.swift in Sources */,
 				48CC8F7423F5C16D00DCE3D8 /* AddBillView.swift in Sources */,
 				65662A1B23D733B700303207 /* NetworkService.swift in Sources */,
+				6591C8E3240527750054BA24 /* PersonsView.swift in Sources */,
 				65C9E2CE23E1B8F500814B37 /* BalanceList.swift in Sources */,
 				650059FC23DDE1C300D1D599 /* Person.swift in Sources */,
 				65662A0323D7320000303207 /* AppDelegate.swift in Sources */,

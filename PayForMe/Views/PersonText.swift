@@ -19,7 +19,7 @@ struct PersonText: View {
             .background(colorOfPerson(person))
             .foregroundColor(Color.white)
             .cornerRadius(5)
-            .fixedSize(horizontal: true, vertical: true)
+            .lineLimit(1)
     }
     
     func colorOfPerson(_ person: Person) -> Color {
@@ -33,6 +33,10 @@ struct PersonText: View {
 
 struct PersonText_Previews: PreviewProvider {
     static var previews: some View {
-        PersonText(person: previewPerson)
+        let viewModel = BillListViewModel()
+        previewProject.bills = previewBills
+        previewProject.members = previewPersons
+        viewModel.currentProject = previewProject
+        return BillList(viewModel: viewModel, tabBarIndex: .BillList, hidePlusButton: .constant(false))
     }
 }
