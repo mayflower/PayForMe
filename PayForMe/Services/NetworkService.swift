@@ -63,12 +63,16 @@ class NetworkService {
     func testProject(_ project: Project) -> AnyPublisher<Bool, Never> {
         let request = buildURLRequest("members", params: [:], project: project)
         return URLSession.shared.dataTaskPublisher(for: request)
-            .compactMap { _, response -> Bool in
+            .tryMap { data, response -> Data in
                 guard let httpResponse = response as? HTTPURLResponse,
-                    httpResponse.statusCode == 200 else { print("Network Error"); return false }
-                return true
+                    httpResponse.statusCode == 200 else { print("Network Error"); return Data.init() }
+                return data
             }
-            .replaceError(with: false)
+            .decode(type: [Person].self, decoder: decoder)
+            .replaceError(with:[])
+            .map {
+                !$0.isEmpty
+            }
             .eraseToAnyPublisher()
     }
     
