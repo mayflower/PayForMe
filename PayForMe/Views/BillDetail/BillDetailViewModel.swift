@@ -79,7 +79,9 @@ class BillDetailViewModel: ObservableObject {
     func prefillData() {
         
         self.topic = currentBill.what
-        self.amount = String(currentBill.amount)
+        if currentBill.amount != 0 {
+            self.amount = String(currentBill.amount)
+        }
         
         self.selectedPayer = currentBill.payer_id
         currentBill.owers.forEach { (person) in
