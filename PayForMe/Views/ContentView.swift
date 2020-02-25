@@ -32,7 +32,7 @@ struct ContentView: View {
                         .tabItem({
                             Image(systemName: "archivebox")
                         }).tag(tabBarItems.ServerList)
-                    BalanceList(viewModel: BalanceViewModel())
+                    BalanceList(hidePlusButton: $hidePlusButton, viewModel: BalanceViewModel())
                         .tabItem({
                             Image(systemName: "arrow.right.arrow.left")
                         }).tag(tabBarItems.Balance)

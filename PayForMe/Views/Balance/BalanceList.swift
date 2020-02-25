@@ -10,6 +10,9 @@ import SwiftUI
 
 struct BalanceList: View {
     
+    @Binding
+    var hidePlusButton: Bool
+    
     @ObservedObject
     var viewModel: BalanceViewModel
     
@@ -19,7 +22,7 @@ struct BalanceList: View {
                 ForEach(viewModel.balances.sorted(by: { ($0.amount > $1.amount) || (($0.amount == $1.amount) && ($0.person.name < $1.person.name)) })) {
                     balance in
                     if balance.amount < 0 {
-                        NavigationLink(destination: BillDetailView(showModal: .constant(false), hidePlusButton: .constant(true), viewModel: BillDetailViewModel(currentBill: self.createSettlingBill(balance: balance)))) {
+                        NavigationLink(destination: BillDetailView(showModal: .constant(false), hidePlusButton: self.$hidePlusButton, viewModel: BillDetailViewModel(currentBill: self.createSettlingBill(balance: balance)))) {
                             BalanceCell(balance: balance)
                         }
                     } else {
@@ -49,7 +52,7 @@ struct BalanceList_Previews: PreviewProvider {
         let vm = BalanceViewModel()
         vm.currentProject = previewProject
         vm.setBalances()
-        return BalanceList(viewModel: vm)
+        return BalanceList(hidePlusButton: .constant(false), viewModel: vm)
     }
 }
 
