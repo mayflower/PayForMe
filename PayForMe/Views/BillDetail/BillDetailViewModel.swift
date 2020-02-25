@@ -55,13 +55,15 @@ class BillDetailViewModel: ObservableObject {
     
     var validatedAmount: AnyPublisher<Bool, Never> {
         return $amount.map { amount in
-            return Double(amount) != nil
+            let safeAmount = amount.replacingOccurrences(of: ",", with: ".")
+            return Double(safeAmount) != nil
         }
         .eraseToAnyPublisher()
     }
     
     func createBill() -> Bill? {
-        guard let doubleAmount = Double(amount) else {
+        let safeAmount = amount.replacingOccurrences(of: ",", with: ".")
+        guard let doubleAmount = Double(safeAmount) else {
             return nil
         }
         
