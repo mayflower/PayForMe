@@ -54,12 +54,11 @@ struct BillDetailView: View {
                             PotentialOwersView(vm: viewModel.povm)
                         }
                             
-                    }.scaledToFit()
+                    }
                     FancyButton(isDisabled: $sendBillButtonDisabled, action: self.sendBillToServer, text: "Create Bill")
                         .onReceive(self.viewModel.validatedInput) {
                             self.sendBillButtonDisabled = !$0
                     }
-                    Spacer()
                 }
                 .navigationBarTitle(navBarTitle)
                 if sendingInProgress {
