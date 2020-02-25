@@ -27,6 +27,10 @@ class AddProjectModel: ObservableObject {
     
     static let shared = AddProjectModel()
     
+    private init() {
+        
+    }
+    
     var validatedAddress: AnyPublisher<(ProjectBackend, String?), Never> {
         return Publishers.CombineLatest($projectType, $serverAddress)
             .map {
