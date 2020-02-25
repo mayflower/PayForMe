@@ -63,9 +63,7 @@ struct BillDetailView: View {
                 }
                 .navigationBarTitle(navBarTitle)
                 if sendingInProgress {
-                    Image(systemName: "arrow.2.circlepath.circle")
-                        .resizable()
-                        .frame(width: 256, height: 256)
+                    CommunicationIndicator()
                 }
             }
         .onAppear {
