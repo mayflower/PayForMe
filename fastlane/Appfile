@@ -1,4 +1,4 @@
-app_identifier("de.mayflower.iWontPayAnyway") # The bundle identifier of your app
+app_identifier("de.mayflower.PayForMe") # The bundle identifier of your app
 apple_id("maxt1409@gmail.com") # Your Apple email address
 
 itc_team_id("340374") # App Store Connect Team ID
