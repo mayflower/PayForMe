@@ -35,7 +35,7 @@ class PotentialOwersViewModel: ObservableObject {
     }
     
     init(members: [Int:Person]) {
-        self.members = Array(members.values)
+        self.members = Array(members.values).sorted(by: {$0.name.lowercased() < $1.name.lowercased()})
         isOwing = [Bool].init(repeating: false, count: members.count)
         
         owersCancellable = $owingStatus.sink { (newValue) in
