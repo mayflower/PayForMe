@@ -68,20 +68,10 @@ struct BillDetailView: View {
             }
         .onAppear {
             self.hidePlusButton = true
-            self.prefillData()
         }
             .onDisappear {
                 self.hidePlusButton = false
         }
-    }
-    
-    func prefillData() {
-        let bill = viewModel.currentBill
-        
-        self.viewModel.topic = bill.what
-        self.viewModel.amount = String(bill.amount)
-        
-        self.viewModel.selectedPayer = bill.payer_id
     }
     
     func sendBillToServer() {

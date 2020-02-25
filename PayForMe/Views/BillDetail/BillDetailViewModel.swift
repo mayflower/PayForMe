@@ -36,6 +36,8 @@ class BillDetailViewModel: ObservableObject {
         self.currentProject = manager.currentProject
         self.povm = PotentialOwersViewModel(members: ProjectManager.shared.currentProject.members)
         self.cancellable = currentProjectChanged
+        
+        prefillData()
     }
     
     var currentProjectChanged: AnyCancellable {
@@ -71,5 +73,19 @@ class BillDetailViewModel: ObservableObject {
         
         return Bill(id: billID, amount: doubleAmount, what: topic, date: date, payer_id: selectedPayer, owers: actualOwers, repeat: "n", lastchanged: 0)
         
+    }
+    
+    
+    func prefillData() {
+        
+        self.topic = currentBill.what
+        self.amount = String(currentBill.amount)
+        
+        self.selectedPayer = currentBill.payer_id
+        currentBill.owers.forEach { (person) in
+            if let index = povm.members.firstIndex(of: person) {
+                povm.isOwing[index] = true
+            }
+        }
     }
 }
