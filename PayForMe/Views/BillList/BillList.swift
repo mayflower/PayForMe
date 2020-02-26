@@ -22,13 +22,7 @@ struct BillList: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(viewModel.currentProject.bills.sorted(by: {
-                    if let l1 = $0.lastchanged,
-                        let l2 = $1.lastchanged {
-                        return l1 > l2
-                    }
-                    return $0.date > $1.date
-                })) { bill in
+                ForEach(viewModel.currentProject.bills) { bill in
                     NavigationLink(destination:
                         BillDetailView(showModal: .constant(false),
                                        hidePlusButton: self.$hidePlusButton,
@@ -50,13 +44,7 @@ struct BillList: View {
     
     func deleteBill(at offsets: IndexSet) {
         for offset in offsets {
-            guard let bill = viewModel.currentProject.bills.sorted(by: {
-                if let l1 = $0.lastchanged,
-                    let l2 = $1.lastchanged {
-                    return l1 > l2
-                }
-                return $0.date > $1.date
-            })[safe: offset] else {
+            guard let bill = viewModel.currentProject.bills[safe: offset] else {
                 return
             }
             ProjectManager.shared.deleteBill(bill)

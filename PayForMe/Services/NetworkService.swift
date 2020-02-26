@@ -41,6 +41,15 @@ class NetworkService {
         }
         .decode(type: [Bill].self, decoder: decoder)
         .replaceError(with: [])
+        .map {
+            return $0.sorted {
+                if let l1 = $0.lastchanged,
+                    let l2 = $1.lastchanged {
+                    return l1 > l2
+                }
+                return $0.date > $1.date
+            }
+        }
         .eraseToAnyPublisher()
     }
 
