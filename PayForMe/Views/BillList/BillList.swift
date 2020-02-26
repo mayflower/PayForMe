@@ -51,7 +51,11 @@ struct BillList: View {
     func deleteBill(at offsets: IndexSet) {
         for offset in offsets {
             guard let bill = viewModel.currentProject.bills.sorted(by: {
-                $0.date > $1.date
+                if let l1 = $0.lastchanged,
+                    let l2 = $1.lastchanged {
+                    return l1 > l2
+                }
+                return $0.date > $1.date
             })[safe: offset] else {
                 return
             }
