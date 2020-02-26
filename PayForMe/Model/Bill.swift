@@ -18,18 +18,31 @@ struct Bill: Codable, Identifiable {
     var owers: [Person]
     var `repeat`: String?
     var lastchanged: Int?
+    var local: Bool?
  
-    var params: [String: String] {
-        return [
+    func paramsFor(_ backend: ProjectBackend) -> [String: Any] {
+        var dict: [String: Any] = [
             "date": DateFormatter.cospend.string(from: self.date),
             "what": self.what,
             "payer": self.payer_id.description,
             "amount": self.amount.description,
-            "payed_for": self.owers.map{$0.id.description}.joined(separator: ","),
-            "repeat": "n",
-            "paymentmode": "n",
-            "categoryid": "0"
         ]
+        if backend == .cospend {
+            dict["payed_for"] = self.owers.map{$0.id.description}.joined(separator: ",")
+            dict["paymentmode"] = "n"
+            dict["categoryid"] = "0"
+            
+            if let rep = self.repeat {
+                dict["repeat"] = rep
+            } else {
+                dict["repeat"] = "n"
+            }
+        }
+        if backend == .iHateMoney {
+            dict["payed_for"] = self.owers.map{$0.id.description}
+        }
+        
+        return dict
     }
     
 }

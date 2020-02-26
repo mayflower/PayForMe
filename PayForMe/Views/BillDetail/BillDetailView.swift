@@ -155,7 +155,7 @@ struct BillDetailView: View {
         
         
         
-        return Bill(id: billID, amount: doubleAmount, what: viewModel.topic, date: date, payer_id: selectedPayer, owers: actualOwers, repeat: "n", lastchanged: 0)
+        return Bill(id: billID, amount: doubleAmount, what: viewModel.topic, date: date, payer_id: selectedPayer, owers: actualOwers, repeat: viewModel.currentProject.backend == .cospend ? "n" : nil, lastchanged: 0)
         
     }
 }
