@@ -40,7 +40,7 @@ struct BillList: View {
                 }
                 .onDelete(perform: deleteBill)
             }
-                
+            .id(viewModel.currentProject.bills)
             .navigationBarTitle("Bills")
         }
         .onAppear {

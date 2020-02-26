@@ -147,16 +147,6 @@ class NetworkService {
         return request
     }
     
-    private func httpBodyFor(_ params: [String: String]) -> Data? {
-        var values = [String]()
-        for (key, value) in params {
-            values.append(key + "=\(value)")
-        }
-//        return values.map { $0 }.joined(separator: "&").data(using: .utf8)
-        return "payer=4632&payed_for=[4632,4633,4630,4631]&what=A&amount=125.0&date=2020-02-25".data(using: .utf8)
-//        return try? JSONSerialization.data(withJSONObject: params)
-    }
-    
     enum HTTPError: LocalizedError {
         case statuscode
     }

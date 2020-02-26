@@ -147,15 +147,11 @@ extension ProjectManager {
     }
     
     func saveBill(_ bill: Bill, completion: @escaping () -> Void) {
-        if let index = self.currentProject.bills.firstIndex(where: {
+        if let _ = self.currentProject.bills.firstIndex(where: {
             $0.id == bill.id
         }) {
-            self.currentProject.bills.remove(at: index)
-            self.currentProject.bills.append(bill)
-            
             sendBillToServer(bill: bill, update: true, completion: completion)
         } else {
-            self.currentProject.bills.append(bill)
             sendBillToServer(bill: bill, update: false, completion: completion)
         }
     }

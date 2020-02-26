@@ -82,6 +82,7 @@ struct BillDetailView: View {
         sendingInProgress = true
         ProjectManager.shared.saveBill(newBill, completion: {
             self.sendingInProgress = false
+            ProjectManager.shared.updateCurrentProject()
             self.showModal.toggle()
             DispatchQueue.main.async {
                 self.presentationMode.wrappedValue.dismiss()

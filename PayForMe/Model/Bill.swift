@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Bill: Codable, Identifiable {
+struct Bill: Codable, Identifiable, Hashable {
     
     var id: Int
     var amount: Double
