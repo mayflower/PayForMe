@@ -21,6 +21,13 @@ extension Color {
         self.init(red: Double(pc.r)/255, green: Double(pc.g)/255, blue: Double(pc.b)/255, opacity: 1)
     }
     
+    static var PFMBackground: Color {
+        if UIScreen.main.traitCollection.userInterfaceStyle == .dark {
+            return Color.black
+        } else {
+            return Color(UIColor(red:0.95, green:0.95, blue:0.97, alpha:1.0))
+        }
+    }
     
     static func standardColorById(id: Int) -> Color {
         let colors = [

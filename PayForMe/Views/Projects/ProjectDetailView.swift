@@ -77,6 +77,7 @@ struct ProjectDetailView: View {
         .onDisappear {
             self.hidePlusButton = false
         }
+        .background(Color.PFMBackground)
     }
     
     func addButton() {

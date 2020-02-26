@@ -68,9 +68,10 @@ struct BillDetailView: View {
         .onAppear {
             self.hidePlusButton = true
         }
-            .onDisappear {
+        .onDisappear {
                 self.hidePlusButton = false
         }
+        .background(Color.PFMBackground)
     }
     
     func sendBillToServer() {
