@@ -32,7 +32,7 @@ struct ContentView: View {
                         .tabItem({
                             Image(systemName: "archivebox")
                         }).tag(tabBarItems.ServerList)
-                    BalanceList(viewModel: BalanceViewModel())
+                    BalanceList(hidePlusButton: $hidePlusButton, viewModel: BalanceViewModel())
                         .tabItem({
                             Image(systemName: "arrow.right.arrow.left")
                         }).tag(tabBarItems.Balance)
@@ -64,7 +64,7 @@ struct ContentView: View {
                 }
             }.padding(EdgeInsets(top: 0, leading: 32, bottom: 64, trailing: 32))
         }.sheet(isPresented: $showModal) {
-            AddBillView(showModal: self.$showModal, viewModel: BillListViewModel())
+            AddBillView(showModal: self.$showModal)
         }
     }
 }

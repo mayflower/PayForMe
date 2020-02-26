@@ -25,15 +25,10 @@ class AddProjectModel: ObservableObject {
     @Published
     var projectPassword = ""
     
-    var networkTestInProgress = false
-    
-    var cancellable: AnyCancellable?
-    
-    
     static let shared = AddProjectModel()
     
     private init() {
-        cancellable = NetworkService.shared.networkActivityPublisher.assign(to: \.networkTestInProgress, on: self)
+        
     }
     
     var validatedAddress: AnyPublisher<(ProjectBackend, String?), Never> {
@@ -51,13 +46,13 @@ class AddProjectModel: ObservableObject {
     
     var validatedInput: AnyPublisher<Project, Never> {
         return Publishers.CombineLatest3(validatedAddress, $projectName, $projectPassword)
-            .debounce(for: 1, scheduler: DispatchQueue.main)
+            .debounce(for: 0.5, scheduler: DispatchQueue.main)
             .compactMap { server, name, password in
                 if let address = server.1, address.isValidURL && !name.isEmpty && !password.isEmpty {
                     guard let url = URL(string: address) else { return nil }
                     return Project(name: name, password: password, backend: server.0, url: url)
                 } else {
-                    return Project(name: name, password: password, backend: server.0)
+                    return nil
                 }
             }
             .removeDuplicates()
@@ -71,5 +66,14 @@ class AddProjectModel: ObservableObject {
         }
         .receive(on: RunLoop.main)
         .eraseToAnyPublisher()
-    }  
+    }
+    
+    var connectionInProgress: AnyPublisher<(Project,Bool), Never> {
+        return Publishers.CombineLatest(validatedInput, validatedServer)
+        .map {
+                input, server in
+            (input, !server)
+            }
+        .eraseToAnyPublisher()
+    }
 }

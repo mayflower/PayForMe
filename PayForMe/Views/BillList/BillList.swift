@@ -32,11 +32,9 @@ struct BillList: View {
                     NavigationLink(destination:
                         BillDetailView(showModal: .constant(false),
                                        hidePlusButton: self.$hidePlusButton,
-                                       viewModel: self.viewModel,
-                                       currentBill: bill,
+                                       viewModel: BillDetailViewModel(currentBill: bill),
                                        navBarTitle: "Edit Bill",
-                                       sendButtonTitle: "Update Bill",
-                                       owers: self.viewModel.initOwers(currentBill: bill))) {
+                                       sendButtonTitle: "Update Bill")) {
                                         BillCell(viewModel: self.viewModel, bill: bill)
                     }
                 }

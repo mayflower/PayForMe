@@ -41,3 +41,5 @@ DerivedData/
 
 # scan temporary files
 **/fastlane/test_output
+PayForMe.app.dSYM.zip
+PayForMe.ipa

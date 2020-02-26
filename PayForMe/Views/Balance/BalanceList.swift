@@ -10,36 +10,49 @@ import SwiftUI
 
 struct BalanceList: View {
     
+    @Binding
+    var hidePlusButton: Bool
+    
     @ObservedObject
     var viewModel: BalanceViewModel
-        
+    
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack() {
-                    ForEach(viewModel.balances.sorted(by: { ($0.amount > $1.amount) || (($0.amount == $1.amount) && ($0.person.name < $1.person.name)) })) {
-                        balance in
-                        VStack {
+            List {
+                ForEach(viewModel.balances.sorted(by: { ($0.amount > $1.amount) || (($0.amount == $1.amount) && ($0.person.name < $1.person.name)) })) {
+                    balance in
+                    if balance.amount < 0 {
+                        NavigationLink(destination: BillDetailView(showModal: .constant(false), hidePlusButton: self.$hidePlusButton, viewModel: BillDetailViewModel(currentBill: self.createSettlingBill(balance: balance)))) {
                             BalanceCell(balance: balance)
-                            Divider()
                         }
+                    } else {
+                        BalanceCell(balance: balance)
                     }
-                    Spacer()
                 }
             }
             .navigationBarTitle("Balance")
-        }
-        .onAppear {
-            ProjectManager.shared.updateCurrentProject()
+            .onAppear {
+                ProjectManager.shared.updateCurrentProject()
+            }
         }
     }
+    
+    func createSettlingBill(balance: Balance) -> Bill {
+        let ower = viewModel.balances.sorted(by: {$0.amount > $1.amount})[0]
+        let payer = balance.person
+        let topic = "Settling balance for \(balance.person.name)"
+        let amount = ower.amount.magnitude < balance.amount.magnitude ? ower.amount : balance.amount.magnitude
+        return Bill(id: 99, amount: amount, what: topic, date: Date(), payer_id: payer.id, owers: [ower.person], repeat: "n")
+    }
 }
+
 
 struct BalanceList_Previews: PreviewProvider {
     static var previews: some View {
         let vm = BalanceViewModel()
         vm.currentProject = previewProject
-        return BalanceList(viewModel: vm)
+        vm.setBalances()
+        return BalanceList(hidePlusButton: .constant(false), viewModel: vm)
     }
 }
 
@@ -53,7 +66,7 @@ struct BalanceCell: View {
             Spacer()
             Text(" \(String(format:"%.2f",balance.amount)) €")
                 .font(.headline)
-                .foregroundColor( balance.amount > 0 ? Color.primary : Color.red)
+                .foregroundColor( balance.amount >= 0 ? Color.primary : Color.red)
         }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
     }
 }

@@ -20,6 +20,9 @@ struct ProjectDetailView: View {
     @State
     var addProjectButtonDisabled = true
     
+    @State
+    var showConnectionIndicator = false
+    
     @Binding
     var hidePlusButton: Bool
     
@@ -52,10 +55,19 @@ struct ProjectDetailView: View {
                     SecureField("Enter project password", text: self.$addProjectModel.projectPassword)
                 }
             }
-            FancyButton(isDisabled: $addProjectButtonDisabled, action: addButton, text: "Add Project")
-                .onReceive(addProjectModel.validatedServer) {
-                    self.addProjectButtonDisabled = !$0
+            .scaledToFit()
+            .onReceive(addProjectModel.connectionInProgress) {
+                self.showConnectionIndicator = $0.1
+                self.addProjectButtonDisabled = $0.1
             }
+            if showConnectionIndicator {
+                HStack {
+                    Text("Testing server").font(.headline)
+                    LoadingDots()
+                }
+            }
+            FancyButton(isDisabled: $addProjectButtonDisabled, action: addButton, text: "Add Project")
+            Spacer()
             
         }
         .navigationBarTitle("Add Project")
