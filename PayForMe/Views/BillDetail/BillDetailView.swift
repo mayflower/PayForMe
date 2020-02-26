@@ -26,7 +26,7 @@ struct BillDetailView: View {
     
     var navBarTitle = "Add Bill"
     var sendButtonTitle = "Create Bill"
-        
+    
     @State
     var noneAllToggle = 1
     
@@ -37,39 +37,34 @@ struct BillDetailView: View {
     var sendingInProgress = false
     
     var body: some View {
-            ZStack {
-                VStack {
-                    Form {
-                        Section(header: Text("Payer")) {
-                            WhoPaidView(members: Array(viewModel.currentProject.members.values), selectedPayer: self.$viewModel.selectedPayer).onAppear {
-                                if self.viewModel.currentProject.members[self.viewModel.selectedPayer] == nil {
-                                    guard let id = self.viewModel.currentProject.members.first?.key else { return }
-                                    self.viewModel.selectedPayer = id
-                                }
-                            }
-                            TextField("What was paid?", text: self.$viewModel.topic)
-                            TextField("How much?", text: self.$viewModel.amount).keyboardType(.decimalPad)
+        VStack {
+            Form {
+                Section(header: Text("Payer")) {
+                    WhoPaidView(members: Array(viewModel.currentProject.members.values), selectedPayer: self.$viewModel.selectedPayer).onAppear {
+                        if self.viewModel.currentProject.members[self.viewModel.selectedPayer] == nil {
+                            guard let id = self.viewModel.currentProject.members.first?.key else { return }
+                            self.viewModel.selectedPayer = id
                         }
-                        Section(header: Text("Owers")) {
-                            PotentialOwersView(vm: viewModel.povm)
-                        }
-                            
                     }
-                    FancyButton(isDisabled: $sendBillButtonDisabled, action: self.sendBillToServer, text: showModal ? "Create Bill" : "Update Bill")
-                        .onReceive(self.viewModel.validatedInput) {
-                            self.sendBillButtonDisabled = !$0
-                    }
+                    TextField("What was paid?", text: self.$viewModel.topic)
+                    TextField("How much?", text: self.$viewModel.amount).keyboardType(.decimalPad)
                 }
-                .navigationBarTitle(navBarTitle)
-                if sendingInProgress {
-                    CommunicationIndicator()
+                Section(header: Text("Owers")) {
+                    PotentialOwersView(vm: viewModel.povm)
                 }
+                
             }
+            FancyButton(isDisabled: $sendBillButtonDisabled, isLoading: $sendingInProgress, action: self.sendBillToServer, text: showModal ? "Create Bill" : "Update Bill")
+                .onReceive(self.viewModel.validatedInput) {
+                    self.sendBillButtonDisabled = !$0
+            }
+        }
+        .navigationBarTitle(navBarTitle)
         .onAppear {
             self.hidePlusButton = true
         }
         .onDisappear {
-                self.hidePlusButton = false
+            self.hidePlusButton = false
         }
         .background(Color.PFMBackground)
     }

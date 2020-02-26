@@ -60,13 +60,7 @@ struct ProjectDetailView: View {
                 self.showConnectionIndicator = $0.1
                 self.addProjectButtonDisabled = $0.1
             }
-            if showConnectionIndicator {
-                HStack {
-                    Text("Testing server").font(.headline)
-                    LoadingDots()
-                }
-            }
-            FancyButton(isDisabled: $addProjectButtonDisabled, action: addButton, text: "Add Project")
+            FancyButton(isDisabled: $addProjectButtonDisabled, isLoading: $showConnectionIndicator, action: addButton, text: "Add Project")
             Spacer()
             
         }

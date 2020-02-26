@@ -13,12 +13,25 @@ struct FancyButton: View {
     @Binding
     var isDisabled: Bool
     
+    @Binding
+    var isLoading: Bool
+    
     var action: () -> Void
     var text: String
     
     var body: some View {
         Button(action: action) {
-            Text(text)
+            if isLoading {
+                HStack {
+                    Text("Finding Server")
+                    
+                    LoadingRings()
+                        .scaleEffect(0.2)
+                        .frame(width: 25, height: 25)
+                }
+            } else {
+                Text(text)
+            }
         }
         .padding(10)
         .background(self.isDisabled ? Color.gray : Color.blue)
@@ -32,6 +45,6 @@ struct FancyButton: View {
 
 struct FancyBotton_Previews: PreviewProvider {
     static var previews: some View {
-        FancyButton(isDisabled: .constant(false), action: ({ return }), text: "Add Project")
+        FancyButton(isDisabled: .constant(false), isLoading: .constant(false), action: ({ return }), text: "Add Project")
     }
 }
