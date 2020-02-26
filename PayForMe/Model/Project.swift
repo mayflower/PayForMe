@@ -23,7 +23,7 @@ class Project: Codable, Identifiable {
         if let cospendURL = url, backend == .cospend {
             self.url = cospendURL
         } else {
-            self.url = URL(string: "https://ihatemoney.org")!
+            self.url = URL(string: NetworkService.iHateMoneyURLString)!
         }
         
         self.members = members

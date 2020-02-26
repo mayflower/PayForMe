@@ -44,7 +44,7 @@ class AddProjectModel: ObservableObject {
                 if type == .cospend {
                     return (type, serverAddress)
                 } else {
-                    return (type, nil)
+                    return (type, NetworkService.iHateMoneyURLString)
                 }
         }
         .eraseToAnyPublisher()

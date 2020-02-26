@@ -23,6 +23,8 @@ class NetworkService {
     private let cospendStaticPath = "/index.php/apps/cospend/api/projects"
     private let iHateMoneyStaticPath = "/api/projects"
     
+    static let iHateMoneyURLString = "https://ihatemoney.org"
+    
     private var currentProject: Project {
         get {
             return ProjectManager.shared.currentProject
