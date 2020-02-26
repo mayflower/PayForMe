@@ -31,6 +31,12 @@ class AddProjectModel: ObservableObject {
         
     }
     
+    func reset() {
+        self.serverAddress = ""
+        self.projectName = ""
+        self.projectPassword = ""
+    }
+    
     var validatedAddress: AnyPublisher<(ProjectBackend, String?), Never> {
         return Publishers.CombineLatest($projectType, $serverAddress)
             .map {

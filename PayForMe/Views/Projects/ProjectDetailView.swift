@@ -91,6 +91,7 @@ struct ProjectDetailView: View {
         }
         
         ProjectManager.shared.addProject(project)
+        addProjectModel.reset()
         
         self.presentationMode.wrappedValue.dismiss()
     }
