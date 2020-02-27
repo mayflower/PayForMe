@@ -58,6 +58,7 @@ struct BillDetailView: View {
                 .onReceive(self.viewModel.validatedInput) {
                     self.sendBillButtonDisabled = !$0
             }
+        .padding()
         }
         .navigationBarTitle(navBarTitle)
         .onAppear {
