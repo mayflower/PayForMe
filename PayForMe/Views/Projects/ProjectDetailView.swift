@@ -56,9 +56,20 @@ struct ProjectDetailView: View {
                 }
             }
             .scaledToFit()
-            .onReceive(addProjectModel.connectionInProgress) {
-                self.showConnectionIndicator = $0.1
-                self.addProjectButtonDisabled = $0.1
+            .onReceive(addProjectModel.validationProgress) {
+                switch $0 {
+                case .inProgress:
+                    self.showConnectionIndicator = true
+                    print("inProgess")
+                case .success:
+                    self.showConnectionIndicator = false
+                    self.addProjectButtonDisabled = false
+                    print("success")
+                case .failure:
+                    self.showConnectionIndicator = false
+                    self.addProjectButtonDisabled = true
+                    print("failure")
+                }
             }
             FancyButton(isDisabled: $addProjectButtonDisabled, isLoading: $showConnectionIndicator, action: addButton, text: "Add Project")
             Spacer()

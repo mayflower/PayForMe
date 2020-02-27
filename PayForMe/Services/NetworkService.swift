@@ -76,14 +76,14 @@ class NetworkService {
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { data, response -> Data in
                 guard let httpResponse = response as? HTTPURLResponse,
-                    httpResponse.statusCode == 200 else { print("Network Error"); return Data.init() }
+                    httpResponse.statusCode == 200 else { print("Network Error"); throw  HTTPError.statuscode}
                 return data
             }
             .decode(type: [Person].self, decoder: decoder)
-            .replaceError(with:[])
             .map {
                 !$0.isEmpty
             }
+            .replaceError(with: false)
             .eraseToAnyPublisher()
     }
     

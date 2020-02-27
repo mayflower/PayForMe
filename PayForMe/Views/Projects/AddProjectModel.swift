@@ -24,7 +24,7 @@ class AddProjectModel: ObservableObject {
     
     @Published
     var projectPassword = ""
-    
+        
     static let shared = AddProjectModel()
     
     private init() {
@@ -52,7 +52,7 @@ class AddProjectModel: ObservableObject {
     
     var validatedInput: AnyPublisher<Project, Never> {
         return Publishers.CombineLatest3(validatedAddress, $projectName, $projectPassword)
-            .debounce(for: 0.5, scheduler: DispatchQueue.main)
+            .debounce(for: 2, scheduler: DispatchQueue.main)
             .compactMap { server, name, password in
                 if let address = server.1, address.isValidURL && !name.isEmpty && !password.isEmpty {
                     guard let url = URL(string: address) else { return nil }
@@ -74,12 +74,31 @@ class AddProjectModel: ObservableObject {
         .eraseToAnyPublisher()
     }
     
-    var connectionInProgress: AnyPublisher<(Project,Bool), Never> {
-        return Publishers.CombineLatest(validatedInput, validatedServer)
-        .map {
-                input, server in
-            (input, !server)
-            }
+    private var inputProgress: AnyPublisher<ValidationState, Never> {
+        return Publishers.Map(upstream: validatedInput) {
+            input in
+            return ValidationState.inProgress
+        }
+    .eraseToAnyPublisher()
+    }
+    
+    private var serverProgress: AnyPublisher<ValidationState, Never> {
+        return Publishers.Map(upstream: validatedServer) {
+            server in
+            return server ? ValidationState.success : ValidationState.failure
+        }
+    .eraseToAnyPublisher()
+    }
+    
+    var validationProgress: AnyPublisher<ValidationState, Never> {
+        return Publishers.Merge(inputProgress, serverProgress)
         .eraseToAnyPublisher()
     }
+}
+
+enum ValidationState {
+    case inProgress
+    case success
+    case failure
+//    case empty
 }
