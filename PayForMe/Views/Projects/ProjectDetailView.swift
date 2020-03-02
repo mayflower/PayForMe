@@ -28,11 +28,12 @@ struct ProjectDetailView: View {
     
     var body: some View {
         VStack {
+            Picker(selection: $addProjectModel.projectType, label: Text("snens")) {
+                Text("Cospend").tag(ProjectBackend.cospend)
+                Text("iHateMoney").tag(ProjectBackend.iHateMoney)
+            }.pickerStyle(SegmentedPickerStyle())
+                .padding()
             Form {
-                Picker(selection: $addProjectModel.projectType, label: Text("snens")) {
-                    Text("Cospend").tag(ProjectBackend.cospend)
-                    Text("iHateMoney").tag(ProjectBackend.iHateMoney)
-                }.pickerStyle(SegmentedPickerStyle())
                 if self.addProjectModel.projectType == .cospend {
                     Section(header: Text("Server Address")) {
                         TextFieldContainer("https://mynextcloud.org",
@@ -54,8 +55,10 @@ struct ProjectDetailView: View {
                     
                     SecureField("Enter project password", text: self.$addProjectModel.projectPassword)
                 }
-            }
-            .scaledToFit()
+                }
+            .id(addProjectModel.projectType == .cospend ? "cospend" : "iHateMoney")
+        
+            .frame(width: UIScreen.main.bounds.width, height: addProjectModel.buttonOffset, alignment: .center)
             .onReceive(addProjectModel.validationProgress) {
                 switch $0 {
                 case .inProgress:

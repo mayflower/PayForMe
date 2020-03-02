@@ -98,6 +98,7 @@ struct TextFieldContainer: UIViewRepresentable {
         
         let innertTextField = UITextField(frame: .zero)
         innertTextField.keyboardType = .URL
+        innertTextField.autocorrectionType = .no
         innertTextField.placeholder = placeholder
         innertTextField.text = text.wrappedValue
         innertTextField.delegate = context.coordinator
