@@ -83,7 +83,10 @@ enum tabBarItems: Int {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        
+        previewProjects.forEach{
+            ProjectManager.shared.addProject($0)
+        }
+        ProjectManager.shared.currentProject = previewProject
         return ContentView()
     }
 }
