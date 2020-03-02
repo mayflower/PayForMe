@@ -50,7 +50,8 @@ struct ContentView: View {
                         })
                         .tag(tabBarItems.AddServer)
                 }
-            }
+            }.animation(.easeInOut(duration: 500))
+            
             VStack {
                 Spacer()
                 Button(action: {
