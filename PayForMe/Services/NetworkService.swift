@@ -118,9 +118,9 @@ class NetworkService {
     private func baseURLFor(_ project: Project, suffix: String) -> URL {
         switch project.backend {
             case .cospend:
-                return project.url.appendingPathComponent("\(cospendStaticPath)/\(project.name)/\(project.password)/\(suffix)")
+                return project.url.appendingPathComponent("\(cospendStaticPath)/\(project.name.lowercased())/\(project.password.lowercased())/\(suffix)")
             case .iHateMoney:
-                return project.url.appendingPathComponent("\(iHateMoneyStaticPath)/\(project.name)/\(suffix)")
+                return project.url.appendingPathComponent("\(iHateMoneyStaticPath)/\(project.name.lowercased())/\(suffix)")
         }
     }
     

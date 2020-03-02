@@ -60,7 +60,7 @@ class AddProjectModel: ObservableObject {
     
     var validatedInput: AnyPublisher<Project, Never> {
         return Publishers.CombineLatest3(validatedAddress, $projectName, $projectPassword)
-            .debounce(for: 2, scheduler: DispatchQueue.main)
+            .debounce(for: 1, scheduler: DispatchQueue.main)
             .compactMap { server, name, password in
                 if let address = server.1, address.isValidURL && !name.isEmpty && !password.isEmpty {
                     guard let url = URL(string: address) else { return nil }
