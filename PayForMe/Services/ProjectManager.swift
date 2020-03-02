@@ -20,7 +20,7 @@ class ProjectManager: ObservableObject {
     
     @Published
     var currentProject: Project = Project(name: "", password: "", backend: .iHateMoney)
-        
+    
     static let shared = ProjectManager()
     private init() {
         print("init")
@@ -65,9 +65,9 @@ class ProjectManager: ObservableObject {
         let newCancellable = Publishers.Zip(a, b)
             .map { bills, members in
                 return Project(name: self.currentProject.name, password: self.currentProject.password, backend: self.currentProject.backend, url: self.currentProject.url, members: members, bills: bills)
-            }
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.currentProject, on: self)
+        }
+        .receive(on: DispatchQueue.main)
+        .assign(to: \.currentProject, on: self)
         
         cancellable = newCancellable
         return newCancellable
@@ -115,13 +115,55 @@ class ProjectManager: ObservableObject {
                 }
         }
     }
+    
+    private func sendMemberToServer(_ member: Person, update: Bool, completion: @escaping () -> Void) {
+        cancellable?.cancel()
+        cancellable = nil
+        
+        if update {
+            cancellable = NetworkService.shared.updateMemberPublisher(member: member)
+                .sink { success in
+                    if success {
+                        print("Member id\(member.id) updated")
+                    } else {
+                        print("Error updating Member")
+                    }
+                    completion()
+            }
+        } else {
+            cancellable = NetworkService.shared.createMemberPublisher(name: member.name)
+                .sink { success in
+                    if success {
+                        print("Member successfully created")
+                    } else {
+                        print("Error creating member")
+                    }
+                    completion()
+            }
+        }
+    }
+    
+    private func deleteMemberFromServer(_ member: Person) {
+        cancellable?.cancel()
+        cancellable = nil
+        
+        cancellable = NetworkService.shared.deleteMemberPublisher(member: member)
+            .sink { success in
+                if success {
+                    print("Member id\(member.id) successfully deleted")
+                    self.updateCurrentProject()
+                } else {
+                    print("Error deleting member")
+                }
+        }
+    }
 }
 
 extension ProjectManager {
     
     func addProject(_ project: Project) {
         guard !projects.contains(project) else { print("project not added") ; return }
-                
+        
         if self.projects.isEmpty {
             self.projects.append(project)
             setCurrentProject(project)
@@ -161,6 +203,10 @@ extension ProjectManager {
             $0.id == bill.id
         }
         self.deleteBillFromServer(bill: bill)
+    }
+    
+    func addMember(_ name: String) {
+        
     }
     
     func setCurrentProject(_ project: Project) {

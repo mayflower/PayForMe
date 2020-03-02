@@ -32,7 +32,6 @@ class NetworkService {
     }
     
     let networkActivityPublisher = PassthroughSubject<Bool, Never>()
-
         
     func loadBillsPublisher(_ project: Project) -> AnyPublisher<[Bill], Never> {
         let request = self.buildURLRequest("bills", params: [:], project: project)
@@ -106,6 +105,33 @@ class NetworkService {
                 
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { output in
+                guard let response = output.response as? HTTPURLResponse, response.statusCode / 100 == 2 else {
+                    return false
+                }
+                return true
+            }
+            .replaceError(with: false)
+            .eraseToAnyPublisher()
+    }
+    
+    func createMemberPublisher(name: String) -> AnyPublisher<Bool, Never> {
+        let request = buildURLRequest("members", params: ["name": name], project: currentProject, httpMethod: "POST")
+        return sendMemberPublisher(request: request)
+    }
+    
+    func updateMemberPublisher(member: Person) -> AnyPublisher<Bool, Never> {
+        let request = buildURLRequest("members/\(member.id)", params: ["name": member.name], project: currentProject, httpMethod: "PUT")
+        return sendMemberPublisher(request: request)
+    }
+    
+    func deleteMemberPublisher(member: Person) -> AnyPublisher<Bool, Never> {
+        let request = buildURLRequest("members/\(member.id)", params: [:], project: currentProject, httpMethod: "DELETE")
+        return sendMemberPublisher(request: request)
+    }
+    
+    private func sendMemberPublisher(request: URLRequest) -> AnyPublisher<Bool, Never> {
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .map { output in
                 guard let response = output.response as? HTTPURLResponse, response.statusCode / 100 == 2 else {
                     return false
                 }
