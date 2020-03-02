@@ -31,20 +31,24 @@ struct ContentView: View {
                     BillList(viewModel: BillListViewModel(), hidePlusButton: self.$hidePlusButton)
                         .tabItem({
                             Image(systemName: "rectangle.stack")
-                        }).tag(tabBarItems.BillList)
+                        })
+                        .tag(tabBarItems.BillList)
                     BalanceList(hidePlusButton: $hidePlusButton, viewModel: BalanceViewModel())
                         .tabItem({
                             Image(systemName: "arrow.right.arrow.left")
-                        }).tag(tabBarItems.Balance)
+                        })
+                        .tag(tabBarItems.Balance)
                     ProjectList(hidePlusButton: self.$hidePlusButton)
                         .tabItem({
                             Image(systemName: "gear")
-                        }).tag(tabBarItems.ServerList)
+                        })
+                        .tag(tabBarItems.ServerList)
                 } else {
                     AddProjectView(hidePlusButton: self.$hidePlusButton)
                         .tabItem({
                             Image(systemName: "folder.badge.plus")
-                        }).tag(tabBarItems.AddServer)
+                        })
+                        .tag(tabBarItems.AddServer)
                 }
             }
             VStack {
