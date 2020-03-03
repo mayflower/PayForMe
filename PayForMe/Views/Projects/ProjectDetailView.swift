@@ -28,17 +28,27 @@ struct ProjectDetailView: View {
     
     var body: some View {
         VStack {
-            Picker(selection: $addProjectModel.projectType, label: Text("snens")) {
+            Picker(selection: $addProjectModel.projectType.animation(), label: Text("snens")) {
                 Text("Cospend").tag(ProjectBackend.cospend)
                 Text("iHateMoney").tag(ProjectBackend.iHateMoney)
             }.pickerStyle(SegmentedPickerStyle())
-                .padding()
+                .padding(EdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 8))
+            
+            if addProjectModel.projectType == ProjectBackend.iHateMoney {
+                Picker(selection: $addProjectModel.addOrCreate, label: Text("snens")) {
+                    Text("Add Existing").tag(0)
+                    Text("Create New").tag(1)
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding(EdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 8))
+                .animation(.easeInOut)
+            }
             Form {
                 if self.addProjectModel.projectType == .cospend {
                     Section(header: Text("Server Address")) {
                         TextFieldContainer("https://mynextcloud.org",
                                            text: self.$addProjectModel.serverAddress)
-//                            .autocapitalization(.none).keyboardType(.URL)
+                            .autocapitalization(.none).keyboardType(.URL)
                             .onTapGesture {
                                 if self.addProjectModel.serverAddress.isEmpty {
                                     DispatchQueue.main.async {
@@ -47,6 +57,7 @@ struct ProjectDetailView: View {
                                 }
                         }
                     }
+                    .animation(.easeInOut)
                 }
                 Section(header: Text("Project Name & Password")) {
                     TextField("Enter project name",
@@ -55,26 +66,30 @@ struct ProjectDetailView: View {
                     
                     SecureField("Enter project password", text: self.$addProjectModel.projectPassword)
                 }
-                }
+            }
             .id(addProjectModel.projectType == .cospend ? "cospend" : "iHateMoney")
-        
+                
             .frame(width: UIScreen.main.bounds.width, height: addProjectModel.buttonOffset, alignment: .center)
             .onReceive(addProjectModel.validationProgress) {
                 switch $0 {
-                case .inProgress:
-                    self.showConnectionIndicator = true
-                    print("inProgess")
-                case .success:
-                    self.showConnectionIndicator = false
-                    self.addProjectButtonDisabled = false
-                    print("success")
-                case .failure:
-                    self.showConnectionIndicator = false
-                    self.addProjectButtonDisabled = true
-                    print("failure")
+                    case .inProgress:
+                        self.showConnectionIndicator = true
+                        print("inProgess")
+                    case .success:
+                        self.showConnectionIndicator = false
+                        self.addProjectButtonDisabled = false
+                        print("success")
+                    case .failure:
+                        self.showConnectionIndicator = false
+                        self.addProjectButtonDisabled = true
+                        print("failure")
                 }
             }
-            FancyButton(isDisabled: $addProjectButtonDisabled, isLoading: $showConnectionIndicator, action: addButton, text: "Add Project")
+            FancyButton(isDisabled: $addProjectButtonDisabled,
+                        isLoading: $showConnectionIndicator,
+                        action: addButton,
+                        text:
+                addProjectModel.addOrCreate == 0 || addProjectModel.projectType == .cospend ? "Add Project" : "Create Project")
             Spacer()
             
         }
