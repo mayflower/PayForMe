@@ -47,7 +47,9 @@ struct BillList: View {
             guard let bill = viewModel.currentProject.bills[safe: offset] else {
                 return
             }
-            ProjectManager.shared.deleteBill(bill)
+            ProjectManager.shared.deleteBill(bill, completion: {
+                ProjectManager.shared.updateCurrentProject()
+            })
         }
     }
     
