@@ -205,8 +205,17 @@ extension ProjectManager {
         self.deleteBillFromServer(bill: bill)
     }
     
-    func addMember(_ name: String) {
-        
+    func addMember(_ name: String, completion: @escaping () -> Void) {
+        let newMember = Person(id: -1, weight: -1, name: name, activated: true, color: nil)
+        self.sendMemberToServer(newMember, update: false, completion: completion)
+    }
+    
+    func updateMember(_ member: Person, completion: @escaping () -> Void) {
+        self.sendMemberToServer(member, update: true, completion: completion)
+    }
+    
+    func deleteMember(_ member: Person, completion: @escaping () -> Void) {
+        self.deleteMemberFromServer(member)
     }
     
     func setCurrentProject(_ project: Project) {
