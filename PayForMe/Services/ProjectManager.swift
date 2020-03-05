@@ -101,7 +101,7 @@ class ProjectManager: ObservableObject {
         }
     }
     
-    private func deleteBillFromServer(bill: Bill) {
+    private func deleteBillFromServer(bill: Bill, completion: @escaping () -> Void) {
         cancellable?.cancel()
         cancellable = nil
         
@@ -109,10 +109,10 @@ class ProjectManager: ObservableObject {
             .sink { success in
                 if success {
                     print("Bill successfully deleted")
-                    self.updateCurrentProject()
                 } else {
                     print("Error deleting bill")
                 }
+                completion()
         }
     }
     
@@ -143,7 +143,7 @@ class ProjectManager: ObservableObject {
         }
     }
     
-    private func deleteMemberFromServer(_ member: Person) {
+    private func deleteMemberFromServer(_ member: Person, completion: @escaping () -> Void) {
         cancellable?.cancel()
         cancellable = nil
         
@@ -151,10 +151,10 @@ class ProjectManager: ObservableObject {
             .sink { success in
                 if success {
                     print("Member id\(member.id) successfully deleted")
-                    self.updateCurrentProject()
                 } else {
                     print("Error deleting member")
                 }
+                completion()
         }
     }
 }
@@ -198,15 +198,24 @@ extension ProjectManager {
         }
     }
     
-    func deleteBill(_ bill: Bill) {
+    func deleteBill(_ bill: Bill, completion: @escaping () -> Void) {
         self.currentProject.bills.removeAll {
             $0.id == bill.id
         }
-        self.deleteBillFromServer(bill: bill)
+        self.deleteBillFromServer(bill: bill, completion: completion)
     }
     
-    func addMember(_ name: String) {
-        
+    func addMember(_ name: String, completion: @escaping () -> Void) {
+        let newMember = Person(id: -1, weight: -1, name: name, activated: true, color: nil)
+        self.sendMemberToServer(newMember, update: false, completion: completion)
+    }
+    
+    func updateMember(_ member: Person, completion: @escaping () -> Void) {
+        self.sendMemberToServer(member, update: true, completion: completion)
+    }
+    
+    func deleteMember(_ member: Person, completion: @escaping () -> Void) {
+        self.deleteMemberFromServer(member, completion: completion)
     }
     
     func setCurrentProject(_ project: Project) {
