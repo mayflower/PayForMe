@@ -62,7 +62,7 @@ struct ContentView: View {
                             .resizable()
                             .frame(width: 64, height: 64)
                             .foregroundColor(Color.secondary)
-                            .shadow(radius: 20)
+                            .shadow(color: Color.secondary, radius: 2, x: 5, y: 5)
                     } else {
                         EmptyView()
                     }
