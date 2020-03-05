@@ -89,10 +89,24 @@ class NetworkService {
             .eraseToAnyPublisher()
     }
     
-//    func create(new project: Project) -> AnyPublisher<Bool, Never> {
-//        let url = baseURLFor(project)
-//        
-//    }
+    func createProjectPublisher(_ project: Project, email: String) -> AnyPublisher<Bool, Never> {
+        let params = ["name": project.name, "password": project.password, "contact_email": email]
+        let request = buildURLRequest("", params: params, project: project, httpMethod: "POST")
+        
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .tryMap { data, response -> Bool in
+                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode / 100 == 2 else {
+                    throw HTTPError.statuscode
+                }
+                guard let responseString = String(data: data, encoding: .utf8) else {
+                    return false
+                }
+                
+                return responseString == project.name
+            }
+            .replaceError(with: false)
+            .eraseToAnyPublisher()
+    }
     
     func postBillPublisher(bill: Bill) -> AnyPublisher<Bool, Never> {
         let request = buildURLRequest("bills", params: bill.paramsFor(currentProject.backend), project: currentProject, httpMethod: "POST")
@@ -167,20 +181,25 @@ class NetworkService {
         }
     }
     
-    private func buildURLRequest(_ suffix: String = "", params: [String: Any] = [:], project: Project = ProjectManager.shared.currentProject, httpMethod: String = "GET") -> URLRequest {
+    private func buildURLRequest(_ suffix: String, params: [String: Any] = [:], project: Project = ProjectManager.shared.currentProject, httpMethod: String = "GET") -> URLRequest {
         
+        let baseURL: URL
         let requestURL: URL
         var request: URLRequest
         
+        if !suffix.isEmpty {
+            baseURL = baseURLFor(project, suffix: suffix)
+        } else {
+            baseURL = baseURLFor(project)
+        }
+        
         if let cospendParams = params as? [String: String], project.backend == .cospend && !params.isEmpty {
-            let baseURL = baseURLFor(project, suffix: suffix)
-
             var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false)
             urlComponents?.queryItems = cospendParams.map { URLQueryItem(name: $0, value: $1) }
 
             requestURL = urlComponents!.url!
         } else {
-            requestURL = baseURLFor(project, suffix: suffix)
+            requestURL = baseURL
         }
                 
         request = URLRequest(url: requestURL)
