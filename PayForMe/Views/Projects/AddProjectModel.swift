@@ -17,6 +17,9 @@ class AddProjectModel: ObservableObject {
     var projectType = ProjectBackend.cospend
     
     @Published
+    var addOrCreate = 0
+    
+    @Published
     var serverAddress = ""
     
     @Published

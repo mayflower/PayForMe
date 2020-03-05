@@ -89,6 +89,11 @@ class NetworkService {
             .eraseToAnyPublisher()
     }
     
+//    func create(new project: Project) -> AnyPublisher<Bool, Never> {
+//        let url = baseURLFor(project)
+//        
+//    }
+    
     func postBillPublisher(bill: Bill) -> AnyPublisher<Bool, Never> {
         let request = buildURLRequest("bills", params: bill.paramsFor(currentProject.backend), project: currentProject, httpMethod: "POST")
         return sendBillPublisher(request: request)
@@ -144,12 +149,21 @@ class NetworkService {
             .eraseToAnyPublisher()
     }
     
+    private func baseURLFor(_ project: Project) -> URL  {
+        switch project.backend {
+            case .cospend:
+                return project.url.appendingPathComponent("\(cospendStaticPath)/")
+            case .iHateMoney:
+                return project.url.appendingPathComponent("\(iHateMoneyStaticPath)/")
+        }
+    }
+    
     private func baseURLFor(_ project: Project, suffix: String) -> URL {
         switch project.backend {
             case .cospend:
-                return project.url.appendingPathComponent("\(cospendStaticPath)/\(project.name.lowercased())/\(project.password.lowercased())/\(suffix)")
+                return baseURLFor(project).appendingPathComponent("\(project.name.lowercased())/\(project.password.lowercased())/\(suffix)")
             case .iHateMoney:
-                return project.url.appendingPathComponent("\(iHateMoneyStaticPath)/\(project.name.lowercased())/\(suffix)")
+                return baseURLFor(project).appendingPathComponent("\(project.name.lowercased())/\(suffix)")
         }
     }
     
