@@ -77,7 +77,15 @@ class AddProjectModel: ObservableObject {
     }
     
     var validatedServer: AnyPublisher<Bool, Never> {
-        return Publishers.FlatMap(upstream: validatedInput, maxPublishers: .unlimited) {
+        return Publishers.CombineLatest3(validatedInput, $addOrCreate, $projectType)
+            .compactMap {
+                input, addOrCreate, backend in
+                if addOrCreate == 0 || backend == .cospend{
+                    return input
+                }
+                return nil
+        }
+        .flatMap{
             project in
             return NetworkService.shared.testProject(project)
         }
@@ -101,8 +109,19 @@ class AddProjectModel: ObservableObject {
     .eraseToAnyPublisher()
     }
     
+    private var createProject: AnyPublisher<ValidationState, Never> {
+        return Publishers.CombineLatest3(validatedInput,$addOrCreate,$projectType)
+            .compactMap {
+                input, addOrCreate, backend in
+                if addOrCreate == 1 && backend == .iHateMoney {
+                    return ValidationState.success
+                }
+                return nil
+        }.eraseToAnyPublisher()
+    }
+    
     var validationProgress: AnyPublisher<ValidationState, Never> {
-        return Publishers.Merge(inputProgress, serverProgress)
+        return Publishers.Merge3(inputProgress, serverProgress, createProject)
         .eraseToAnyPublisher()
     }
 }
