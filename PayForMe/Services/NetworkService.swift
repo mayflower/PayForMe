@@ -65,7 +65,10 @@ class NetworkService {
         .replaceError(with: [])
         .map {
             members in
-            Dictionary(members.map {($0.id, $0)}) {a,_ in a }
+            let filtered = members.filter {
+                $0.activated
+            }
+            return Dictionary(filtered.map {($0.id, $0)}) {a,_ in a }
         }
         .eraseToAnyPublisher()
     }

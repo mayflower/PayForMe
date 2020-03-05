@@ -54,7 +54,7 @@ struct BillDetailView: View {
                 }
                 
             }
-            FancyButton(isDisabled: $sendBillButtonDisabled, isLoading: $sendingInProgress, action: self.sendBillToServer, text: showModal ? "Create Bill" : "Update Bill")
+            FancyButton(isDisabled: $sendBillButtonDisabled, isLoading: $sendingInProgress, add: false, action: self.sendBillToServer, text: showModal ? "Create Bill" : "Update Bill")
                 .onReceive(self.viewModel.validatedInput) {
                     self.sendBillButtonDisabled = !$0
             }

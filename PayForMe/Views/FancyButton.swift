@@ -16,6 +16,8 @@ struct FancyButton: View {
     @Binding
     var isLoading: Bool
     
+    var add: Bool
+    
     var action: () -> Void
     var text: String
     
@@ -29,6 +31,8 @@ struct FancyButton: View {
                         .scaleEffect(0.2)
                         .frame(width: 25, height: 25)
                 }
+            } else if add {
+                Image(systemName: "plus")
             } else {
                 Text(text)
             }
@@ -45,6 +49,6 @@ struct FancyButton: View {
 
 struct FancyBotton_Previews: PreviewProvider {
     static var previews: some View {
-        FancyButton(isDisabled: .constant(false), isLoading: .constant(false), action: ({ return }), text: "Add Project")
+        FancyButton(isDisabled: .constant(false), isLoading: .constant(false), add: false, action: ({ return }), text: "Add Project")
     }
 }

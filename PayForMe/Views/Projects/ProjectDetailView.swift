@@ -74,7 +74,7 @@ struct ProjectDetailView: View {
                     print("failure")
                 }
             }
-            FancyButton(isDisabled: $addProjectButtonDisabled, isLoading: $showConnectionIndicator, action: addButton, text: "Add Project")
+            FancyButton(isDisabled: $addProjectButtonDisabled, isLoading: $showConnectionIndicator, add: false, action: addButton, text: "Add Project")
             Spacer()
             
         }

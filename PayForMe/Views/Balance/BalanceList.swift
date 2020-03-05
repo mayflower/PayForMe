@@ -16,25 +16,58 @@ struct BalanceList: View {
     @ObservedObject
     var viewModel: BalanceViewModel
     
+    @State
+    var addingUser = false
+    
+    @State
+    var showConnectionIndicator = false
+    
+    @State
+    var memberName = ""
+    
     var body: some View {
         NavigationView {
-            List {
-                ForEach(viewModel.balances.sorted(by: { ($0.amount > $1.amount) || (($0.amount == $1.amount) && ($0.person.name < $1.person.name)) })) {
-                    balance in
-                    if balance.amount < 0 {
-                        NavigationLink(destination: BillDetailView(showModal: .constant(false), hidePlusButton: self.$hidePlusButton, viewModel: BillDetailViewModel(currentBill: self.createSettlingBill(balance: balance)))) {
+            VStack(alignment: .center) {
+                if addingUser {
+                    AddMemberView(memberName: $memberName, addMemberAction: submitUser, cancelButtonAction: cancelAddUser)
+                }
+                List {
+                    ForEach(viewModel.balances.sorted(by: { ($0.amount > $1.amount) || (($0.amount == $1.amount) && ($0.person.name < $1.person.name)) })) {
+                        balance in
+                        if balance.amount < 0 {
+                            NavigationLink(destination: BillDetailView(showModal: .constant(false), hidePlusButton: self.$hidePlusButton, viewModel: BillDetailViewModel(currentBill: self.createSettlingBill(balance: balance)))) {
+                                BalanceCell(balance: balance)
+                            }
+                        } else {
                             BalanceCell(balance: balance)
                         }
-                    } else {
-                        BalanceCell(balance: balance)
                     }
                 }
             }
+            .animation(.easeInOut, value: self.addingUser)
+            .navigationBarItems(trailing: !addingUser ? FancyButton(isDisabled: .constant(false), isLoading: .constant(false), add: true, action: showAddUser, text: "") : nil)
             .navigationBarTitle("Balance")
             .onAppear {
                 ProjectManager.shared.updateCurrentProject()
             }
         }
+    }
+    
+    func showAddUser() {
+        addingUser = true
+    }
+    
+    func submitUser() {
+        ProjectManager.shared.addMember(memberName) {
+            self.addingUser = false
+            self.memberName = ""
+            ProjectManager.shared.updateCurrentProject()
+        }
+    }
+    
+    func cancelAddUser() {
+        self.memberName = ""
+        self.addingUser = false
     }
     
     func createSettlingBill(balance: Balance) -> Bill {
@@ -52,7 +85,7 @@ struct BalanceList_Previews: PreviewProvider {
         let vm = BalanceViewModel()
         vm.currentProject = previewProject
         vm.setBalances()
-        return BalanceList(hidePlusButton: .constant(false), viewModel: vm)
+        return BalanceList(hidePlusButton: .constant(false), viewModel: vm, addingUser: true)
     }
 }
 
