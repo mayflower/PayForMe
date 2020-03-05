@@ -55,6 +55,21 @@ class ProjectManager: ObservableObject {
     
     // MARK: Server Communication
     
+    private func createProjectOnServer(_ project: Project, email: String, completion: @escaping () -> Void) {
+        cancellable?.cancel()
+        cancellable = nil
+        
+        cancellable = NetworkService.shared.createProjectPublisher(project, email: email)
+            .sink { success in
+                if success {
+                    print("Project \(project.name) created successfully")
+                } else {
+                    print("Error creating project \(project.name)")
+                }
+                 completion()
+            }
+    }
+    
     @discardableResult func updateCurrentProject() -> Cancellable {
         cancellable?.cancel()
         cancellable = nil
@@ -160,6 +175,12 @@ class ProjectManager: ObservableObject {
 }
 
 extension ProjectManager {
+    
+    func createProject(_ project: Project, email: String, completion: @escaping () -> Void) {
+        guard !projects.contains(project) else { print("project duplicate") ; return }
+        
+        self.createProjectOnServer(project, email: email, completion: completion)
+    }
     
     func addProject(_ project: Project) {
         guard !projects.contains(project) else { print("project not added") ; return }
