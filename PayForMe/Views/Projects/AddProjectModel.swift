@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Combine
+import TimelaneCombine
 
 class AddProjectModel: ObservableObject {
     
@@ -35,7 +36,7 @@ class AddProjectModel: ObservableObject {
             return 120
         }
     }
-        
+    
     static let shared = AddProjectModel()
     
     private init() {
@@ -50,6 +51,7 @@ class AddProjectModel: ObservableObject {
     
     var validatedAddress: AnyPublisher<(ProjectBackend, String?), Never> {
         return Publishers.CombineLatest($projectType, $serverAddress)
+            .lane("Address validation")
             .map {
                 type, serverAddress in
                 if type == .cospend {
@@ -64,6 +66,7 @@ class AddProjectModel: ObservableObject {
     var validatedInput: AnyPublisher<Project, Never> {
         return Publishers.CombineLatest3(validatedAddress, $projectName, $projectPassword)
             .debounce(for: 1, scheduler: DispatchQueue.main)
+            .lane("Validate input")
             .compactMap { server, name, password in
                 if let address = server.1, address.isValidURL && !name.isEmpty && !password.isEmpty {
                     guard let url = URL(string: address) else { return nil }
@@ -71,13 +74,14 @@ class AddProjectModel: ObservableObject {
                 } else {
                     return nil
                 }
-            }
-            .removeDuplicates()
-            .eraseToAnyPublisher()
+        }
+        .removeDuplicates()
+        .eraseToAnyPublisher()
     }
     
     var validatedServer: AnyPublisher<Bool, Never> {
         return Publishers.CombineLatest3(validatedInput, $addOrCreate, $projectType)
+            .lane("validate Server")
             .compactMap {
                 input, addOrCreate, backend in
                 if addOrCreate == 0 || backend == .cospend{
@@ -89,6 +93,7 @@ class AddProjectModel: ObservableObject {
             project in
             return NetworkService.shared.testProject(project)
         }
+        .lane("Test project")
         .receive(on: RunLoop.main)
         .eraseToAnyPublisher()
     }
@@ -98,7 +103,8 @@ class AddProjectModel: ObservableObject {
             input in
             return ValidationState.inProgress
         }
-    .eraseToAnyPublisher()
+        .lane("Input progress")
+        .eraseToAnyPublisher()
     }
     
     private var serverProgress: AnyPublisher<ValidationState, Never> {
@@ -106,7 +112,8 @@ class AddProjectModel: ObservableObject {
             server in
             return server ? ValidationState.success : ValidationState.failure
         }
-    .eraseToAnyPublisher()
+        .lane("Server progress")
+        .eraseToAnyPublisher()
     }
     
     private var createProject: AnyPublisher<ValidationState, Never> {
@@ -117,12 +124,15 @@ class AddProjectModel: ObservableObject {
                     return ValidationState.success
                 }
                 return nil
-        }.eraseToAnyPublisher()
+        }
+        .lane("Create Project progress")
+        .eraseToAnyPublisher()
     }
     
     var validationProgress: AnyPublisher<ValidationState, Never> {
         return Publishers.Merge3(inputProgress, serverProgress, createProject)
-        .eraseToAnyPublisher()
+            .lane("Validation merger")
+            .eraseToAnyPublisher()
     }
 }
 
@@ -130,5 +140,5 @@ enum ValidationState {
     case inProgress
     case success
     case failure
-//    case empty
+    //    case empty
 }
