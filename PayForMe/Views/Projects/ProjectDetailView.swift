@@ -115,8 +115,15 @@ struct ProjectDetailView: View {
             project = Project(name: addProjectModel.projectName, password: addProjectModel.projectPassword, backend: .iHateMoney)
         }
         
-        ProjectManager.shared.addProject(project)
-        addProjectModel.reset()
+        if addProjectModel.addOrCreate == 0 {
+            ProjectManager.shared.addProject(project)
+            addProjectModel.reset()
+        } else {
+            ProjectManager.shared.createProject(project, email: "camille@mainz.me") {
+                print("created projecttt")
+                self.addProjectModel.reset()
+            }
+        }
         
         self.presentationMode.wrappedValue.dismiss()
     }

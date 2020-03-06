@@ -90,7 +90,7 @@ class NetworkService {
     }
     
     func createProjectPublisher(_ project: Project, email: String) -> AnyPublisher<Bool, Never> {
-        let params = ["name": project.name, "password": project.password, "contact_email": email]
+        let params = ["name": project.name, "id": project.name, "password": project.password, "contact_email": email]
         let request = buildURLRequest("", params: params, project: project, httpMethod: "POST")
         
         return URLSession.shared.dataTaskPublisher(for: request)
@@ -102,7 +102,7 @@ class NetworkService {
                     return false
                 }
                 
-                return responseString == project.name
+                return responseString.contains(project.name)
             }
             .replaceError(with: false)
             .eraseToAnyPublisher()
@@ -168,7 +168,7 @@ class NetworkService {
             case .cospend:
                 return project.url.appendingPathComponent("\(cospendStaticPath)/")
             case .iHateMoney:
-                return project.url.appendingPathComponent("\(iHateMoneyStaticPath)/")
+                return project.url.appendingPathComponent("\(iHateMoneyStaticPath)")
         }
     }
     
@@ -205,8 +205,10 @@ class NetworkService {
         request = URLRequest(url: requestURL)
         
         if project.backend == .iHateMoney {
-            guard let authString = "\(project.name):\(project.password)".data(using: .utf8)?.base64EncodedString() else { fatalError("error generating authString. THIS SHOULD NOT HAPPEN") }
-            request.setValue("Basic \(authString)", forHTTPHeaderField: "Authorization")
+            if !suffix.isEmpty {
+                guard let authString = "\(project.name):\(project.password)".data(using: .utf8)?.base64EncodedString() else { fatalError("error generating authString. THIS SHOULD NOT HAPPEN") }
+                request.setValue("Basic \(authString)", forHTTPHeaderField: "Authorization")
+            }
             
             if !params.isEmpty {
                 request.httpBody = try? JSONSerialization.data(withJSONObject: params)
