@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,6 +18,7 @@
 		65005A0223DDFB1A00D1D599 /* WhoPaidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65005A0123DDFB1A00D1D599 /* WhoPaidView.swift */; };
 		65005A0423DE0C5C00D1D599 /* BillList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65005A0323DE0C5C00D1D599 /* BillList.swift */; };
 		650504A123FEA461000E5F9C /* PersonText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650504A023FEA461000E5F9C /* PersonText.swift */; };
+		6521FCFF2412A69E00A172DE /* TimelaneCombine in Frameworks */ = {isa = PBXBuildFile; productRef = 6521FCFE2412A69E00A172DE /* TimelaneCombine */; };
 		6533A02B23D888B100FF822B /* BillCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533A02A23D888B100FF822B /* BillCell.swift */; };
 		65662A0323D7320000303207 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A0223D7320000303207 /* AppDelegate.swift */; };
 		65662A0523D7320000303207 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A0423D7320000303207 /* SceneDelegate.swift */; };
@@ -89,6 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6521FCFF2412A69E00A172DE /* TimelaneCombine in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,6 +237,7 @@
 			);
 			name = PayForMe;
 			packageProductDependencies = (
+				6521FCFE2412A69E00A172DE /* TimelaneCombine */,
 			);
 			productName = iCospend;
 			productReference = 656629FF23D7320000303207 /* PayForMe.app */;
@@ -265,6 +268,7 @@
 			);
 			mainGroup = 656629F623D7320000303207;
 			packageReferences = (
+				6521FCFD2412A69D00A172DE /* XCRemoteSwiftPackageReference "TimelaneCombine" */,
 			);
 			productRefGroup = 65662A0023D7320000303207 /* Products */;
 			projectDirPath = "";
@@ -524,6 +528,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6521FCFD2412A69D00A172DE /* XCRemoteSwiftPackageReference "TimelaneCombine" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/icanzilb/TimelaneCombine";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6521FCFE2412A69E00A172DE /* TimelaneCombine */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6521FCFD2412A69D00A172DE /* XCRemoteSwiftPackageReference "TimelaneCombine" */;
+			productName = TimelaneCombine;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 656629F723D7320000303207 /* Project object */;
 }
