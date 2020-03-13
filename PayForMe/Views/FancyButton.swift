@@ -43,12 +43,13 @@ struct FancyButton: View {
         .foregroundColor(.white)
             
         .cornerRadius(10)
+        .shadow(color: self.isDisabled ? Color.gray.opacity(0.5) : Color.blue.opacity(0.5), radius: 4, x: 2, y: 2)
         .disabled(isDisabled)
     }
 }
 
 struct FancyBotton_Previews: PreviewProvider {
     static var previews: some View {
-        FancyButton(isDisabled: .constant(false), isLoading: .constant(false), add: false, action: ({ return }), text: "Add Project")
+        FancyButton(isDisabled: .constant(true), isLoading: .constant(false), add: false, action: ({ return }), text: "Add Project")
     }
 }
