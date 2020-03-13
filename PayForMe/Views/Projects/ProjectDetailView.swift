@@ -123,7 +123,7 @@ struct ProjectDetailView: View {
             ProjectManager.shared.addProject(project)
             addProjectModel.reset()
         } else {
-            ProjectManager.shared.createProject(project, email: "camille@mainz.me") {
+            ProjectManager.shared.createProject(project, email: self.addProjectModel.emailAddr) {
                 print("created projecttt")
                 self.addProjectModel.reset()
             }
