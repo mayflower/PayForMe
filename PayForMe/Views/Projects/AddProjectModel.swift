@@ -120,10 +120,10 @@ class AddProjectModel: ObservableObject {
     }
     
     private var createProject: AnyPublisher<ValidationState, Never> {
-        return Publishers.CombineLatest3(validatedInput,$addOrCreate,$projectType)
+        return Publishers.CombineLatest4(validatedInput,$addOrCreate,$projectType, $emailAddr)
             .compactMap {
-                input, addOrCreate, backend in
-                if addOrCreate == 1 && backend == .iHateMoney {
+                input, addOrCreate, backend, email in
+                if addOrCreate == 1 && backend == .iHateMoney && email.isValidEmail {
                     return ValidationState.success
                 }
                 return nil
