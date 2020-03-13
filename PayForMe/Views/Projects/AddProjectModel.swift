@@ -29,11 +29,14 @@ class AddProjectModel: ObservableObject {
     @Published
     var projectPassword = ""
     
+    @Published
+    var emailAddr = ""
+    
     var buttonOffset: CGFloat {
         if projectType == .cospend {
             return 220
         } else {
-            return 120
+            return 170
         }
     }
     
