@@ -29,4 +29,16 @@ platform :ios do
       appicon_path: 'PayForMe/Assets.xcassets'
     )
   end
+
+  lane :screenshots do
+    capture_screenshots
+    upload_to_app_store
+  end
+
+  lane :deliver do
+    increment_build_number(xcodeproj: "PayForMe.xcodeproj") 
+    build_app(scheme: "PayForMe")
+    capture_screenshots
+    upload_to_app_store
+  end
 end

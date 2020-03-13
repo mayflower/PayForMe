@@ -32,6 +32,8 @@
 		65662A2223D75C5F00303207 /* ProjectDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A2123D75C5F00303207 /* ProjectDetailView.swift */; };
 		65662A2423D83ED100303207 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A2323D83ED100303207 /* StorageService.swift */; };
 		65662A2623D8546900303207 /* ProjectList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A2523D8546900303207 /* ProjectList.swift */; };
+		656A2AD7241BB4F300786A1E /* PayForMeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656A2AD6241BB4F300786A1E /* PayForMeUITests.swift */; };
+		656A2ADF241BBAF200786A1E /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656A2ADE241BBAF200786A1E /* SnapshotHelper.swift */; };
 		656E8CB423D9C3DA00B3ED10 /* BillDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656E8CB323D9C3DA00B3ED10 /* BillDetailView.swift */; };
 		656E8CB623D9C88A00B3ED10 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656E8CB523D9C88A00B3ED10 /* Project.swift */; };
 		656E8CB823D9FDA300B3ED10 /* BillListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656E8CB723D9FDA300B3ED10 /* BillListViewModel.swift */; };
@@ -44,6 +46,16 @@
 		65C9E2CE23E1B8F500814B37 /* BalanceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C9E2CD23E1B8F500814B37 /* BalanceList.swift */; };
 		65C9E2D023E1B96B00814B37 /* BalanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C9E2CF23E1B96B00814B37 /* BalanceViewModel.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		656A2AD9241BB4F300786A1E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 656629F723D7320000303207 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 656629FE23D7320000303207;
+			remoteInfo = PayForMe;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		481FB4FA23E964C8003BD108 /* ProjectManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectManager.swift; sourceTree = "<group>"; };
@@ -72,6 +84,10 @@
 		65662A2123D75C5F00303207 /* ProjectDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailView.swift; sourceTree = "<group>"; };
 		65662A2323D83ED100303207 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		65662A2523D8546900303207 /* ProjectList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectList.swift; sourceTree = "<group>"; };
+		656A2AD4241BB4F300786A1E /* PayForMeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PayForMeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		656A2AD6241BB4F300786A1E /* PayForMeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayForMeUITests.swift; sourceTree = "<group>"; };
+		656A2AD8241BB4F300786A1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		656A2ADE241BBAF200786A1E /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		656E8CB323D9C3DA00B3ED10 /* BillDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillDetailView.swift; sourceTree = "<group>"; };
 		656E8CB523D9C88A00B3ED10 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		656E8CB723D9FDA300B3ED10 /* BillListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillListViewModel.swift; sourceTree = "<group>"; };
@@ -91,6 +107,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				6521FCFF2412A69E00A172DE /* TimelaneCombine in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		656A2AD1241BB4F300786A1E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				65662A0123D7320000303207 /* PayForMe */,
+				656A2AD5241BB4F300786A1E /* PayForMeUITests */,
 				65662A0023D7320000303207 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -123,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				656629FF23D7320000303207 /* PayForMe.app */,
+				656A2AD4241BB4F300786A1E /* PayForMeUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -181,6 +206,16 @@
 				65C9E2CF23E1B96B00814B37 /* BalanceViewModel.swift */,
 			);
 			path = Balance;
+			sourceTree = "<group>";
+		};
+		656A2AD5241BB4F300786A1E /* PayForMeUITests */ = {
+			isa = PBXGroup;
+			children = (
+				656A2ADE241BBAF200786A1E /* SnapshotHelper.swift */,
+				656A2AD6241BB4F300786A1E /* PayForMeUITests.swift */,
+				656A2AD8241BB4F300786A1E /* Info.plist */,
+			);
+			path = PayForMeUITests;
 			sourceTree = "<group>";
 		};
 		6596D4E223ED9C520079DD5B /* BillDetail */ = {
@@ -243,6 +278,24 @@
 			productReference = 656629FF23D7320000303207 /* PayForMe.app */;
 			productType = "com.apple.product-type.application";
 		};
+		656A2AD3241BB4F300786A1E /* PayForMeUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 656A2ADD241BB4F300786A1E /* Build configuration list for PBXNativeTarget "PayForMeUITests" */;
+			buildPhases = (
+				656A2AD0241BB4F300786A1E /* Sources */,
+				656A2AD1241BB4F300786A1E /* Frameworks */,
+				656A2AD2241BB4F300786A1E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				656A2ADA241BB4F300786A1E /* PBXTargetDependency */,
+			);
+			name = PayForMeUITests;
+			productName = PayForMeUITests;
+			productReference = 656A2AD4241BB4F300786A1E /* PayForMeUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -255,6 +308,10 @@
 				TargetAttributes = {
 					656629FE23D7320000303207 = {
 						CreatedOnToolsVersion = 11.3.1;
+					};
+					656A2AD3241BB4F300786A1E = {
+						CreatedOnToolsVersion = 11.3.1;
+						TestTargetID = 656629FE23D7320000303207;
 					};
 				};
 			};
@@ -275,6 +332,7 @@
 			projectRoot = "";
 			targets = (
 				656629FE23D7320000303207 /* PayForMe */,
+				656A2AD3241BB4F300786A1E /* PayForMeUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -287,6 +345,13 @@
 				65662A0F23D7320300303207 /* LaunchScreen.storyboard in Resources */,
 				65662A0C23D7320300303207 /* Preview Assets.xcassets in Resources */,
 				65662A0923D7320300303207 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		656A2AD2241BB4F300786A1E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,7 +397,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		656A2AD0241BB4F300786A1E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				656A2AD7241BB4F300786A1E /* PayForMeUITests.swift in Sources */,
+				656A2ADF241BBAF200786A1E /* SnapshotHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		656A2ADA241BB4F300786A1E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 656629FE23D7320000303207 /* PayForMe */;
+			targetProxy = 656A2AD9241BB4F300786A1E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		65662A0D23D7320300303207 /* LaunchScreen.storyboard */ = {
@@ -465,7 +547,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 32;
+				CURRENT_PROJECT_VERSION = 33;
 				DEVELOPMENT_ASSET_PATHS = "\"PayForMe/Preview Content\"";
 				DEVELOPMENT_TEAM = L79BTFY6FV;
 				ENABLE_PREVIEWS = YES;
@@ -488,7 +570,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 32;
+				CURRENT_PROJECT_VERSION = 33;
 				DEVELOPMENT_ASSET_PATHS = "\"PayForMe/Preview Content\"";
 				DEVELOPMENT_TEAM = L79BTFY6FV;
 				ENABLE_PREVIEWS = YES;
@@ -503,6 +585,44 @@
 				PRODUCT_NAME = PayForMe;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		656A2ADB241BB4F300786A1E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = L79BTFY6FV;
+				INFOPLIST_FILE = PayForMeUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mayflower.PayForMeUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = PayForMe;
+			};
+			name = Debug;
+		};
+		656A2ADC241BB4F300786A1E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = L79BTFY6FV;
+				INFOPLIST_FILE = PayForMeUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mayflower.PayForMeUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = PayForMe;
 			};
 			name = Release;
 		};
@@ -523,6 +643,15 @@
 			buildConfigurations = (
 				65662A1423D7320300303207 /* Debug */,
 				65662A1523D7320300303207 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		656A2ADD241BB4F300786A1E /* Build configuration list for PBXNativeTarget "PayForMeUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				656A2ADB241BB4F300786A1E /* Debug */,
+				656A2ADC241BB4F300786A1E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

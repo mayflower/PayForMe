@@ -43,3 +43,5 @@ DerivedData/
 **/fastlane/test_output
 PayForMe.app.dSYM.zip
 PayForMe.ipa
+
+output/
