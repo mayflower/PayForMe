@@ -13,5 +13,5 @@ Inspired by Moneybuster (https://gitlab.com/eneiluj/moneybuster).
 * Update bills
 * Delete bills
 * Clearing debt of single members
-* Creating new projects on iHateMoney
+* C̵r̵e̵a̵t̵i̵n̵g̵ ̵n̵e̵w̵ ̵p̵r̵o̵j̵e̵c̵t̵s̵ ̵o̵n̵ ̵i̵H̵a̵t̵e̵M̵o̵n̵e̵y̵
 * Adding new members to a project
