@@ -38,8 +38,7 @@ struct ProjectList: View {
             }
             .navigationBarItems(trailing:
                 NavigationLink(destination: ProjectDetailView(addProjectModel: AddProjectModel.shared, hidePlusButton: self.$hidePlusButton)) {
-                    Image(systemName: "plus")
-                        .frame(width: 20.0, height: 20.0)
+                    Image(systemName: "plus").fancyStyle()
                 }
             )
             .navigationBarTitle("Known Projects")

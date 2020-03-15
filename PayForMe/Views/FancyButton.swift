@@ -37,13 +37,7 @@ struct FancyButton: View {
                 Text(text)
             }
         }
-        .padding(10)
-        .background(self.isDisabled ? Color.gray : Color.blue)
-            
-        .foregroundColor(.white)
-            
-        .cornerRadius(10)
-        .shadow(color: self.isDisabled ? Color.gray.opacity(0.5) : Color.blue.opacity(0.5), radius: 4, x: 2, y: 2)
+.fancyStyle(active: !self.isDisabled)
         .disabled(isDisabled)
     }
 }
