@@ -73,7 +73,7 @@ class AddProjectModel: ObservableObject {
             .compactMap { server, name, password in
                 if let address = server.1, address.isValidURL && !name.isEmpty && !password.isEmpty {
                     guard let url = URL(string: address) else { return nil }
-                    return Project(name: name, password: password, backend: server.0, url: url)
+                    return Project(name: name.lowercased(), password: password, backend: server.0, url: url)
                 } else {
                     return nil
                 }

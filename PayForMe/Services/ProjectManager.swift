@@ -178,8 +178,12 @@ extension ProjectManager {
     
     func createProject(_ project: Project, email: String, completion: @escaping () -> Void) {
         guard !projects.contains(project) else { print("project duplicate") ; return }
+        let inceptedCompletion = {
+            self.addProject(project)
+            completion()
+        }
         
-        self.createProjectOnServer(project, email: email, completion: completion)
+        self.createProjectOnServer(project, email: email, completion: inceptedCompletion)
     }
     
     func addProject(_ project: Project) {

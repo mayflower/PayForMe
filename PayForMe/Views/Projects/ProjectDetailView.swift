@@ -34,15 +34,15 @@ struct ProjectDetailView: View {
             }.pickerStyle(SegmentedPickerStyle())
                 .padding(EdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 8))
             
-            if addProjectModel.projectType == ProjectBackend.iHateMoney {
-                Picker(selection: $addProjectModel.addOrCreate, label: Text("snens")) {
-                    Text("Add Existing").tag(0)
-                    Text("Create New").tag(1)
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding(EdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 8))
-                .animation(.easeInOut)
-            }
+//            if addProjectModel.projectType == ProjectBackend.iHateMoney {
+//                Picker(selection: $addProjectModel.addOrCreate, label: Text("snens")) {
+//                    Text("Add Existing").tag(0)
+//                    Text("Create New").tag(1)
+//                }
+//                .pickerStyle(SegmentedPickerStyle())
+//                .padding(EdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 8))
+//                .animation(.easeInOut)
+//            }
             Form {
                 if self.addProjectModel.projectType == .cospend {
                     Section(header: Text("Server Address")) {
@@ -124,7 +124,6 @@ struct ProjectDetailView: View {
             addProjectModel.reset()
         } else {
             ProjectManager.shared.createProject(project, email: self.addProjectModel.emailAddr) {
-                print("created projecttt")
                 self.addProjectModel.reset()
             }
         }
