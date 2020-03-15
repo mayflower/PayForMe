@@ -46,7 +46,7 @@ struct BalanceList: View {
             }
             .animation(.easeInOut, value: self.addingUser)
             .navigationBarItems(trailing: !addingUser ? FancyButton(isDisabled: .constant(false), isLoading: .constant(false), add: true, action: showAddUser, text: "") : nil)
-            .navigationBarTitle("Balance")
+            .navigationBarTitle("Members")
             .onAppear {
                 ProjectManager.shared.updateCurrentProject()
             }
