@@ -31,6 +31,11 @@ fastlane ios icon
 fastlane ios screenshots
 ```
 
+### ios githubshots
+```
+fastlane ios githubshots
+```
+
 ### ios deliver
 ```
 fastlane ios deliver
