@@ -159,6 +159,7 @@
 				65662A1723D7321A00303207 /* Services */,
 				65662A1623D7321100303207 /* Model */,
 				65662A0423D7320000303207 /* SceneDelegate.swift */,
+				65662A0223D7320000303207 /* AppDelegate.swift */,
 				65662A0823D7320300303207 /* Assets.xcassets */,
 				65662A0D23D7320300303207 /* LaunchScreen.storyboard */,
 				65662A1023D7320300303207 /* Info.plist */,
@@ -182,7 +183,6 @@
 				656E8CB523D9C88A00B3ED10 /* Project.swift */,
 				65662A1823D7322B00303207 /* Bill.swift */,
 				65662A1C23D7353400303207 /* Server.swift */,
-				65662A0223D7320000303207 /* AppDelegate.swift */,
 				650059FB23DDE1C300D1D599 /* Person.swift */,
 			);
 			path = Model;

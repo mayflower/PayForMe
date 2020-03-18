@@ -213,6 +213,11 @@ extension ProjectManager {
         }
     }
     
+    func prepareUITest() {
+        projects.removeAll()
+        addProject(Project(name: "demo", password: "demo", backend: .cospend, url: URL(string: "https://intranet.mayflower.de")!))
+    }
+    
     func saveBill(_ bill: Bill, completion: @escaping () -> Void) {
         if let _ = self.currentProject.bills.firstIndex(where: {
             $0.id == bill.id

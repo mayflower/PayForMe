@@ -11,10 +11,21 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    static var isUITestingEnabled: Bool {
+        get {
+            return ProcessInfo.processInfo.arguments.contains("UI-Testing")
+        }
+    }
+    
+    private func setStateForUITesting() {
+        if AppDelegate.isUITestingEnabled {
+            ProjectManager.shared.prepareUITest()
+        }
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        setStateForUITesting()
         return true
     }
 

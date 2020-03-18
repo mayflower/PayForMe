@@ -27,8 +27,9 @@ class PayForMeUITests: XCTestCase {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
         setupSnapshot(app)
+        app.launchArguments += ["UI-Testing"]
         app.launch()
-        
+        	
         let tabBarsQuery = XCUIApplication().tabBars
         snapshot("FirstScreen")
         tabBarsQuery.children(matching: .button).element(boundBy: 1).tap()
@@ -39,8 +40,6 @@ class PayForMeUITests: XCTestCase {
         
         app.buttons["plus.circle"].tap()
         snapshot("Add Bill")
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
 
     func testLaunchPerformance() {
