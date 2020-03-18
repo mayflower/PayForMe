@@ -48,7 +48,7 @@ platform :ios do
     frameit
   end
 
-  lane :deliver do
+  lane :deliverToAppstore do
     increment_build_number(xcodeproj: "PayForMe.xcodeproj") 
     build_app(scheme: "PayForMe")
     capture_screenshots
