@@ -2,7 +2,8 @@
 
 # A list of devices you want to take the screenshots from
 devices([
-  "iPhone 8 Plus"
+  "iPhone 8 Plus",
+  "iPhone 11 Pro Max"
 ])
 
 workspace("PayForMe.xcworkspace")
