@@ -19,6 +19,9 @@ struct BillList: View {
     @Binding
     var hidePlusButton: Bool
     
+    @State
+    var deleteAlert = false
+    
     var body: some View {
         NavigationView {
             List {
@@ -32,10 +35,16 @@ struct BillList: View {
                                         BillCell(viewModel: self.viewModel, bill: bill)
                     }
                 }
-                .onDelete(perform: deleteBill)
+                .onDelete(perform: {
+                    offset in
+                    self.deleteAlert.toggle()
+                })
             }
             .id(viewModel.currentProject.bills)
             .navigationBarTitle("Bills")
+            .alert(isPresented: $deleteAlert) {
+                Alert(title: Text("Delete Bill"), message: Text("Do you really want to erase the bill from the server?"), primaryButton: .destructive(Text("Sure")), secondaryButton: .cancel())
+        }
         }
         .onAppear {
             ProjectManager.shared.updateCurrentProject()
