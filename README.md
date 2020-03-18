@@ -6,10 +6,7 @@ Inspired by Moneybuster (https://gitlab.com/eneiluj/moneybuster).
 
 # Screenshots
 
-<img src="/fastlane/screenshots/en-US/iPhone%208%20Plus-FirstScreen.png?raw=true" width="200"/>
-<img src="/fastlane/screenshots/en-US/iPhone%208%20Plus-SecondScreen.png?raw=true" width="200"/>
-<img src="/fastlane/screenshots/en-US/iPhone%208%20Plus-ThirdsScreen.png?raw=true" width="200"/>
-<img src="/fastlane/screenshots/en-US/iPhone%208%20Plus-Add%20Bill.png?raw=true" width="200"/>
+<img src="/fastlane/screenshots/en-US/iPhone%208%20Plus-FirstScreen.png?raw=true" width="200"/> <img src="/fastlane/screenshots/en-US/iPhone%208%20Plus-SecondScreen.png?raw=true" width="200"/> <img src="/fastlane/screenshots/en-US/iPhone%208%20Plus-ThirdsScreen.png?raw=true" width="200"/> <img src="/fastlane/screenshots/en-US/iPhone%208%20Plus-Add%20Bill.png?raw=true" width="200"/>
 
 ## Features
 * Show listed bills
