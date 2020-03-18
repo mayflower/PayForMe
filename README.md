@@ -6,7 +6,7 @@ Inspired by Moneybuster (https://gitlab.com/eneiluj/moneybuster).
 
 # Screenshots
 
-<img src="/fastlane/screenshots/en-US/iPhone%2011%20Pro%20Max-FirstScreen_framed.png?raw=true" width="200"/> <img src="/fastlane/screenshots/en-US/iPhone%2011%20Pro%20Max-SecondScreen_framed.png?raw=true" width="200"/> <img src="/fastlane/screenshots/en-US/iPhone%2011%20Pro%20Max-ThirdsScreen_framed.png?raw=true" width="200"/> <img src="/fastlane/screenshots/en-US/iPhone%2011%20Pro%20Max-Add%20Bill_framed.png?raw=true" width="200"/>
+<img src="/screenshots/lightmode/en-US/iPhone%2011-FirstScreen_framed.png?raw=true" width="200"/> <img src="/screenshots/lightmode/en-US/iPhone%2011-SecondScreen_framed.png?raw=true" width="200"/> <img src="/screenshots/lightmode/en-US/iPhone%2011-ThirdsScreen_framed.png?raw=true" width="200"/> <img src="/screenshots/lightmode/en-US/iPhone%2011-Add%20Bill_framed.png?raw=true" width="200"/>
 
 ## Features
 * Show listed bills
