@@ -36,9 +36,9 @@ fastlane ios screenshots
 fastlane ios githubshots
 ```
 
-### ios deliver
+### ios deliverToAppstore
 ```
-fastlane ios deliver
+fastlane ios deliverToAppstore
 ```
 
 

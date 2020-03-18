@@ -40,6 +40,7 @@ platform :ios do
       dark_mode: true,
       output_directory: "screenshots/darkmode"
     )
+    frameit
     capture_screenshots(
       dark_mode: false,
       clear_previous_screenshots: false,
