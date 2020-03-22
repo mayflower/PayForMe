@@ -25,7 +25,10 @@ struct ProjectList: View {
                             self.manager.setCurrentProject(project)
                         }, label: {
                             HStack {
-                                Text(project.name)
+                                VStack {
+                                    Text(project.name)
+                                    Text(project.backend == .cospend ? "Cospend" : "iHateMoney").font(.caption).foregroundColor(Color.gray)
+                                }
                                 if self.manager.currentProject == project {
                                     Spacer()
                                     Image(systemName: "checkmark").padding(.trailing)
