@@ -1,0 +1,9 @@
+/* 
+  Localizable.strings
+  PayForMe
+
+  Created by Max Tharr on 22.03.20.
+  Copyright © 2020 Mayflower GmbH. All rights reserved.
+*/
+"Finding Server" = "Finding Server";
+"Enter project name" = "Enter project name";

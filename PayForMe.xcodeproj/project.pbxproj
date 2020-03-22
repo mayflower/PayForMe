@@ -45,6 +45,7 @@
 		6591C8E7240542250054BA24 /* LoadingDots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6591C8E6240542250054BA24 /* LoadingDots.swift */; };
 		65C9E2CE23E1B8F500814B37 /* BalanceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C9E2CD23E1B8F500814B37 /* BalanceList.swift */; };
 		65C9E2D023E1B96B00814B37 /* BalanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C9E2CF23E1B96B00814B37 /* BalanceViewModel.swift */; };
+		65D225F32428038500C3F1EC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65D225F52428038500C3F1EC /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +100,9 @@
 		6591C8E6240542250054BA24 /* LoadingDots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoadingDots.swift; path = PayForMe/Views/LoadingDots.swift; sourceTree = SOURCE_ROOT; };
 		65C9E2CD23E1B8F500814B37 /* BalanceList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceList.swift; sourceTree = "<group>"; };
 		65C9E2CF23E1B96B00814B37 /* BalanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewModel.swift; sourceTree = "<group>"; };
+		65D225F42428038500C3F1EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		65D225F6242803BC00C3F1EC /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		65D225F7242803C800C3F1EC /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +159,7 @@
 		65662A0123D7320000303207 /* PayForMe */ = {
 			isa = PBXGroup;
 			children = (
+				65D225F0242802E400C3F1EC /* Strings */,
 				6533A02C23D88EF300FF822B /* Views */,
 				65662A1723D7321A00303207 /* Services */,
 				65662A1623D7321100303207 /* Model */,
@@ -255,6 +260,14 @@
 			path = BillList;
 			sourceTree = "<group>";
 		};
+		65D225F0242802E400C3F1EC /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				65D225F52428038500C3F1EC /* Localizable.strings */,
+			);
+			path = Strings;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -322,6 +335,8 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
+				ru,
 			);
 			mainGroup = 656629F623D7320000303207;
 			packageReferences = (
@@ -343,6 +358,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65662A0F23D7320300303207 /* LaunchScreen.storyboard in Resources */,
+				65D225F32428038500C3F1EC /* Localizable.strings in Resources */,
 				65662A0C23D7320300303207 /* Preview Assets.xcassets in Resources */,
 				65662A0923D7320300303207 /* Assets.xcassets in Resources */,
 			);
@@ -425,6 +441,16 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		65D225F52428038500C3F1EC /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				65D225F42428038500C3F1EC /* en */,
+				65D225F6242803BC00C3F1EC /* de */,
+				65D225F7242803C800C3F1EC /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -432,6 +458,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -492,6 +519,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
