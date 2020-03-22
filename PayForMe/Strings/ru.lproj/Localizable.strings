@@ -4,4 +4,28 @@
 
   Created by Max Tharr on 22.03.20.
   Copyright © 2020 Mayflower GmbH. All rights reserved.
+  Translated to Russian by Anton Karliner on 23.03.20
 */
+"Server Address" = "Адрес сервера";
+"Project name & Password" = "Название проекта и пароль";
+"Enter project id" = "Введите id проекта";
+"Enter project password" = "Введите пароль проекта";
+"Add project" = "Добавить проект";
+"Finding Server" = "Ищем сервер";
+"Bills" = "Счета";
+"Add Bill" = "Добавить счёт";
+"Payer" = "Кто платил";
+"What was paid" = "За что платил";
+"How much" = "Сколько";
+"Owers" = "За кого";
+"None" = "Никто";
+"All" = "Все";
+"Create Bill" = "Создать счёт";
+"Edit Bill" = "Редактировать счёт";
+"Update Bill" = "Обновить счёт";
+"Delete" = "Удалить";
+"Members" = "Участники";
+"Add member" = "Добавить участника";
+"Member name" = "Имя участника";
+"Submit" = "Подтвердить";
+"Known Projects" = "Добавленные проекты";
