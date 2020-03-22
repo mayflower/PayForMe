@@ -31,7 +31,7 @@ struct BillCell: View {
     }
     
     func amountString() -> String {
-        return "\(String(format: "%.2f €", bill.amount))"
+        return "\(String(format: "%.2f", bill.amount))"
     }
 }
 
