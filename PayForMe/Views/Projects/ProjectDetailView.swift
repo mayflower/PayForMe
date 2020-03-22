@@ -64,7 +64,7 @@ struct ProjectDetailView: View {
                         TextField("Enter your email", text: self.$addProjectModel.emailAddr).autocapitalization(.none)
                             .keyboardType(.emailAddress)
                     }
-                    TextField("Enter project name",
+                    TextField("Enter project id",
                               text: self.$addProjectModel.projectName)
                         .autocapitalization(.none)
                     
