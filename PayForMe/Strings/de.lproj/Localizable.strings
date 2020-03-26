@@ -7,3 +7,24 @@
 */
 "Finding Server" = "Suche Server";
 "Enter project id" = "Projekt-ID eingeben";
+"Server Address" = "Serveradresse";
+"Project name & Password" = "Projektname & Passwort";
+"Enter project password" = "Projektpasswort eingeben";
+"Add project" = "Projekt hinzufügen";
+"Bills" = "Rechnungen";
+"Add Bill" = "Rechnung hinzufügen";
+"Payer" = "Zahler";
+"What was paid" = "Was wurde bezahlt";
+"How much" = "Wie viel";
+"Owers" = "Schuldner";
+"None" = "Keiner";
+"All" = "Alle";
+"Create Bill" = "Rechnung erstellen";
+"Edit Bill" = "Rechnung bearbeiten";
+"Update Bill" = "Rechnung aktualisieren";
+"Delete" = "Löschen";
+"Members" = "Mitglieder";
+"Add member" = "Mitglied hinzufügen";
+"Member name" = "Mitgliedsname";
+"Submit" = "Bestätigen";
+"Known Projects" = "Bekannte Projekte";
