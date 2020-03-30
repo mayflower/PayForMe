@@ -44,6 +44,6 @@ struct FancyButton: View {
 
 struct FancyBotton_Previews: PreviewProvider {
     static var previews: some View {
-        FancyButton(isDisabled: .constant(true), isLoading: .constant(false), add: false, action: ({ return }), text: "Add Project")
+        FancyButton(isDisabled: .constant(true), isLoading: .constant(false), add: false, action: ({ return }), text: "Add Project").environment(\.locale, .init(identifier: "de"))
     }
 }

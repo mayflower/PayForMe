@@ -22,6 +22,6 @@ struct AddProjectView: View {
 
 struct AddProjectView_Previews: PreviewProvider {
     static var previews: some View {
-        AddProjectView(hidePlusButton: .constant(false))
+        AddProjectView(hidePlusButton: .constant(false)).environment(\.locale, .init(identifier: "de"))
     }
 }
