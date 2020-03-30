@@ -34,7 +34,7 @@ struct FancyButton: View {
             } else if add {
                 Image(systemName: "plus")
             } else {
-                Text(text)
+                Text(LocalizedStringKey(text))
             }
         }
 .fancyStyle(active: !self.isDisabled)
