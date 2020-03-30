@@ -5,5 +5,29 @@
   Created by Max Tharr on 22.03.20.
   Copyright © 2020 Mayflower GmbH. All rights reserved.
 */
+"Server Address" = "Server URL";
+"Project ID & Password" = "Projekt ID und Passwort";
+"Enter project id" = "Projekt ID eingeben";
+"Enter project password" = "Passwort eingeben";
+"Add project" = "Projekt hinzufügen";
 "Finding Server" = "Suche Server";
-"Enter project id" = "Projekt-ID eingeben";
+"Bills" = "Einträge";
+"Add Bill" = "Eintrag hinzufügen";
+"Payer" = "Zahler";
+"What was paid" = "Was wurde bezahlt?";
+"How much" = "Wie viel";
+"Owers" = "Schuldner";
+"None" = "Niemand";
+"All" = "Alle";
+"Create Bill" = "Eintrag hinzufügen";
+"Edit Bill" = "Eintrag bearbeiten";
+"Update Bill" = "Eintrag updaten";
+"Delete" = "Entfernen";
+"Members" = "Mitglieder";
+"Add member" = "Mitglied hinzufügen";
+"Member name" = "Name";
+"Submit" = "Abschicken";
+"Known Projects" = "Bekannte Gruppen";
+"Add Project" = "Projekt hinzufügen";
+"Could not find server" = "Server nicht auffindbar";
+"Unauthorized: Wrong project id/pw" = "Unauthorisiert: Falsche Projekt ID/Passwort";
