@@ -32,8 +32,6 @@ class AddProjectModel: ObservableObject {
     @Published
     var emailAddr = ""
     
-    var errorText = PassthroughSubject<String,Never>()
-    
     var buttonOffset: CGFloat {
         if projectType == .cospend {
             return 220
@@ -84,7 +82,7 @@ class AddProjectModel: ObservableObject {
         .eraseToAnyPublisher()
     }
     
-    var validatedServer: AnyPublisher<Bool, Never> {
+    var validatedServer: AnyPublisher<Int, Never> {
         return Publishers.CombineLatest(validatedInput, $projectType)
             .lane("validate Server")
             .compactMap {
@@ -100,24 +98,25 @@ class AddProjectModel: ObservableObject {
         }
         .removeDuplicates()
         .receive(on: RunLoop.main)
-        .map {
+        .lane("Test project")
+        .eraseToAnyPublisher()
+    }
+    
+    var errorTextPublisher: AnyPublisher<String, Never> {
+        return Publishers.Map(upstream: validatedServer) {
             statusCode in
             if statusCode != 200 {
                 switch statusCode {
                     case -1:
-                        self.errorText.send("Could not find server")
+                        return "Could not find server"
                     case 401:
-                        self.errorText.send("Unauthorized: Wrong username/pw")
+                        return "Unauthorized: Wrong username/pw"
                     default:
-                        self.errorText.send("Server error: \(statusCode)")
+                        return "Server error: \(statusCode)"
                 }
-                return false
             }
-            self.errorText.send("")
-            return true
-        }
-        .lane("Test project")
-        .eraseToAnyPublisher()
+            return ""
+        }.eraseToAnyPublisher()
     }
     
     private var inputProgress: AnyPublisher<ValidationState, Never> {
@@ -132,7 +131,7 @@ class AddProjectModel: ObservableObject {
     private var serverProgress: AnyPublisher<ValidationState, Never> {
         return Publishers.Map(upstream: validatedServer) {
             server in
-            return server ? ValidationState.success : ValidationState.failure
+            return server == 200 ? ValidationState.success : ValidationState.failure
         }
         .lane("Server progress")
         .eraseToAnyPublisher()

@@ -92,7 +92,7 @@ struct ProjectDetailView: View {
                         print("failure")
                 }
             }
-            Text(errorText).onReceive(addProjectModel.errorText) {
+            Text(errorText).onReceive(addProjectModel.errorTextPublisher) {
                 text in
                 self.errorText = text
             }
