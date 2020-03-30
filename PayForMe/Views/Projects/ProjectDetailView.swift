@@ -62,7 +62,7 @@ struct ProjectDetailView: View {
                     }
                     .animation(.easeInOut)
                 }
-                Section(header: Text("Project Name & Password")) {
+                Section(header: Text("Project ID & Password")) {
                     if addProjectModel.addOrCreate == 1 && addProjectModel.projectType == .iHateMoney {
                         TextField("Enter your email", text: self.$addProjectModel.emailAddr).autocapitalization(.none)
                             .keyboardType(.emailAddress)

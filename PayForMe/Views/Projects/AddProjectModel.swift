@@ -110,7 +110,7 @@ class AddProjectModel: ObservableObject {
                     case -1:
                         return "Could not find server"
                     case 401:
-                        return "Unauthorized: Wrong username/pw"
+                        return "Unauthorized: Wrong project id/pw"
                     default:
                         return "Server error: \(statusCode)"
                 }
