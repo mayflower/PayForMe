@@ -38,11 +38,11 @@ class Project: Codable, Identifiable {
 
 extension Project: Equatable {
     static func == (lhs: Project, rhs: Project) -> Bool {
-        return (lhs.id == rhs.id) || (lhs.url == rhs.url && lhs.name == rhs.name)
+        return lhs.url == rhs.url && lhs.name == rhs.name && lhs.backend == rhs.backend
     }
 }
 
-enum ProjectBackend: Int, Codable {
+enum ProjectBackend: Int, Codable, Equatable {
     case cospend = 0
     case iHateMoney = 1
 }

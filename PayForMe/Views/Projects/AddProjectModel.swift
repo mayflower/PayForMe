@@ -32,6 +32,8 @@ class AddProjectModel: ObservableObject {
     @Published
     var emailAddr = ""
     
+    var errorText = PassthroughSubject<String,Never>()
+    
     var buttonOffset: CGFloat {
         if projectType == .cospend {
             return 220
@@ -83,11 +85,11 @@ class AddProjectModel: ObservableObject {
     }
     
     var validatedServer: AnyPublisher<Bool, Never> {
-        return Publishers.CombineLatest3(validatedInput, $addOrCreate, $projectType)
+        return Publishers.CombineLatest(validatedInput, $projectType)
             .lane("validate Server")
             .compactMap {
-                input, addOrCreate, backend in
-                if addOrCreate == 0 || backend == .cospend{
+                input, backend in
+                if backend == .cospend{
                     return input
                 }
                 return nil
@@ -96,8 +98,25 @@ class AddProjectModel: ObservableObject {
             project in
             return NetworkService.shared.testProject(project)
         }
-        .lane("Test project")
+        .removeDuplicates()
         .receive(on: RunLoop.main)
+        .map {
+            statusCode in
+            if statusCode != 200 {
+                switch statusCode {
+                    case -1:
+                        self.errorText.send("Could not find server")
+                    case 401:
+                        self.errorText.send("Unauthorized: Wrong username/pw")
+                    default:
+                        self.errorText.send("Server error: \(statusCode)")
+                }
+                return false
+            }
+            self.errorText.send("")
+            return true
+        }
+        .lane("Test project")
         .eraseToAnyPublisher()
     }
     

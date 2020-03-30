@@ -26,6 +26,9 @@ struct ProjectDetailView: View {
     @Binding
     var hidePlusButton: Bool
     
+    @State
+    var errorText = ""
+    
     var body: some View {
         VStack {
             Picker(selection: $addProjectModel.projectType.animation(), label: Text("snens")) {
@@ -88,6 +91,10 @@ struct ProjectDetailView: View {
                         self.addProjectButtonDisabled = true
                         print("failure")
                 }
+            }
+            Text(errorText).onReceive(addProjectModel.errorText) {
+                text in
+                self.errorText = text
             }
             FancyButton(isDisabled: $addProjectButtonDisabled,
                         isLoading: $showConnectionIndicator,
