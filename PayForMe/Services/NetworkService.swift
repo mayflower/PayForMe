@@ -77,8 +77,11 @@ class NetworkService {
         let request = buildURLRequest("members", params: [:], project: project)
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { data, response -> Data in
-                guard let httpResponse = response as? HTTPURLResponse,
-                    httpResponse.statusCode == 200 else { print("Network Error"); throw  HTTPError.statuscode}
+                guard let httpResponse = response as? HTTPURLResponse else { print("Network Error"); throw  HTTPError.statuscode}
+                if httpResponse.statusCode != 200 {
+                    print("Wrong code \(httpResponse.statusCode)")
+                    throw  HTTPError.statuscode
+                }
                 return data
             }
             .decode(type: [Person].self, decoder: decoder)
