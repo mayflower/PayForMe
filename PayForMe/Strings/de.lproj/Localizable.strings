@@ -6,22 +6,22 @@
   Copyright © 2020 Mayflower GmbH. All rights reserved.
 */
 "Server Address" = "Server URL";
-"Project ID & Password" = "Projekt ID und Passwort";
+"Project ID & Password" = "Projekt ID & Passwort";
 "Enter project id" = "Projekt ID eingeben";
 "Enter project password" = "Passwort eingeben";
 "Add project" = "Projekt hinzufügen";
 "Finding Server" = "Suche Server";
-"Bills" = "Einträge";
-"Add Bill" = "Eintrag hinzufügen";
-"Payer" = "Bezahler";
+"Bills" = "Rechnungen";
+"Add Bill" = "Rechnung hinzufügen";
+"Payer" = "Zahler";
 "What was paid" = "Was wurde bezahlt?";
 "How much" = "Wie viel";
 "Owers" = "Schuldner";
 "None" = "Niemand";
 "All" = "Alle";
-"Create Bill" = "Eintrag hinzufügen";
-"Edit Bill" = "Eintrag bearbeiten";
-"Update Bill" = "Eintrag updaten";
+"Create Bill" = "Rechnung hinzufügen";
+"Edit Bill" = "Rechnung bearbeiten";
+"Update Bill" = "Rechnung aktualisieren";
 "Delete" = "Entfernen";
 "Members" = "Mitglieder";
 "Add member" = "Mitglied hinzufügen";
