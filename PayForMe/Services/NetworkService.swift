@@ -32,7 +32,7 @@ class NetworkService {
     }
     
     let networkActivityPublisher = PassthroughSubject<Bool, Never>()
-        
+    
     func loadBillsPublisher(_ project: Project) -> AnyPublisher<[Bill], Never> {
         let request = self.buildURLRequest("bills", params: [:], project: project)
         return URLSession.shared.dataTaskPublisher(for: request)
@@ -53,7 +53,7 @@ class NetworkService {
         }
         .eraseToAnyPublisher()
     }
-
+    
     func loadMembersPublisher(_ project: Project) -> AnyPublisher<[Int:Person], Never> {
         let request = buildURLRequest("members", params: [:], project: project)
         return URLSession.shared.dataTaskPublisher(for: request)
@@ -73,20 +73,15 @@ class NetworkService {
         .eraseToAnyPublisher()
     }
     
-    func testProject(_ project: Project) -> AnyPublisher<Bool, Never> {
+    func testProject(_ project: Project) -> AnyPublisher<Int, Never> {
         let request = buildURLRequest("members", params: [:], project: project)
         return URLSession.shared.dataTaskPublisher(for: request)
-            .tryMap { data, response -> Data in
-                guard let httpResponse = response as? HTTPURLResponse,
-                    httpResponse.statusCode == 200 else { print("Network Error"); throw  HTTPError.statuscode}
-                return data
-            }
-            .decode(type: [Person].self, decoder: decoder)
-            .map {
-                !$0.isEmpty
-            }
-            .replaceError(with: false)
-            .eraseToAnyPublisher()
+        .tryMap { data, response -> Int in
+            guard let httpResponse = response as? HTTPURLResponse else { print("Network Error"); return -1}
+            return httpResponse.statusCode
+        }
+        .replaceError(with: -1)
+        .eraseToAnyPublisher()
     }
     
     func createProjectPublisher(_ project: Project, email: String) -> AnyPublisher<Bool, Never> {
@@ -103,9 +98,9 @@ class NetworkService {
                 }
                 
                 return responseString.contains(project.name)
-            }
-            .replaceError(with: false)
-            .eraseToAnyPublisher()
+        }
+        .replaceError(with: false)
+        .eraseToAnyPublisher()
     }
     
     func postBillPublisher(bill: Bill) -> AnyPublisher<Bool, Never> {
@@ -124,16 +119,16 @@ class NetworkService {
     }
     
     private func sendBillPublisher(request: URLRequest) -> AnyPublisher<Bool, Never> {
-                
+        
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { output in
                 guard let response = output.response as? HTTPURLResponse, response.statusCode / 100 == 2 else {
                     return false
                 }
                 return true
-            }
-            .replaceError(with: false)
-            .eraseToAnyPublisher()
+        }
+        .replaceError(with: false)
+        .eraseToAnyPublisher()
     }
     
     func createMemberPublisher(name: String) -> AnyPublisher<Bool, Never> {
@@ -158,9 +153,9 @@ class NetworkService {
                     return false
                 }
                 return true
-            }
-            .replaceError(with: false)
-            .eraseToAnyPublisher()
+        }
+        .replaceError(with: false)
+        .eraseToAnyPublisher()
     }
     
     private func baseURLFor(_ project: Project) -> URL  {
@@ -175,7 +170,7 @@ class NetworkService {
     private func baseURLFor(_ project: Project, suffix: String) -> URL {
         switch project.backend {
             case .cospend:
-                return baseURLFor(project).appendingPathComponent("\(project.name.lowercased())/\(project.password.lowercased())/\(suffix)")
+                return baseURLFor(project).appendingPathComponent("\(project.name.lowercased())/\(project.password)/\(suffix)")
             case .iHateMoney:
                 return baseURLFor(project).appendingPathComponent("\(project.name.lowercased())/\(suffix)")
         }
@@ -196,12 +191,12 @@ class NetworkService {
         if let cospendParams = params as? [String: String], project.backend == .cospend && !params.isEmpty {
             var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false)
             urlComponents?.queryItems = cospendParams.map { URLQueryItem(name: $0, value: $1) }
-
+            
             requestURL = urlComponents!.url!
         } else {
             requestURL = baseURL
         }
-                
+        
         request = URLRequest(url: requestURL)
         
         if project.backend == .iHateMoney {

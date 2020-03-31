@@ -5,6 +5,9 @@ Download from the [Apple App Store](https://apps.apple.com/us/app/payforme/id150
 Using SwiftUI and Combine.
 Inspired by Moneybuster (https://gitlab.com/eneiluj/moneybuster).
 
+We are currently in a kind of "open beta" v1.0 All basic functionality should work, but we are not completely stable with everthing. If you find something, please create an issue or write a mail to hustenbonbon@posteo.de!
+Contributions of all kind are welcome, please get in touch with us!
+
 # Screenshots
 
 <img src="/screenshots/lightmode/en-US/iPhone%2011-FirstScreen_framed.png?raw=true" width="200"/> <img src="/screenshots/lightmode/en-US/iPhone%2011-SecondScreen_framed.png?raw=true" width="200"/> <img src="/screenshots/lightmode/en-US/iPhone%2011-ThirdsScreen_framed.png?raw=true" width="200"/> <img src="/screenshots/lightmode/en-US/iPhone%2011-Add%20Bill_framed.png?raw=true" width="200"/>

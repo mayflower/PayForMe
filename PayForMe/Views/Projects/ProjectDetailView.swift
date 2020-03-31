@@ -26,6 +26,9 @@ struct ProjectDetailView: View {
     @Binding
     var hidePlusButton: Bool
     
+    @State
+    var errorText = ""
+    
     var body: some View {
         VStack {
             Picker(selection: $addProjectModel.projectType.animation(), label: Text("snens")) {
@@ -59,7 +62,7 @@ struct ProjectDetailView: View {
                     }
                     .animation(.easeInOut)
                 }
-                Section(header: Text("Project Name & Password")) {
+                Section(header: Text("Project ID & Password")) {
                     if addProjectModel.addOrCreate == 1 && addProjectModel.projectType == .iHateMoney {
                         TextField("Enter your email", text: self.$addProjectModel.emailAddr).autocapitalization(.none)
                             .keyboardType(.emailAddress)
@@ -88,6 +91,10 @@ struct ProjectDetailView: View {
                         self.addProjectButtonDisabled = true
                         print("failure")
                 }
+            }
+            Text(errorText).onReceive(addProjectModel.errorTextPublisher) {
+                text in
+                self.errorText = text
             }
             FancyButton(isDisabled: $addProjectButtonDisabled,
                         isLoading: $showConnectionIndicator,

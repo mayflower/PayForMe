@@ -82,12 +82,12 @@ class AddProjectModel: ObservableObject {
         .eraseToAnyPublisher()
     }
     
-    var validatedServer: AnyPublisher<Bool, Never> {
-        return Publishers.CombineLatest3(validatedInput, $addOrCreate, $projectType)
+    var validatedServer: AnyPublisher<Int, Never> {
+        return Publishers.CombineLatest(validatedInput, $projectType)
             .lane("validate Server")
             .compactMap {
-                input, addOrCreate, backend in
-                if addOrCreate == 0 || backend == .cospend{
+                input, backend in
+                if backend == .cospend{
                     return input
                 }
                 return nil
@@ -96,9 +96,27 @@ class AddProjectModel: ObservableObject {
             project in
             return NetworkService.shared.testProject(project)
         }
-        .lane("Test project")
+        .removeDuplicates()
         .receive(on: RunLoop.main)
+        .lane("Test project")
         .eraseToAnyPublisher()
+    }
+    
+    var errorTextPublisher: AnyPublisher<String, Never> {
+        return Publishers.Map(upstream: validatedServer) {
+            statusCode in
+            if statusCode != 200 {
+                switch statusCode {
+                    case -1:
+                        return "Could not find server"
+                    case 401:
+                        return "Unauthorized: Wrong project id/pw"
+                    default:
+                        return "Server error: \(statusCode)"
+                }
+            }
+            return ""
+        }.eraseToAnyPublisher()
     }
     
     private var inputProgress: AnyPublisher<ValidationState, Never> {
@@ -113,7 +131,7 @@ class AddProjectModel: ObservableObject {
     private var serverProgress: AnyPublisher<ValidationState, Never> {
         return Publishers.Map(upstream: validatedServer) {
             server in
-            return server ? ValidationState.success : ValidationState.failure
+            return server == 200 ? ValidationState.success : ValidationState.failure
         }
         .lane("Server progress")
         .eraseToAnyPublisher()

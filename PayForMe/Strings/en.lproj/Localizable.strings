@@ -5,5 +5,29 @@
   Created by Max Tharr on 22.03.20.
   Copyright © 2020 Mayflower GmbH. All rights reserved.
 */
-"Finding Server" = "Finding Server";
+"Server Address" = "Server Address";
+"Project ID & Password" = "Project ID & Password";
 "Enter project id" = "Enter project id";
+"Enter project password" = "Enter project password";
+"Add project" = "Add project";
+"Finding Server" = "Finding Server";
+"Bills" = "Bills";
+"Add Bill" = "Add Bill";
+"Payer" = "Payer";
+"What was paid" = "What was paid?";
+"How much" = "How much";
+"Owers" = "Owers";
+"None" = "None";
+"All" = "All";
+"Create Bill" = "Create Bill";
+"Edit Bill" = "Edit Bill";
+"Update Bill" = "Update Bill";
+"Delete" = "Delete";
+"Members" = "Members";
+"Add member" = "Add member";
+"Member name" = "Member name";
+"Submit" = "Submit";
+"Known Projects" = "Known Projects";
+"Add Project" = "Add Project";
+"Could not find server" = "Could not find server";
+"Unauthorized: Wrong project id/pw" = "Unauthorized: Wrong project id/pw";
