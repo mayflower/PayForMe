@@ -29,3 +29,6 @@
 "Member name" = "Имя участника";
 "Submit" = "Подтвердить";
 "Known Projects" = "Добавленные проекты";
+"Add Project" = "Проект добавить";
+"Could not find server" = "Сервер не найден";
+"Unauthorized: Wrong project id/pw" = "Неавторизован: неправильный ID проекта/пароль";
