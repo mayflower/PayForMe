@@ -23,7 +23,7 @@ struct AddMemberView: View {
             HStack(alignment: .center) {
                 EmptyView()
                 Spacer()
-                Text("Add Member")
+                Text("Add member")
                 .font(.headline)
                 .multilineTextAlignment(.center)
                     .padding(.trailing, -cancelButtonWidth)
@@ -31,7 +31,7 @@ struct AddMemberView: View {
                 Button(action: cancelButtonAction, label: { Image(systemName: "xmark.circle.fill") })
                     .frame(width: cancelButtonWidth, height: cancelButtonWidth, alignment: .center)
             }
-            TextField("Member Name", text: $memberName)
+            TextField("Member name", text: $memberName)
                 .multilineTextAlignment(.center)
             .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()

@@ -24,8 +24,8 @@ struct BillDetailView: View {
     @ObservedObject
     var viewModel: BillDetailViewModel
     
-    var navBarTitle = "Add Bill"
-    var sendButtonTitle = "Create Bill"
+    var navBarTitle = LocalizedStringKey("Add Bill")
+    var sendButtonTitle = LocalizedStringKey("Create Bill")
     
     @State
     var noneAllToggle = 1
@@ -46,8 +46,8 @@ struct BillDetailView: View {
                             self.viewModel.selectedPayer = id
                         }
                     }
-                    TextField("What was paid?", text: self.$viewModel.topic)
-                    TextField("How much?", text: self.$viewModel.amount).keyboardType(.decimalPad)
+                    TextField("What was paid", text: self.$viewModel.topic)
+                    TextField("How much", text: self.$viewModel.amount).keyboardType(.decimalPad)
                 }
                 Section(header: Text("Owers")) {
                     PotentialOwersView(vm: viewModel.povm)

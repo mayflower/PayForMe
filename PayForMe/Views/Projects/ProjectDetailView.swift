@@ -105,7 +105,7 @@ struct ProjectDetailView: View {
             Spacer()
             
         }
-        .navigationBarTitle("Add Project")
+        .navigationBarTitle("Add project")
         .onAppear {
             self.hidePlusButton = true
         }
