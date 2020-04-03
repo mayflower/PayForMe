@@ -18,7 +18,7 @@ struct WhoPaidView: View {
     var body: some View {
         
         if members.count <= 4 {
-            return AnyView(Picker(selection: $selectedPayer, label: Text("Who paid")) {
+            return AnyView(Picker(selection: $selectedPayer, label: Text("Payer")) {
                 ForEach(members) {
                     member in
                     Text(member.name)
@@ -26,7 +26,7 @@ struct WhoPaidView: View {
             }.pickerStyle(SegmentedPickerStyle()))
         } else {
             return AnyView(
-                Picker(selection: $selectedPayer, label: Text("Who paid")) {
+                Picker(selection: $selectedPayer, label: Text("Payer")) {
                     ForEach(members) {
                     member in
                         PersonText(person: member)
