@@ -13,12 +13,13 @@ scheme("PayForMeUITests")
 
 ios_version("13.3")
 
-# languages([
-#   "en-US",
-#   "de-DE",
-#   "it-IT",
-#   ["pt", "pt_BR"] # Portuguese with Brazilian locale
-# ])
+languages([
+  "ru-RU",
+  "en-US",
+  "de-DE",
+  "fr-FR"
+#  ["pt", "pt_BR"] # Portuguese with Brazilian locale
+])
 
 # The name of the scheme which contains the UI Tests
 scheme("PayForMeTests")

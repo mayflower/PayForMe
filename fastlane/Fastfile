@@ -53,6 +53,6 @@ platform :ios do
     increment_build_number(xcodeproj: "PayForMe.xcodeproj") 
     build_app(scheme: "PayForMe")
     capture_screenshots
-    upload_to_app_store
+    upload_to_app_store(ignore_language_directory_validation: true)
   end
 end
