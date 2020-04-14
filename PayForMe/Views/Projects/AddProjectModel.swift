@@ -83,16 +83,7 @@ class AddProjectModel: ObservableObject {
     }
     
     var validatedServer: AnyPublisher<Int, Never> {
-        return Publishers.CombineLatest(validatedInput, $projectType)
-            .lane("validate Server")
-            .compactMap {
-                input, backend in
-                if backend == .cospend{
-                    return input
-                }
-                return nil
-        }
-        .flatMap{
+        return Publishers.FlatMap(upstream: validatedInput, maxPublishers: .unlimited) {
             project in
             return NetworkService.shared.testProject(project)
         }
