@@ -9,7 +9,6 @@
 import XCTest
 
 class PayForMeUITests: XCTestCase {
-
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
@@ -23,21 +22,20 @@ class PayForMeUITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() {
-        // UI tests must launch the application that they test.
+    func testScreenshots() {
         let app = XCUIApplication()
         setupSnapshot(app)
         app.launchArguments += ["UI-Testing"]
         app.launch()
-        	
-        let tabBarsQuery = XCUIApplication().tabBars
-        snapshot("FirstScreen")
+        let tabBarsQuery = app.tabBars
+        snapshot("Bill List")
         tabBarsQuery.children(matching: .button).element(boundBy: 1).tap()
-        snapshot("SecondScreen")
+        snapshot("Balance List")
         tabBarsQuery.children(matching: .button).element(boundBy: 2).tap()
-        snapshot("ThirdsScreen")
-        
-        
+        snapshot("Known Projects")
+        app.navigationBars["Bekannte Gruppen"].buttons["plus"].tap()
+        snapshot("Add Project")
+        app.navigationBars["Projekt hinzufügen"].buttons["Bekannte Gruppen"].tap()
         app.buttons["plus.circle"].tap()
         snapshot("Add Bill")
     }
