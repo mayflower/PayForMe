@@ -17,7 +17,8 @@ languages([
   "ru-RU",
   "en-US",
   "de-DE",
-  "fr-FR"
+  "fr-FR",
+  "es-ES"
 #  ["pt", "pt_BR"] # Portuguese with Brazilian locale
 ])
 
