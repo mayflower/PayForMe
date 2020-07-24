@@ -32,14 +32,6 @@ class AddProjectModel: ObservableObject {
     @Published
     var emailAddr = ""
     
-    var buttonOffset: CGFloat {
-        if projectType == .cospend {
-            return 220
-        } else {
-            return 170
-        }
-    }
-    
     static let shared = AddProjectModel()
     
     private init() {
@@ -57,10 +49,10 @@ class AddProjectModel: ObservableObject {
             .lane("Address validation")
             .map {
                 type, serverAddress in
-                if type == .cospend {
-                    return (type, serverAddress)
-                } else {
+                if type == .iHateMoney && serverAddress == "" {
                     return (type, NetworkService.iHateMoneyURLString)
+                } else {
+                    return (type, serverAddress)
                 }
         }
         .eraseToAnyPublisher()

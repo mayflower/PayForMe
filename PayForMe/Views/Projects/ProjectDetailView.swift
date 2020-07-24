@@ -47,21 +47,24 @@ struct ProjectDetailView: View {
 //                .animation(.easeInOut)
 //            }
             Form {
-                if self.addProjectModel.projectType == .cospend {
-                    Section(header: Text("Server Address")) {
-                        TextFieldContainer("https://mynextcloud.org",
-                                           text: self.$addProjectModel.serverAddress)
-                            .autocapitalization(.none).keyboardType(.URL)
-                            .onTapGesture {
-                                if self.addProjectModel.serverAddress.isEmpty {
-                                    DispatchQueue.main.async {
-                                        self.addProjectModel.serverAddress = "https://"
-                                    }
+                Section(
+                    header: Text("Server Address" + (addProjectModel.projectType == .iHateMoney ? " (Optional)" : ""))
+                ) {
+                    TextFieldContainer(
+                        addProjectModel.projectType == .cospend
+                            ? "https://mynextcloud.org" : "https://ihatemoney.org",
+                        text: self.$addProjectModel.serverAddress)
+                        .autocapitalization(.none).keyboardType(.URL)
+                        .onTapGesture {
+                            if self.addProjectModel.serverAddress.isEmpty {
+                                DispatchQueue.main.async {
+                                    self.addProjectModel.serverAddress = "https://"
                                 }
-                        }
+                            }
                     }
-                    .animation(.easeInOut)
                 }
+                .animation(.easeInOut)
+
                 Section(header: Text("Project ID & Password")) {
                     if addProjectModel.addOrCreate == 1 && addProjectModel.projectType == .iHateMoney {
                         TextField("Enter your email", text: self.$addProjectModel.emailAddr).autocapitalization(.none)
@@ -76,11 +79,12 @@ struct ProjectDetailView: View {
             }
             .id(addProjectModel.projectType == .cospend ? "cospend" : "iHateMoney")
                 
-            .frame(width: UIScreen.main.bounds.width, height: addProjectModel.buttonOffset, alignment: .center)
+            .frame(width: UIScreen.main.bounds.width, height: 220, alignment: .center)
             .onReceive(addProjectModel.validationProgress) {
                 switch $0 {
                     case .inProgress:
                         self.showConnectionIndicator = true
+                        self.addProjectButtonDisabled = true
                         print("inProgess")
                     case .success:
                         self.showConnectionIndicator = false
@@ -116,16 +120,13 @@ struct ProjectDetailView: View {
     }
     
     func addButton() {
-        
-        let project: Project
-        
-        if addProjectModel.projectType == .cospend {
-            guard let url = URL(string: addProjectModel.serverAddress) else { return }
-            project = Project(name: addProjectModel.projectName, password: addProjectModel.projectPassword, backend: .cospend, url: url)
+        let project : Project
+        if let url = URL(string: addProjectModel.serverAddress) {
+            project = Project(name: addProjectModel.projectName, password: addProjectModel.projectPassword, backend: addProjectModel.projectType, url: url)
         } else {
-            project = Project(name: addProjectModel.projectName, password: addProjectModel.projectPassword, backend: .iHateMoney)
+            project = Project(name: addProjectModel.projectName, password: addProjectModel.projectPassword, backend: addProjectModel.projectType)
         }
-        
+                
         if addProjectModel.addOrCreate == 0 {
             ProjectManager.shared.addProject(project)
             addProjectModel.reset()
