@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import Combine
-import TimelaneCombine
 
 class AddProjectModel: ObservableObject {
     
@@ -46,7 +45,6 @@ class AddProjectModel: ObservableObject {
     
     var validatedAddress: AnyPublisher<(ProjectBackend, String?), Never> {
         return Publishers.CombineLatest($projectType, $serverAddress)
-            .lane("Address validation")
             .map {
                 type, serverAddress in
                 if type == .iHateMoney && serverAddress == "" {
@@ -61,7 +59,6 @@ class AddProjectModel: ObservableObject {
     var validatedInput: AnyPublisher<Project, Never> {
         return Publishers.CombineLatest3(validatedAddress, $projectName, $projectPassword)
             .debounce(for: 1, scheduler: DispatchQueue.main)
-            .lane("Validate input")
             .compactMap { server, name, password in
                 if let address = server.1, address.isValidURL && !name.isEmpty && !password.isEmpty {
                     guard let url = URL(string: address) else { return nil }
@@ -81,7 +78,6 @@ class AddProjectModel: ObservableObject {
         }
         .removeDuplicates()
         .receive(on: RunLoop.main)
-        .lane("Test project")
         .eraseToAnyPublisher()
     }
     
@@ -107,7 +103,6 @@ class AddProjectModel: ObservableObject {
             input in
             return ValidationState.inProgress
         }
-        .lane("Input progress")
         .eraseToAnyPublisher()
     }
     
@@ -116,7 +111,6 @@ class AddProjectModel: ObservableObject {
             server in
             return server == 200 ? ValidationState.success : ValidationState.failure
         }
-        .lane("Server progress")
         .eraseToAnyPublisher()
     }
     
@@ -129,13 +123,11 @@ class AddProjectModel: ObservableObject {
                 }
                 return nil
         }
-        .lane("Create Project progress")
         .eraseToAnyPublisher()
     }
     
     var validationProgress: AnyPublisher<ValidationState, Never> {
         return Publishers.Merge3(inputProgress, serverProgress, createProject)
-            .lane("Validation merger")
             .eraseToAnyPublisher()
     }
 }
