@@ -20,18 +20,18 @@ struct ProjectList: View {
     @State
     var cameraAuthStatus = AVCaptureDevice.authorizationStatus(for: .video)
     
-    @State var toggleSheet = false
+    @State private var addProject: AddingProjectMethod?
     
     var body: some View {
         VStack {
             HStack(spacing: 20) {
                 Spacer()
-                Button(action: { toggleSheet.toggle()}) {
-                    Image(systemName: "qrcode").fancyStyle()
+                Button(action: { addProject = .manual }) {
+                    Image(systemName: "plus").fancyStyle()
                     
                 }
-                Button(action: { toggleSheet.toggle()}) {
-                    Image(systemName: "plus").fancyStyle()
+                Button(action: { addProject = .qrCode }) {
+                    Image(systemName: "qrcode").fancyStyle()
                     
                 }
             }.padding(20)
@@ -55,9 +55,26 @@ struct ProjectList: View {
                 .onDelete(perform: deleteProject)
             }
         }
-        .sheet(isPresented: $toggleSheet, content: {
-            destination
+        .sheet(item: $addProject, content: { method -> AnyView in
+            switch method {
+                case .qrCode:
+                    return destination
+                case .manual:
+                    return ProjectDetailView(addProjectModel: AddProjectModel.shared, hidePlusButton: self.$hidePlusButton).eraseToAnyView()
+            }
         })
+    }
+    
+    private enum AddingProjectMethod: Int, CaseIterable, Identifiable {
+        var id: Int {
+            switch self {
+                case .qrCode: return 0
+                case .manual: return 1
+            }
+        }
+        
+        case qrCode
+        case manual
     }
     
     func deleteProject(at offsets: IndexSet) {

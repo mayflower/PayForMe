@@ -29,12 +29,18 @@ struct AddProjectQRView: View {
             }
         }
         .onReceive(viewmodel.$isProject, perform: { status in
-            if status == .right {
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now().advanced(by: .seconds(1)), execute: {
-                    withAnimation {
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                })
+            switch status {
+                case .right:
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now().advanced(by: .seconds(1)), execute: {
+                        withAnimation {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    })
+                    break
+                case .wrong:
+                    scanningCode = [.qr]
+                default:
+                    break
             }
         })
     }
@@ -43,7 +49,9 @@ struct AddProjectQRView: View {
         VStack(spacing:10) {
             Text(viewmodel.url?.absoluteString ?? "URL wrong, please scan right barcode").font(.title)
             Text(viewmodel.name).font(.title)
-            SecureField("Type password here", text: $viewmodel.passwordText).font(.title)
+            SecureField("Type password here", text: $viewmodel.passwordText)
+                .font(.title)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
             SlickLoadingSpinner(connectionState: $viewmodel.isProject)
         }.padding(40)
     }
