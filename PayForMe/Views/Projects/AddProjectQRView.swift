@@ -18,21 +18,16 @@ struct AddProjectQRView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
-    var body: some View {
-        if viewmodel.askForPassword {
-            passwordView
-        } else {
-            qrCodeScanner
-        }
-    }
+    @State var scanningCode: [AVMetadataObject.ObjectType] = [.qr]
     
-    var passwordView: some View {
-        VStack(spacing:10) {
-            Text(viewmodel.url?.absoluteString ?? "URL wrong, please scan right barcode").font(.title)
-            Text(viewmodel.name).font(.title)
-            SecureField("Type password here", text: $viewmodel.passwordText).font(.title)
-            SlickLoadingSpinner(connectionState: $viewmodel.isProject)
-        }.padding(40)
+    var body: some View {
+        VStack {
+            if viewmodel.askForPassword {
+                passwordView
+            } else {
+                qrCodeScanner
+            }
+        }
         .onReceive(viewmodel.$isProject, perform: { status in
             if status == .right {
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now().advanced(by: .seconds(1)), execute: {
@@ -44,6 +39,15 @@ struct AddProjectQRView: View {
         })
     }
     
+    var passwordView: some View {
+        VStack(spacing:10) {
+            Text(viewmodel.url?.absoluteString ?? "URL wrong, please scan right barcode").font(.title)
+            Text(viewmodel.name).font(.title)
+            SecureField("Type password here", text: $viewmodel.passwordText).font(.title)
+            SlickLoadingSpinner(connectionState: $viewmodel.isProject)
+        }.padding(40)
+    }
+    
     var connectIndicator: some View {
         viewmodel.isProject.image
             .frame(width: 100, height: 100, alignment: .center)
@@ -52,18 +56,20 @@ struct AddProjectQRView: View {
     var qrCodeScanner: some View {
         ZStack {
             CBScanner(
-                supportBarcode: .constant([.qr]), //Set type of barcode you want to scan
+                supportBarcode: $scanningCode, //Set type of barcode you want to scan
                 scanInterval: .constant(5.0), //Event will trigger every 5 seconds,
                 mockBarCode: .constant(mockCode)
             ){ code in
-                //When the scanner found a barcode
-                print(code.value)
-                print("Barcode Type is", code.type.rawValue)
-                self.viewmodel.scannedCode = code.value
+                // If we find a QR code which is an url with at least 3 components, it can be a Cospend link
+                guard let url = URL(string: code.value),
+                      url.pathComponents.count >= 3 else { return }
+                
+                scanningCode = []
+                self.viewmodel.scannedCode = url
             }
             VStack {
                 Spacer()
-                Text(viewmodel.text)
+                SlickLoadingSpinner(connectionState: $viewmodel.isProject)
                     .padding(20)
                     .frame(width: UIScreen.main.bounds.width)
                     .background(Color.gray.opacity(0.5).blur(radius: 3))

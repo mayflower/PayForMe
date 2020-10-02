@@ -12,7 +12,7 @@ import SwiftUI
 import SlickLoadingSpinner
 
 class AddProjectQRViewModel: ObservableObject {
-    @Published var scannedCode = ""
+    @Published var scannedCode: URL?
     @Published var text = ""
     @Published var askForPassword = false
     @Published var passwordText = ""
@@ -23,8 +23,10 @@ class AddProjectQRViewModel: ObservableObject {
     typealias ProjectConnectState = SlickLoadingSpinner.State
     @Published var isProject = ProjectConnectState.notStarted
     
+    private var subscriptions = Set<AnyCancellable>()
+    
     init() {
-        connected.assign(to: &$text)
+        foundCodeSink.store(in: &subscriptions)
         passwordCorrect.assign(to: &$isProject)
         isTestingSubject.assign(to: &$isProject)
     }
@@ -64,27 +66,39 @@ class AddProjectQRViewModel: ObservableObject {
             
     }
     
-    var connected: AnyPublisher<String, Never> {
+    var foundCode: AnyPublisher<[String], Never> {
         $scannedCode
-            .compactMap { code in
-                guard let url = URL(string: code) else { return "Error"}
-                let components = url.pathComponents
-                if components.count == 4,
-                   let url = URL(string: components[1]) {
+            .compactMap { $0?.pathComponents }
+            .eraseToAnyPublisher()
+    }
+    
+    var foundCodeSink: AnyCancellable {
+        foundCode
+            .sink { components in
+                guard let url = URL(string: "https://" + components[1]) else { return }
+                
+                if components.count == 4 {
                     let project = Project(name: components[2], password: components[3], backend: .cospend, url: url)
-                    return "\(project)"
+                    self.isTestingSubject.send(.connecting)
+                    NetworkService.shared.testProject(project)
+                        .asUIPublisher
+                        .sink(receiveValue: {
+                        project, code in
+                        if code == 200 {
+                            ProjectManager.shared.addProject(project)
+                            self.isTestingSubject.send(.right)
+                        } else {
+                            self.isTestingSubject.send(.wrong)
+                        }
+                    }).store(in: &self.subscriptions)
                 }
-                if components.count == 3,
-                   let url = URL(string: "https://" + components[1]) {
+                if components.count == 3 {
                     withAnimation {
                         self.url = url
                         self.name = components[2]
                         self.askForPassword.toggle()
                     }
                 }
-                   
-                return nil
             }
-            .eraseToAnyPublisher()
     }
 }
