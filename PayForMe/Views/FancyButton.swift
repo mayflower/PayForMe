@@ -10,8 +10,7 @@ import SwiftUI
 
 struct FancyButton: View {
     
-    @Binding
-    var isDisabled: Bool
+    @Environment(\.isEnabled) private var isEnabled: Bool
     
     @Binding
     var isLoading: Bool
@@ -37,13 +36,13 @@ struct FancyButton: View {
                 Text(LocalizedStringKey(text))
             }
         }
-.fancyStyle(active: !self.isDisabled)
-        .disabled(isDisabled)
+        .fancyStyle(active: self.isEnabled)
+        .disabled(!isEnabled)
     }
 }
 
 struct FancyBotton_Previews: PreviewProvider {
     static var previews: some View {
-        FancyButton(isDisabled: .constant(true), isLoading: .constant(false), add: false, action: ({ return }), text: "Add Project").environment(\.locale, .init(identifier: "de"))
+        FancyButton(isLoading: .constant(false), add: false, action: ({ return }), text: "Add Project").environment(\.locale, .init(identifier: "de"))
     }
 }

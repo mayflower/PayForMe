@@ -73,15 +73,15 @@ class NetworkService {
         .eraseToAnyPublisher()
     }
     
-    func testProject(_ project: Project) -> AnyPublisher<Int, Never> {
+    func testProject(_ project: Project) -> AnyPublisher<(Project, Int), Never> {
         let request = buildURLRequest("members", params: [:], project: project)
-        return URLSession.shared.dataTaskPublisher(for: request)
+        let requestPub = URLSession.shared.dataTaskPublisher(for: request)
         .tryMap { data, response -> Int in
             guard let httpResponse = response as? HTTPURLResponse else { print("Network Error"); return -1}
             return httpResponse.statusCode
         }
         .replaceError(with: -1)
-        .eraseToAnyPublisher()
+        return Publishers.CombineLatest(Just(project),requestPub).eraseToAnyPublisher()
     }
     
     func createProjectPublisher(_ project: Project, email: String) -> AnyPublisher<Bool, Never> {

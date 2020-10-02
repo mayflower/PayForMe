@@ -13,9 +13,15 @@ struct AddProjectView: View {
     @Binding
     var hidePlusButton: Bool
     
+    @State var isQRScanning = false
+    
     var body: some View {
         NavigationView {
-            ProjectDetailView(hidePlusButton: self.$hidePlusButton)
+            if isQRScanning {
+                AddProjectQRView()
+            } else {
+                ProjectDetailView(hidePlusButton: self.$hidePlusButton)
+            }
         }
     }
 }

@@ -97,6 +97,10 @@ extension View {
             .cornerRadius(10)
             .shadow(color: (active ? Color.blue : Color.gray).opacity(0.5), radius: 4, x: 2, y: 2)
     }
+    
+    func eraseToAnyView() -> AnyView {
+        AnyView(self)
+    }
 }
 
 struct TextFieldContainer: UIViewRepresentable {

@@ -27,28 +27,36 @@ struct BalanceList: View {
     
     var body: some View {
         NavigationView {
-            VStack(alignment: .center) {
-                if addingUser {
-                    AddMemberView(memberName: $memberName, addMemberAction: submitUser, cancelButtonAction: cancelAddUser)
-                }
-                List {
-                    ForEach(viewModel.balances.sorted(by: { ($0.amount > $1.amount) || (($0.amount == $1.amount) && ($0.person.name < $1.person.name)) })) {
-                        balance in
-                        if balance.amount < 0 {
-                            NavigationLink(destination: BillDetailView(showModal: .constant(false), hidePlusButton: self.$hidePlusButton, viewModel: BillDetailViewModel(currentBill: self.createSettlingBill(balance: balance)))) {
-                                BalanceCell(balance: balance)
-                            }
-                        } else {
-                            BalanceCell(balance: balance)
-                        }
-                    }
-                }
-            }
+            mainView
             .animation(.easeInOut, value: self.addingUser)
-            .navigationBarItems(trailing: !addingUser ? FancyButton(isDisabled: .constant(false), isLoading: .constant(false), add: true, action: showAddUser, text: "") : nil)
+            .navigationBarItems(trailing: !addingUser ? FancyButton(isLoading: .constant(false), add: true, action: showAddUser, text: "") : nil)
             .navigationBarTitle("Members")
             .onAppear {
                 ProjectManager.shared.updateCurrentProject()
+            }
+        }
+    }
+    
+    var mainView: some View {
+        VStack(alignment: .center) {
+            if addingUser {
+                AddMemberView(memberName: $memberName, addMemberAction: submitUser, cancelButtonAction: cancelAddUser)
+            }
+            list
+        }
+    }
+    
+    var list: some View {
+        List {
+            ForEach(viewModel.balances.sorted(by: { ($0.amount > $1.amount) || (($0.amount == $1.amount) && ($0.person.name < $1.person.name)) })) {
+                balance in
+                if balance.amount < 0 {
+                    NavigationLink(destination: BillDetailView(showModal: .constant(false), hidePlusButton: self.$hidePlusButton, viewModel: BillDetailViewModel(currentBill: self.createSettlingBill(balance: balance)))) {
+                        BalanceCell(balance: balance)
+                    }
+                } else {
+                    BalanceCell(balance: balance)
+                }
             }
         }
     }

@@ -76,6 +76,9 @@ class AddProjectModel: ObservableObject {
             project in
             return NetworkService.shared.testProject(project)
         }
+        .map {project, code in
+            code
+        }
         .removeDuplicates()
         .receive(on: RunLoop.main)
         .eraseToAnyPublisher()

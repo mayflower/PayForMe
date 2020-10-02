@@ -100,12 +100,12 @@ struct ProjectDetailView: View {
                 text in
                 self.errorText = text
             }
-            FancyButton(isDisabled: $addProjectButtonDisabled,
-                        isLoading: $showConnectionIndicator,
+            FancyButton(isLoading: $showConnectionIndicator,
                         add: false,
                         action: addButton,
                         text:
                 addProjectModel.addOrCreate == 0 || addProjectModel.projectType == .cospend ? "Add Project" : "Create Project")
+                .disabled(addProjectButtonDisabled)
             Spacer()
             
         }

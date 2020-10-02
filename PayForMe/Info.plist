@@ -56,5 +56,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>In order to easily add new projects, you can allow us to scan a QR code from CoSpend. If you don&apos;t want that, you can add it manually</string>
 </dict>
 </plist>
