@@ -45,7 +45,7 @@ struct BalanceList: View {
     
     var list: some View {
         List {
-            ForEach(viewModel.balances.sorted(by: { ($0.amount > $1.amount) || (($0.amount == $1.amount) && ($0.person.name < $1.person.name)) })) {
+            ForEach(viewModel.balances.sorted(by: balanceSort(_:_:))) {
                 balance in
                 if balance.amount < 0 {
                     NavigationLink(destination: BillDetailView(showModal: .constant(false), viewModel: BillDetailViewModel(currentBill: self.createSettlingBill(balance: balance)))) {
@@ -56,6 +56,10 @@ struct BalanceList: View {
                 }
             }
         }
+    }
+    
+    func balanceSort(_ a: Balance, _ b: Balance) -> Bool {
+        (a.amount > b.amount) || ((a.amount == b.amount) && (a.person.name < b.person.name))
     }
     
     func showAddUser() {
