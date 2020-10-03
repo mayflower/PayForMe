@@ -17,9 +17,6 @@ class AddProjectManualViewModel: ObservableObject {
     var projectType = ProjectBackend.cospend
     
     @Published
-    var addOrCreate = 0
-    
-    @Published
     var serverAddress = ""
     
     @Published
@@ -28,14 +25,16 @@ class AddProjectManualViewModel: ObservableObject {
     @Published
     var projectPassword = ""
     
-    @Published
-    var emailAddr = ""
-    
     @Published var validationProgress = LoadingState.notStarted
     
+    @Published var errorText = ""
+    
+    private var lastProjectTestedSuccessfully: Project?
+    
     init() {
-        inputProgress.assign(to: &$validationProgress)
-        serverProgress.assign(to: &$validationProgress)
+        validatedInput.map { _ in LoadingState.connecting }.assign(to: &$validationProgress)
+        validatedServer.map { $0 == 200 ? LoadingState.right : LoadingState.wrong }.assign(to: &$validationProgress)
+        errorTextPublisher.assign(to: &$errorText)
     }
     
     func reset() {
@@ -44,8 +43,34 @@ class AddProjectManualViewModel: ObservableObject {
         self.projectPassword = ""
     }
     
-    var validatedAddress: AnyPublisher<(ProjectBackend, String?), Never> {
-        return Publishers.CombineLatest($projectType, $serverAddress)
+    func addProject() {
+        guard let project = lastProjectTestedSuccessfully else { return }
+        ProjectManager.shared.addProject(project)
+    }
+    
+    var serverAddressFormatted: AnyPublisher<String, Never> {
+        $serverAddress
+            .map { $0.hasPrefix("https://") ? $0 : "https://\($0)" }
+            .map { unformatted in
+            if let index = unformatted.index(of: "/index.php") {
+                if let url = URL(string: unformatted) {
+                    let components = url.pathComponents
+                    if components.count == 6 {
+                        self.projectPassword = components[5]
+                        self.projectName = components[4]
+                    }
+                    if components.count == 5 {
+                        self.projectName = components[4]
+                    }
+                }
+                return String(unformatted[..<index])
+            }
+            return unformatted
+        }.eraseToAnyPublisher()
+    }
+    
+    private var validatedAddress: AnyPublisher<(ProjectBackend, String?), Never> {
+        return Publishers.CombineLatest($projectType, serverAddressFormatted)
             .map {
                 type, serverAddress in
                 if type == .iHateMoney && serverAddress == "" {
@@ -53,8 +78,8 @@ class AddProjectManualViewModel: ObservableObject {
                 } else {
                     return (type, serverAddress)
                 }
-        }
-        .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
     }
     
     var validatedInput: AnyPublisher<Project, Never> {
@@ -67,54 +92,40 @@ class AddProjectManualViewModel: ObservableObject {
                 } else {
                     return nil
                 }
-        }
-        .removeDuplicates()
-        .eraseToAnyPublisher()
+            }
+            .removeDuplicates()
+            .eraseToAnyPublisher()
     }
     
-    var validatedServer: AnyPublisher<Int, Never> {
-        return Publishers.FlatMap(upstream: validatedInput, maxPublishers: .unlimited) {
+    private var validatedServer: AnyPublisher<Int, Never> {
+        validatedInput.flatMap {
             project in
             return NetworkService.shared.testProject(project)
         }
         .map {project, code in
-            code
+            self.lastProjectTestedSuccessfully = project
+            return code
         }
         .removeDuplicates()
         .receive(on: RunLoop.main)
         .eraseToAnyPublisher()
     }
     
-    var errorTextPublisher: AnyPublisher<String, Never> {
-        return Publishers.Map(upstream: validatedServer) {
+    private var errorTextPublisher: AnyPublisher<String, Never> {
+        validatedServer.map {
             statusCode in
-            if statusCode != 200 {
-                switch statusCode {
-                    case -1:
-                        return "Could not find server"
-                    case 401:
-                        return "Unauthorized: Wrong project id/pw"
-                    default:
-                        return "Server error: \(statusCode)"
-                }
+            switch statusCode {
+                case 200:
+                    return ""
+                case -1:
+                    return "Could not find server"
+                case 401:
+                    return "Unauthorized: Wrong project id/pw"
+                default:
+                    return "Server error: \(statusCode)"
             }
-            return ""
-        }.eraseToAnyPublisher()
-    }
-    
-    private var inputProgress: AnyPublisher<LoadingState, Never> {
-        return Publishers.Map(upstream: validatedInput) {
-            input in
-            return .connecting
         }
-        .eraseToAnyPublisher()
-    }
-    
-    private var serverProgress: AnyPublisher<LoadingState, Never> {
-        return Publishers.Map(upstream: validatedServer) {
-            server in
-            return server == 200 ? .right : .wrong
-        }
+        .removeDuplicates()
         .eraseToAnyPublisher()
     }
 }

@@ -38,6 +38,16 @@
                ReferencedContainer = "container:PayForMe.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "654754E02528B29F00A82EB6"
+               BuildableName = "PayForMeTests.xctest"
+               BlueprintName = "PayForMeTests"
+               ReferencedContainer = "container:PayForMe.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
