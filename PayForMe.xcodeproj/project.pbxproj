@@ -23,6 +23,7 @@
 		654754BC2528750A00A82EB6 /* FloatingAddButtonViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654754BB2528750A00A82EB6 /* FloatingAddButtonViewModifier.swift */; };
 		654754C0252889B200A82EB6 /* ProjectQRPermissionCheckerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654754BF252889B200A82EB6 /* ProjectQRPermissionCheckerView.swift */; };
 		654754C8252899FF00A82EB6 /* FancyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654754C7252899FF00A82EB6 /* FancyButton.swift */; };
+		654754DA2528A32100A82EB6 /* SlickLoadingSpinner in Frameworks */ = {isa = PBXBuildFile; productRef = 654754D92528A32100A82EB6 /* SlickLoadingSpinner */; };
 		65662A0323D7320000303207 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A0223D7320000303207 /* AppDelegate.swift */; };
 		65662A0523D7320000303207 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A0423D7320000303207 /* SceneDelegate.swift */; };
 		65662A0723D7320000303207 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A0623D7320000303207 /* ContentView.swift */; };
@@ -53,7 +54,6 @@
 		65C9E2CE23E1B8F500814B37 /* BalanceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C9E2CD23E1B8F500814B37 /* BalanceList.swift */; };
 		65C9E2D023E1B96B00814B37 /* BalanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C9E2CF23E1B96B00814B37 /* BalanceViewModel.swift */; };
 		65D225F32428038500C3F1EC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65D225F52428038500C3F1EC /* Localizable.strings */; };
-		65EE50DD2527873900636A58 /* SlickLoadingSpinner in Frameworks */ = {isa = PBXBuildFile; productRef = 65EE50DC2527873900636A58 /* SlickLoadingSpinner */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,7 +126,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65EE50DD2527873900636A58 /* SlickLoadingSpinner in Frameworks */,
+				654754DA2528A32100A82EB6 /* SlickLoadingSpinner in Frameworks */,
 				658FC555252727C1004A49AA /* CarBode in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -326,7 +326,7 @@
 			name = PayForMe;
 			packageProductDependencies = (
 				658FC554252727C1004A49AA /* CarBode */,
-				65EE50DC2527873900636A58 /* SlickLoadingSpinner */,
+				654754D92528A32100A82EB6 /* SlickLoadingSpinner */,
 			);
 			productName = iCospend;
 			productReference = 656629FF23D7320000303207 /* PayForMe.app */;
@@ -383,7 +383,7 @@
 			mainGroup = 656629F623D7320000303207;
 			packageReferences = (
 				658FC553252727C1004A49AA /* XCRemoteSwiftPackageReference "CarBode-Barcode-Scanner-For-SwiftUI" */,
-				65EE50DB2527873900636A58 /* XCRemoteSwiftPackageReference "SlickLoadingSpinner" */,
+				654754D82528A32100A82EB6 /* XCRemoteSwiftPackageReference "SlickLoadingSpinner" */,
 			);
 			productRefGroup = 65662A0023D7320000303207 /* Products */;
 			projectDirPath = "";
@@ -738,6 +738,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		654754D82528A32100A82EB6 /* XCRemoteSwiftPackageReference "SlickLoadingSpinner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Hustenbonbon/SlickLoadingSpinner.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		658FC553252727C1004A49AA /* XCRemoteSwiftPackageReference "CarBode-Barcode-Scanner-For-SwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/heart/CarBode-Barcode-Scanner-For-SwiftUI";
@@ -746,26 +754,18 @@
 				minimumVersion = 2.0.1;
 			};
 		};
-		65EE50DB2527873900636A58 /* XCRemoteSwiftPackageReference "SlickLoadingSpinner" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Hustenbonbon/SlickLoadingSpinner";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		654754D92528A32100A82EB6 /* SlickLoadingSpinner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 654754D82528A32100A82EB6 /* XCRemoteSwiftPackageReference "SlickLoadingSpinner" */;
+			productName = SlickLoadingSpinner;
+		};
 		658FC554252727C1004A49AA /* CarBode */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 658FC553252727C1004A49AA /* XCRemoteSwiftPackageReference "CarBode-Barcode-Scanner-For-SwiftUI" */;
 			productName = CarBode;
-		};
-		65EE50DC2527873900636A58 /* SlickLoadingSpinner */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 65EE50DB2527873900636A58 /* XCRemoteSwiftPackageReference "SlickLoadingSpinner" */;
-			productName = SlickLoadingSpinner;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

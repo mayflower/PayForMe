@@ -53,6 +53,7 @@ struct AddProjectQRView: View {
                 .font(.title)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
             SlickLoadingSpinner(connectionState: $viewmodel.isProject)
+                .frame(width: 100, height: 100)
         }.padding(40)
     }
     
@@ -62,28 +63,36 @@ struct AddProjectQRView: View {
     }
     
     var qrCodeScanner: some View {
-        ZStack {
-            CBScanner(
-                supportBarcode: $scanningCode, //Set type of barcode you want to scan
-                scanInterval: .constant(5.0), //Event will trigger every 5 seconds,
-                mockBarCode: .constant(mockCode)
-            ){ code in
-                // If we find a QR code which is an url with at least 3 components, it can be a Cospend link
-                guard let url = URL(string: code.value),
-                      url.pathComponents.count >= 3 else { return }
-                
-                scanningCode = []
-                self.viewmodel.scannedCode = url
-            }
-            VStack {
-                Spacer()
+        CBScanner(
+            supportBarcode: $scanningCode, //Set type of barcode you want to scan
+            scanInterval: .constant(5.0), //Event will trigger every 5 seconds,
+            mockBarCode: .constant(mockCode)
+        ){ code in
+            // If we find a QR code which is an url with at least 3 components, it can be a Cospend link
+            guard let url = URL(string: code.value),
+                  url.pathComponents.count >= 3 else { return }
+            
+            scanningCode = []
+            self.viewmodel.scannedCode = url
+        }
+        .overlay(footer, alignment: .bottom)
+        .edgesIgnoringSafeArea(.all)
+    }
+    
+    var footer: some View {
+        Group {
+            if viewmodel.isProject == .notStarted {
+                Text("Scan the QR code to proceed")
+                    .foregroundColor(.white)
+                    .font(.headline)
+            } else {
                 SlickLoadingSpinner(connectionState: $viewmodel.isProject)
-                    .padding(20)
-                    .frame(width: UIScreen.main.bounds.width)
-                    .background(Color.gray.opacity(0.5).blur(radius: 3))
+                    .frame(width: 80, height: 80)
             }
         }
-        .edgesIgnoringSafeArea(.all)
+        .padding(20)
+        .frame(width: UIScreen.main.bounds.width)
+        .background(Color.gray.opacity(0.5).blur(radius: 3))
     }
 }
 

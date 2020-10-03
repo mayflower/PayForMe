@@ -12,10 +12,10 @@
       },
       {
         "package": "SlickLoadingSpinner",
-        "repositoryURL": "https://github.com/Hustenbonbon/SlickLoadingSpinner",
+        "repositoryURL": "https://github.com/Hustenbonbon/SlickLoadingSpinner.git",
         "state": {
           "branch": null,
-          "revision": "1b7e8b9a2cd69defec5709b7c0e7faf85e93e9cd",
+          "revision": "ae3e3256a78781fec47ecd6c42e9fb15115b49bd",
           "version": "1.0.0"
         }
       }

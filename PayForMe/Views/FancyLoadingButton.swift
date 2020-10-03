@@ -36,6 +36,7 @@ struct FancyLoadingButton: View {
                 .eraseToAnyView()
             default:
                 return SlickLoadingSpinner(connectionState: $isLoading)
+                    .frame(width: 50, height: 50)
                     .eraseToAnyView()
         }
     }
