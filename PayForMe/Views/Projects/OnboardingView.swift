@@ -8,10 +8,7 @@
 
 import SwiftUI
 
-struct AddProjectView: View {
-    
-    @Binding
-    var hidePlusButton: Bool
+struct OnboardingView: View {
     
     @State var isQRScanning = false
     
@@ -20,14 +17,14 @@ struct AddProjectView: View {
             if isQRScanning {
                 AddProjectQRView()
             } else {
-                ProjectDetailView(hidePlusButton: self.$hidePlusButton)
+                ProjectDetailView()
             }
         }
     }
 }
 
-struct AddProjectView_Previews: PreviewProvider {
+struct OnboardingViewView_Previews: PreviewProvider {
     static var previews: some View {
-        AddProjectView(hidePlusButton: .constant(false)).environment(\.locale, .init(identifier: "de"))
+        OnboardingView().environment(\.locale, .init(identifier: "de"))
     }
 }

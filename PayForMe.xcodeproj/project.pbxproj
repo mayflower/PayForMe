@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		481FB4FB23E964C8003BD108 /* ProjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481FB4FA23E964C8003BD108 /* ProjectManager.swift */; };
 		481FB4FD23EAD78F003BD108 /* AddProjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481FB4FC23EAD78F003BD108 /* AddProjectModel.swift */; };
-		489995DA23F6EC6F008B7E38 /* AddProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489995D923F6EC6F008B7E38 /* AddProjectView.swift */; };
+		489995DA23F6EC6F008B7E38 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489995D923F6EC6F008B7E38 /* OnboardingView.swift */; };
 		489D35FA23E081120029F59F /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489D35F923E081120029F59F /* Util.swift */; };
 		48CC8F7423F5C16D00DCE3D8 /* AddBillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CC8F7323F5C16D00DCE3D8 /* AddBillView.swift */; };
 		48CF709B240FF82000770B97 /* AddMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CF709A240FF82000770B97 /* AddMemberView.swift */; };
@@ -65,7 +65,7 @@
 /* Begin PBXFileReference section */
 		481FB4FA23E964C8003BD108 /* ProjectManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectManager.swift; sourceTree = "<group>"; };
 		481FB4FC23EAD78F003BD108 /* AddProjectModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectModel.swift; sourceTree = "<group>"; };
-		489995D923F6EC6F008B7E38 /* AddProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectView.swift; sourceTree = "<group>"; };
+		489995D923F6EC6F008B7E38 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		489D35F923E081120029F59F /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		48CC8F7323F5C16D00DCE3D8 /* AddBillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBillView.swift; sourceTree = "<group>"; };
 		48CF709A240FF82000770B97 /* AddMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberView.swift; sourceTree = "<group>"; };
@@ -252,7 +252,7 @@
 			children = (
 				481FB4FC23EAD78F003BD108 /* AddProjectModel.swift */,
 				65662A2523D8546900303207 /* ProjectList.swift */,
-				489995D923F6EC6F008B7E38 /* AddProjectView.swift */,
+				489995D923F6EC6F008B7E38 /* OnboardingView.swift */,
 				65662A2123D75C5F00303207 /* ProjectDetailView.swift */,
 				658FC54A25272639004A49AA /* AddProjectQRView.swift */,
 				658FC55825273E4D004A49AA /* AddProjectQRViewModel.swift */,
@@ -423,7 +423,7 @@
 				658FC55925273E4D004A49AA /* AddProjectQRViewModel.swift in Sources */,
 				489D35FA23E081120029F59F /* Util.swift in Sources */,
 				65A65E3F2527529D00C86533 /* Combine.swift in Sources */,
-				489995DA23F6EC6F008B7E38 /* AddProjectView.swift in Sources */,
+				489995DA23F6EC6F008B7E38 /* OnboardingView.swift in Sources */,
 				6591C8E524052C240054BA24 /* CommunicationIndicator.swift in Sources */,
 				65662A0523D7320000303207 /* SceneDelegate.swift in Sources */,
 				6591C8DD2403F84E0054BA24 /* PotentialOwersView.swift in Sources */,

@@ -26,8 +26,8 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
+            if !manager.projects.isEmpty {
             TabView(selection: $tabBarIndex){
-                if !manager.projects.isEmpty {
                     BillList(viewModel: BillListViewModel(), hidePlusButton: self.$hidePlusButton)
                         .tabItem({
                             Image(systemName: "rectangle.stack")
@@ -43,13 +43,9 @@ struct ContentView: View {
                             Image(systemName: "gear")
                         })
                         .tag(tabBarItems.ServerList)
-                } else {
-                    AddProjectView(hidePlusButton: self.$hidePlusButton)
-                        .tabItem({
-                            Image(systemName: "folder.badge.plus")
-                        })
-                        .tag(tabBarItems.AddServer)
                 }
+            } else {
+                OnboardingView()
             }
             
             VStack {
