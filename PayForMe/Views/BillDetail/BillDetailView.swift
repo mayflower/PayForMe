@@ -18,9 +18,6 @@ struct BillDetailView: View {
     @Binding
     var showModal: Bool
     
-    @Binding
-    var hidePlusButton: Bool
-    
     @ObservedObject
     var viewModel: BillDetailViewModel
     
@@ -62,12 +59,6 @@ struct BillDetailView: View {
         .padding()
         }
         .navigationBarTitle(navBarTitle)
-        .onAppear {
-            self.hidePlusButton = true
-        }
-        .onDisappear {
-            self.hidePlusButton = false
-        }
         .background(Color.PFMBackground)
     }
     
@@ -92,7 +83,7 @@ struct BillDetailView_Previews: PreviewProvider {
     static var previews: some View {
         let vm = BillDetailViewModel(currentBill: previewBills[0])
         vm.currentProject = previewProject
-        return BillDetailView(showModal: .constant(true), hidePlusButton: .constant(true), viewModel: vm)
+        return BillDetailView(showModal: .constant(true), viewModel: vm)
     }
 }
 

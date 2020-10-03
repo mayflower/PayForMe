@@ -22,50 +22,33 @@ struct ContentView: View {
     @State
     var hidePlusButton = false
     
-    var bills = [Bill]()
-    
     var body: some View {
         ZStack {
             if !manager.projects.isEmpty {
-            TabView(selection: $tabBarIndex){
-                    BillList(viewModel: BillListViewModel(), hidePlusButton: self.$hidePlusButton)
-                        .tabItem({
-                            Image(systemName: "rectangle.stack")
-                        })
-                        .tag(tabBarItems.BillList)
-                    BalanceList(hidePlusButton: $hidePlusButton, viewModel: BalanceViewModel())
-                        .tabItem({
-                            Image(systemName: "arrow.right.arrow.left")
-                        })
-                        .tag(tabBarItems.Balance)
-                    ProjectList(hidePlusButton: self.$hidePlusButton)
-                        .tabItem({
-                            Image(systemName: "gear")
-                        })
-                        .tag(tabBarItems.ServerList)
-                }
+                tabBar
             } else {
                 OnboardingView()
             }
-            
-            VStack {
-                Spacer()
-                Button(action: {
-                    self.showModal.toggle()
-                }) {
-                    if !hidePlusButton {
-                        Image(systemName: "plus.circle")
-                            .resizable()
-                            .frame(width: 64, height: 64)
-                            .foregroundColor(Color.secondary)
-                            .shadow(radius: 10)
-                    } else {
-                        EmptyView()
-                    }
-                }
-            }.padding(EdgeInsets(top: 0, leading: 32, bottom: 64, trailing: 32))
-        }.sheet(isPresented: $showModal) {
-            AddBillView(showModal: self.$showModal)
+        }
+    }
+    
+    var tabBar: some View {
+        TabView(selection: $tabBarIndex){
+            BillList(viewModel: BillListViewModel())
+                .tabItem({
+                    Image(systemName: "rectangle.stack")
+                })
+                .tag(tabBarItems.BillList)
+            BalanceList(viewModel: BalanceViewModel())
+                .tabItem({
+                    Image(systemName: "arrow.right.arrow.left")
+                })
+                .tag(tabBarItems.Balance)
+            ProjectList()
+                .tabItem({
+                    Image(systemName: "gear")
+                })
+                .tag(tabBarItems.ServerList)
         }
     }
 }

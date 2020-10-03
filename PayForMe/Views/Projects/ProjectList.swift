@@ -14,9 +14,6 @@ struct ProjectList: View {
     @ObservedObject
     var manager = ProjectManager.shared
     
-    @Binding
-    var hidePlusButton: Bool
-    
     @State
     var cameraAuthStatus = AVCaptureDevice.authorizationStatus(for: .video)
     
@@ -60,7 +57,7 @@ struct ProjectList: View {
                 case .qrCode:
                     return destination
                 case .manual:
-                    return ProjectDetailView(addProjectModel: AddProjectModel.shared, hidePlusButton: self.$hidePlusButton).eraseToAnyView()
+                    return ProjectDetailView(addProjectModel: AddProjectModel.shared).eraseToAnyView()
             }
         })
     }
@@ -88,7 +85,7 @@ struct ProjectList: View {
             case .authorized:
                 return AddProjectQRView().eraseToAnyView()
             case .denied:
-                return ProjectDetailView(addProjectModel: AddProjectModel.shared, hidePlusButton: self.$hidePlusButton).eraseToAnyView()
+                return ProjectDetailView(addProjectModel: AddProjectModel.shared).eraseToAnyView()
             default:
                 AVCaptureDevice.requestAccess(for: .video) { _ in
                     cameraAuthStatus = AVCaptureDevice.authorizationStatus(for: .video)
@@ -102,6 +99,6 @@ struct ServerList_Previews: PreviewProvider {
     static var previews: some View {
         ProjectManager.shared.addProject(previewProjects[0])
         ProjectManager.shared.addProject(previewProjects[1])
-        return ProjectList(hidePlusButton: .constant(false))
+        return ProjectList()
     }
 }

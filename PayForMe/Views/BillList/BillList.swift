@@ -16,9 +16,6 @@ struct BillList: View {
     @State
     var tabBarIndex = tabBarItems.AddBill
     
-    @Binding
-    var hidePlusButton: Bool
-    
     @State
     var deleteAlert = false
     
@@ -28,7 +25,6 @@ struct BillList: View {
                 ForEach(viewModel.currentProject.bills) { bill in
                     NavigationLink(destination:
                         BillDetailView(showModal: .constant(false),
-                                       hidePlusButton: self.$hidePlusButton,
                                        viewModel: BillDetailViewModel(currentBill: bill),
                                        navBarTitle: "Edit Bill",
                                        sendButtonTitle: "Update Bill")) {
@@ -42,9 +38,10 @@ struct BillList: View {
             }
             .id(viewModel.currentProject.bills)
             .navigationBarTitle("Bills")
+            .addFloatingAddButton()
             .alert(isPresented: $deleteAlert) {
                 Alert(title: Text("Delete Bill"), message: Text("Do you really want to erase the bill from the server?"), primaryButton: .destructive(Text("Sure")), secondaryButton: .cancel())
-        }
+            }
         }
         .onAppear {
             ProjectManager.shared.updateCurrentProject()
@@ -70,6 +67,6 @@ struct BillList_Previews: PreviewProvider {
         previewProject.bills = previewBills
         previewProject.members = previewPersons
         viewModel.currentProject = previewProject
-        return BillList(viewModel: viewModel, tabBarIndex: .BillList, hidePlusButton: .constant(false))
+        return BillList(viewModel: viewModel, tabBarIndex: .BillList)
     }
 }

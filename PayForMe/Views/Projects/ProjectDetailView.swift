@@ -23,9 +23,6 @@ struct ProjectDetailView: View {
     @State
     var showConnectionIndicator = false
     
-    @Binding
-    var hidePlusButton: Bool
-    
     @State
     var errorText = ""
     
@@ -110,12 +107,6 @@ struct ProjectDetailView: View {
             
         }
         .navigationBarTitle("Add project")
-        .onAppear {
-            self.hidePlusButton = true
-        }
-        .onDisappear {
-            self.hidePlusButton = false
-        }
         .background(Color.PFMBackground)
     }
     
@@ -143,6 +134,6 @@ struct ProjectDetailView: View {
 
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectDetailView(addProjectModel: AddProjectModel.shared, hidePlusButton: .constant(false)).environment(\.locale, .init(identifier: "de"))
+        ProjectDetailView(addProjectModel: AddProjectModel.shared).environment(\.locale, .init(identifier: "de"))
     }
 }

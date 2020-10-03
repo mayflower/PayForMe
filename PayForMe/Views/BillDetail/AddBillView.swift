@@ -15,7 +15,7 @@ struct AddBillView: View {
     
     var body: some View {
         NavigationView {
-            BillDetailView(showModal: $showModal, hidePlusButton: .constant(false), viewModel: BillDetailViewModel(currentBill: Bill.newBill()), navBarTitle: "Add Bill")
+            BillDetailView(showModal: $showModal, viewModel: BillDetailViewModel(currentBill: Bill.newBill()), navBarTitle: "Add Bill")
         }
     }
 }
