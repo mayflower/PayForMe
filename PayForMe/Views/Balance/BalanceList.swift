@@ -25,13 +25,12 @@ struct BalanceList: View {
     var body: some View {
         NavigationView {
             mainView
-            .animation(.easeInOut, value: self.addingUser)
             .navigationBarItems(trailing: !addingUser ? FancyButton(isLoading: .constant(false), add: true, action: showAddUser, text: "") : nil)
             .navigationBarTitle("Members")
             .onAppear {
                 ProjectManager.shared.updateCurrentProject()
             }
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
     
     var mainView: some View {
@@ -40,6 +39,7 @@ struct BalanceList: View {
                 AddMemberView(memberName: $memberName, addMemberAction: submitUser, cancelButtonAction: cancelAddUser)
             }
             list
+            .addFloatingAddButton()
         }
     }
     
@@ -56,7 +56,6 @@ struct BalanceList: View {
                 }
             }
         }
-        .addFloatingAddButton()
     }
     
     func showAddUser() {
