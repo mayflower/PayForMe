@@ -17,9 +17,6 @@ struct BalanceList: View {
     var addingUser = false
     
     @State
-    var showConnectionIndicator = false
-    
-    @State
     var memberName = ""
     
     var body: some View {
