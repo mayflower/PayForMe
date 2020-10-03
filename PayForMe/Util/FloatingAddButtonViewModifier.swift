@@ -27,17 +27,27 @@ private struct FloatingAddButtonView: View {
             Button(action: {
                 sheetToggle.toggle()
             }) {
-                Image(systemName: "plus.circle")
+                Image(systemName: "plus")
                     .resizable()
-                    .frame(width: 48, height: 48)
-                    .foregroundColor(Color.secondary)
-                    .shadow(radius: 10)
+                    .frame(width: 50, height: 50)
+                    .foregroundColor(Color.blue)
+                    .shadow(color: Color(red: 0.53, green: 0.53, blue: 0.53), radius: 3, x: 2, y: 2)
             }
     }
 }
 
 struct FloatingAddButtonViewModifier_Previews: PreviewProvider {
     static var previews: some View {
-        Text("Hello World").modifier(FloatingAddButtonViewModifier())
+        let viewModel = BillListViewModel()
+        previewProject.bills = [previewBills, previewBills, previewBills].flatMap { $0 }
+        previewProject.members = previewPersons
+        viewModel.currentProject = previewProject
+         
+        return NavigationView {
+            BillList(viewModel: viewModel, tabBarIndex: .BillList)
+        }
+        //.modifier(FloatingAddButtonViewModifier())
+        .navigationViewStyle(StackNavigationViewStyle())
+        .preferredColorScheme(.dark)
     }
 }
