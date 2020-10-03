@@ -14,9 +14,6 @@ struct ProjectList: View {
     @ObservedObject
     var manager = ProjectManager.shared
     
-    @State
-    var cameraAuthStatus = AVCaptureDevice.authorizationStatus(for: .video)
-    
     @State private var addProject: AddingProjectMethod?
     
     var body: some View {
@@ -55,7 +52,7 @@ struct ProjectList: View {
         .sheet(item: $addProject, content: { method -> AnyView in
             switch method {
                 case .qrCode:
-                    return destination
+                    return destination.eraseToAnyView()
                 case .manual:
                     return ProjectDetailView(addProjectModel: AddProjectModel.shared).eraseToAnyView()
             }
@@ -80,18 +77,8 @@ struct ProjectList: View {
         }
     }
     
-    var destination: AnyView {
-        switch cameraAuthStatus {
-            case .authorized:
-                return AddProjectQRView().eraseToAnyView()
-            case .denied:
-                return ProjectDetailView(addProjectModel: AddProjectModel.shared).eraseToAnyView()
-            default:
-                AVCaptureDevice.requestAccess(for: .video) { _ in
-                    cameraAuthStatus = AVCaptureDevice.authorizationStatus(for: .video)
-                }
-                return Text("Please allow us to use the camera in order to scan the CoSpend QR view").eraseToAnyView()
-        }
+    var destination: some View {
+        ProjectQRPermissionCheckerView()
     }
 }
 

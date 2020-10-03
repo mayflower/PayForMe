@@ -21,6 +21,7 @@
 		6533A02B23D888B100FF822B /* BillCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533A02A23D888B100FF822B /* BillCell.swift */; };
 		654754B82528736F00A82EB6 /* Views+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654754B72528736F00A82EB6 /* Views+Extensions.swift */; };
 		654754BC2528750A00A82EB6 /* FloatingAddButtonViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654754BB2528750A00A82EB6 /* FloatingAddButtonViewModifier.swift */; };
+		654754C0252889B200A82EB6 /* ProjectQRPermissionCheckerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654754BF252889B200A82EB6 /* ProjectQRPermissionCheckerView.swift */; };
 		65662A0323D7320000303207 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A0223D7320000303207 /* AppDelegate.swift */; };
 		65662A0523D7320000303207 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A0423D7320000303207 /* SceneDelegate.swift */; };
 		65662A0723D7320000303207 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A0623D7320000303207 /* ContentView.swift */; };
@@ -79,6 +80,7 @@
 		6533A02A23D888B100FF822B /* BillCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillCell.swift; sourceTree = "<group>"; };
 		654754B72528736F00A82EB6 /* Views+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views+Extensions.swift"; sourceTree = "<group>"; };
 		654754BB2528750A00A82EB6 /* FloatingAddButtonViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingAddButtonViewModifier.swift; sourceTree = "<group>"; };
+		654754BF252889B200A82EB6 /* ProjectQRPermissionCheckerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectQRPermissionCheckerView.swift; sourceTree = "<group>"; };
 		656629FF23D7320000303207 /* PayForMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PayForMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65662A0223D7320000303207 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		65662A0423D7320000303207 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 				65662A2123D75C5F00303207 /* ProjectDetailView.swift */,
 				658FC54A25272639004A49AA /* AddProjectQRView.swift */,
 				658FC55825273E4D004A49AA /* AddProjectQRViewModel.swift */,
+				654754BF252889B200A82EB6 /* ProjectQRPermissionCheckerView.swift */,
 			);
 			path = Projects;
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 				65C9E2CE23E1B8F500814B37 /* BalanceList.swift in Sources */,
 				650059FC23DDE1C300D1D599 /* Person.swift in Sources */,
 				65662A0323D7320000303207 /* AppDelegate.swift in Sources */,
+				654754C0252889B200A82EB6 /* ProjectQRPermissionCheckerView.swift in Sources */,
 				654754BC2528750A00A82EB6 /* FloatingAddButtonViewModifier.swift in Sources */,
 				6533A02B23D888B100FF822B /* BillCell.swift in Sources */,
 				48CF709B240FF82000770B97 /* AddMemberView.swift in Sources */,
