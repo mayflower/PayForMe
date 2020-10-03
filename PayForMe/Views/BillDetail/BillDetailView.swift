@@ -57,9 +57,11 @@ struct BillDetailView: View {
                     self.sendBillButtonDisabled = !$0
             }
         .padding()
+                .padding(.bottom,20)
         }
         .navigationBarTitle(navBarTitle)
         .background(Color.PFMBackground)
+        .edgesIgnoringSafeArea(.bottom)
     }
     
     func sendBillToServer() {
