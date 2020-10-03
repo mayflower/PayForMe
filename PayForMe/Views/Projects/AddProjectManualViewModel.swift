@@ -31,6 +31,13 @@ class AddProjectManualViewModel: ObservableObject {
     @Published
     var emailAddr = ""
     
+    @Published var validationProgress = LoadingState.notStarted
+    
+    init() {
+        inputProgress.assign(to: &$validationProgress)
+        serverProgress.assign(to: &$validationProgress)
+    }
+    
     func reset() {
         self.serverAddress = ""
         self.projectName = ""
@@ -95,43 +102,19 @@ class AddProjectManualViewModel: ObservableObject {
         }.eraseToAnyPublisher()
     }
     
-    private var inputProgress: AnyPublisher<ValidationState, Never> {
+    private var inputProgress: AnyPublisher<LoadingState, Never> {
         return Publishers.Map(upstream: validatedInput) {
             input in
-            return ValidationState.inProgress
+            return .connecting
         }
         .eraseToAnyPublisher()
     }
     
-    private var serverProgress: AnyPublisher<ValidationState, Never> {
+    private var serverProgress: AnyPublisher<LoadingState, Never> {
         return Publishers.Map(upstream: validatedServer) {
             server in
-            return server == 200 ? ValidationState.success : ValidationState.failure
+            return server == 200 ? .right : .wrong
         }
         .eraseToAnyPublisher()
     }
-    
-    private var createProject: AnyPublisher<ValidationState, Never> {
-        return Publishers.CombineLatest4(validatedInput,$addOrCreate,$projectType, $emailAddr)
-            .compactMap {
-                input, addOrCreate, backend, email in
-                if addOrCreate == 1 && backend == .iHateMoney && email.isValidEmail {
-                    return ValidationState.success
-                }
-                return nil
-        }
-        .eraseToAnyPublisher()
-    }
-    
-    var validationProgress: AnyPublisher<ValidationState, Never> {
-        return Publishers.Merge3(inputProgress, serverProgress, createProject)
-            .eraseToAnyPublisher()
-    }
-}
-
-enum ValidationState {
-    case inProgress
-    case success
-    case failure
-    //    case empty
 }

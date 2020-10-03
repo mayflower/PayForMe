@@ -31,7 +31,7 @@ struct BillDetailView: View {
     var sendBillButtonDisabled = true
     
     @State
-    var sendingInProgress = false
+    var sendingInProgress = LoadingState.notStarted
     
     var body: some View {
         VStack {
@@ -51,7 +51,7 @@ struct BillDetailView: View {
                 }
                 
             }
-            FancyButton(isLoading: $sendingInProgress, add: false, action: self.sendBillToServer, text: showModal ? "Create Bill" : "Update Bill")
+            FancyLoadingButton(isLoading: $sendingInProgress, add: false, action: self.sendBillToServer, text: showModal ? "Create Bill" : "Update Bill")
                 .disabled(sendBillButtonDisabled)
                 .onReceive(self.viewModel.validatedInput) {
                     self.sendBillButtonDisabled = !$0
@@ -69,9 +69,9 @@ struct BillDetailView: View {
             print("Could not create bill")
             return
         }
-        sendingInProgress = true
+        sendingInProgress = .connecting
         ProjectManager.shared.saveBill(newBill, completion: {
-            self.sendingInProgress = false
+            self.sendingInProgress = .right
             ProjectManager.shared.updateCurrentProject()
             self.showModal.toggle()
             DispatchQueue.main.async {

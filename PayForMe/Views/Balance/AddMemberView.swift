@@ -35,7 +35,7 @@ struct AddMemberView: View {
                 .multilineTextAlignment(.center)
             .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
-            FancyButton(isLoading: .constant(false), add: false, action: addMemberAction, text: "Submit")
+            FancyButton(add: false, action: addMemberAction, text: "Submit")
         }
         .padding()
     }

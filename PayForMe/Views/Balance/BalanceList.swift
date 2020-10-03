@@ -22,7 +22,7 @@ struct BalanceList: View {
     var body: some View {
         NavigationView {
             mainView
-            .navigationBarItems(trailing: !addingUser ? FancyButton(isLoading: .constant(false), add: true, action: showAddUser, text: "") : nil)
+            .navigationBarItems(trailing: !addingUser ? FancyButton(add: true, action: showAddUser, text: "") : nil)
             .navigationBarTitle("Members")
             .onAppear {
                 ProjectManager.shared.updateCurrentProject()

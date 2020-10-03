@@ -28,6 +28,7 @@ struct AddProjectManualView: View {
     
     var body: some View {
         VStack {
+            Text("Add project").font(.title)
             Picker(selection: $addProjectModel.projectType.animation(), label: Text("snens")) {
                 Text("Cospend").tag(ProjectBackend.cospend)
                 Text("iHateMoney").tag(ProjectBackend.iHateMoney)
@@ -77,27 +78,11 @@ struct AddProjectManualView: View {
             .id(addProjectModel.projectType == .cospend ? "cospend" : "iHateMoney")
                 
             .frame(width: UIScreen.main.bounds.width, height: 220, alignment: .center)
-            .onReceive(addProjectModel.validationProgress) {
-                switch $0 {
-                    case .inProgress:
-                        self.showConnectionIndicator = true
-                        self.addProjectButtonDisabled = true
-                        print("inProgess")
-                    case .success:
-                        self.showConnectionIndicator = false
-                        self.addProjectButtonDisabled = false
-                        print("success")
-                    case .failure:
-                        self.showConnectionIndicator = false
-                        self.addProjectButtonDisabled = true
-                        print("failure")
-                }
-            }
             Text(errorText).onReceive(addProjectModel.errorTextPublisher) {
                 text in
                 self.errorText = text
             }
-            FancyButton(isLoading: $showConnectionIndicator,
+            FancyLoadingButton(isLoading: $addProjectModel.validationProgress,
                         add: false,
                         action: addButton,
                         text:
@@ -106,8 +91,9 @@ struct AddProjectManualView: View {
             Spacer()
             
         }
-        .navigationBarTitle("Add project")
+        .padding(.vertical, 50)
         .background(Color.PFMBackground)
+        .edgesIgnoringSafeArea(.all)
     }
     
     func addButton() {
