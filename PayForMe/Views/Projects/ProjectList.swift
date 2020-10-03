@@ -15,41 +15,65 @@ struct ProjectList: View {
     var manager = ProjectManager.shared
     
     @State private var addProject: AddingProjectMethod?
+    @State private var shareProject: Project?
     
     var body: some View {
         VStack {
-            HStack(spacing: 20) {
-                Spacer()
-                Button(action: { addProject = .manual }) {
-                    Image(systemName: "plus").fancyStyle()
-                    
-                }
-                Button(action: { addProject = .qrCode }) {
-                    Image(systemName: "qrcode").fancyStyle()
-                    
-                }
-            }.padding(.horizontal, 20)
-            .padding(.vertical, 5)
+            header
             List {
                 ForEach(manager.projects) { project in
-                    Button(action: {
-                        self.manager.setCurrentProject(project)
-                    }, label: {
-                        HStack {
-                            VStack {
-                                Text(project.name)
-                                Text(project.backend == .cospend ? "Cospend" : "iHateMoney").font(.caption).foregroundColor(Color.gray)
-                            }
-                            if self.manager.currentProject == project {
-                                Spacer()
-                                Image(systemName: "checkmark").padding(.trailing)
-                            }
-                        }
-                    })
+                    listRow(project: project)
                 }
                 .onDelete(perform: deleteProject)
             }
+            .sheet(item: $shareProject) { project in
+                ShareProjectQRCode(project: project)
+            }
         }
+    }
+    
+    private func listRow(project: Project) -> some View {
+        Button(action: {
+            self.manager.setCurrentProject(project)
+        }, label: {
+            HStack {
+                VStack {
+                    Text(project.name)
+                    Text(project.backend == .cospend ? "Cospend" : "iHateMoney").font(.caption).foregroundColor(Color.gray)
+                }
+                if project.backend == .cospend {
+                    Spacer()
+                    Button(action: {
+                        self.shareProject = project
+                    }, label: {
+                        HStack(spacing: 5) {
+                            Image(systemName: "square.and.arrow.up")
+                            Image(systemName: "qrcode")
+                        }
+                    })
+                }
+                Spacer()
+                if self.manager.currentProject == project {
+                    Image(systemName: "checkmark").padding(.trailing)
+                }
+            }
+        })
+    }
+    
+    private var header: some View {
+        HStack(spacing: 20) {
+            Spacer()
+            Button(action: { addProject = .manual }) {
+                Image(systemName: "plus").fancyStyle()
+                
+            }
+            Button(action: { addProject = .qrCode }) {
+                Image(systemName: "qrcode").fancyStyle()
+                
+            }
+        }
+        .padding(.horizontal, 20)
+        .padding(.vertical, 5)
         .sheet(item: $addProject, content: { method -> AnyView in
             switch method {
                 case .qrCode:

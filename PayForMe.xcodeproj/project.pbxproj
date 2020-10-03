@@ -25,6 +25,7 @@
 		654754C8252899FF00A82EB6 /* FancyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654754C7252899FF00A82EB6 /* FancyButton.swift */; };
 		654754DA2528A32100A82EB6 /* SlickLoadingSpinner in Frameworks */ = {isa = PBXBuildFile; productRef = 654754D92528A32100A82EB6 /* SlickLoadingSpinner */; };
 		654754E42528B29F00A82EB6 /* AddProjectManuallyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654754E32528B29F00A82EB6 /* AddProjectManuallyTests.swift */; };
+		654754F22528BB7700A82EB6 /* ShareProjectQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654754F12528BB7600A82EB6 /* ShareProjectQRCode.swift */; };
 		65662A0323D7320000303207 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A0223D7320000303207 /* AppDelegate.swift */; };
 		65662A0523D7320000303207 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A0423D7320000303207 /* SceneDelegate.swift */; };
 		65662A0723D7320000303207 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A0623D7320000303207 /* ContentView.swift */; };
@@ -94,6 +95,7 @@
 		654754E12528B29F00A82EB6 /* PayForMeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PayForMeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		654754E32528B29F00A82EB6 /* AddProjectManuallyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectManuallyTests.swift; sourceTree = "<group>"; };
 		654754E52528B29F00A82EB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		654754F12528BB7600A82EB6 /* ShareProjectQRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareProjectQRCode.swift; sourceTree = "<group>"; };
 		656629FF23D7320000303207 /* PayForMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PayForMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65662A0223D7320000303207 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		65662A0423D7320000303207 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 				658FC54A25272639004A49AA /* AddProjectQRView.swift */,
 				658FC55825273E4D004A49AA /* AddProjectQRViewModel.swift */,
 				654754BF252889B200A82EB6 /* ProjectQRPermissionCheckerView.swift */,
+				654754F12528BB7600A82EB6 /* ShareProjectQRCode.swift */,
 			);
 			path = Projects;
 			sourceTree = "<group>";
@@ -491,6 +494,7 @@
 				654754C8252899FF00A82EB6 /* FancyButton.swift in Sources */,
 				656E8CB423D9C3DA00B3ED10 /* BillDetailView.swift in Sources */,
 				481FB4FB23E964C8003BD108 /* ProjectManager.swift in Sources */,
+				654754F22528BB7700A82EB6 /* ShareProjectQRCode.swift in Sources */,
 				654754B82528736F00A82EB6 /* Views+Extensions.swift in Sources */,
 				65662A1923D7322B00303207 /* Bill.swift in Sources */,
 				48CC8F7423F5C16D00DCE3D8 /* AddBillView.swift in Sources */,
