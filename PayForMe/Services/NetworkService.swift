@@ -37,7 +37,8 @@ class NetworkService {
         let request = self.buildURLRequest("bills", params: [:], project: project)
         return URLSession.shared.dataTaskPublisher(for: request)
             .compactMap { data, response -> Data? in
-                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else { print("Network Error"); return nil }
+                guard let httpResponse = response as? HTTPURLResponse else { print("Network Error"); return nil }
+                guard httpResponse.statusCode == 200 else { print("Network Error: Status code: \(httpResponse.statusCode) \(httpResponse.description)"); return nil }
                 return data
         }
         .decode(type: [Bill].self, decoder: decoder)
@@ -58,7 +59,8 @@ class NetworkService {
         let request = buildURLRequest("members", params: [:], project: project)
         return URLSession.shared.dataTaskPublisher(for: request)
             .compactMap { data, response -> Data? in
-                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else { print("Network Error"); return nil }
+                guard let httpResponse = response as? HTTPURLResponse else { print("Network Error"); return nil }
+                guard httpResponse.statusCode == 200 else { print("Network Error: Status code: \(httpResponse.statusCode) \(httpResponse.description)"); return nil }
                 return data
         }
         .decode(type: [Person].self, decoder: decoder)
