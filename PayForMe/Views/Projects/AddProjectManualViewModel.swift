@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Combine
 
-class AddProjectModel: ObservableObject {
+class AddProjectManualViewModel: ObservableObject {
     
     
     @Published
@@ -30,12 +30,6 @@ class AddProjectModel: ObservableObject {
     
     @Published
     var emailAddr = ""
-    
-    static let shared = AddProjectModel()
-    
-    private init() {
-        
-    }
     
     func reset() {
         self.serverAddress = ""

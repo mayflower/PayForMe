@@ -24,7 +24,7 @@ struct OnboardingView: View {
                             .aspectRatio(contentMode: .fit)
                     }
                     NavigationLink(
-                        destination: ProjectDetailView(),
+                        destination: AddProjectManualView(),
                         label: {
                             Image(systemName: "square.and.pencil")
                                 .resizable()

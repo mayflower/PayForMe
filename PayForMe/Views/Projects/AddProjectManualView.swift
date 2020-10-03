@@ -9,13 +9,13 @@
 import SwiftUI
 import Combine
 
-struct ProjectDetailView: View {
+struct AddProjectManualView: View {
     
     @Environment(\.presentationMode)
     var presentationMode: Binding<PresentationMode>
     
-    @ObservedObject
-    var addProjectModel = AddProjectModel.shared
+    @StateObject
+    private var addProjectModel = AddProjectManualViewModel()
     
     @State
     var addProjectButtonDisabled = true
@@ -134,6 +134,6 @@ struct ProjectDetailView: View {
 
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectDetailView(addProjectModel: AddProjectModel.shared).environment(\.locale, .init(identifier: "de"))
+        AddProjectManualView().environment(\.locale, .init(identifier: "de"))
     }
 }

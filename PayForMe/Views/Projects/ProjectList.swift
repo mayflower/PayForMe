@@ -28,7 +28,8 @@ struct ProjectList: View {
                     Image(systemName: "qrcode").fancyStyle()
                     
                 }
-            }.padding(20)
+            }.padding(.horizontal, 20)
+            .padding(.vertical, 5)
             List {
                 ForEach(manager.projects) { project in
                     Button(action: {
@@ -54,7 +55,7 @@ struct ProjectList: View {
                 case .qrCode:
                     return destination.eraseToAnyView()
                 case .manual:
-                    return ProjectDetailView(addProjectModel: AddProjectModel.shared).eraseToAnyView()
+                    return AddProjectManualView().eraseToAnyView()
             }
         })
     }
