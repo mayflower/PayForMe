@@ -24,7 +24,9 @@ class StorageService {
     }
     
     func storeProjects(projects: [Project]) {
-        guard let encodedData = try? encoder.encode(projects) else {
+        let storedProjects = projects.map { StoredProject(project: $0) }
+        
+        guard let encodedData = try? encoder.encode(storedProjects) else {
             print("data not saved")
             return
         }
@@ -42,13 +44,18 @@ class StorageService {
             print("Could not open file URL")
             return [Project]()
         }
-        let projects = try? decoder.decode([Project].self, from: data)
-        if let projects = projects {
-            print("data loaded")
+        //Test legacyVersion
+        if let projects = try? decoder.decode([Project].self, from: data) {
+            print("data loaded legacy, will save as new")
+            storeProjects(projects: projects)
             return projects
-        } else {
-            print("💣💣💣 Could not decode saved Data, will be overriden -> probably the model changed")
-            return [Project]()
         }
+        //Try new version
+        if let projects = try? decoder.decode([StoredProject].self, from: data) {
+            print("data loaded v2")
+            return projects.map { $0.toProject() }
+        }
+        print("💣💣💣 Could not decode saved Data, will be overriden -> probably the model changed")
+        return [Project]()
     }
 }

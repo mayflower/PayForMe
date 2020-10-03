@@ -29,6 +29,39 @@ class Project: Codable, Identifiable {
         
         self.id = UUID()
     }
+    
+    fileprivate init(name: String, password: String, backend: ProjectBackend, url: URL, id: UUID) {
+        self.name = name
+        self.password = password
+        self.backend = backend
+        self.url = url
+        self.id = id
+        members = [:]
+        bills = []
+    }
+}
+
+struct StoredProject: Codable, Identifiable {
+    let name: String
+    let password: String
+    let url: URL
+    let id: UUID
+    let backend: ProjectBackend
+    
+    let dbVersion: Int
+    
+    init(project: Project) {
+        name = project.name
+        password = project.password
+        url = project.url
+        id = project.id
+        backend = project.backend
+        dbVersion = 2
+    }
+    
+    func toProject() -> Project {
+        Project(name: name, password: password, backend: backend, url: url, id: id)
+    }
 }
 
 extension Project: Equatable {
