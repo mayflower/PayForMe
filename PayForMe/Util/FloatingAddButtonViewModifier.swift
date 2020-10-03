@@ -44,7 +44,7 @@ struct FloatingAddButtonViewModifier_Previews: PreviewProvider {
         viewModel.currentProject = previewProject
          
         return NavigationView {
-            BillList(viewModel: viewModel, tabBarIndex: .BillList)
+            BillList(viewModel: viewModel)
         }
         //.modifier(FloatingAddButtonViewModifier())
         .navigationViewStyle(StackNavigationViewStyle())

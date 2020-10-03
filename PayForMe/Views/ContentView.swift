@@ -56,9 +56,7 @@ struct ContentView: View {
 enum tabBarItems: Int {
     case ServerList
     case BillList
-    case AddServer
     case Balance
-    case AddBill
 }
 
 struct ContentView_Previews: PreviewProvider {

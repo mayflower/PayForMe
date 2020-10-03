@@ -59,6 +59,6 @@ struct PersonsView_Previews: PreviewProvider {
     static var previews: some View {
         let viewModel = BillListViewModel()
         viewModel.currentProject = previewProject
-        return BillList(viewModel: viewModel, tabBarIndex: .BillList)
+        return BillList(viewModel: viewModel)
     }
 }

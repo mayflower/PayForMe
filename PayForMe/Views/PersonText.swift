@@ -37,6 +37,6 @@ struct PersonText_Previews: PreviewProvider {
         previewProject.bills = previewBills
         previewProject.members = previewPersons
         viewModel.currentProject = previewProject
-        return BillList(viewModel: viewModel, tabBarIndex: .BillList)
+        return BillList(viewModel: viewModel)
     }
 }

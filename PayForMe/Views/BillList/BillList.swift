@@ -14,9 +14,6 @@ struct BillList: View {
     var viewModel: BillListViewModel
     
     @State
-    var tabBarIndex = tabBarItems.AddBill
-    
-    @State
     var deleteAlert = false
     
     var body: some View {
@@ -68,6 +65,6 @@ struct BillList_Previews: PreviewProvider {
         previewProject.bills = previewBills
         previewProject.members = previewPersons
         viewModel.currentProject = previewProject
-        return BillList(viewModel: viewModel, tabBarIndex: .BillList)
+        return BillList(viewModel: viewModel)
     }
 }
