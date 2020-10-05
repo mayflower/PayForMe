@@ -1,33 +1,117 @@
-/* 
-  Localizable.strings
-  PayForMe
 
-  Created by Max Tharr on 22.03.20.
-  Copyright © 2020 Mayflower GmbH. All rights reserved.
-*/
-"Server Address" = "Server Address";
-"Project ID & Password" = "Project ID & Password";
-"Enter project id" = "Enter project id";
-"Enter project password" = "Enter project password";
-"Add project" = "Add project";
-"Finding Server" = "Finding Server";
-"Bills" = "Bills";
+
 "Add Bill" = "Add Bill";
-"Payer" = "Payer";
-"What was paid" = "What was paid?";
-"How much" = "How much";
-"Owers" = "Owers";
-"None" = "None";
-"All" = "All";
-"Create Bill" = "Create Bill";
-"Edit Bill" = "Edit Bill";
-"Update Bill" = "Update Bill";
-"Delete" = "Delete";
-"Members" = "Members";
-"Add member" = "Add member";
-"Member name" = "Member name";
-"Submit" = "Submit";
-"Known Projects" = "Known Projects";
+
+
 "Add Project" = "Add Project";
+
+/* AddMemberView.swift */
+"Add member" = "Add member";
+
+
+"All" = "All";
+
+
+"Bills" = "Bills";
+
+
+"Bills" = "Bills";
+
+
+"Cospend is a NextCloud app" = "Cospend is a NextCloud app";
+
+/* Error messages */
 "Could not find server" = "Could not find server";
+
+
+"Create Bill" = "Create Bill";
+
+
+"Delete" = "Delete";
+
+
+"Delete Bill" = "Delete Bill";
+
+
+"Do you really want to erase the bill from the server?" = "Do you really want to erase the bill from the server?";
+
+/* BillList.swift */
+"Edit Bill" = "Edit Bill";
+
+
+"Enter project id" = "Enter project id";
+
+
+"Enter project password" = "Enter project password";
+
+
+"Go to settings" = "Go to settings";
+
+
+"How much" = "How much";
+
+
+"If you want to scan your project as a QR code, you need to allow this app to use your camera. Otherwise please navigate back and fill out the information manually." = "If you want to scan your project as a QR code, you need to allow this app to use your camera. Otherwise please navigate back and fill out the information manually.";
+
+/* ----- Projects  ----- */
+"Known Projects" = "Known Projects";
+
+
+"Member name" = "Member name";
+
+/* BalanceList.swift */
+"Members" = "Members";
+
+
+"None" = "None";
+
+
+"Owers" = "Owers";
+
+/* BillDetail.swift */
+"Payer" = "Payer";
+
+/* ProjectQRPermissionCheckerView.swift */
+"Please allow us to use the camera in order to scan the Cospend QR code" = "Please allow us to use the camera in order to scan the Cospend QR code";
+
+
+"Project ID & Password" = "Project ID & Password";
+
+/* AddProjectQRView.swift */
+"Scan the Cospend QR code to proceed" = "Scan the Cospend QR code to proceed";
+
+/* AddProjectManualView.swift */
+"Server Address" = "Server Address";
+
+
+"Server Address (Optional)" = "Server Address (Optional)";
+
+
+"Submit" = "Submit";
+
+
+"Sure" = "Sure";
+
+
+"To get started sharing expenses with friends, you must add a project from Cospend or iHateMoney. \n\n Cospend projects can be added by QR Code or by manually filling out the information, for iHateMoney you need to fill out the information manually." = "To get started sharing expenses with friends, you must add a project from Cospend or iHateMoney. \n\n Cospend projects can be added by QR Code or by manually filling out the information, for iHateMoney you need to fill out the information manually.";
+
+
+"To use iHateMoney, host an own instance or register at" = "To use iHateMoney, host an own instance or register at";
+
+
+"Type password here" = "Type password here";
+
+
+"URL wrong, please scan right barcode" = "URL wrong, please scan right barcode";
+
+
 "Unauthorized: Wrong project id/pw" = "Unauthorized: Wrong project id/pw";
+
+
+"Update Bill" = "Update Bill";
+
+/* OnboardingView.swift */
+"Welcome to PayForMe!" = "Welcome to PayForMe!";
+
+
+"What was paid" = "What was paid?";

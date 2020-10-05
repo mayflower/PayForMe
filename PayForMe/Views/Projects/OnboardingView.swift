@@ -16,7 +16,7 @@ struct OnboardingView: View {
         NavigationView {
             VStack(spacing: 32) {
                 Text("Welcome to PayForMe!").font(.largeTitle)
-                Text("To get started sharing expenses with friends, you must add a project from Cospend or iHateMoney. \n\n Cospend projects can be added by QR Code or by manually filling out the information, for iHateMoney you need to fill out the infromation manually.")
+                Text("To get started sharing expenses with friends, you must add a project from Cospend or iHateMoney. \n\n Cospend projects can be added by QR Code or by manually filling out the information, for iHateMoney you need to fill out the information manually.")
                 HStack(spacing: 50) {
                     NavigationLink(destination: ProjectQRPermissionCheckerView()) {
                         Image(systemName: "qrcode")
@@ -43,7 +43,7 @@ struct OnboardingView: View {
                     HStack(alignment: .top, spacing: 12) {
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Cospend is a NextCloud app")
-                            Button("Go to nextcloud") {
+                            Button("nextcloud.com") {
                                 if let url = URL(string: "https://nextcloud.com/") {
                                     if UIApplication.shared.canOpenURL(url) {
                                         UIApplication.shared.open(url)

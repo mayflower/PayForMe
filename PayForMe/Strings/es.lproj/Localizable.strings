@@ -1,33 +1,87 @@
+
+
+"Add Bill" = "Añadir una factura";
+
+
+"Add Project" = "Añadir el proyecto";
+
+
+"Add member" = "Añadir un membro";
+
+
+"Add project" = "Añadir un proyecto";
+
+
+"All" = "Todos";
+
+
+"Bills" = "Cuentas";
+
+/*  */
+"Cospend is a NextCloud app" = "";
+
+
+"Could not find server" = "Servidor no encontrado";
+
+
+"Create Bill" = "Crear la factura";
+
+
+"Delete" = "Eliminar";
+
+
+"Edit Bill" = "Editar la factura";
+
+
+"Enter project id" = "Entrar el ID del proyecto";
+
+
+"Enter project password" = "Entrar la contraseña del proyecto";
+
+
+"Finding Server" = "Encontrando el proyecto";
+
+
+"How much" = "¿Cuanto?";
+
+
+"Known Projects" = "Lista de proyectos";
+
+
+"Member name" = "Nombre";
+
+
+"Members" = "Membros";
+
+
+"None" = "Nadie";
+
+
+"Owers" = "Prestatarios";
+
+
+"Payer" = "Pagador";
+
+
+"Project ID & Password" = "ID del proyecto y contraseña";
+
 /* 
   Localizable.strings
   PayForMe
 
   Created by Max Tharr on 22.03.20.
   Copyright © 2020 Mayflower GmbH. All rights reserved.
-*/
+ */
 "Server Address" = "Dirreción del servidor";
-"Project ID & Password" = "ID del proyecto y contraseña";
-"Enter project id" = "Entrar el ID del proyecto";
-"Enter project password" = "Entrar la contraseña del proyecto";
-"Add project" = "Añadir un proyecto";
-"Finding Server" = "Encontrando el proyecto";
-"Bills" = "Cuentas";
-"Add Bill" = "Añadir una factura";
-"Payer" = "Pagador";
-"What was paid" = "¿Qué se pagó?";
-"How much" = "¿Cuanto?";
-"Owers" = "Prestatarios";
-"None" = "Nadie";
-"All" = "Todos";
-"Create Bill" = "Crear la factura";
-"Edit Bill" = "Editar la factura";
-"Update Bill" = "Actualizar la factura";
-"Delete" = "Eliminar";
-"Members" = "Membros";
-"Add member" = "Añadir un membro";
-"Member name" = "Nombre";
+
+
 "Submit" = "Seguir";
-"Known Projects" = "Lista de proyectos";
-"Add Project" = "Añadir el proyecto";
-"Could not find server" = "Servidor no encontrado";
+
+
 "Unauthorized: Wrong project id/pw" = "No autorizado: Proyecto o contraseña invorrecta";
+
+
+"Update Bill" = "Actualizar la factura";
+
+
+"What was paid" = "¿Qué se pagó?";

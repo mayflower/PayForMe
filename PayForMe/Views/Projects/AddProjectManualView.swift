@@ -28,7 +28,7 @@ struct AddProjectManualView: View {
                 .padding(EdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 8))
             Form {
                 Section(
-                    header: Text("Server Address" + (viewmodel.projectType == .iHateMoney ? " (Optional)" : ""))
+                    header: Text( (viewmodel.projectType == .iHateMoney ? "Server Address (Optional)" : "Server Address"))
                 ) {
                     TextFieldContainer(
                         viewmodel.projectType == .cospend

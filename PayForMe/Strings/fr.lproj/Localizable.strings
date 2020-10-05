@@ -1,33 +1,84 @@
+
+
+"Add Bill" = "Ajouter une facture";
+
+
+"Add Project" = "Ajouter le projet";
+
+
+"Add member" = "Ajouter un membre";
+
+
+"Add project" = "Ajouter un projet";
+
+
+"All" = "Tout le monde";
+
+
+"Bills" = "Récapitulatif";
+
+
+"Could not find server" = "Serveur introuvable";
+
+
+"Create Bill" = "Créer la facture";
+
+
+"Delete" = "Supprimer";
+
+
+"Edit Bill" = "Editer la facture";
+
+
+"Enter project id" = "Entrer le ID du projet";
+
+
+"Enter project password" = "Entrer le mot de passe du projet";
+
+
+"Finding Server" = "Trouver le serveur";
+
+
+"How much" = "Combien";
+
+
+"Known Projects" = "Liste des projets";
+
+
+"Member name" = "Nom";
+
+
+"Members" = "Membres";
+
+
+"None" = "Personne";
+
+
+"Owers" = "Emprunteur";
+
+
+"Payer" = "Prêteur";
+
+
+"Project ID & Password" = "ID du projet et mot de passe";
+
 /* 
   Localizable.strings
   PayForMe
 
   Created by Max Tharr on 22.03.20.
   Copyright © 2020 Mayflower GmbH. All rights reserved.
-*/
+ */
 "Server Address" = "Adresse du serveur";
-"Project ID & Password" = "ID du projet et mot de passe";
-"Enter project id" = "Entrer le ID du projet";
-"Enter project password" = "Entrer le mot de passe du projet";
-"Add project" = "Ajouter un projet";
-"Finding Server" = "Trouver le serveur";
-"Bills" = "Récapitulatif";
-"Add Bill" = "Ajouter une facture";
-"Payer" = "Prêteur";
-"What was paid" = "Qu'est-ce qui a été payé?";
-"How much" = "Combien";
-"Owers" = "Emprunteur";
-"None" = "Personne";
-"All" = "Tout le monde";
-"Create Bill" = "Créer la facture";
-"Edit Bill" = "Editer la facture";
-"Update Bill" = "Mettre à jour la facture";
-"Delete" = "Supprimer";
-"Members" = "Membres";
-"Add member" = "Ajouter un membre";
-"Member name" = "Nom";
+
+
 "Submit" = "Enregistrer";
-"Known Projects" = "Liste des projets";
-"Add Project" = "Ajouter le projet";
-"Could not find server" = "Serveur introuvable";
+
+
 "Unauthorized: Wrong project id/pw" = "Non autorisé: Mauvais projet ou mot de passe";
+
+
+"Update Bill" = "Mettre à jour la facture";
+
+
+"What was paid" = "Qu'est-ce qui a été payé?";

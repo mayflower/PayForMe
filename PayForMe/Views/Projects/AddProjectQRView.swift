@@ -12,8 +12,6 @@ import AVFoundation
 import SlickLoadingSpinner
 
 struct AddProjectQRView: View {
-    @State var text = "Scanne den QR Code von Cospend"
-    @State var mockCode = BarcodeData(value:"https://net.eneiluj.moneybuster.cospend/intranet.mayflower.de/test/test", type: .qr)
     @StateObject var viewmodel = AddProjectQRViewModel()
     
     @Environment(\.presentationMode) var presentationMode
@@ -65,8 +63,7 @@ struct AddProjectQRView: View {
     var qrCodeScanner: some View {
         CBScanner(
             supportBarcode: $scanningCode, //Set type of barcode you want to scan
-            scanInterval: .constant(5.0), //Event will trigger every 5 seconds,
-            mockBarCode: .constant(mockCode)
+            scanInterval: .constant(5.0) //Event will trigger every 5 seconds,
         ){ code in
             // If we find a QR code which is an url with at least 3 components, it can be a Cospend link
             guard let url = URL(string: code.value),

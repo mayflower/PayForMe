@@ -1,3 +1,67 @@
+
+
+"Add Bill" = "Добавить счёт";
+
+
+"Add Project" = "Проект добавить";
+
+
+"Add member" = "Добавить участника";
+
+
+"Add project" = "Добавить проект";
+
+
+"All" = "Все";
+
+
+"Bills" = "Счета";
+
+
+"Could not find server" = "Сервер не найден";
+
+
+"Create Bill" = "Создать счёт";
+
+
+"Delete" = "Удалить";
+
+
+"Edit Bill" = "Редактировать счёт";
+
+
+"Enter project id" = "Введите id проекта";
+
+
+"Enter project password" = "Введите пароль проекта";
+
+
+"Finding Server" = "Ищем сервер";
+
+
+"How much" = "Сколько";
+
+
+"Known Projects" = "Добавленные проекты";
+
+
+"Member name" = "Имя участника";
+
+
+"Members" = "Участники";
+
+
+"None" = "Никто";
+
+
+"Owers" = "За кого";
+
+
+"Payer" = "Кто платил";
+
+
+"Project ID & Password" = "Название проекта и пароль";
+
 /* 
   Localizable.strings
   PayForMe
@@ -5,30 +69,17 @@
   Created by Max Tharr on 22.03.20.
   Copyright © 2020 Mayflower GmbH. All rights reserved.
   Translated to Russian by Anton Karliner on 23.03.20
-*/
+ */
 "Server Address" = "Адрес сервера";
-"Project ID & Password" = "Название проекта и пароль";
-"Enter project id" = "Введите id проекта";
-"Enter project password" = "Введите пароль проекта";
-"Add project" = "Добавить проект";
-"Finding Server" = "Ищем сервер";
-"Bills" = "Счета";
-"Add Bill" = "Добавить счёт";
-"Payer" = "Кто платил";
-"What was paid" = "За что платил";
-"How much" = "Сколько";
-"Owers" = "За кого";
-"None" = "Никто";
-"All" = "Все";
-"Create Bill" = "Создать счёт";
-"Edit Bill" = "Редактировать счёт";
-"Update Bill" = "Обновить счёт";
-"Delete" = "Удалить";
-"Members" = "Участники";
-"Add member" = "Добавить участника";
-"Member name" = "Имя участника";
+
+
 "Submit" = "Подтвердить";
-"Known Projects" = "Добавленные проекты";
-"Add Project" = "Проект добавить";
-"Could not find server" = "Сервер не найден";
+
+
 "Unauthorized: Wrong project id/pw" = "Неавторизован: неправильный ID проекта/пароль";
+
+
+"Update Bill" = "Обновить счёт";
+
+
+"What was paid" = "За что платил";
