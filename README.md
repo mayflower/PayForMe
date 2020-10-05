@@ -10,8 +10,8 @@ Contributions of all kind are welcome, please get in touch with us!
 
 # Screenshots
 
-<img src="/screenshots/lightmode/en-US/iPhone%2011-FirstScreen_framed.png?raw=true" width="200"/> <img src="/screenshots/lightmode/en-US/iPhone%2011-SecondScreen_framed.png?raw=true" width="200"/> <img src="/screenshots/lightmode/en-US/iPhone%2011-ThirdsScreen_framed.png?raw=true" width="200"/> <img src="/screenshots/lightmode/en-US/iPhone%2011-Add%20Bill_framed.png?raw=true" width="200"/>
-<img src="/screenshots/darkmode/en-US/iPhone%2011-FirstScreen_framed.png?raw=true" width="200"/> <img src="/screenshots/darkmode/en-US/iPhone%2011-SecondScreen_framed.png?raw=true" width="200"/> <img src="/screenshots/darkmode/en-US/iPhone%2011-ThirdsScreen_framed.png?raw=true" width="200"/> <img src="/screenshots/darkmode/en-US/iPhone%2011-Add%20Bill_framed.png?raw=true" width="200"/>
+<img src="/screenshots/lightmode/en-US/iPhone%2011-Bill%20List_framed.png?raw=true" width="200"/> <img src="/screenshots/lightmode/en-US/iPhone%2011-Balance%20List_framed.png?raw=true" width="200"/> <img src="/screenshots/lightmode/en-US/iPhone%2011-Known%20Projects_framed.png?raw=true" width="200"/> <img src="/screenshots/lightmode/en-US/iPhone%2011-Add%20Bill_framed.png?raw=true" width="200"/>
+<img src="/screenshots/darkmode/en-US/iPhone%2011-Bill%20List_framed.png?raw=true" width="200"/> <img src="/screenshots/darkmode/en-US/iPhone%2011-Balance%20List_framed.png?raw=true" width="200"/> <img src="/screenshots/darkmode/en-US/iPhone%2011-Known%20Projects_framed.png?raw=true" width="200"/> <img src="/screenshots/darkmode/en-US/iPhone%2011-Add%20Bill_framed.png?raw=true" width="200"/>
 
 ## Features
 * Show listed bills
