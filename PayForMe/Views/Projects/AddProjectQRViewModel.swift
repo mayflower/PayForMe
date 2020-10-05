@@ -66,36 +66,35 @@ class AddProjectQRViewModel: ObservableObject {
             
     }
     
-    var foundCode: AnyPublisher<[String], Never> {
+    var foundCode: AnyPublisher<URL, Never> {
         $scannedCode
-            .compactMap { $0?.pathComponents }
+            .compactMap { $0 }
             .eraseToAnyPublisher()
     }
     
     var foundCodeSink: AnyCancellable {
         foundCode
-            .sink { components in
-                guard let url = URL(string: "https://" + components[1]) else { return }
-                
-                if components.count == 4 {
-                    let project = Project(name: components[2], password: components[3], backend: .cospend, url: url)
+            .sink { codedUrl in
+                let (optionalUrl, optionalName, optionalPassword) = codedUrl.decodeMoneyBusterString()
+                guard let url = optionalUrl, let name = optionalName else { return }
+                if let password = optionalPassword {
                     self.isTestingSubject.send(.connecting)
+                    let project = Project(name: name, password: password, backend: .cospend, url: url)
                     NetworkService.shared.testProject(project)
                         .asUIPublisher
                         .sink(receiveValue: {
-                        project, code in
-                        if code == 200 {
-                            ProjectManager.shared.addProject(project)
-                            self.isTestingSubject.send(.right)
-                        } else {
-                            self.isTestingSubject.send(.wrong)
-                        }
-                    }).store(in: &self.subscriptions)
-                }
-                if components.count == 3 {
+                            project, code in
+                            if code == 200 {
+                                ProjectManager.shared.addProject(project)
+                                self.isTestingSubject.send(.right)
+                            } else {
+                                self.isTestingSubject.send(.wrong)
+                            }
+                        }).store(in: &self.subscriptions)
+                } else {
                     withAnimation {
                         self.url = url
-                        self.name = components[2]
+                        self.name = name
                         self.askForPassword.toggle()
                     }
                 }

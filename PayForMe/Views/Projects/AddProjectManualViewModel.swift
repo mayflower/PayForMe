@@ -48,25 +48,57 @@ class AddProjectManualViewModel: ObservableObject {
         ProjectManager.shared.addProject(project)
     }
     
+    func pasteAddress(address: String) {
+        let trimmedAddress = address.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let url = URL(string: trimmedAddress) else {
+            return
+        }
+        // If it is a moneybuster URL
+        let (mUrl, mName, mPassword) = url.decodeMoneyBusterString()
+        if let url = mUrl, let name = mName {
+            serverAddress = url.absoluteString
+            projectName = name
+            if let password = mPassword {
+                projectPassword = password
+            }
+            return
+        }
+        // If it is another url
+        
+        let pathComponents = url.pathComponents
+        let pureUrl = url.deletingPathExtension().absoluteString
+        let trimmIndices = url.absoluteString.indices(of: "/")
+        if let cutIndex = trimmIndices[safe: 2] {
+            let trimmedUrl = pureUrl[...cutIndex]
+            serverAddress = String(trimmedUrl)
+        } else {
+            serverAddress = pureUrl
+        }
+        fillFieldsFromComponents(components: pathComponents)
+    }
+    
     var serverAddressFormatted: AnyPublisher<String, Never> {
         $serverAddress
             .map { $0.hasPrefix("https://") ? $0 : "https://\($0)" }
             .map { unformatted in
             if let index = unformatted.index(of: "/index.php") {
                 if let url = URL(string: unformatted) {
-                    let components = url.pathComponents
-                    if components.count == 6 {
-                        self.projectPassword = components[5]
-                        self.projectName = components[4]
-                    }
-                    if components.count == 5 {
-                        self.projectName = components[4]
-                    }
+                    self.fillFieldsFromComponents(components: url.pathComponents)
                 }
                 return String(unformatted[..<index])
             }
             return unformatted
         }.eraseToAnyPublisher()
+    }
+    
+    private func fillFieldsFromComponents(components: [String]) {
+        if components.count == 6 {
+            self.projectPassword = components[5]
+            self.projectName = components[4]
+        }
+        if components.count == 5 {
+            self.projectName = components[4]
+        }
     }
     
     private var validatedAddress: AnyPublisher<(ProjectBackend, String?), Never> {

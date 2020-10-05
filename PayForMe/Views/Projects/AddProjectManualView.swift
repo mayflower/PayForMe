@@ -43,7 +43,7 @@ struct AddProjectManualView: View {
                     
                     SecureField("Enter project password", text: self.$viewmodel.projectPassword)
                 }
-            }.scaledToFit()
+            }
             .id(viewmodel.projectType == .cospend ? "cospend" : "iHateMoney")
 
             .frame(width: UIScreen.main.bounds.width, height: 220, alignment: .center)
@@ -62,6 +62,12 @@ struct AddProjectManualView: View {
         .padding(.vertical, 50)
         .background(Color.PFMBackground)
         .edgesIgnoringSafeArea(.all)
+        .onAppear {
+            if let pasteString = UIPasteboard.general.string {
+                print(pasteString)
+                viewmodel.pasteAddress(address: pasteString)
+            }
+        }
     }
     
     func addButton() {

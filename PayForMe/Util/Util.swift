@@ -173,3 +173,11 @@ extension StringProtocol {
         return result
     }
 }
+
+extension URL {
+    func decodeMoneyBusterString() -> (URL?, String?, String?) {
+        guard absoluteString.hasPrefix("https://net.eneiluj.moneybuster.cospend/"),
+              pathComponents.count >= 3, pathComponents.count <= 4 else { return (nil,nil,nil)}
+        return (URL(string: "https://" + pathComponents[1]),pathComponents[2],pathComponents[safe: 3])
+    }
+}
