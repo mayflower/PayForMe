@@ -24,6 +24,7 @@ class PayForMeUITests: XCTestCase {
 
     func testScreenshots() {
         let app = XCUIApplication()
+        Snapshot.setLanguage(app)
         setupSnapshot(app)
         app.launchArguments += ["UI-Testing"]
         app.launch()
@@ -33,11 +34,19 @@ class PayForMeUITests: XCTestCase {
         snapshot("Balance List")
         tabBarsQuery.children(matching: .button).element(boundBy: 2).tap()
         snapshot("Known Projects")
-        app.navigationBars["Bekannte Gruppen"].buttons["plus"].tap()
-        snapshot("Add Project")
-        app.navigationBars["Projekt hinzufügen"].buttons["Bekannte Gruppen"].tap()
-        app.buttons["plus.circle"].tap()
+        tabBarsQuery.children(matching: .button).element(boundBy: 1).tap()
+        app.buttons["Add Bill"].tap()
         snapshot("Add Bill")
+                
+    }
+    
+    func testScreenshotsEmpty() {
+        let app = XCUIApplication()
+        Snapshot.setLanguage(app)
+        setupSnapshot(app)
+        app.launchArguments += ["UI-Testing","Onboarding"]
+        app.launch()
+        snapshot("Onboarding")
     }
 
     func testLaunchPerformance() {

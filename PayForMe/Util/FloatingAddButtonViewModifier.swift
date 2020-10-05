@@ -33,6 +33,8 @@ private struct FloatingAddButtonView: View {
                     .foregroundColor(Color.blue)
                     .shadow(color: Color(red: 0.53, green: 0.53, blue: 0.53), radius: 3, x: 2, y: 2)
             }
+            .accessibility(identifier: "Add Bill")
+            .accessibility(label: Text("Add Bill"))
     }
 }
 

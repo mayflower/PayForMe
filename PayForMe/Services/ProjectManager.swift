@@ -213,6 +213,10 @@ extension ProjectManager {
         }
     }
     
+    func prepareUITestOnboarding() {
+        projects.removeAll()
+    }
+    
     func prepareUITest() {
         projects.removeAll()
         addProject(Project(name: "demo", password: "demo", backend: .cospend, url: URL(string: "https://intranet.mayflower.de")!))

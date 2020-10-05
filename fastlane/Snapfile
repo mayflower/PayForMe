@@ -11,7 +11,7 @@ workspace("PayForMe.xcworkspace")
 
 scheme("PayForMeUITests")
 
-ios_version("13.3")
+ios_version("14.0")
 
 languages([
   "ru-RU",
@@ -23,7 +23,7 @@ languages([
 ])
 
 # The name of the scheme which contains the UI Tests
-scheme("PayForMeTests")
+scheme("PayForMeUITests")
 
 # Where should the resulting screenshots be stored?
 # output_directory("./screenshots")

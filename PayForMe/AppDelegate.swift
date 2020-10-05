@@ -17,9 +17,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    static var isUITestingOnboarding: Bool {
+        get {
+            return ProcessInfo.processInfo.arguments.contains("Onboarding")
+        }
+    }
+    
     private func setStateForUITesting() {
         if AppDelegate.isUITestingEnabled {
-            ProjectManager.shared.prepareUITest()
+            if AppDelegate.isUITestingOnboarding {
+                ProjectManager.shared.prepareUITestOnboarding()
+            } else {
+                ProjectManager.shared.prepareUITest()
+            }
         }
     }
 
