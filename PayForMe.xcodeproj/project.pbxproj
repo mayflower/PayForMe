@@ -126,6 +126,7 @@
 		6591C8E424052C240054BA24 /* CommunicationIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationIndicator.swift; sourceTree = "<group>"; };
 		6591C8E6240542250054BA24 /* LoadingDots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoadingDots.swift; path = PayForMe/Views/LoadingDots.swift; sourceTree = SOURCE_ROOT; };
 		65A65E3E2527529D00C86533 /* Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Combine.swift; sourceTree = "<group>"; };
+		65AA00A6252C881E00C5DEE8 /* PayForMe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PayForMe.entitlements; sourceTree = "<group>"; };
 		65B848F9243337DC0096F51C /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		65C9E2CD23E1B8F500814B37 /* BalanceList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceList.swift; sourceTree = "<group>"; };
 		65C9E2CF23E1B96B00814B37 /* BalanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewModel.swift; sourceTree = "<group>"; };
@@ -209,6 +210,7 @@
 		65662A0123D7320000303207 /* PayForMe */ = {
 			isa = PBXGroup;
 			children = (
+				65AA00A6252C881E00C5DEE8 /* PayForMe.entitlements */,
 				65A65E3D2527528300C86533 /* Util */,
 				65D225F0242802E400C3F1EC /* Strings */,
 				6533A02C23D88EF300FF822B /* Views */,
@@ -743,6 +745,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PayForMe/PayForMe.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 58;
 				DEVELOPMENT_ASSET_PATHS = "\"PayForMe/Preview Content\"";
@@ -766,6 +769,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PayForMe/PayForMe.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 58;
 				DEVELOPMENT_ASSET_PATHS = "\"PayForMe/Preview Content\"";
