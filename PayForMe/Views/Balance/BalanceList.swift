@@ -25,7 +25,7 @@ struct BalanceList: View {
             .navigationBarItems(trailing: !addingUser ? FancyButton(add: true, action: showAddUser, text: "") : nil)
             .navigationBarTitle("Members")
             .onAppear {
-                ProjectManager.shared.updateCurrentProject()
+                ProjectManager.shared.loadBillsAndMembers()
             }
         }.navigationViewStyle(StackNavigationViewStyle())
     }
@@ -67,7 +67,7 @@ struct BalanceList: View {
         ProjectManager.shared.addMember(memberName) {
             self.addingUser = false
             self.memberName = ""
-            ProjectManager.shared.updateCurrentProject()
+            ProjectManager.shared.loadBillsAndMembers()
         }
     }
     

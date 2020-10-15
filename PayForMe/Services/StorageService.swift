@@ -7,55 +7,117 @@
 //
 
 import Foundation
+import GRDB
 
 class StorageService {
     
     let encoder = JSONEncoder()
     let decoder = JSONDecoder()
     
-    private var filePath: URL {
-        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("Projects.json")
+    private let databasePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    private var legacyFilePath: URL {
+        return databasePath.appendingPathComponent("Projects.json")
     }
+
     
-    static let shared = StorageService()
+    private let dbQueue: DatabaseQueue
     
-    private init() {
+    init() {
+        do {
+            dbQueue = try DatabaseQueue(path: databasePath.appendingPathComponent("payforme.sqlite").path)
+            try dbQueue.write { db in
+                try db.create(table: "storedProject", ifNotExists: true) { table in
+                    table.autoIncrementedPrimaryKey("id")
+                    table.column("name")
+                    table.column("password")
+                    table.column("url")
+                    table.column("backend")
+                }
+            }
+        } catch let error {
+            print("Storage couldn't be initialized \(error.localizedDescription)")
+            fatalError()
+        }
+        #if targetEnvironment(simulator)
+        print("Database file at \(databasePath.appendingPathComponent("payforme.sqlite").path)")
+        #endif
+        testLegacy()
         print("Storage service initialized")
     }
     
-    func storeProjects(projects: [Project]) {
-        let storedProjects = projects.map { StoredProject(project: $0) }
-        
-        guard let encodedData = try? encoder.encode(storedProjects) else {
-            print("data not saved")
-            return
-        }
+    func saveProject(project: Project) {
+        let storedProject = StoredProject(project: project)
         do {
-            try encodedData.write(to: filePath)
-            print("data saved")
+            try dbQueue.write { db in
+                try storedProject.save(db)
+            }
         } catch let error {
-            print("data not saved")
-            print(error)
+            print("Couldn't store projects \(error.localizedDescription)")
         }
     }
     
-    func loadProjects() -> [Project]{
-        guard let data = try? Data(contentsOf: filePath) else {
-            print("Could not open file URL")
-            return [Project]()
+    func loadProjects() -> [Project] {
+        do {
+            return try dbQueue.read { db in
+                try StoredProject.fetchAll(db).map { $0.toProject() }
+            }
+        } catch let error {
+            print("Catched \(error.localizedDescription) while loading projects")
+            return []
         }
-        //Test legacyVersion
-        if let projects = try? decoder.decode([Project].self, from: data) {
+    }
+    
+    func removeProject(project: Project) {
+        let storedProject = StoredProject(project: project)
+        do {
+            try dbQueue.write { db in
+                try storedProject.delete(db)
+            }
+        } catch let error {
+            print("Couldn't remove projects \(error.localizedDescription)")
+        }
+    }
+    
+    private func testLegacy() {
+        guard let data = try? Data(contentsOf: legacyFilePath) else {
+            return
+        }
+        print("Found old file URL")
+        do {
+            let projects = try decoder.decode([OldProject].self, from: data)
+            storeProjects(projects: projects.map { $0.toProject() })
+            try FileManager.default.removeItem(at: legacyFilePath)
             print("data loaded legacy, will save as new")
-            storeProjects(projects: projects)
-            return projects
+        } catch let error {
+            print("\(error.localizedDescription)")
         }
-        //Try new version
-        if let projects = try? decoder.decode([StoredProject].self, from: data) {
-            print("data loaded v2")
-            return projects.map { $0.toProject() }
+    }
+    
+    private func storeProjects(projects: [StoredProject]) {
+        do {
+            try dbQueue.write { db in
+                try projects.forEach { try $0.save(db) }
+            }
+        } catch let error {
+            print("Couldn't store projects \(error.localizedDescription)")
         }
-        print("💣💣💣 Could not decode saved Data, will be overriden -> probably the model changed")
-        return [Project]()
+    }
+}
+
+extension StoredProject: FetchableRecord, PersistableRecord {
+}
+
+fileprivate class OldProject: Codable, Identifiable {
+    let name: String
+    let password: String
+    let url: URL
+    let id: UUID
+    let backend: ProjectBackend
+    
+    var members: [Int : Person]
+    var bills: [Bill]
+    
+    func toProject() -> StoredProject {
+        return StoredProject(name: name, password: password, url: url, backend: backend)
     }
 }

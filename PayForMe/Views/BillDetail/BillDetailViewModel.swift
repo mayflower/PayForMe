@@ -24,7 +24,7 @@ class BillDetailViewModel: ObservableObject {
     var selectedPayer = 1
     
     @Published
-    var currentProject: Project
+    var currentProject: Project = demoProject
     
     @Published
     var currentBill: Bill
@@ -33,16 +33,11 @@ class BillDetailViewModel: ObservableObject {
     
     init(currentBill: Bill) {
         self.currentBill = currentBill
-        self.currentProject = manager.currentProject
         self.povm = PotentialOwersViewModel(members: ProjectManager.shared.currentProject.members)
-        self.cancellable = currentProjectChanged
+        
+        manager.$currentProject.assign(to: &$currentProject)
         
         prefillData()
-    }
-    
-    var currentProjectChanged: AnyCancellable {
-        manager.$currentProject
-            .assign(to: \.currentProject, on: self)
     }
     
     var validatedInput: AnyPublisher<Bool, Never> {

@@ -19,38 +19,33 @@ class ProjectManager: ObservableObject {
     private(set) var projects = [Project]()
     
     @Published
-    var currentProject: Project = Project(name: "", password: "", backend: .iHateMoney)
+    var currentProject: Project = demoProject
+    
+    let storageService = StorageService()
     
     static let shared = ProjectManager()
+    
     private init() {
         print("init")
-        _ = loadData()
+        projects = loadProjects()
         
-        if  let id = defaults.string(forKey: "projectID"),
-            let project = projects.first(where: {
-                $0.id.uuidString == id
+        let id = defaults.integer(forKey: "projectID")
+        if let project = projects.first(where: {
+                $0.id == id
             }){
             self.currentProject = project
-            updateCurrentProject()
+            loadBillsAndMembers()
+        } else {
+            if !projects.isEmpty {
+                currentProject = projects[0]
+            }
         }
-    }
-    
-    deinit {
-        saveData()
     }
     
     // MARK: Data Persistence
     
-    private func loadData() {
-        self.projects = StorageService.shared.loadProjects()
-    }
-    
-    private func saveData() {
-        projects.removeAll {
-            $0 == self.currentProject
-        }
-        projects.append(self.currentProject)
-        StorageService.shared.storeProjects(projects: self.projects)
+    private func loadProjects() -> [Project] {
+        storageService.loadProjects()
     }
     
     // MARK: Server Communication
@@ -70,22 +65,20 @@ class ProjectManager: ObservableObject {
             }
     }
     
-    @discardableResult func updateCurrentProject() -> Cancellable {
-        cancellable?.cancel()
-        cancellable = nil
+    func loadBillsAndMembers() {
+        let project = currentProject
         
-        let a = NetworkService.shared.loadBillsPublisher(currentProject)
-        let b = NetworkService.shared.loadMembersPublisher(currentProject)
+        let billsPublisher = NetworkService.shared.loadBillsPublisher(project)
+        let membersPublisher = NetworkService.shared.loadMembersPublisher(project)
         
-        let newCancellable = Publishers.Zip(a, b)
+        Publishers.Zip(billsPublisher, membersPublisher)
             .map { bills, members in
-                return Project(name: self.currentProject.name, password: self.currentProject.password, backend: self.currentProject.backend, url: self.currentProject.url, members: members, bills: bills)
-        }
+                project.bills = bills
+                project.members = members
+                return project
+            }
         .receive(on: DispatchQueue.main)
-        .assign(to: \.currentProject, on: self)
-        
-        cancellable = newCancellable
-        return newCancellable
+        .assign(to: &$currentProject)
     }
     
     private func sendBillToServer(bill: Bill, update: Bool, completion: @escaping () -> Void) {
@@ -112,7 +105,6 @@ class ProjectManager: ObservableObject {
                     }
                     completion()
             }
-            
         }
     }
     
@@ -175,7 +167,6 @@ class ProjectManager: ObservableObject {
 }
 
 extension ProjectManager {
-    
     func createProject(_ project: Project, email: String, completion: @escaping () -> Void) {
         guard !projects.contains(project) else { print("project duplicate") ; return }
         let inceptedCompletion = {
@@ -187,28 +178,25 @@ extension ProjectManager {
     }
     
     func addProject(_ project: Project) {
-        guard !projects.contains(project) else { print("project not added") ; return }
+        storageService.saveProject(project: project)
+        projects = storageService.loadProjects()
         
-        if self.projects.isEmpty {
-            self.projects.append(project)
+        if projects.count == 1 {
             setCurrentProject(project)
-        } else {
-            self.projects.append(project)
         }
         
         print("project added")
-        saveData()
     }
     
     func deleteProject(_ project: Project) {
-        projects.removeAll {
-            $0 == project
-        }
+        storageService.removeProject(project: project)
+        projects = storageService.loadProjects()
+//        projects.removeAll {
+//            $0 == project
+//        }
         if currentProject == project {
             if let nextProject = projects.first {
                 setCurrentProject(nextProject)
-            } else {
-                self.currentProject.bills = []
             }
         }
     }
@@ -219,7 +207,7 @@ extension ProjectManager {
     
     func prepareUITest() {
         projects.removeAll()
-        addProject(Project(name: "demo", password: "demo", backend: .cospend, url: URL(string: "https://intranet.mayflower.de")!))
+        addProject(demoProject)
     }
     
     func saveBill(_ bill: Bill, completion: @escaping () -> Void) {
@@ -259,8 +247,8 @@ extension ProjectManager {
             return
         }
         self.currentProject = project
-        updateCurrentProject()
-        defaults.set(project.id.uuidString, forKey: "projectID")
+        loadBillsAndMembers()
+        defaults.set(project.id, forKey: "projectID")
     }
     
 }

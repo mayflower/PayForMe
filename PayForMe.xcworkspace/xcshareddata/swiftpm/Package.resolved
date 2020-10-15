@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "GRDB",
+        "repositoryURL": "https://github.com/groue/GRDB.swift.git",
+        "state": {
+          "branch": null,
+          "revision": "948e91126a70ae703e5fe600ca3183161009bc4b",
+          "version": "5.0.2"
+        }
+      },
+      {
         "package": "SlickLoadingSpinner",
         "repositoryURL": "https://github.com/Hustenbonbon/SlickLoadingSpinner.git",
         "state": {

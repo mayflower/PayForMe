@@ -42,8 +42,7 @@ struct BillList: View {
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .onAppear {
-            ProjectManager.shared.updateCurrentProject()
-        }
+            ProjectManager.shared.loadBillsAndMembers()        }
     }
     
     func deleteBill(at offsets: IndexSet) {
@@ -52,7 +51,7 @@ struct BillList: View {
                 return
             }
             ProjectManager.shared.deleteBill(bill, completion: {
-                ProjectManager.shared.updateCurrentProject()
+                ProjectManager.shared.loadBillsAndMembers()
             })
         }
     }
