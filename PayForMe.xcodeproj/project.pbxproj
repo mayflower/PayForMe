@@ -26,6 +26,7 @@
 		654754DA2528A32100A82EB6 /* SlickLoadingSpinner in Frameworks */ = {isa = PBXBuildFile; productRef = 654754D92528A32100A82EB6 /* SlickLoadingSpinner */; };
 		654754E42528B29F00A82EB6 /* AddProjectManuallyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654754E32528B29F00A82EB6 /* AddProjectManuallyTests.swift */; };
 		654754F22528BB7700A82EB6 /* ShareProjectQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654754F12528BB7600A82EB6 /* ShareProjectQRCode.swift */; };
+		655B8C312535DDD400F4B818 /* CoreStore in Frameworks */ = {isa = PBXBuildFile; productRef = 655B8C302535DDD400F4B818 /* CoreStore */; };
 		65662A0323D7320000303207 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A0223D7320000303207 /* AppDelegate.swift */; };
 		65662A0523D7320000303207 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A0423D7320000303207 /* SceneDelegate.swift */; };
 		65662A0723D7320000303207 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A0623D7320000303207 /* ContentView.swift */; };
@@ -148,6 +149,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				654754DA2528A32100A82EB6 /* SlickLoadingSpinner in Frameworks */,
+				655B8C312535DDD400F4B818 /* CoreStore in Frameworks */,
 				658FC555252727C1004A49AA /* CarBode in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -379,6 +381,7 @@
 			packageProductDependencies = (
 				658FC554252727C1004A49AA /* CarBode */,
 				654754D92528A32100A82EB6 /* SlickLoadingSpinner */,
+				655B8C302535DDD400F4B818 /* CoreStore */,
 			);
 			productName = iCospend;
 			productReference = 656629FF23D7320000303207 /* PayForMe.app */;
@@ -440,6 +443,7 @@
 			packageReferences = (
 				658FC553252727C1004A49AA /* XCRemoteSwiftPackageReference "CarBode-Barcode-Scanner-For-SwiftUI" */,
 				654754D82528A32100A82EB6 /* XCRemoteSwiftPackageReference "SlickLoadingSpinner" */,
+				655B8C2F2535DDD400F4B818 /* XCRemoteSwiftPackageReference "CoreStore" */,
 			);
 			productRefGroup = 65662A0023D7320000303207 /* Products */;
 			projectDirPath = "";
@@ -877,6 +881,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		655B8C2F2535DDD400F4B818 /* XCRemoteSwiftPackageReference "CoreStore" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/JohnEstropia/CoreStore.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.3.0;
+			};
+		};
 		658FC553252727C1004A49AA /* XCRemoteSwiftPackageReference "CarBode-Barcode-Scanner-For-SwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/heart/CarBode-Barcode-Scanner-For-SwiftUI";
@@ -892,6 +904,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 654754D82528A32100A82EB6 /* XCRemoteSwiftPackageReference "SlickLoadingSpinner" */;
 			productName = SlickLoadingSpinner;
+		};
+		655B8C302535DDD400F4B818 /* CoreStore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 655B8C2F2535DDD400F4B818 /* XCRemoteSwiftPackageReference "CoreStore" */;
+			productName = CoreStore;
 		};
 		658FC554252727C1004A49AA /* CarBode */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreStore
 
 class Project: Codable, Identifiable {
     let name: String
@@ -61,6 +62,36 @@ struct StoredProject: Codable, Identifiable {
     
     func toProject() -> Project {
         Project(name: name, password: password, backend: backend, url: url, id: id)
+    }
+}
+
+
+class StoreProject: CoreStoreObject {
+    
+    @Field.Stored("id")
+    var id: String = ""
+    
+    @Field.Coded("url", coder: FieldCoders.Json.self)
+    var url: URL = URL.init(string: "test")!
+    
+    @Field.Stored("name")
+    var name: String = ""
+    
+    @Field.Stored("password")
+    var password: String = ""
+    
+    @Field.Coded("backend", coder: FieldCoders.Json.self)
+    var backend: ProjectBackend = ProjectBackend.cospend
+    
+    func toProject() -> Project {
+        Project(name: name, password: password, backend: backend, url: url, id: UUID(uuidString: id)!)
+    }
+    
+    static func == (lhs: StoreProject, rhs: StoreProject) -> Bool {
+        lhs.backend == rhs.backend &&
+            lhs.name == rhs.name &&
+            lhs.password == rhs.password &&
+            lhs.url == rhs.url
     }
 }
 

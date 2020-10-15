@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "CoreStore",
+        "repositoryURL": "https://github.com/JohnEstropia/CoreStore.git",
+        "state": {
+          "branch": null,
+          "revision": "d6eae8c0912aafdcfdd6e97ccd39922b6a6b83e9",
+          "version": "7.3.0"
+        }
+      },
+      {
         "package": "SlickLoadingSpinner",
         "repositoryURL": "https://github.com/Hustenbonbon/SlickLoadingSpinner.git",
         "state": {
