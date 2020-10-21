@@ -26,6 +26,12 @@ struct AddProjectManualView: View {
                 Text("iHateMoney").tag(ProjectBackend.iHateMoney)
             }.pickerStyle(SegmentedPickerStyle())
                 .padding(EdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 8))
+            if viewmodel.projectType == .cospend {
+                Button("Paste Link") {
+                    pasteLink()
+                }
+                .padding(.top, 10)
+            }
             Form {
                 Section(
                     header: Text( (viewmodel.projectType == .iHateMoney ? "Server Address (Optional)" : "Server Address"))
@@ -45,7 +51,6 @@ struct AddProjectManualView: View {
                 }
             }
             .id(viewmodel.projectType == .cospend ? "cospend" : "iHateMoney")
-
             .frame(width: UIScreen.main.bounds.width, height: 220, alignment: .center)
             Text(viewmodel.errorText)
             SlickLoadingSpinner(connectionState: $viewmodel.validationProgress)
@@ -62,12 +67,6 @@ struct AddProjectManualView: View {
         .padding(.vertical, 50)
         .background(Color.PFMBackground)
         .edgesIgnoringSafeArea(.all)
-        .onAppear {
-            if let pasteString = UIPasteboard.general.string {
-                print(pasteString)
-                viewmodel.pasteAddress(address: pasteString)
-            }
-        }
     }
     
     func addButton() {
@@ -75,6 +74,12 @@ struct AddProjectManualView: View {
         self.presentationMode.wrappedValue.dismiss()
     }
     
+    private func pasteLink() {
+        if let pasteString = UIPasteboard.general.string {
+            print(pasteString)
+            viewmodel.pasteAddress(address: pasteString)
+        }
+    }
 }
 
 struct OnboardingView_Previews: PreviewProvider {

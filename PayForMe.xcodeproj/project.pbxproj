@@ -18,6 +18,7 @@
 		65005A0223DDFB1A00D1D599 /* WhoPaidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65005A0123DDFB1A00D1D599 /* WhoPaidView.swift */; };
 		65005A0423DE0C5C00D1D599 /* BillList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65005A0323DE0C5C00D1D599 /* BillList.swift */; };
 		650504A123FEA461000E5F9C /* PersonText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650504A023FEA461000E5F9C /* PersonText.swift */; };
+		6524D60225385E0800B2AA7B /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 6524D60125385E0800B2AA7B /* GRDB */; };
 		6533A02B23D888B100FF822B /* BillCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533A02A23D888B100FF822B /* BillCell.swift */; };
 		654754B82528736F00A82EB6 /* Views+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654754B72528736F00A82EB6 /* Views+Extensions.swift */; };
 		654754BC2528750A00A82EB6 /* FloatingAddButtonViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654754BB2528750A00A82EB6 /* FloatingAddButtonViewModifier.swift */; };
@@ -147,6 +148,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6524D60225385E0800B2AA7B /* GRDB in Frameworks */,
 				654754DA2528A32100A82EB6 /* SlickLoadingSpinner in Frameworks */,
 				658FC555252727C1004A49AA /* CarBode in Frameworks */,
 			);
@@ -379,6 +381,7 @@
 			packageProductDependencies = (
 				658FC554252727C1004A49AA /* CarBode */,
 				654754D92528A32100A82EB6 /* SlickLoadingSpinner */,
+				6524D60125385E0800B2AA7B /* GRDB */,
 			);
 			productName = iCospend;
 			productReference = 656629FF23D7320000303207 /* PayForMe.app */;
@@ -440,6 +443,7 @@
 			packageReferences = (
 				658FC553252727C1004A49AA /* XCRemoteSwiftPackageReference "CarBode-Barcode-Scanner-For-SwiftUI" */,
 				654754D82528A32100A82EB6 /* XCRemoteSwiftPackageReference "SlickLoadingSpinner" */,
+				6524D60025385E0800B2AA7B /* XCRemoteSwiftPackageReference "GRDB.swift" */,
 			);
 			productRefGroup = 65662A0023D7320000303207 /* Products */;
 			projectDirPath = "";
@@ -869,6 +873,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		6524D60025385E0800B2AA7B /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRDB.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.2;
+			};
+		};
 		654754D82528A32100A82EB6 /* XCRemoteSwiftPackageReference "SlickLoadingSpinner" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Hustenbonbon/SlickLoadingSpinner.git";
@@ -888,6 +900,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		6524D60125385E0800B2AA7B /* GRDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6524D60025385E0800B2AA7B /* XCRemoteSwiftPackageReference "GRDB.swift" */;
+			productName = GRDB;
+		};
 		654754D92528A32100A82EB6 /* SlickLoadingSpinner */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 654754D82528A32100A82EB6 /* XCRemoteSwiftPackageReference "SlickLoadingSpinner" */;
