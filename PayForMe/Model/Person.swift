@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GRDB
 
 struct Person: Hashable, Codable, Identifiable {
     
@@ -24,6 +25,11 @@ struct Person: Hashable, Codable, Identifiable {
         hasher.combine(id)
     }
 }
+
+extension Person: FetchableRecord, PersistableRecord {
+    
+}
+
 struct PersonColor: Codable {
     var r: Int
     var g: Int

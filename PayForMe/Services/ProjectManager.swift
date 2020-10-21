@@ -27,25 +27,19 @@ class ProjectManager: ObservableObject {
     
     private init() {
         print("init")
-        projects = loadProjects()
+        projects = storageService.loadProjects()
         
         let id = defaults.integer(forKey: "projectID")
         if let project = projects.first(where: {
                 $0.id == id
             }){
-            self.currentProject = project
+            currentProject = storageService.loadBillsAndMembers(for: project)
             loadBillsAndMembers()
         } else {
             if !projects.isEmpty {
                 currentProject = projects[0]
             }
         }
-    }
-    
-    // MARK: Data Persistence
-    
-    private func loadProjects() -> [Project] {
-        storageService.loadProjects()
     }
     
     // MARK: Server Communication
@@ -70,11 +64,11 @@ class ProjectManager: ObservableObject {
         
         let billsPublisher = NetworkService.shared.loadBillsPublisher(project)
         let membersPublisher = NetworkService.shared.loadMembersPublisher(project)
-        
         Publishers.Zip(billsPublisher, membersPublisher)
             .map { bills, members in
                 project.bills = bills
                 project.members = members
+                self.storageService.saveMembersAndBills(for: project)
                 return project
             }
         .receive(on: DispatchQueue.main)

@@ -33,6 +33,26 @@ class StorageService {
                     table.column("url")
                     table.column("backend")
                 }
+                try db.create(table: "bill", ifNotExists: true) { table in
+                    table.primaryKey(["id"])
+                    table.column("id")
+                    table.column("amount")
+                    table.column("what")
+                    table.column("date")
+                    table.column("payer_id")
+                    table.column("owers")
+                    table.column("repeat")
+                    table.column("lastChanged")
+                }
+                try db.create(table: "person", ifNotExists: true) { table in
+                    table.primaryKey(["id"])
+                    table.column("id")
+                    table.column("weight")
+                    table.column("name")
+                    table.column("activated")
+                    table.column("payer_id")
+                    table.column("color")
+                }
             }
         } catch let error {
             print("Storage couldn't be initialized \(error.localizedDescription)")
@@ -56,6 +76,11 @@ class StorageService {
         }
     }
     
+    func saveMembersAndBills(for project: Project) {
+        saveBillsForProject(project: project)
+        saveMembersForProject(project: project)
+    }
+
     func loadProjects() -> [Project] {
         do {
             return try dbQueue.read { db in
@@ -75,6 +100,62 @@ class StorageService {
             }
         } catch let error {
             print("Couldn't remove projects \(error.localizedDescription)")
+        }
+    }
+    
+    func loadBillsAndMembers(for currentProject: Project) -> Project {
+        do {
+            try dbQueue.read { db in
+                currentProject.bills = try Bill.fetchAll(db)
+                let keyValuePairMembers = try Person.fetchAll(db).map { ($0.id, $0) }
+                currentProject.members = Dictionary(uniqueKeysWithValues: keyValuePairMembers)
+            }
+        } catch let error {
+            print("Couldn't load bills and members \(error.localizedDescription)")
+        }
+        return currentProject
+    }
+    
+    func clearMembersAndBills() {
+        do {
+            try dbQueue.write { db in
+                try Bill.deleteAll(db)
+                try Person.deleteAll(db)
+            }
+        } catch let error {
+            print("Couldn't clear bills and members \(error.localizedDescription)")
+        }
+    }
+    
+    private func saveBillsForProject(project: Project) {
+        let bills = project.bills
+        guard !bills.isEmpty else {
+            return
+        }
+        do {
+            try dbQueue.write { db in
+                //Delete old bills
+                try Bill.deleteAll(db)
+                try bills.forEach { try $0.save(db) }
+            }
+        } catch let error {
+            print("Couldn't store bills for project \(error.localizedDescription)")
+        }
+    }
+    
+    private func saveMembersForProject(project: Project) {
+        let members = project.members
+        guard !members.isEmpty else {
+            return
+        }
+        do {
+            try dbQueue.write { db in
+                //Delete old bills
+                try Person.deleteAll(db)
+                try members.values.forEach { try $0.save(db) }
+            }
+        } catch let error {
+            print("Couldn't store bills for project \(error.localizedDescription)")
         }
     }
     
