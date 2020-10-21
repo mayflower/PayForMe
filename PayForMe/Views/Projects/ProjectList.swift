@@ -18,18 +18,43 @@ struct ProjectList: View {
     @State private var shareProject: Project?
     
     var body: some View {
-        VStack {
-            header
-            List {
-                ForEach(manager.projects) { project in
-                    listRow(project: project)
+        NavigationView {
+            VStack {
+                List {
+                    ForEach(manager.projects) { project in
+                        listRow(project: project)
+                    }
+                    .onDelete(perform: deleteProject)
                 }
-                .onDelete(perform: deleteProject)
+                .sheet(item: $shareProject) { project in
+                    ShareProjectQRCode(project: project)
+                }
             }
-            .sheet(item: $shareProject) { project in
-                ShareProjectQRCode(project: project)
-            }
+            .navigationBarTitle("Projects")
+            .navigationBarItems(trailing:
+                                    HStack {
+                                        Button(action: {
+                                            self.addProject = .manual
+                                        }) {
+                                            Image(systemName: "plus").fancyStyle()
+                                        }
+                                        Button(action: {
+                                            self.addProject = .qrCode
+                                        }) {
+                                            Image(systemName: "qrcode").fancyStyle()
+                                        }
+                                    }
+                                    .sheet(item: $addProject, content: { method -> AnyView in
+                                        switch method {
+                                            case .qrCode:
+                                                return destination.eraseToAnyView()
+                                            case .manual:
+                                                return AddProjectManualView().eraseToAnyView()
+                                        }
+                                    })
+            )
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
     
     private func listRow(project: Project) -> some View {
@@ -55,30 +80,6 @@ struct ProjectList: View {
                         }
                     })
                 }
-            }
-        })
-    }
-    
-    private var header: some View {
-        HStack(spacing: 20) {
-            Spacer()
-            Button(action: { addProject = .manual }) {
-                Image(systemName: "plus").fancyStyle()
-                
-            }
-            Button(action: { addProject = .qrCode }) {
-                Image(systemName: "qrcode").fancyStyle()
-                
-            }
-        }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 5)
-        .sheet(item: $addProject, content: { method -> AnyView in
-            switch method {
-                case .qrCode:
-                    return destination.eraseToAnyView()
-                case .manual:
-                    return AddProjectManualView().eraseToAnyView()
             }
         })
     }
@@ -110,6 +111,7 @@ struct ServerList_Previews: PreviewProvider {
     static var previews: some View {
         ProjectManager.shared.addProject(previewProjects[0])
         ProjectManager.shared.addProject(previewProjects[1])
+        ProjectManager.shared.addProject(previewProjects[2])
         return ProjectList()
     }
 }
