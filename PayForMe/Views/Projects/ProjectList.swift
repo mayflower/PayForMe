@@ -37,12 +37,15 @@ struct ProjectList: View {
             self.manager.setCurrentProject(project)
         }, label: {
             HStack {
-                VStack {
+                VStack(alignment: .leading) {
                     Text(project.name)
                     Text(project.backend == .cospend ? "Cospend" : "iHateMoney").font(.caption).foregroundColor(Color.gray)
                 }
+                if self.manager.currentProject == project {
+                    Image(systemName: "checkmark").padding(.trailing)
+                }
+                Spacer()
                 if project.backend == .cospend {
-                    Spacer()
                     Button(action: {
                         self.shareProject = project
                     }, label: {
@@ -51,10 +54,6 @@ struct ProjectList: View {
                             Image(systemName: "qrcode")
                         }
                     })
-                }
-                Spacer()
-                if self.manager.currentProject == project {
-                    Image(systemName: "checkmark").padding(.trailing)
                 }
             }
         })
