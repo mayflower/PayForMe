@@ -105,7 +105,7 @@ class AddProjectManualViewModel: ObservableObject {
         return Publishers.CombineLatest($projectType, serverAddressFormatted)
             .map {
                 type, serverAddress in
-                if type == .iHateMoney && serverAddress == "" {
+                if type == .iHateMoney && serverAddress == "https://" {
                     return (type, NetworkService.iHateMoneyURLString)
                 } else {
                     return (type, serverAddress)
