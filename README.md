@@ -24,3 +24,15 @@ Contributions of all kind are welcome, please get in touch with us!
 * Clearing debt of single members
 * C̵r̵e̵a̵t̵i̵n̵g̵ ̵n̵e̵w̵ ̵p̵r̵o̵j̵e̵c̵t̵s̵ ̵o̵n̵ ̵i̵H̵a̵t̵e̵M̵o̵n̵e̵y̵
 * Adding new members to a project
+
+
+# How to contribute Localization
+
+If you want to localize PayForMe into your language you are very welcome! Here is a short guide how, if you localized another iOS app you should find it familiar.
+
+## MacOS way
+
+If you are using MacOS, there is an awesome helper app called [LocalizationEditor](https://github.com/igorkulman/iOSLocalizationEditor).
+
+To add a new localization, fork the project on github, download it, open it in XCode and then navigate to the Project/Info settings, and add a new localization file there. It is recommended, but not necessary to use LocalizationHelper then to easily translate all strings. Afterwards, commit and push you changes and open a pull request to the main repository.
+
