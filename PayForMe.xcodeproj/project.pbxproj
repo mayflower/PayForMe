@@ -134,6 +134,7 @@
 		65D225F42428038500C3F1EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		65D225F6242803BC00C3F1EC /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		65D225F7242803C800C3F1EC /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		65FE0E8E2544968B002B80CF /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -438,6 +439,7 @@
 				de,
 				ru,
 				fr,
+				es,
 			);
 			mainGroup = 656629F623D7320000303207;
 			packageReferences = (
@@ -580,6 +582,7 @@
 				65D225F6242803BC00C3F1EC /* de */,
 				65D225F7242803C800C3F1EC /* ru */,
 				65B848F9243337DC0096F51C /* fr */,
+				65FE0E8E2544968B002B80CF /* es */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -751,7 +754,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = PayForMe/PayForMe.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 58;
+				CURRENT_PROJECT_VERSION = 59;
 				DEVELOPMENT_ASSET_PATHS = "\"PayForMe/Preview Content\"";
 				DEVELOPMENT_TEAM = L79BTFY6FV;
 				ENABLE_PREVIEWS = YES;
@@ -775,7 +778,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = PayForMe/PayForMe.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 58;
+				CURRENT_PROJECT_VERSION = 59;
 				DEVELOPMENT_ASSET_PATHS = "\"PayForMe/Preview Content\"";
 				DEVELOPMENT_TEAM = L79BTFY6FV;
 				ENABLE_PREVIEWS = YES;
