@@ -74,6 +74,9 @@
 
 "Project ID & Password" = "Projekt ID & Passwort";
 
+/*  */
+"Projects" = "Gruppen";
+
 /* AddProjectQRView.swift */
 "Scan the Cospend QR code to proceed" = "Scanne den Cospend QR Code um fortzufahren";
 
