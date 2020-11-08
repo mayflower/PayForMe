@@ -174,10 +174,41 @@ extension StringProtocol {
     }
 }
 
+typealias ProjectData = (server: URL?, project: String?, passwd: String?)
+
 extension URL {
-    func decodeMoneyBusterString() -> (URL?, String?, String?) {
+    func decodeMoneyBusterString() -> ProjectData {
         guard absoluteString.hasPrefix("https://net.eneiluj.moneybuster.cospend/"),
               pathComponents.count >= 3, pathComponents.count <= 4 else { return (nil,nil,nil)}
         return (URL(string: "https://" + pathComponents[1]),pathComponents[2],pathComponents[safe: 3])
+    }
+}
+
+extension URL {
+    func decodeCospendString() -> ProjectData {
+        guard let host = host,
+              let scheme = scheme,
+              scheme.localizedCaseInsensitiveContains("cospend"),
+              pathComponents.count >= 2,
+              pathComponents.count <= 3 else {
+            return (nil,nil,nil)
+        }
+        return (URL(string: "https://\(host)"),
+                pathComponents[1],
+                pathComponents[safe: 2])
+    }
+}
+
+extension URL {
+    func decodeQRCode() -> ProjectData {
+        guard let scheme = scheme else { return (nil, nil, nil) }
+        return scheme.contains("cospend") ? decodeCospendString() : decodeMoneyBusterString()
+    }
+}
+
+// Why is URL an identifier but not identifiable?
+extension URL: Identifiable {
+    public var id: URL {
+        self
     }
 }

@@ -31,6 +31,11 @@ class AddProjectQRViewModel: ObservableObject {
         isTestingSubject.assign(to: &$isProject)
     }
     
+    convenience init(openedByURL: URL?) {
+        self.init()
+        scannedCode = openedByURL
+    }
+    
     var isTestingSubject =  PassthroughSubject<ProjectConnectState, Never>()
     
     var passwordCorrect: AnyPublisher<ProjectConnectState, Never> {
@@ -66,6 +71,10 @@ class AddProjectQRViewModel: ObservableObject {
             
     }
     
+    var urlString: String {
+        url?.absoluteString ?? "URL wrong, please scan right barcode"
+    }
+    
     var foundCode: AnyPublisher<URL, Never> {
         $scannedCode
             .compactMap { $0 }
@@ -75,9 +84,9 @@ class AddProjectQRViewModel: ObservableObject {
     var foundCodeSink: AnyCancellable {
         foundCode
             .sink { codedUrl in
-                let (optionalUrl, optionalName, optionalPassword) = codedUrl.decodeMoneyBusterString()
-                guard let url = optionalUrl, let name = optionalName else { return }
-                if let password = optionalPassword {
+                let projectData = codedUrl.decodeQRCode()
+                guard let url = projectData.server, let name = projectData.project else { return }
+                if let password = projectData.passwd {
                     self.isTestingSubject.send(.connecting)
                     let project = Project(name: name, password: password, backend: .cospend, url: url)
                     NetworkService.shared.testProject(project)
@@ -85,7 +94,9 @@ class AddProjectQRViewModel: ObservableObject {
                         .sink(receiveValue: {
                             project, code in
                             if code == 200 {
-                                ProjectManager.shared.addProject(project)
+                                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now().advanced(by: .seconds(1))) {
+                                    ProjectManager.shared.addProject(project)
+                                }
                                 self.isTestingSubject.send(.right)
                             } else {
                                 self.isTestingSubject.send(.wrong)

@@ -44,15 +44,7 @@ struct AddProjectQRView: View {
     }
     
     var passwordView: some View {
-        VStack(spacing:10) {
-            Text(viewmodel.url?.absoluteString ?? "URL wrong, please scan right barcode").font(.title)
-            Text(viewmodel.name).font(.title)
-            SecureField("Type password here", text: $viewmodel.passwordText)
-                .font(.title)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-            SlickLoadingSpinner(connectionState: $viewmodel.isProject)
-                .frame(width: 100, height: 100)
-        }.padding(40)
+        AddPasswordView(password: $viewmodel.passwordText, connectionState: $viewmodel.isProject, name: viewmodel.name, urlString: viewmodel.urlString)
     }
     
     var connectIndicator: some View {

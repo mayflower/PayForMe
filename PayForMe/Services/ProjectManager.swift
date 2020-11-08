@@ -25,9 +25,11 @@ class ProjectManager: ObservableObject {
     
     static let shared = ProjectManager()
     
+    @Published var openedByURL: URL?
+    
     private init() {
         print("init")
-        projects = loadProjects()
+        projects = storageService.loadProjects()
         
         let id = defaults.integer(forKey: "projectID")
         if let project = projects.first(where: {
@@ -42,10 +44,13 @@ class ProjectManager: ObservableObject {
         }
     }
     
-    // MARK: Data Persistence
-    
-    private func loadProjects() -> [Project] {
-        storageService.loadProjects()
+    func openedByURL(url: URL) {
+        let data = url.decodeCospendString()
+        guard let _ = data.server,
+              let _ = data.project else {
+            return
+        }
+        openedByURL = url
     }
     
     // MARK: Server Communication
@@ -184,7 +189,7 @@ extension ProjectManager {
         if projects.count == 1 {
             setCurrentProject(project)
         }
-        
+        openedByURL = nil
         print("project added")
     }
     
@@ -202,11 +207,11 @@ extension ProjectManager {
     }
     
     func prepareUITestOnboarding() {
-        projects.removeAll()
+        projects.forEach { deleteProject($0) }
     }
     
     func prepareUITest() {
-        projects.removeAll()
+        projects.forEach { deleteProject($0) }
         addProject(demoProject)
     }
     

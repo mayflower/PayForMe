@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct ContentView: View {
     
@@ -24,11 +25,14 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            if !manager.projects.isEmpty {
+             if !manager.projects.isEmpty {
                 tabBar
             } else {
                 OnboardingView()
             }
+        }
+        .sheet(item: $manager.openedByURL) { url in
+            AddFromURLView(viewmodel: AddProjectQRViewModel(openedByURL: url))
         }
     }
     
