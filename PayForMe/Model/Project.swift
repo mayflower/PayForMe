@@ -63,13 +63,13 @@ struct StoredProject: Codable {
 
 extension Project: Equatable {
     static func == (lhs: Project, rhs: Project) -> Bool {
-        return lhs.url == rhs.url && lhs.name == rhs.name && lhs.backend == rhs.backend
+        return lhs.url == rhs.url && lhs.name == rhs.name && lhs.backend == rhs.backend && lhs.password == rhs.password
     }
 }
 
 extension StoredProject: Equatable {
     static func == (lhs: StoredProject, rhs: StoredProject) -> Bool {
-        return lhs.url == rhs.url && lhs.name == rhs.name && lhs.backend == rhs.backend
+        return lhs.url == rhs.url && lhs.name == rhs.name && lhs.backend == rhs.backend && lhs.password == rhs.password
     }
 }
 
