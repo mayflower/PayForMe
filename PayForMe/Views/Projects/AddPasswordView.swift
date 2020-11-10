@@ -11,7 +11,7 @@ import SlickLoadingSpinner
 
 struct AddPasswordView: View {
     @Binding var password: String
-    @Binding var connectionState: SlickLoadingSpinner.State
+    let connectionState: LoadingState
     
     let name: String
     let urlString: String
@@ -23,7 +23,7 @@ struct AddPasswordView: View {
             SecureField("Type password here", text: $password)
                 .font(.title)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-            SlickLoadingSpinner(connectionState: $connectionState)
+            SlickLoadingSpinner(connectionState: connectionState)
                 .frame(width: 100, height: 100)
         }.padding(40)
     }
@@ -31,7 +31,7 @@ struct AddPasswordView: View {
 
 struct AddPasswordView_Previews: PreviewProvider {
     static var previews: some View {
-        AddPasswordView(password: .constant(""), connectionState: .constant(.connecting), name: "Test", urlString: "myserver.de")
+        AddPasswordView(password: .constant(""), connectionState: .connecting, name: "Test", urlString: "myserver.de")
             
     }
 }

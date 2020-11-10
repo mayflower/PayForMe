@@ -14,13 +14,13 @@ struct AddFromURLView: View {
     @ObservedObject var viewmodel: AddProjectQRViewModel
     var body: some View {
         viewmodel.askForPassword ?
-            AddPasswordView(password: $viewmodel.passwordText, connectionState: $viewmodel.isProject, name: viewmodel.name, urlString: viewmodel.urlString).eraseToAnyView()
+            AddPasswordView(password: $viewmodel.passwordText, connectionState: viewmodel.isProject, name: viewmodel.name, urlString: viewmodel.urlString).eraseToAnyView()
             : loadingView.eraseToAnyView()
     }
     
     var loadingView: some View {
         VStack {
-            SlickLoadingSpinner(connectionState: $viewmodel.isProject)
+            SlickLoadingSpinner(connectionState: viewmodel.isProject)
         }
         .padding(40)
     }

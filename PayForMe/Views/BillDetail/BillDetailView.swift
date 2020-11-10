@@ -9,6 +9,7 @@
 import SwiftUI
 import Foundation
 import Combine
+import SlickLoadingSpinner
 
 struct BillDetailView: View {
     
@@ -51,17 +52,15 @@ struct BillDetailView: View {
                 }
                 
             }
-            FancyLoadingButton(isLoading: $sendingInProgress, add: false, action: self.sendBillToServer, text: showModal ? "Create Bill" : "Update Bill")
+            FancyLoadingButton(isLoading: sendingInProgress, add: false, action: self.sendBillToServer, text: showModal ? "Create Bill" : "Update Bill")
                 .disabled(sendBillButtonDisabled)
                 .onReceive(self.viewModel.validatedInput) {
                     self.sendBillButtonDisabled = !$0
-            }
-        .padding()
-                .padding(.bottom,20)
+                }
+                .padding()
         }
         .navigationBarTitle(navBarTitle)
         .background(Color.PFMBackground)
-        .edgesIgnoringSafeArea(.bottom)
     }
     
     func sendBillToServer() {
@@ -71,7 +70,7 @@ struct BillDetailView: View {
         }
         sendingInProgress = .connecting
         ProjectManager.shared.saveBill(newBill, completion: {
-            self.sendingInProgress = .right
+            self.sendingInProgress = .success
             ProjectManager.shared.loadBillsAndMembers()
             self.showModal.toggle()
             DispatchQueue.main.async {

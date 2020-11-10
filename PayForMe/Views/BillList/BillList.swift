@@ -14,7 +14,7 @@ struct BillList: View {
     var viewModel: BillListViewModel
     
     @State
-    var deleteAlert = false
+    var deleteAlert: IndexSet?
     
     var body: some View {
         NavigationView {
@@ -30,14 +30,19 @@ struct BillList: View {
                 }
                 .onDelete(perform: {
                     offset in
-                    self.deleteAlert.toggle()
+                    self.deleteAlert = offset
                 })
             }
             .addFloatingAddButton()
             .id(viewModel.currentProject.bills)
             .navigationBarTitle("Bills")
-            .alert(isPresented: $deleteAlert) {
-                Alert(title: Text("Delete Bill"), message: Text("Do you really want to erase the bill from the server?"), primaryButton: .destructive(Text("Sure")), secondaryButton: .cancel())
+            .alert(item: $deleteAlert) { index in
+                Alert(title: Text("Delete Bill"),
+                      message: Text("Do you really want to erase the bill from the server?"),
+                      primaryButton: .destructive(Text("Sure")) {
+                        self.deleteBill(at: index)
+                      },
+                      secondaryButton: .cancel())
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
@@ -56,6 +61,12 @@ struct BillList: View {
         }
     }
     
+}
+
+extension IndexSet: Identifiable {
+    public var id: Int {
+        hashValue
+    }
 }
 
 struct BillList_Previews: PreviewProvider {

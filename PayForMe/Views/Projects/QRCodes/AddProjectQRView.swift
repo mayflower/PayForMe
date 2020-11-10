@@ -28,14 +28,14 @@ struct AddProjectQRView: View {
         }
         .onReceive(viewmodel.$isProject, perform: { status in
             switch status {
-                case .right:
+                case .success:
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now().advanced(by: .seconds(1)), execute: {
                         withAnimation {
                             presentationMode.wrappedValue.dismiss()
                         }
                     })
                     break
-                case .wrong:
+                case .failure:
                     scanningCode = [.qr]
                 default:
                     break
@@ -44,11 +44,11 @@ struct AddProjectQRView: View {
     }
     
     var passwordView: some View {
-        AddPasswordView(password: $viewmodel.passwordText, connectionState: $viewmodel.isProject, name: viewmodel.name, urlString: viewmodel.urlString)
+        AddPasswordView(password: $viewmodel.passwordText, connectionState: viewmodel.isProject, name: viewmodel.name, urlString: viewmodel.urlString)
     }
     
     var connectIndicator: some View {
-        viewmodel.isProject.image
+        SlickLoadingSpinner(connectionState: viewmodel.isProject)
             .frame(width: 100, height: 100, alignment: .center)
     }
     
@@ -75,7 +75,7 @@ struct AddProjectQRView: View {
                     .foregroundColor(.white)
                     .font(.headline)
             } else {
-                SlickLoadingSpinner(connectionState: $viewmodel.isProject)
+                SlickLoadingSpinner(connectionState: viewmodel.isProject)
                     .frame(width: 80, height: 80)
             }
         }

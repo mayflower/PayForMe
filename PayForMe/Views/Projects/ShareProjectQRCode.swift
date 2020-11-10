@@ -23,7 +23,7 @@ struct ShareProjectQRCode: View {
     
     var path: String {
         let server = project.url.relativeString.replacingOccurrences(of: "https://", with: "")
-        return "https://net.eneiluj.moneybuster.cospend/\(server)/\(project.name.lowercased())/\(project.password)"
+        return "cospend://\(server)/\(project.name.lowercased())/\(project.password)"
     }
 }
 

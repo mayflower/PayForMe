@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 import Combine
+import TimelaneCombine
+import SlickLoadingSpinner
 
 class AddProjectManualViewModel: ObservableObject {
     
@@ -32,8 +34,8 @@ class AddProjectManualViewModel: ObservableObject {
     private var lastProjectTestedSuccessfully: Project?
     
     init() {
-        validatedInput.map { _ in LoadingState.connecting }.assign(to: &$validationProgress)
-        validatedServer.map { $0 == 200 ? LoadingState.right : LoadingState.wrong }.assign(to: &$validationProgress)
+        validatedInput.map { _ in LoadingState.connecting }.lane("connecting").assign(to: &$validationProgress)
+        validatedServer.map { $0 == 200 ? LoadingState.success : LoadingState.failure }.lane("right/wrong").assign(to: &$validationProgress)
         errorTextPublisher.assign(to: &$errorText)
         serverCheckUnsupportedPorts.assign(to: &$errorText)
     }
@@ -56,8 +58,9 @@ class AddProjectManualViewModel: ObservableObject {
         guard let url = URL(string: trimmedAddress) else {
             return
         }
+        
         // If it is a moneybuster URL
-        let (mUrl, mName, mPassword) = url.decodeMoneyBusterString()
+        let (mUrl, mName, mPassword) = url.decodeQRCode()
         if let url = mUrl, let name = mName {
             serverAddress = url.absoluteString
             projectName = name
@@ -115,7 +118,7 @@ class AddProjectManualViewModel: ObservableObject {
         }
     }
     
-    private var validatedAddress: AnyPublisher<(ProjectBackend, String?), Never> {
+    private var validatedAddress: AnyPublisher<(type: ProjectBackend, address:  String?), Never> {
         return Publishers.CombineLatest($projectType, serverAddressFormatted)
             .map {
                 type, serverAddress in
@@ -132,14 +135,16 @@ class AddProjectManualViewModel: ObservableObject {
         return Publishers.CombineLatest3(validatedAddress, $projectName, $projectPassword)
             .debounce(for: 1, scheduler: DispatchQueue.main)
             .compactMap { server, name, password in
-                if let address = server.1, address.isValidURL && !name.isEmpty && !password.isEmpty {
+                if let address = server.address, address.isValidURL && !name.isEmpty && !password.isEmpty {
                     guard let url = URL(string: address) else { return nil }
                     return Project(name: name.lowercased(), password: password, backend: server.0, url: url)
                 } else {
                     return nil
                 }
             }
+            .lane("Input")
             .removeDuplicates()
+            .lane("InputUnduplicated")
             .eraseToAnyPublisher()
     }
     
@@ -152,13 +157,17 @@ class AddProjectManualViewModel: ObservableObject {
             self.lastProjectTestedSuccessfully = project
             return code
         }
+        .lane("Server")
         .removeDuplicates()
+        .lane("ServerUnDuplicated")
         .receive(on: RunLoop.main)
         .eraseToAnyPublisher()
     }
     
     private var errorTextPublisher: AnyPublisher<String, Never> {
-        validatedServer.map {
+        validatedServer
+            .lane("ErrorText")
+            .map {
             statusCode in
             switch statusCode {
                 case 200:

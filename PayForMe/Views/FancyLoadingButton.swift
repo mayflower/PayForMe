@@ -13,8 +13,7 @@ struct FancyLoadingButton: View {
     
     @Environment(\.isEnabled) private var isEnabled: Bool
     
-    @Binding
-    var isLoading: SlickLoadingSpinner.State
+    let isLoading: LoadingState
     
     var add: Bool
     
@@ -35,7 +34,7 @@ struct FancyLoadingButton: View {
                 .disabled(!isEnabled)
                 .eraseToAnyView()
             default:
-                return SlickLoadingSpinner(connectionState: $isLoading)
+                return SlickLoadingSpinner(connectionState: isLoading)
                     .frame(width: 50, height: 50)
                     .eraseToAnyView()
         }
@@ -44,6 +43,6 @@ struct FancyLoadingButton: View {
 
 struct FancyBotton_Previews: PreviewProvider {
     static var previews: some View {
-        FancyLoadingButton(isLoading: .constant(.connecting), add: false, action: ({ return }), text: "Add Project").environment(\.locale, .init(identifier: "de"))
+        FancyLoadingButton(isLoading: .connecting, add: false, action: ({ return }), text: "Add Project").environment(\.locale, .init(identifier: "de"))
     }
 }

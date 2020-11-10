@@ -52,14 +52,16 @@ struct AddProjectManualView: View {
             }
             .id(viewmodel.projectType == .cospend ? "cospend" : "iHateMoney")
             .frame(width: UIScreen.main.bounds.width, height: 220, alignment: .center)
-            Text(viewmodel.errorText)
-            SlickLoadingSpinner(connectionState: $viewmodel.validationProgress)
-                .frame(width: 50, height: 50)
+            SlickLoadingSpinner(connectionState: viewmodel.validationProgress)
+                    .frame(width: 50, height: 50)
             FancyButton(
                         add: false,
                         action: addButton,
                         text: "Add Project")
-                .disabled(viewmodel.validationProgress != .right)
+                .disabled(viewmodel.validationProgress != .success)
+            if !viewmodel.errorText.isEmpty {
+                Text(viewmodel.errorText)
+            }
             Spacer()
             
         }

@@ -18,6 +18,8 @@
 		65005A0223DDFB1A00D1D599 /* WhoPaidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65005A0123DDFB1A00D1D599 /* WhoPaidView.swift */; };
 		65005A0423DE0C5C00D1D599 /* BillList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65005A0323DE0C5C00D1D599 /* BillList.swift */; };
 		650504A123FEA461000E5F9C /* PersonText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650504A023FEA461000E5F9C /* PersonText.swift */; };
+		651B0CAE2559A32E00D02CA9 /* TimelaneCombine in Frameworks */ = {isa = PBXBuildFile; productRef = 651B0CAD2559A32E00D02CA9 /* TimelaneCombine */; };
+		651B0CD02559C40900D02CA9 /* SlickLoadingSpinner in Frameworks */ = {isa = PBXBuildFile; productRef = 651B0CCF2559C40900D02CA9 /* SlickLoadingSpinner */; };
 		6523FC4C25580EEF00BCD843 /* UrlExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6523FC4B25580EEF00BCD843 /* UrlExtensionsTests.swift */; };
 		6523FC512558153600BCD843 /* AddPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6523FC502558153600BCD843 /* AddPasswordView.swift */; };
 		6524D60225385E0800B2AA7B /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 6524D60125385E0800B2AA7B /* GRDB */; };
@@ -26,7 +28,6 @@
 		654754BC2528750A00A82EB6 /* FloatingAddButtonViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654754BB2528750A00A82EB6 /* FloatingAddButtonViewModifier.swift */; };
 		654754C0252889B200A82EB6 /* ProjectQRPermissionCheckerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654754BF252889B200A82EB6 /* ProjectQRPermissionCheckerView.swift */; };
 		654754C8252899FF00A82EB6 /* FancyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654754C7252899FF00A82EB6 /* FancyButton.swift */; };
-		654754DA2528A32100A82EB6 /* SlickLoadingSpinner in Frameworks */ = {isa = PBXBuildFile; productRef = 654754D92528A32100A82EB6 /* SlickLoadingSpinner */; };
 		654754E42528B29F00A82EB6 /* AddProjectManuallyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654754E32528B29F00A82EB6 /* AddProjectManuallyTests.swift */; };
 		654754F22528BB7700A82EB6 /* ShareProjectQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654754F12528BB7600A82EB6 /* ShareProjectQRCode.swift */; };
 		65662A0323D7320000303207 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65662A0223D7320000303207 /* AppDelegate.swift */; };
@@ -156,8 +157,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				6524D60225385E0800B2AA7B /* GRDB in Frameworks */,
-				654754DA2528A32100A82EB6 /* SlickLoadingSpinner in Frameworks */,
 				658FC555252727C1004A49AA /* CarBode in Frameworks */,
+				651B0CD02559C40900D02CA9 /* SlickLoadingSpinner in Frameworks */,
+				651B0CAE2559A32E00D02CA9 /* TimelaneCombine in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,8 +408,9 @@
 			name = PayForMe;
 			packageProductDependencies = (
 				658FC554252727C1004A49AA /* CarBode */,
-				654754D92528A32100A82EB6 /* SlickLoadingSpinner */,
 				6524D60125385E0800B2AA7B /* GRDB */,
+				651B0CAD2559A32E00D02CA9 /* TimelaneCombine */,
+				651B0CCF2559C40900D02CA9 /* SlickLoadingSpinner */,
 			);
 			productName = iCospend;
 			productReference = 656629FF23D7320000303207 /* PayForMe.app */;
@@ -469,8 +472,9 @@
 			mainGroup = 656629F623D7320000303207;
 			packageReferences = (
 				658FC553252727C1004A49AA /* XCRemoteSwiftPackageReference "CarBode-Barcode-Scanner-For-SwiftUI" */,
-				654754D82528A32100A82EB6 /* XCRemoteSwiftPackageReference "SlickLoadingSpinner" */,
 				6524D60025385E0800B2AA7B /* XCRemoteSwiftPackageReference "GRDB.swift" */,
+				651B0CAC2559A32E00D02CA9 /* XCRemoteSwiftPackageReference "TimelaneCombine" */,
+				651B0CCE2559C40900D02CA9 /* XCRemoteSwiftPackageReference "SlickLoadingSpinner" */,
 			);
 			productRefGroup = 65662A0023D7320000303207 /* Products */;
 			projectDirPath = "";
@@ -782,7 +786,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = PayForMe/PayForMe.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 63;
+				CURRENT_PROJECT_VERSION = 65;
 				DEVELOPMENT_ASSET_PATHS = "\"PayForMe/Preview Content\"";
 				DEVELOPMENT_TEAM = L79BTFY6FV;
 				ENABLE_PREVIEWS = YES;
@@ -806,7 +810,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = PayForMe/PayForMe.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 63;
+				CURRENT_PROJECT_VERSION = 65;
 				DEVELOPMENT_ASSET_PATHS = "\"PayForMe/Preview Content\"";
 				DEVELOPMENT_TEAM = L79BTFY6FV;
 				ENABLE_PREVIEWS = YES;
@@ -904,20 +908,28 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		651B0CAC2559A32E00D02CA9 /* XCRemoteSwiftPackageReference "TimelaneCombine" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/icanzilb/TimelaneCombine";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		651B0CCE2559C40900D02CA9 /* XCRemoteSwiftPackageReference "SlickLoadingSpinner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Hustenbonbon/SlickLoadingSpinner.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.1;
+			};
+		};
 		6524D60025385E0800B2AA7B /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/groue/GRDB.swift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.0.2;
-			};
-		};
-		654754D82528A32100A82EB6 /* XCRemoteSwiftPackageReference "SlickLoadingSpinner" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Hustenbonbon/SlickLoadingSpinner.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
 			};
 		};
 		658FC553252727C1004A49AA /* XCRemoteSwiftPackageReference "CarBode-Barcode-Scanner-For-SwiftUI" */ = {
@@ -931,15 +943,20 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		651B0CAD2559A32E00D02CA9 /* TimelaneCombine */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 651B0CAC2559A32E00D02CA9 /* XCRemoteSwiftPackageReference "TimelaneCombine" */;
+			productName = TimelaneCombine;
+		};
+		651B0CCF2559C40900D02CA9 /* SlickLoadingSpinner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 651B0CCE2559C40900D02CA9 /* XCRemoteSwiftPackageReference "SlickLoadingSpinner" */;
+			productName = SlickLoadingSpinner;
+		};
 		6524D60125385E0800B2AA7B /* GRDB */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6524D60025385E0800B2AA7B /* XCRemoteSwiftPackageReference "GRDB.swift" */;
 			productName = GRDB;
-		};
-		654754D92528A32100A82EB6 /* SlickLoadingSpinner */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 654754D82528A32100A82EB6 /* XCRemoteSwiftPackageReference "SlickLoadingSpinner" */;
-			productName = SlickLoadingSpinner;
 		};
 		658FC554252727C1004A49AA /* CarBode */ = {
 			isa = XCSwiftPackageProductDependency;

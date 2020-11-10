@@ -20,7 +20,7 @@ class AddProjectQRViewModel: ObservableObject {
     @Published var url: URL?
     @Published var name = ""
     
-    typealias ProjectConnectState = SlickLoadingSpinner.State
+    typealias ProjectConnectState = LoadingState
     @Published var isProject = ProjectConnectState.notStarted
     
     private var subscriptions = Set<AnyCancellable>()
@@ -60,11 +60,11 @@ class AddProjectQRViewModel: ObservableObject {
                 if statusCode == 200 {
                     ProjectManager.shared.addProject(project)
                     return withAnimation {
-                        .right
+                        .success
                     }
                 }
                 return withAnimation {
-                    .wrong
+                    .failure
                 }
             }
             .eraseToAnyPublisher()
@@ -97,9 +97,9 @@ class AddProjectQRViewModel: ObservableObject {
                                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now().advanced(by: .seconds(1))) {
                                     ProjectManager.shared.addProject(project)
                                 }
-                                self.isTestingSubject.send(.right)
+                                self.isTestingSubject.send(.success)
                             } else {
-                                self.isTestingSubject.send(.wrong)
+                                self.isTestingSubject.send(.failure)
                             }
                         }).store(in: &self.subscriptions)
                 } else {
