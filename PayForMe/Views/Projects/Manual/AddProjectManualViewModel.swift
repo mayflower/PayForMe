@@ -35,6 +35,7 @@ class AddProjectManualViewModel: ObservableObject {
         validatedInput.map { _ in LoadingState.connecting }.assign(to: &$validationProgress)
         validatedServer.map { $0 == 200 ? LoadingState.right : LoadingState.wrong }.assign(to: &$validationProgress)
         errorTextPublisher.assign(to: &$errorText)
+        serverCheckUnsupportedPorts.assign(to: &$errorText)
     }
     
     func reset() {
@@ -45,7 +46,9 @@ class AddProjectManualViewModel: ObservableObject {
     
     func addProject() {
         guard let project = lastProjectTestedSuccessfully else { return }
-        ProjectManager.shared.addProject(project)
+        if !ProjectManager.shared.addProject(project) {
+            errorText = "Project already exists!"
+        }
     }
     
     func pasteAddress(address: String) {
@@ -89,6 +92,17 @@ class AddProjectManualViewModel: ObservableObject {
             }
             return unformatted
         }.eraseToAnyPublisher()
+    }
+    
+    var serverCheckUnsupportedPorts: AnyPublisher<String, Never> {
+        serverAddressFormatted
+            .map {
+                $0.contains("http://") ||
+                    String($0.suffix(from: $0.index($0.startIndex, offsetBy: 6))).contains(":") ?
+                    "PayForMe doesn't support http or custom ports" : ""
+            }
+            .removeDuplicates()
+            .eraseToAnyPublisher()
     }
     
     private func fillFieldsFromComponents(components: [String]) {
