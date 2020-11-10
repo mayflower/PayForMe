@@ -45,14 +45,19 @@ class StorageService {
         print("Storage service initialized")
     }
     
-    func saveProject(project: Project) {
+    func saveProject(project: Project) -> Bool {
         let storedProject = StoredProject(project: project)
         do {
-            try dbQueue.write { db in
-                try storedProject.save(db)
+            return try dbQueue.write { db -> Bool in
+                if try !StoredProject.fetchAll(db).contains(storedProject) {
+                    try storedProject.save(db)
+                    return true
+                }
+                return false
             }
         } catch let error {
             print("Couldn't store projects \(error.localizedDescription)")
+            return false
         }
     }
     

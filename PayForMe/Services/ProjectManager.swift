@@ -182,8 +182,10 @@ extension ProjectManager {
         self.createProjectOnServer(project, email: email, completion: inceptedCompletion)
     }
     
-    func addProject(_ project: Project) {
-        storageService.saveProject(project: project)
+    func addProject(_ project: Project) -> Bool {
+        guard storageService.saveProject(project: project) else {
+            return false
+        }
         projects = storageService.loadProjects()
         
         if projects.count == 1 {
@@ -191,6 +193,7 @@ extension ProjectManager {
         }
         openedByURL = nil
         print("project added")
+        return true
     }
     
     func deleteProject(_ project: Project) {
