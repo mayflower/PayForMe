@@ -59,8 +59,8 @@ struct BillDetailView: View {
                 }
                 .padding()
         }
-        .navigationBarTitle(navBarTitle)
         .background(Color.PFMBackground)
+        .navigationBarTitle(navBarTitle, displayMode: .inline)
     }
     
     func sendBillToServer() {
