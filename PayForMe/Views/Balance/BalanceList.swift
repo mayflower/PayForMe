@@ -81,7 +81,7 @@ struct BalanceList: View {
         let payer = balance.person
         let topic = "Settling balance for \(balance.person.name)"
         let amount = ower.amount.magnitude < balance.amount.magnitude ? ower.amount : balance.amount.magnitude
-        return Bill(id: 99, amount: amount, what: topic, date: Date(), payer_id: payer.id, owers: [ower.person], repeat: "n")
+        return Bill(id: -1, amount: amount, what: topic, date: Date(), payer_id: payer.id, owers: [ower.person], repeat: "n")
     }
 }
 

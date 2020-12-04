@@ -41,6 +41,11 @@ fastlane ios githubshots
 fastlane ios deliverToAppstore
 ```
 
+### ios upload
+```
+fastlane ios upload
+```
+
 
 ----
 

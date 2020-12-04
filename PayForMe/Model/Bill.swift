@@ -45,7 +45,7 @@ struct Bill: Codable, Identifiable, Hashable {
     }
     
     static func newBill() -> Bill {
-        Bill(id: 99, amount: 0, what: "", date: Date(), payer_id: 0, owers: [], repeat: "n")
+        Bill(id: -1, amount: 0, what: "", date: Date(), payer_id: 0, owers: [], repeat: "n")
     }
 }
 

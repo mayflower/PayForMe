@@ -3,18 +3,16 @@
 # A list of devices you want to take the screenshots from
 devices([
   "iPhone 8 Plus",
-  "iPhone 11",
-  "iPhone 11 Pro Max"
+  "iPhone 12 Pro Max"
 ])
 
 workspace("PayForMe.xcworkspace")
 
 scheme("PayForMeUITests")
 
-ios_version("14.0")
+ios_version("14.2")
 
 languages([
-  "ru-RU",
   "en-US",
   "de-DE",
   "fr-FR",
