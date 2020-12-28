@@ -21,11 +21,12 @@ struct AddProjectManualView: View {
     var body: some View {
         VStack {
             Text("Add project").font(.title)
-            Picker(selection: $viewmodel.projectType.animation(), label: Text("snens")) {
+            Picker(selection: $viewmodel.projectType, label: Text("snens")) {
                 Text("Cospend").tag(ProjectBackend.cospend)
                 Text("iHateMoney").tag(ProjectBackend.iHateMoney)
-            }.pickerStyle(SegmentedPickerStyle())
-                .padding(EdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 8))
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding(EdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 8))
             if viewmodel.projectType == .cospend {
                 Button("Paste Link") {
                     pasteLink()
@@ -53,7 +54,7 @@ struct AddProjectManualView: View {
             .id(viewmodel.projectType == .cospend ? "cospend" : "iHateMoney")
             .frame(width: UIScreen.main.bounds.width, height: 220, alignment: .center)
             SlickLoadingSpinner(connectionState: viewmodel.validationProgress)
-                    .frame(width: 50, height: 50)
+                .frame(width: 50, height: 50)
             FancyButton(
                         add: false,
                         action: addButton,
@@ -68,7 +69,6 @@ struct AddProjectManualView: View {
         .padding(.horizontal, 20)
         .padding(.vertical, 50)
         .background(Color.PFMBackground)
-        .edgesIgnoringSafeArea(.all)
     }
     
     func addButton() {
