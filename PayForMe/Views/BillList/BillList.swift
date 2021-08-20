@@ -18,34 +18,41 @@ struct BillList: View {
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(viewModel.currentProject.bills) { bill in
-                    NavigationLink(destination:
-                        BillDetailView(showModal: .constant(false),
-                                       viewModel: BillDetailViewModel(currentBill: bill),
-                                       navBarTitle: "Edit Bill",
-                                       sendButtonTitle: "Update Bill")) {
-                                        BillCell(viewModel: self.viewModel, bill: bill)
+            VStack(alignment: .leading) {
+                Text("Sort by").multilineTextAlignment(.leading).font(.caption)
+                    .padding(.horizontal)
+                Picker("Sort by", selection: $viewModel.sortBy) {
+                    Text("Expense date").tag(BillListViewModel.SortedBy.expenseDate)
+                    Text("Changed date").tag(BillListViewModel.SortedBy.changedDate)
+                }.pickerStyle(.segmented)
+                List {
+                    ForEach(viewModel.sortedBills) { bill in
+                        NavigationLink(destination:
+                                        BillDetailView(showModal: .constant(false),
+                                                       viewModel: BillDetailViewModel(currentBill: bill),
+                                                       navBarTitle: "Edit Bill",
+                                                       sendButtonTitle: "Update Bill")) {
+                            BillCell(viewModel: self.viewModel, bill: bill)
+                        }
                     }
+                    .onDelete(perform: {
+                        offset in
+                        self.deleteAlert = offset
+                    })
                 }
-                .onDelete(perform: {
-                    offset in
-                    self.deleteAlert = offset
-                })
-            }
-            .addFloatingAddButton()
-            .id(viewModel.currentProject.bills)
-            .navigationBarTitle("Bills")
-            .alert(item: $deleteAlert) { index in
-                Alert(title: Text("Delete Bill"),
-                      message: Text("Do you really want to erase the bill from the server?"),
-                      primaryButton: .destructive(Text("Sure")) {
+                .addFloatingAddButton()
+                .id(viewModel.currentProject.bills)
+                .navigationBarTitle("Bills")
+                .alert(item: $deleteAlert) { index in
+                    Alert(title: Text("Delete Bill"),
+                          message: Text("Do you really want to erase the bill from the server?"),
+                          primaryButton: .destructive(Text("Sure")) {
                         self.deleteBill(at: index)
-                      },
-                      secondaryButton: .cancel())
+                    },
+                          secondaryButton: .cancel())
+            }
             }
         }
-        .navigationViewStyle(StackNavigationViewStyle())
         .onAppear {
             ProjectManager.shared.loadBillsAndMembers()        }
     }
