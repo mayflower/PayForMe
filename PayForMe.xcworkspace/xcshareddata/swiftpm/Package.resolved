@@ -2,7 +2,7 @@
   "object": {
     "pins": [
       {
-        "package": "CarBode",
+        "package": "CarBode-Barcode-Scanner-For-SwiftUI",
         "repositoryURL": "https://github.com/heart/CarBode-Barcode-Scanner-For-SwiftUI",
         "state": {
           "branch": null,
@@ -11,7 +11,7 @@
         }
       },
       {
-        "package": "GRDB",
+        "package": "GRDB.swift",
         "repositoryURL": "https://github.com/groue/GRDB.swift.git",
         "state": {
           "branch": null,
