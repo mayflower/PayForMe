@@ -92,6 +92,8 @@
 		65005A0123DDFB1A00D1D599 /* WhoPaidView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoPaidView.swift; sourceTree = "<group>"; };
 		65005A0323DE0C5C00D1D599 /* BillList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillList.swift; sourceTree = "<group>"; };
 		650504A023FEA461000E5F9C /* PersonText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonText.swift; sourceTree = "<group>"; };
+		6514934B26CFC71000F00851 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		6514934C26CFC71000F00851 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6523FC4B25580EEF00BCD843 /* UrlExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlExtensionsTests.swift; sourceTree = "<group>"; };
 		6523FC502558153600BCD843 /* AddPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPasswordView.swift; sourceTree = "<group>"; };
 		6533A02A23D888B100FF822B /* BillCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillCell.swift; sourceTree = "<group>"; };
@@ -468,6 +470,7 @@
 				ru,
 				fr,
 				es,
+				cs,
 			);
 			mainGroup = 656629F623D7320000303207;
 			packageReferences = (
@@ -603,6 +606,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				65662A0E23D7320300303207 /* Base */,
+				6514934B26CFC71000F00851 /* cs */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -615,6 +619,7 @@
 				65D225F7242803C800C3F1EC /* ru */,
 				65B848F9243337DC0096F51C /* fr */,
 				65FE0E8E2544968B002B80CF /* es */,
+				6514934C26CFC71000F00851 /* cs */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
