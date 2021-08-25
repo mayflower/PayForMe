@@ -18,14 +18,11 @@ struct BillList: View {
     
     var body: some View {
         NavigationView {
-            VStack(alignment: .leading) {
-                Text("Sort by").multilineTextAlignment(.leading).font(.caption)
-                    .padding(.horizontal)
-                Picker("Sort by", selection: $viewModel.sortBy) {
+            List {
+                Section(header: Picker("Sort by", selection: $viewModel.sortBy) {
                     Text("Expense date").tag(BillListViewModel.SortedBy.expenseDate)
                     Text("Changed date").tag(BillListViewModel.SortedBy.changedDate)
-                }.pickerStyle(.segmented)
-                List {
+                }.pickerStyle(SegmentedPickerStyle())) {
                     ForEach(viewModel.sortedBills) { bill in
                         NavigationLink(destination:
                                         BillDetailView(showModal: .constant(false),
@@ -40,33 +37,34 @@ struct BillList: View {
                         self.deleteAlert = offset
                     })
                 }
-                .addFloatingAddButton()
-                .id(viewModel.currentProject.bills)
-                .navigationBarTitle("Bills")
-                .alert(item: $deleteAlert) { index in
-                    Alert(title: Text("Delete Bill"),
-                          message: Text("Do you really want to erase the bill from the server?"),
-                          primaryButton: .destructive(Text("Sure")) {
-                        self.deleteBill(at: index)
-                    },
-                          secondaryButton: .cancel())
             }
+            .addFloatingAddButton()
+            .id(viewModel.currentProject.bills)
+            .navigationBarTitle("Bills")
+            .alert(item: $deleteAlert) { index in
+                Alert(title: Text("Delete Bill"),
+                      message: Text("Do you really want to erase the bill from the server?"),
+                      primaryButton: .destructive(Text("Sure")) {
+                    self.deleteBill(at: index)
+                },
+                      secondaryButton: .cancel())
             }
         }
         .onAppear {
-            ProjectManager.shared.loadBillsAndMembers()        }
-    }
-    
-    func deleteBill(at offsets: IndexSet) {
-        for offset in offsets {
-            guard let bill = viewModel.currentProject.bills[safe: offset] else {
-                return
-            }
-            ProjectManager.shared.deleteBill(bill, completion: {
-                ProjectManager.shared.loadBillsAndMembers()
-            })
+            ProjectManager.shared.loadBillsAndMembers()
         }
     }
+    
+func deleteBill(at offsets: IndexSet) {
+    for offset in offsets {
+        guard let bill = viewModel.currentProject.bills[safe: offset] else {
+            return
+        }
+        ProjectManager.shared.deleteBill(bill, completion: {
+            ProjectManager.shared.loadBillsAndMembers()
+        })
+    }
+}
     
 }
 
