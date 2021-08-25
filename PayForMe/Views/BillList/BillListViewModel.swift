@@ -49,11 +49,11 @@ class BillListViewModel: ObservableObject {
             switch(self) {
             case .expenseDate:
                 return bills.sorted { a, b in
-                    a.date < b.date
+                    a.date > b.date
                 }
             case .changedDate:
                 return bills.sorted { a, b in
-                    a.lastchanged ?? 0 < b.lastchanged ?? 0
+                    a.lastchanged ?? 0 > b.lastchanged ?? 0
                 }
             }
         }
