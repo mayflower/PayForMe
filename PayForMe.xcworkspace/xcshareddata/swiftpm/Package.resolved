@@ -27,24 +27,6 @@
           "revision": "c1b125fabf245717df0a44655cd8a96b603ee55e",
           "version": "2.0.1"
         }
-      },
-      {
-        "package": "TimelaneCombine",
-        "repositoryURL": "https://github.com/icanzilb/TimelaneCombine",
-        "state": {
-          "branch": null,
-          "revision": "e6837bcbb19332866d5e37d501c05d68fbf985f2",
-          "version": "2.0.0"
-        }
-      },
-      {
-        "package": "TimelaneCore",
-        "repositoryURL": "https://github.com/icanzilb/TimelaneCore",
-        "state": {
-          "branch": null,
-          "revision": "1ce6992ee42d88590d38fe6dceae9b6e2a8f4919",
-          "version": "2.0.0"
-        }
       }
     ]
   },

@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import Combine
-import TimelaneCombine
 import SlickLoadingSpinner
 
 class AddProjectManualViewModel: ObservableObject {
@@ -34,8 +33,8 @@ class AddProjectManualViewModel: ObservableObject {
     private var lastProjectTestedSuccessfully: Project?
     
     init() {
-        validatedInput.map { _ in LoadingState.connecting }.lane("connecting").assign(to: &$validationProgress)
-        validatedServer.map { $0 == 200 ? LoadingState.success : LoadingState.failure }.lane("right/wrong").assign(to: &$validationProgress)
+        validatedInput.map { _ in LoadingState.connecting }.assign(to: &$validationProgress)
+        validatedServer.map { $0 == 200 ? LoadingState.success : LoadingState.failure }.assign(to: &$validationProgress)
         errorTextPublisher.assign(to: &$errorText)
         serverCheckUnsupportedPorts.assign(to: &$errorText)
     }
@@ -142,9 +141,7 @@ class AddProjectManualViewModel: ObservableObject {
                     return nil
                 }
             }
-            .lane("Input")
             .removeDuplicates()
-            .lane("InputUnduplicated")
             .eraseToAnyPublisher()
     }
     
@@ -157,16 +154,13 @@ class AddProjectManualViewModel: ObservableObject {
             self.lastProjectTestedSuccessfully = project
             return code
         }
-        .lane("Server")
         .removeDuplicates()
-        .lane("ServerUnDuplicated")
         .receive(on: RunLoop.main)
         .eraseToAnyPublisher()
     }
     
     private var errorTextPublisher: AnyPublisher<String, Never> {
         validatedServer
-            .lane("ErrorText")
             .map {
             statusCode in
             switch statusCode {

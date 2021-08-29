@@ -19,23 +19,10 @@ struct BillList: View {
     var body: some View {
         NavigationView {
             List {
-                Section(header: Picker("Sort by", selection: $viewModel.sortBy) {
-                    Text("Expense date").tag(BillListViewModel.SortedBy.expenseDate)
-                    Text("Changed date").tag(BillListViewModel.SortedBy.changedDate)
-                }.pickerStyle(SegmentedPickerStyle())) {
-                    ForEach(viewModel.sortedBills) { bill in
-                        NavigationLink(destination:
-                                        BillDetailView(showModal: .constant(false),
-                                                       viewModel: BillDetailViewModel(currentBill: bill),
-                                                       navBarTitle: "Edit Bill",
-                                                       sendButtonTitle: "Update Bill")) {
-                            BillCell(viewModel: self.viewModel, bill: bill)
-                        }
-                    }
-                    .onDelete(perform: {
-                        offset in
-                        self.deleteAlert = offset
-                    })
+                if #available(iOS 15, *) {
+                    iOS15ListContent
+                } else {
+                   iOS14ListContent
                 }
             }
             .addFloatingAddButton()
@@ -49,23 +36,70 @@ struct BillList: View {
                 },
                       secondaryButton: .cancel())
             }
+            .listStyle(InsetGroupedListStyle())
         }
         .onAppear {
             ProjectManager.shared.loadBillsAndMembers()
         }
     }
     
-func deleteBill(at offsets: IndexSet) {
-    for offset in offsets {
-        guard let bill = viewModel.currentProject.bills[safe: offset] else {
-            return
+    @ViewBuilder
+    var iOS15ListContent: some View {
+    Section(header: Picker("Sort by", selection: $viewModel.sortBy) {
+        Text("Expense date").tag(BillListViewModel.SortedBy.expenseDate)
+        Text("Changed date").tag(BillListViewModel.SortedBy.changedDate)
+    }.pickerStyle(SegmentedPickerStyle())) {
+        ForEach(viewModel.sortedBills) { bill in
+            NavigationLink(destination:
+                            BillDetailView(showModal: .constant(false),
+                                           viewModel: BillDetailViewModel(currentBill: bill),
+                                           navBarTitle: "Edit Bill",
+                                           sendButtonTitle: "Update Bill")) {
+                BillCell(viewModel: self.viewModel, bill: bill)
+            }
         }
-        ProjectManager.shared.deleteBill(bill, completion: {
-            ProjectManager.shared.loadBillsAndMembers()
+        .onDelete(perform: {
+            offset in
+            self.deleteAlert = offset
         })
     }
-}
+    }
     
+    @ViewBuilder
+    var iOS14ListContent: some View {
+        Section {
+            Picker("Sort by", selection: $viewModel.sortBy) {
+            Text("Expense date").tag(BillListViewModel.SortedBy.expenseDate)
+            Text("Changed date").tag(BillListViewModel.SortedBy.changedDate)
+        }.pickerStyle(SegmentedPickerStyle())
+        }
+        Section {
+            ForEach(viewModel.sortedBills) { bill in
+                NavigationLink(destination:
+                                BillDetailView(showModal: .constant(false),
+                                               viewModel: BillDetailViewModel(currentBill: bill),
+                                               navBarTitle: "Edit Bill",
+                                               sendButtonTitle: "Update Bill")) {
+                    BillCell(viewModel: self.viewModel, bill: bill)
+                }
+            }
+            .onDelete(perform: {
+                offset in
+                self.deleteAlert = offset
+            })
+        }
+    }
+    
+    func deleteBill(at offsets: IndexSet) {
+        for offset in offsets {
+            guard let bill = viewModel.sortedBills[safe: offset] else {
+                return
+            }
+            ProjectManager.shared.deleteBill(bill, completion: {
+                ProjectManager.shared.loadBillsAndMembers()
+            })
+        }
+    }
 }
 
 extension IndexSet: Identifiable {
