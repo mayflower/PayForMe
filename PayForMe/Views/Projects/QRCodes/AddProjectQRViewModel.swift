@@ -54,7 +54,7 @@ class AddProjectQRViewModel: ObservableObject {
                 return Project(name: name, password: password, backend: .cospend, url: url)
             }
             .flatMap { project in
-                NetworkService.shared.testProject(project)
+                NetworkService.shared.foundProjectStatusCode(project)
             }
             .map { project, statusCode in
                 if statusCode == 200 {
@@ -89,7 +89,7 @@ class AddProjectQRViewModel: ObservableObject {
                 if let password = projectData.passwd {
                     self.isTestingSubject.send(.connecting)
                     let project = Project(name: name, password: password, backend: .cospend, url: url)
-                    NetworkService.shared.testProject(project)
+                    NetworkService.shared.foundProjectStatusCode(project)
                         .asUIPublisher
                         .sink(receiveValue: {
                             project, code in

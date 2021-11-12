@@ -75,7 +75,7 @@ class NetworkService {
         .eraseToAnyPublisher()
     }
     
-    func testProject(_ project: Project) -> AnyPublisher<(Project, Int), Never> {
+    func foundProjectStatusCode(_ project: Project) -> AnyPublisher<(Project, Int), Never> {
         let request = buildURLRequest("members", params: [:], project: project)
         let requestPub = URLSession.shared.dataTaskPublisher(for: request)
         .tryMap { data, response -> Int in
@@ -93,7 +93,7 @@ class NetworkService {
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { data, response -> Bool in
                 guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode / 100 == 2 else {
-                    throw HTTPError.statuscode
+                    throw HTTPError.generalFailure
                 }
                 guard let responseString = String(data: data, encoding: .utf8) else {
                     return false
@@ -103,21 +103,6 @@ class NetworkService {
         }
         .replaceError(with: false)
         .eraseToAnyPublisher()
-    }
-    
-    func postBillPublisher(bill: Bill) -> AnyPublisher<Bool, Never> {
-        let request = buildURLRequest("bills", params: bill.paramsFor(currentProject.backend), project: currentProject, httpMethod: "POST")
-        return sendBillPublisher(request: request)
-    }
-    
-    func updateBillPublisher(bill: Bill) -> AnyPublisher<Bool, Never> {
-        let request = buildURLRequest("bills/\(bill.id)", params: bill.paramsFor(currentProject.backend), project: currentProject, httpMethod: "PUT")
-        return sendBillPublisher(request: request)
-    }
-    
-    func deleteBillPublisher(bill: Bill) -> AnyPublisher<Bool, Never> {
-        let request = buildURLRequest("bills/\(bill.id)", params: [:], project: currentProject, httpMethod: "DELETE")
-        return sendBillPublisher(request: request)
     }
     
     private func sendBillPublisher(request: URLRequest) -> AnyPublisher<Bool, Never> {
@@ -131,6 +116,31 @@ class NetworkService {
         }
         .replaceError(with: false)
         .eraseToAnyPublisher()
+    }
+    
+    func post(bill: Bill) async throws {
+        let request = buildURLRequest("bills", params: bill.paramsFor(currentProject.backend), project: currentProject, httpMethod: "POST")
+        try await sendWithOutResponseData(request: request)
+    }
+    
+    func update(bill: Bill) async throws {
+        let request = buildURLRequest("bills/\(bill.id)", params: bill.paramsFor(currentProject.backend), project: currentProject, httpMethod: "PUT")
+        try await sendWithOutResponseData(request: request)
+    }
+    
+    private func sendWithOutResponseData(request: URLRequest) async throws {
+        let (_, response) = try await URLSession.shared.data(for: request)
+        guard let response = response as? HTTPURLResponse else {
+            throw HTTPError.generalFailure
+              }
+        if response.statusCode / 100 == 2 {
+            throw HTTPError.statuscode(code: response.statusCode)
+        }
+    }
+    
+    func deleteBillPublisher(bill: Bill) -> AnyPublisher<Bool, Never> {
+        let request = buildURLRequest("bills/\(bill.id)", params: [:], project: currentProject, httpMethod: "DELETE")
+        return sendBillPublisher(request: request)
     }
     
     func createMemberPublisher(name: String) -> AnyPublisher<Bool, Never> {
@@ -218,12 +228,13 @@ class NetworkService {
         
         return request
     }
-    
-    enum HTTPError: LocalizedError {
-        case statuscode
-    }
-    
-    enum ServerError: LocalizedError {
-        case noIdReturned
-    }
+}
+
+enum HTTPError: LocalizedError {
+    case statuscode(code: Int)
+    case generalFailure
+}
+
+enum ServerError: LocalizedError {
+    case noIdReturned
 }

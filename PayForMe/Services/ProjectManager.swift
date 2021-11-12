@@ -86,32 +86,26 @@ class ProjectManager: ObservableObject {
         .assign(to: &$currentProject)
     }
     
-    private func sendBillToServer(bill: Bill, update: Bool, completion: @escaping () -> Void) {
-        cancellable?.cancel()
-        cancellable = nil
-        
-        if update {
-            cancellable = NetworkService.shared.updateBillPublisher(bill: bill)
-                .sink { success in
-                    if success {
-                        print("Bill id\(bill.id) updated")
-                    } else {
-                        print("error updating bill id\(bill.id)")
-                    }
-                    completion()
-            }
-        } else {
-            cancellable = NetworkService.shared.postBillPublisher(bill: bill)
-                .sink { success in
-                    if success {
-                        print("Bill posted")
-                    } else {
-                        print("Error posting bill")
-                    }
-                    completion()
-            }
+    private func updateBill(bill: Bill) async {
+        do {
+            try await NetworkService.shared.update(bill: bill)
+        } catch {
+            // TODO
+            print("Error posting bill")
+            
         }
     }
+    
+    private func createBill(bill: Bill) async {
+        do {
+            try await NetworkService.shared.post(bill: bill)
+        } catch {
+            // TODO
+            print("Error posting bill")
+        }
+    }
+    
+    
     
     private func deleteBillFromServer(bill: Bill, completion: @escaping () -> Void) {
         cancellable?.cancel()
@@ -218,13 +212,13 @@ extension ProjectManager {
         addProject(demoProject)
     }
     
-    func saveBill(_ bill: Bill, completion: @escaping () -> Void) {
-        if bill.id != -1, let _ = self.currentProject.bills.firstIndex(where: {
+    func saveBill(_ bill: Bill) async {
+        if bill.id != -1 && self.currentProject.bills.contains(where: {
             $0.id == bill.id
         }) {
-            sendBillToServer(bill: bill, update: true, completion: completion)
+            await createBill(bill: bill)
         } else {
-            sendBillToServer(bill: bill, update: false, completion: completion)
+            await updateBill(bill: bill)
         }
     }
     

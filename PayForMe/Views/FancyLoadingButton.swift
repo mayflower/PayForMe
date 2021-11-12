@@ -17,13 +17,16 @@ struct FancyLoadingButton: View {
     
     var add: Bool
     
-    var action: () -> Void
+    var action: () async -> Void
     var text: String
     
     var body: some View {
         switch isLoading {
-            case .notStarted:
-                return Button(action: action) {
+        case .notStarted:
+            return Button(action: {
+                Task {
+                    await action()
+                }}) {
                     if add {
                         Image(systemName: "plus")
                     } else {
@@ -33,10 +36,10 @@ struct FancyLoadingButton: View {
                 .fancyStyle(active: self.isEnabled)
                 .disabled(!isEnabled)
                 .eraseToAnyView()
-            default:
-                return SlickLoadingSpinner(connectionState: isLoading)
-                    .frame(width: 50, height: 50)
-                    .eraseToAnyView()
+        default:
+            return SlickLoadingSpinner(connectionState: isLoading)
+                .frame(width: 50, height: 50)
+                .eraseToAnyView()
         }
     }
 }

@@ -148,7 +148,7 @@ class AddProjectManualViewModel: ObservableObject {
     private var validatedServer: AnyPublisher<Int, Never> {
         validatedInput.flatMap {
             project in
-            return NetworkService.shared.testProject(project)
+            return NetworkService.shared.foundProjectStatusCode(project)
         }
         .map {project, code in
             self.lastProjectTestedSuccessfully = project
