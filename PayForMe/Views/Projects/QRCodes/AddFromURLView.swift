@@ -6,18 +6,17 @@
 //  Copyright © 2020 Mayflower GmbH. All rights reserved.
 //
 
-import SwiftUI
 import SlickLoadingSpinner
+import SwiftUI
 
 struct AddFromURLView: View {
-    
     @ObservedObject var viewmodel: AddProjectQRViewModel
     var body: some View {
         viewmodel.askForPassword ?
             AddPasswordView(password: $viewmodel.passwordText, connectionState: viewmodel.isProject, name: viewmodel.name, urlString: viewmodel.urlString).eraseToAnyView()
             : loadingView.eraseToAnyView()
     }
-    
+
     var loadingView: some View {
         VStack {
             SlickLoadingSpinner(connectionState: viewmodel.isProject)

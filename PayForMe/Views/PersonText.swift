@@ -9,10 +9,9 @@
 import SwiftUI
 
 struct PersonText: View {
-    
     @State
     var person: Person
-    
+
     var body: some View {
         Text(person.name)
             .padding(2)
@@ -21,12 +20,12 @@ struct PersonText: View {
             .cornerRadius(5)
             .lineLimit(1)
     }
-    
+
     func colorOfPerson(_ person: Person) -> Color {
         guard let color = person.color else {
-                return Color.standardColorById(id: person.id)
+            return Color.standardColorById(id: person.id)
         }
-        
+
         return Color(color)
     }
 }

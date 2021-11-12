@@ -6,26 +6,25 @@
 //  Copyright © 2020 Mayflower GmbH. All rights reserved.
 //
 
-import SwiftUI
 import Foundation
+import SwiftUI
 
 struct ContentView: View {
-    
     @ObservedObject
     var manager = ProjectManager.shared
-        
+
     @State
     var tabBarIndex = tabBarItems.BillList
-    
+
     @State
     var showModal = false
-    
+
     @State
     var hidePlusButton = false
-    
+
     var body: some View {
         ZStack {
-             if !manager.projects.isEmpty {
+            if !manager.projects.isEmpty {
                 tabBar
             } else {
                 OnboardingView()
@@ -35,23 +34,23 @@ struct ContentView: View {
             AddFromURLView(viewmodel: AddProjectQRViewModel(openedByURL: url))
         }
     }
-    
+
     var tabBar: some View {
-        TabView(selection: $tabBarIndex){
+        TabView(selection: $tabBarIndex) {
             BillList(viewModel: BillListViewModel())
-                .tabItem({
+                .tabItem {
                     Image(systemName: "rectangle.stack")
-                })
+                }
                 .tag(tabBarItems.BillList)
             BalanceList(viewModel: BalanceViewModel())
-                .tabItem({
+                .tabItem {
                     Image(systemName: "arrow.right.arrow.left")
-                })
+                }
                 .tag(tabBarItems.Balance)
             ProjectList()
-                .tabItem({
+                .tabItem {
                     Image(systemName: "gear")
-                })
+                }
                 .tag(tabBarItems.ServerList)
         }
     }
@@ -65,7 +64,7 @@ enum tabBarItems: Int {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        previewProjects.forEach{
+        previewProjects.forEach {
             ProjectManager.shared.addProject($0)
         }
         ProjectManager.shared.currentProject = previewProject

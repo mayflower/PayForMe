@@ -9,7 +9,6 @@
 import SwiftUI
 
 struct PotentialOwersView: View {
-    
     @ObservedObject
     var vm: PotentialOwersViewModel
 
@@ -23,7 +22,7 @@ struct PotentialOwersView: View {
             ForEach(vm.isOwing.indices, id: \.self) {
                 index in
                 Toggle(isOn: self.$vm.isOwing[index]) {
-                    Text(self.vm.members[index].name )
+                    Text(self.vm.members[index].name)
                 }
             }
         }

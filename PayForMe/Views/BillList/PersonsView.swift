@@ -11,10 +11,10 @@ import SwiftUI
 struct PersonsView: View {
     @Binding
     var bill: Bill
-    
+
     @Binding
-    var members: [Int:Person]
-    
+    var members: [Int: Person]
+
     var body: some View {
         HStack(spacing: 5) {
             payerText()
@@ -22,11 +22,11 @@ struct PersonsView: View {
             owersTexts()
         }.font(.headline)
     }
-    
+
     func payerText() -> some View {
         PersonText(person: payer)
     }
-    
+
     func owersTexts() -> some View {
         HStack(spacing: 1) {
             ForEach(bill.owers) {
@@ -38,20 +38,16 @@ struct PersonsView: View {
             }
         }.padding(0)
     }
-    
+
     func realPerson(_ ower: Person) -> Person {
         guard let person = members[ower.id] else {
             return ower
         }
         return person
     }
-    
-    
-    
+
     var payer: Person {
-        get {
-            members[bill.payer_id] ?? Person(id: 1, weight: 1, name: "Unknown", activated: true)
-        }
+        members[bill.payer_id] ?? Person(id: 1, weight: 1, name: "Unknown", activated: true)
     }
 }
 
