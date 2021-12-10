@@ -191,15 +191,23 @@ extension URL {
     func decodeCospendString() -> ProjectData {
         guard let host = host,
               let scheme = scheme,
-              scheme.localizedCaseInsensitiveContains("cospend"),
-              pathComponents.count >= 2,
-              pathComponents.count <= 3
+              scheme.localizedCaseInsensitiveContains("cospend")
         else {
             return (nil, nil, nil)
         }
-        return (URL(string: "https://\(host)"),
-                pathComponents[1],
-                pathComponents[safe: 2])
+        
+        var hostString = "https://\(host)"
+        
+        if pathComponents.count > 3 {
+            for i in 1..<pathComponents.count - 2 {
+                hostString += "/"
+                hostString += pathComponents[i]
+            }
+        }
+        
+        return (URL(string: hostString),
+                pathComponents[safe: pathComponents.count - 2],
+                pathComponents.last)
     }
 }
 
