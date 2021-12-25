@@ -37,14 +37,13 @@ class PayForMeUITests: XCTestCase {
         tabBarsQuery.children(matching: .button).element(boundBy: 1).tap()
         app.buttons["Add Bill"].tap()
         snapshot("Add Bill")
-                
     }
-    
+
     func testScreenshotsEmpty() {
         let app = XCUIApplication()
         Snapshot.setLanguage(app)
         setupSnapshot(app)
-        app.launchArguments += ["UI-Testing","Onboarding"]
+        app.launchArguments += ["UI-Testing", "Onboarding"]
         app.launch()
         snapshot("Onboarding")
     }

@@ -9,14 +9,13 @@
 import SwiftUI
 
 struct FancyButton: View {
-    
     @Environment(\.isEnabled) private var isEnabled: Bool
-    
+
     var add: Bool
-    
+
     var action: () -> Void
     var text: String
-    
+
     var body: some View {
         return Button(action: action) {
             if add {

@@ -6,9 +6,9 @@
 //  Copyright © 2020 Mayflower GmbH. All rights reserved.
 //
 
-import SwiftUI
 import AVFoundation
 import CarBode
+import SwiftUI
 
 struct ShareProjectQRCode: View {
     let project: Project
@@ -20,7 +20,7 @@ struct ShareProjectQRCode: View {
         }
         .padding()
     }
-    
+
     var path: String {
         let server = project.url.relativeString.replacingOccurrences(of: "https://", with: "")
         return "cospend://\(server)/\(project.name.lowercased())/\(project.password)"

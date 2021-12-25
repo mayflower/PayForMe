@@ -6,17 +6,16 @@
 //  Copyright © 2020 Mayflower GmbH. All rights reserved.
 //
 
-import SwiftUI
 import AVFoundation
+import SwiftUI
 
 struct ProjectList: View {
-    
     @ObservedObject
     var manager = ProjectManager.shared
-    
+
     @State private var addProject: AddingProjectMethod?
     @State private var shareProject: Project?
-    
+
     var body: some View {
         NavigationView {
             VStack {
@@ -32,31 +31,31 @@ struct ProjectList: View {
             }
             .navigationBarTitle("Projects")
             .navigationBarItems(trailing:
-                                    HStack {
-                                        Button(action: {
-                                            self.addProject = .manual
-                                        }) {
-                                            Image(systemName: "plus").fancyStyle()
-                                        }
-                                        Button(action: {
-                                            self.addProject = .qrCode
-                                        }) {
-                                            Image(systemName: "qrcode").fancyStyle()
-                                        }
-                                    }
-                                    .sheet(item: $addProject, content: { method -> AnyView in
-                                        switch method {
-                                            case .qrCode:
-                                                return destination.eraseToAnyView()
-                                            case .manual:
-                                                return AddProjectManualView().eraseToAnyView()
-                                        }
-                                    })
+                HStack {
+                    Button(action: {
+                        self.addProject = .manual
+                    }) {
+                        Image(systemName: "plus").fancyStyle()
+                    }
+                    Button(action: {
+                        self.addProject = .qrCode
+                    }) {
+                        Image(systemName: "qrcode").fancyStyle()
+                    }
+                }
+                .sheet(item: $addProject, content: { method -> AnyView in
+                    switch method {
+                    case .qrCode:
+                        return destination.eraseToAnyView()
+                    case .manual:
+                        return AddProjectManualView().eraseToAnyView()
+                    }
+                })
             )
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
-    
+
     private func listRow(project: Project) -> some View {
         Button(action: {
             self.manager.setCurrentProject(project)
@@ -83,25 +82,25 @@ struct ProjectList: View {
             }
         })
     }
-    
+
     private enum AddingProjectMethod: Int, CaseIterable, Identifiable {
         var id: Int {
             switch self {
-                case .qrCode: return 0
-                case .manual: return 1
+            case .qrCode: return 0
+            case .manual: return 1
             }
         }
-        
+
         case qrCode
         case manual
     }
-    
+
     func deleteProject(at offsets: IndexSet) {
         for index in offsets {
             manager.deleteProject(manager.projects[index])
         }
     }
-    
+
     var destination: some View {
         ProjectQRPermissionCheckerView()
     }

@@ -6,18 +6,18 @@
 //  Copyright © 2020 Mayflower GmbH. All rights reserved.
 //
 
-import SwiftUI
 import SlickLoadingSpinner
+import SwiftUI
 
 struct AddPasswordView: View {
     @Binding var password: String
     let connectionState: LoadingState
-    
+
     let name: String
     let urlString: String
-    
+
     var body: some View {
-        VStack(spacing:10) {
+        VStack(spacing: 10) {
             Text(urlString).font(.title)
             Text(name).font(.title)
             SecureField("Type password here", text: $password)
@@ -32,6 +32,5 @@ struct AddPasswordView: View {
 struct AddPasswordView_Previews: PreviewProvider {
     static var previews: some View {
         AddPasswordView(password: .constant(""), connectionState: .connecting, name: "Test", urlString: "myserver.de")
-            
     }
 }

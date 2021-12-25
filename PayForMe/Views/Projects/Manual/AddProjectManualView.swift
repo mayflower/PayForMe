@@ -6,18 +6,17 @@
 //  Copyright © 2020 Mayflower GmbH. All rights reserved.
 //
 
-import SwiftUI
 import Combine
 import SlickLoadingSpinner
+import SwiftUI
 
 struct AddProjectManualView: View {
-    
     @Environment(\.presentationMode)
     var presentationMode: Binding<PresentationMode>
-    
+
     @StateObject
     private var viewmodel = AddProjectManualViewModel()
-    
+
     var body: some View {
         VStack {
             Text("Add project").font(.title)
@@ -35,19 +34,20 @@ struct AddProjectManualView: View {
             }
             Form {
                 Section(
-                    header: Text( (viewmodel.projectType == .iHateMoney ? "Server Address (Optional)" : "Server Address"))
+                    header: Text(viewmodel.projectType == .iHateMoney ? "Server Address (Optional)" : "Server Address")
                 ) {
                     TextFieldContainer(
                         viewmodel.projectType == .cospend
                             ? "https://mynextcloud.org" : "https://ihatemoney.org",
-                        text: self.$viewmodel.serverAddress)
+                        text: self.$viewmodel.serverAddress
+                    )
                 }
 
                 Section(header: Text("Project ID & Password")) {
                     TextField("Enter project id",
                               text: self.$viewmodel.projectName)
                         .autocapitalization(.none)
-                    
+
                     SecureField("Enter project password", text: self.$viewmodel.projectPassword)
                 }
             }
@@ -56,26 +56,26 @@ struct AddProjectManualView: View {
             SlickLoadingSpinner(connectionState: viewmodel.validationProgress)
                 .frame(width: 50, height: 50)
             FancyButton(
-                        add: false,
-                        action: addButton,
-                        text: "Add Project")
-                .disabled(viewmodel.validationProgress != .success)
+                add: false,
+                action: addButton,
+                text: "Add Project"
+            )
+            .disabled(viewmodel.validationProgress != .success)
             if !viewmodel.errorText.isEmpty {
                 Text(viewmodel.errorText)
             }
             Spacer()
-            
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 50)
         .background(Color.PFMBackground)
     }
-    
+
     func addButton() {
         viewmodel.addProject()
-        self.presentationMode.wrappedValue.dismiss()
+        presentationMode.wrappedValue.dismiss()
     }
-    
+
     private func pasteLink() {
         if let pasteString = UIPasteboard.general.string {
             print(pasteString)

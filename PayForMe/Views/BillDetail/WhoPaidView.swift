@@ -11,12 +11,11 @@ import SwiftUI
 struct WhoPaidView: View {
     @State
     var members: [Person]
-    
+
     @Binding
     var selectedPayer: Int
-    
+
     var body: some View {
-        
         if members.count <= 4 {
             return AnyView(Picker(selection: $selectedPayer, label: Text("Payer")) {
                 ForEach(members) {
@@ -28,10 +27,10 @@ struct WhoPaidView: View {
             return AnyView(
                 Picker(selection: $selectedPayer, label: Text("Payer")) {
                     ForEach(members) {
-                    member in
+                        member in
                         PersonText(person: member)
-                }
-            }.pickerStyle(DefaultPickerStyle()))
+                    }
+                }.pickerStyle(DefaultPickerStyle()))
         }
     }
 }
