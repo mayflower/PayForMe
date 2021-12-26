@@ -9,23 +9,22 @@
 import SwiftUI
 
 struct AddMemberView: View {
-    
     @Binding
     var memberName: String
-    
-    var addMemberAction: () -> ()
-    var cancelButtonAction: () -> ()
-   
+
+    var addMemberAction: () -> Void
+    var cancelButtonAction: () -> Void
+
     var cancelButtonWidth: CGFloat = 10
-    
+
     var body: some View {
         VStack(alignment: .center) {
             HStack(alignment: .center) {
                 EmptyView()
                 Spacer()
                 Text("Add member")
-                .font(.headline)
-                .multilineTextAlignment(.center)
+                    .font(.headline)
+                    .multilineTextAlignment(.center)
                     .padding(.trailing, -cancelButtonWidth)
                 Spacer()
                 Button(action: cancelButtonAction, label: { Image(systemName: "xmark.circle.fill") })
@@ -33,13 +32,12 @@ struct AddMemberView: View {
             }
             TextField("Member name", text: $memberName)
                 .multilineTextAlignment(.center)
-            .textFieldStyle(RoundedBorderTextFieldStyle())
+                .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
             FancyButton(add: false, action: addMemberAction, text: "Submit")
         }
         .padding()
     }
-
 }
 
 struct AddMemberView_Previews: PreviewProvider {

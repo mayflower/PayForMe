@@ -6,36 +6,35 @@
 //  Copyright © 2020 Mayflower GmbH. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 class ProjectManager: ObservableObject {
-    
     private let defaults = UserDefaults.standard
-    
+
     private var cancellable: Cancellable?
-    
+
     @Published
     private(set) var projects = [Project]()
-    
+
     @Published
     var currentProject: Project = demoProject
-    
+
     let storageService = StorageService()
-    
+
     static let shared = ProjectManager()
-    
+
     @Published var openedByURL: URL?
-    
+
     private init() {
         print("init")
         projects = storageService.loadProjects()
-        
+
         let id = defaults.integer(forKey: "projectID")
         if let project = projects.first(where: {
-                $0.id == id
-            }){
-            self.currentProject = project
+            $0.id == id
+        }) {
+            currentProject = project
             loadBillsAndMembers()
         } else {
             if !projects.isEmpty {
@@ -43,22 +42,23 @@ class ProjectManager: ObservableObject {
             }
         }
     }
-    
+
     func openedByURL(url: URL) {
         let data = url.decodeCospendString()
         guard let _ = data.server,
-              let _ = data.project else {
+              let _ = data.project
+        else {
             return
         }
         openedByURL = url
     }
-    
+
     // MARK: Server Communication
-    
+
     private func createProjectOnServer(_ project: Project, email: String, completion: @escaping () -> Void) {
         cancellable?.cancel()
         cancellable = nil
-        
+
         cancellable = NetworkService.shared.createProjectPublisher(project, email: email)
             .sink { success in
                 if success {
@@ -66,30 +66,30 @@ class ProjectManager: ObservableObject {
                 } else {
                     print("Error creating project \(project.name)")
                 }
-                 completion()
+                completion()
             }
     }
-    
+
     func loadBillsAndMembers() {
         let project = currentProject
-        
+
         let billsPublisher = NetworkService.shared.loadBillsPublisher(project)
         let membersPublisher = NetworkService.shared.loadMembersPublisher(project)
-        
+
         Publishers.Zip(billsPublisher, membersPublisher)
             .map { bills, members in
                 project.bills = bills
                 project.members = members
                 return project
             }
-        .receive(on: DispatchQueue.main)
-        .assign(to: &$currentProject)
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$currentProject)
     }
-    
+
     private func sendBillToServer(bill: Bill, update: Bool, completion: @escaping () -> Void) {
         cancellable?.cancel()
         cancellable = nil
-        
+
         if update {
             cancellable = NetworkService.shared.updateBillPublisher(bill: bill)
                 .sink { success in
@@ -99,7 +99,7 @@ class ProjectManager: ObservableObject {
                         print("error updating bill id\(bill.id)")
                     }
                     completion()
-            }
+                }
         } else {
             cancellable = NetworkService.shared.postBillPublisher(bill: bill)
                 .sink { success in
@@ -109,14 +109,14 @@ class ProjectManager: ObservableObject {
                         print("Error posting bill")
                     }
                     completion()
-            }
+                }
         }
     }
-    
+
     private func deleteBillFromServer(bill: Bill, completion: @escaping () -> Void) {
         cancellable?.cancel()
         cancellable = nil
-        
+
         cancellable = NetworkService.shared.deleteBillPublisher(bill: bill)
             .sink { success in
                 if success {
@@ -125,13 +125,13 @@ class ProjectManager: ObservableObject {
                     print("Error deleting bill")
                 }
                 completion()
-        }
+            }
     }
-    
+
     private func sendMemberToServer(_ member: Person, update: Bool, completion: @escaping () -> Void) {
         cancellable?.cancel()
         cancellable = nil
-        
+
         if update {
             cancellable = NetworkService.shared.updateMemberPublisher(member: member)
                 .sink { success in
@@ -141,7 +141,7 @@ class ProjectManager: ObservableObject {
                         print("Error updating Member")
                     }
                     completion()
-            }
+                }
         } else {
             cancellable = NetworkService.shared.createMemberPublisher(name: member.name)
                 .sink { success in
@@ -151,14 +151,14 @@ class ProjectManager: ObservableObject {
                         print("Error creating member")
                     }
                     completion()
-            }
+                }
         }
     }
-    
+
     private func deleteMemberFromServer(_ member: Person, completion: @escaping () -> Void) {
         cancellable?.cancel()
         cancellable = nil
-        
+
         cancellable = NetworkService.shared.deleteMemberPublisher(member: member)
             .sink { success in
                 if success {
@@ -167,27 +167,27 @@ class ProjectManager: ObservableObject {
                     print("Error deleting member")
                 }
                 completion()
-        }
+            }
     }
 }
 
 extension ProjectManager {
     func createProject(_ project: Project, email: String, completion: @escaping () -> Void) {
-        guard !projects.contains(project) else { print("project duplicate") ; return }
+        guard !projects.contains(project) else { print("project duplicate"); return }
         let inceptedCompletion = {
             self.addProject(project)
             completion()
         }
-        
-        self.createProjectOnServer(project, email: email, completion: inceptedCompletion)
+
+        createProjectOnServer(project, email: email, completion: inceptedCompletion)
     }
-    
+
     func addProject(_ project: Project) -> Bool {
         guard storageService.saveProject(project: project) else {
             return false
         }
         projects = storageService.loadProjects()
-        
+
         if projects.count == 1 {
             setCurrentProject(project)
         }
@@ -195,7 +195,7 @@ extension ProjectManager {
         print("project added")
         return true
     }
-    
+
     func deleteProject(_ project: Project) {
         storageService.removeProject(project: project)
         projects = storageService.loadProjects()
@@ -208,18 +208,18 @@ extension ProjectManager {
             }
         }
     }
-    
+
     func prepareUITestOnboarding() {
         projects.forEach { deleteProject($0) }
     }
-    
+
     func prepareUITest() {
         projects.forEach { deleteProject($0) }
         addProject(demoProject)
     }
-    
+
     func saveBill(_ bill: Bill, completion: @escaping () -> Void) {
-        if bill.id != -1, let _ = self.currentProject.bills.firstIndex(where: {
+        if bill.id != -1, let _ = currentProject.bills.firstIndex(where: {
             $0.id == bill.id
         }) {
             sendBillToServer(bill: bill, update: true, completion: completion)
@@ -227,36 +227,35 @@ extension ProjectManager {
             sendBillToServer(bill: bill, update: false, completion: completion)
         }
     }
-    
+
     func deleteBill(_ bill: Bill, completion: @escaping () -> Void) {
-        self.currentProject.bills.removeAll {
+        currentProject.bills.removeAll {
             $0.id == bill.id
         }
-        self.deleteBillFromServer(bill: bill, completion: completion)
+        deleteBillFromServer(bill: bill, completion: completion)
     }
-    
+
     func addMember(_ name: String, completion: @escaping () -> Void) {
         let newMember = Person(id: -1, weight: -1, name: name, activated: true, color: nil)
-        self.sendMemberToServer(newMember, update: false, completion: completion)
+        sendMemberToServer(newMember, update: false, completion: completion)
     }
-    
+
     func updateMember(_ member: Person, completion: @escaping () -> Void) {
-        self.sendMemberToServer(member, update: true, completion: completion)
+        sendMemberToServer(member, update: true, completion: completion)
     }
-    
+
     func deleteMember(_ member: Person, completion: @escaping () -> Void) {
-        self.deleteMemberFromServer(member, completion: completion)
+        deleteMemberFromServer(member, completion: completion)
     }
-    
+
     func setCurrentProject(_ project: Project) {
-        guard let project = projects.first (where: {
+        guard let project = projects.first(where: {
             $0 == project
         }) else {
             return
         }
-        self.currentProject = project
+        currentProject = project
         loadBillsAndMembers()
         defaults.set(project.id, forKey: "projectID")
     }
-    
 }

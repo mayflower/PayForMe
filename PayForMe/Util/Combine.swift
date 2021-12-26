@@ -10,7 +10,7 @@ import Combine
 import Foundation
 
 extension Publisher where Failure == Never {
-    var asUIPublisher: AnyPublisher<Output,Never>  {
-        self.receive(on: RunLoop.main).eraseToAnyPublisher()
+    var asUIPublisher: AnyPublisher<Output, Never> {
+        receive(on: RunLoop.main).eraseToAnyPublisher()
     }
 }

@@ -9,9 +9,8 @@
 import SwiftUI
 
 struct OnboardingView: View {
-    
     @State private var moreInfo = false
-    
+
     var body: some View {
         NavigationView {
             VStack(spacing: 32) {
@@ -29,7 +28,8 @@ struct OnboardingView: View {
                             Image(systemName: "square.and.pencil")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                        })
+                        }
+                    )
                 }.padding(.horizontal, 30)
                 if moreInfo {
                     Button(action: {
@@ -38,7 +38,7 @@ struct OnboardingView: View {
                         }
                     }, label: {
                         Image(systemName: "chevron.compact.up")
-                            .resizable().aspectRatio(contentMode: .fit).frame(width:30)
+                            .resizable().aspectRatio(contentMode: .fit).frame(width: 30)
                     })
                     HStack(alignment: .top, spacing: 12) {
                         VStack(alignment: .leading, spacing: 5) {

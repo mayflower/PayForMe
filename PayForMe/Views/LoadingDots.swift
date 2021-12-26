@@ -12,57 +12,54 @@ struct LoadingDots: View {
     @State private var leftAnimates = false
     @State private var middleAnimates = false
     @State private var rightAnimates = false
-    
+
     var body: some View {
-        
-        
         // Middle
         HStack {
-            
             // Left
             Circle()
                 .stroke(lineWidth: 3)
                 .frame(width: 12, height: 12)
                 .scaleEffect(leftAnimates ? 1 : 0)
                 .animation(Animation.spring().repeatForever(autoreverses: false).speed(0.5))
-                .onAppear() {
+                .onAppear {
                     self.leftAnimates.toggle()
-            }
-            
+                }
+
             Circle()
                 .stroke(lineWidth: 3)
                 .frame(width: 12, height: 12)
                 .scaleEffect(middleAnimates ? 1 : 0)
                 .animation(Animation.spring().repeatForever(autoreverses: false).speed(0.5).delay(0.15))
-                .onAppear() {
+                .onAppear {
                     self.middleAnimates.toggle()
-            }
-            
+                }
+
             // Right
             Circle()
                 .stroke(lineWidth: 3)
                 .frame(width: 12, height: 12)
                 .scaleEffect(rightAnimates ? 1 : 0)
                 .animation(Animation.spring().repeatForever(autoreverses: false).speed(0.5).delay(0.25))
-                .onAppear() {
+                .onAppear {
                     self.rightAnimates.toggle()
-            }
+                }
             Circle()
                 .stroke(lineWidth: 3)
                 .frame(width: 12, height: 12)
                 .scaleEffect(rightAnimates ? 1 : 0)
                 .animation(Animation.spring().repeatForever(autoreverses: false).speed(0.5).delay(0.35))
-                .onAppear() {
+                .onAppear {
                     self.rightAnimates.toggle()
-            }
+                }
             Circle()
                 .stroke(lineWidth: 3)
                 .frame(width: 12, height: 12)
                 .scaleEffect(rightAnimates ? 1 : 0)
                 .animation(Animation.spring().repeatForever(autoreverses: false).speed(0.5).delay(0.45))
-                .onAppear() {
+                .onAppear {
                     self.rightAnimates.toggle()
-            }
+                }
         }
     }
 }

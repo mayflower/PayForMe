@@ -6,58 +6,56 @@
 //  Copyright © 2020 Mayflower GmbH. All rights reserved.
 //
 
-import Foundation
-import UIKit
 import Combine
+import Foundation
 import SlickLoadingSpinner
+import UIKit
 
 class AddProjectManualViewModel: ObservableObject {
-    
-    
     @Published
     var projectType = ProjectBackend.cospend
-    
+
     @Published
     var serverAddress = ""
-    
+
     @Published
     var projectName = ""
-    
+
     @Published
     var projectPassword = ""
-    
+
     @Published var validationProgress = LoadingState.notStarted
-    
+
     @Published var errorText = ""
-    
+
     private var lastProjectTestedSuccessfully: Project?
-    
+
     init() {
         validatedInput.map { _ in LoadingState.connecting }.assign(to: &$validationProgress)
         validatedServer.map { $0 == 200 ? LoadingState.success : LoadingState.failure }.assign(to: &$validationProgress)
         errorTextPublisher.assign(to: &$errorText)
         serverCheckUnsupportedPorts.assign(to: &$errorText)
     }
-    
+
     func reset() {
-        self.serverAddress = ""
-        self.projectName = ""
-        self.projectPassword = ""
+        serverAddress = ""
+        projectName = ""
+        projectPassword = ""
     }
-    
+
     func addProject() {
         guard let project = lastProjectTestedSuccessfully else { return }
         if !ProjectManager.shared.addProject(project) {
             errorText = "Project already exists!"
         }
     }
-    
+
     func pasteAddress(address: String) {
         let trimmedAddress = address.trimmingCharacters(in: .whitespacesAndNewlines)
         guard let url = URL(string: trimmedAddress) else {
             return
         }
-        
+
         // If it is a moneybuster URL
         let (mUrl, mName, mPassword) = url.decodeQRCode()
         if let url = mUrl, let name = mName {
@@ -69,7 +67,7 @@ class AddProjectManualViewModel: ObservableObject {
             return
         }
         // If it is another url
-        
+
         let pathComponents = url.pathComponents
         let pureUrl = url.deletingPathExtension().absoluteString
         let trimmIndices = url.absoluteString.indices(of: "/")
@@ -81,21 +79,21 @@ class AddProjectManualViewModel: ObservableObject {
         }
         fillFieldsFromComponents(components: pathComponents)
     }
-    
+
     var serverAddressFormatted: AnyPublisher<String, Never> {
         $serverAddress
             .map { $0.hasPrefix("https://") ? $0 : "https://\($0)" }
             .map { unformatted in
-            if let index = unformatted.index(of: "/index.php") {
-                if let url = URL(string: unformatted) {
-                    self.fillFieldsFromComponents(components: url.pathComponents)
+                if let index = unformatted.index(of: "/index.php") {
+                    if let url = URL(string: unformatted) {
+                        self.fillFieldsFromComponents(components: url.pathComponents)
+                    }
+                    return String(unformatted[..<index])
                 }
-                return String(unformatted[..<index])
-            }
-            return unformatted
-        }.eraseToAnyPublisher()
+                return unformatted
+            }.eraseToAnyPublisher()
     }
-    
+
     var serverCheckUnsupportedPorts: AnyPublisher<String, Never> {
         serverAddressFormatted
             .map {
@@ -106,22 +104,22 @@ class AddProjectManualViewModel: ObservableObject {
             .removeDuplicates()
             .eraseToAnyPublisher()
     }
-    
+
     private func fillFieldsFromComponents(components: [String]) {
         if components.count == 6 {
-            self.projectPassword = components[5]
-            self.projectName = components[4]
+            projectPassword = components[5]
+            projectName = components[4]
         }
         if components.count == 5 {
-            self.projectName = components[4]
+            projectName = components[4]
         }
     }
-    
-    private var validatedAddress: AnyPublisher<(type: ProjectBackend, address:  String?), Never> {
+
+    private var validatedAddress: AnyPublisher<(type: ProjectBackend, address: String?), Never> {
         return Publishers.CombineLatest($projectType, serverAddressFormatted)
             .map {
                 type, serverAddress in
-                if type == .iHateMoney && serverAddress == "https://" {
+                if type == .iHateMoney, serverAddress == "https://" {
                     return (type, NetworkService.iHateMoneyURLString)
                 } else {
                     return (type, serverAddress)
@@ -129,12 +127,12 @@ class AddProjectManualViewModel: ObservableObject {
             }
             .eraseToAnyPublisher()
     }
-    
+
     var validatedInput: AnyPublisher<Project, Never> {
         return Publishers.CombineLatest3(validatedAddress, $projectName, $projectPassword)
             .debounce(for: 1, scheduler: DispatchQueue.main)
             .compactMap { server, name, password in
-                if let address = server.address, address.isValidURL && !name.isEmpty && !password.isEmpty {
+                if let address = server.address, address.isValidURL, !name.isEmpty, !password.isEmpty {
                     guard let url = URL(string: address) else { return nil }
                     return Project(name: name.lowercased(), password: password, backend: server.0, url: url)
                 } else {
@@ -144,13 +142,13 @@ class AddProjectManualViewModel: ObservableObject {
             .removeDuplicates()
             .eraseToAnyPublisher()
     }
-    
+
     private var validatedServer: AnyPublisher<Int, Never> {
         validatedInput.flatMap {
             project in
-            return NetworkService.shared.testProject(project)
+            NetworkService.shared.testProject(project)
         }
-        .map {project, code in
+        .map { project, code in
             self.lastProjectTestedSuccessfully = project
             return code
         }
@@ -158,12 +156,12 @@ class AddProjectManualViewModel: ObservableObject {
         .receive(on: RunLoop.main)
         .eraseToAnyPublisher()
     }
-    
+
     private var errorTextPublisher: AnyPublisher<String, Never> {
         validatedServer
             .map {
-            statusCode in
-            switch statusCode {
+                statusCode in
+                switch statusCode {
                 case 200:
                     return ""
                 case -1:
@@ -172,9 +170,9 @@ class AddProjectManualViewModel: ObservableObject {
                     return "Unauthorized: Wrong project id/pw"
                 default:
                     return "Server error: \(statusCode)"
+                }
             }
-        }
-        .removeDuplicates()
-        .eraseToAnyPublisher()
+            .removeDuplicates()
+            .eraseToAnyPublisher()
     }
 }

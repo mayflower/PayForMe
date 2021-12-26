@@ -9,37 +9,36 @@
 import SwiftUI
 
 struct BalanceList: View {
-    
     @ObservedObject
     var viewModel: BalanceViewModel
-    
+
     @State
     var addingUser = false
-    
+
     @State
     var memberName = ""
-    
+
     var body: some View {
         NavigationView {
             mainView
-            .navigationBarItems(trailing: !addingUser ? FancyButton(add: true, action: showAddUser, text: "") : nil)
-            .navigationBarTitle("Members")
-            .onAppear {
-                ProjectManager.shared.loadBillsAndMembers()
-            }
+                .navigationBarItems(trailing: !addingUser ? FancyButton(add: true, action: showAddUser, text: "") : nil)
+                .navigationBarTitle("Members")
+                .onAppear {
+                    ProjectManager.shared.loadBillsAndMembers()
+                }
         }.navigationViewStyle(StackNavigationViewStyle())
     }
-    
+
     var mainView: some View {
         VStack(alignment: .center) {
             if addingUser {
                 AddMemberView(memberName: $memberName, addMemberAction: submitUser, cancelButtonAction: cancelAddUser)
             }
             list
-            .addFloatingAddButton()
+                .addFloatingAddButton()
         }
     }
-    
+
     var list: some View {
         List {
             ForEach(viewModel.balances.sorted(by: balanceSort(_:_:))) {
@@ -54,15 +53,15 @@ struct BalanceList: View {
             }
         }
     }
-    
+
     func balanceSort(_ a: Balance, _ b: Balance) -> Bool {
         (a.amount > b.amount) || ((a.amount == b.amount) && (a.person.name < b.person.name))
     }
-    
+
     func showAddUser() {
         addingUser = true
     }
-    
+
     func submitUser() {
         ProjectManager.shared.addMember(memberName) {
             self.addingUser = false
@@ -70,21 +69,20 @@ struct BalanceList: View {
             ProjectManager.shared.loadBillsAndMembers()
         }
     }
-    
+
     func cancelAddUser() {
-        self.memberName = ""
-        self.addingUser = false
+        memberName = ""
+        addingUser = false
     }
-    
+
     func createSettlingBill(balance: Balance) -> Bill {
-        let ower = viewModel.balances.sorted(by: {$0.amount > $1.amount})[0]
+        let ower = viewModel.balances.sorted(by: { $0.amount > $1.amount })[0]
         let payer = balance.person
         let topic = "Settling balance for \(balance.person.name)"
         let amount = ower.amount.magnitude < balance.amount.magnitude ? ower.amount : balance.amount.magnitude
         return Bill(id: -1, amount: amount, what: topic, date: Date(), payer_id: payer.id, owers: [ower.person], repeat: "n")
     }
 }
-
 
 struct BalanceList_Previews: PreviewProvider {
     static var previews: some View {
@@ -98,14 +96,14 @@ struct BalanceList_Previews: PreviewProvider {
 struct BalanceCell: View {
     @State
     var balance: Balance
-    
+
     var body: some View {
         HStack {
             PersonText(person: balance.person)
             Spacer()
-            Text(" \(String(format:"%.2f",balance.amount))")
+            Text(" \(String(format: "%.2f", balance.amount))")
                 .font(.headline)
-                .foregroundColor( balance.amount >= 0 ? Color.primary : Color.red)
+                .foregroundColor(balance.amount >= 0 ? Color.primary : Color.red)
         }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
     }
 }

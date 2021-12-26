@@ -6,15 +6,14 @@
 //  Copyright © 2020 Mayflower GmbH. All rights reserved.
 //
 
-import XCTest
 import Combine
 @testable import PayForMe
+import XCTest
 
 class AddProjectManuallyTests: XCTestCase {
-    
     var viewmodel = AddProjectManualViewModel()
     var subscriptions = Set<AnyCancellable>()
-    
+
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
@@ -32,7 +31,7 @@ class AddProjectManuallyTests: XCTestCase {
         }.store(in: &subscriptions)
         waitForExpectations(timeout: 1)
     }
-    
+
     func testHTTPSPrefix2() throws {
         viewmodel.serverAddress = "https://myserver.de"
         let exp = expectation(description: "No double https")
@@ -42,7 +41,7 @@ class AddProjectManuallyTests: XCTestCase {
         }.store(in: &subscriptions)
         waitForExpectations(timeout: 1)
     }
-    
+
     func testSuffix() throws {
         viewmodel.serverAddress = "https://myserver.de/index.php/apps/cospend/"
         let exp = expectation(description: "Remove trunk")
@@ -52,7 +51,7 @@ class AddProjectManuallyTests: XCTestCase {
         }.store(in: &subscriptions)
         waitForExpectations(timeout: 1)
     }
-    
+
     func testPreAndSuffix() throws {
         viewmodel.serverAddress = "myserver.de/index.php/apps/cospend/"
         let exp = expectation(description: "Remove trunk, add prefix")
@@ -62,7 +61,7 @@ class AddProjectManuallyTests: XCTestCase {
         }.store(in: &subscriptions)
         waitForExpectations(timeout: 1)
     }
-    
+
     func testAutofillName() throws {
         viewmodel.serverAddress = "https://myserver.de/index.php/apps/cospend/nameXY"
         let exp1 = expectation(description: "Remove trunk, add prefix")
@@ -82,7 +81,7 @@ class AddProjectManuallyTests: XCTestCase {
         }.store(in: &subscriptions)
         waitForExpectations(timeout: 1)
     }
-    
+
     func testAutofill() throws {
         viewmodel.serverAddress = "https://myserver.de/index.php/apps/cospend/nameXY/passwordXY"
         let exp1 = expectation(description: "Remove trunk, add prefix")
@@ -102,7 +101,7 @@ class AddProjectManuallyTests: XCTestCase {
         }.store(in: &subscriptions)
         waitForExpectations(timeout: 1)
     }
-    
+
     func testProjectCreation() throws {
         viewmodel.serverAddress = "https://myserver.de/index.php/apps/cospend/nameXY/passwordXY"
         viewmodel.projectType = .cospend
