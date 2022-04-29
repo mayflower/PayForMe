@@ -74,33 +74,29 @@ class NetworkService {
     }
 
     func testProject(_ project: Project) -> AnyPublisher<(Project, Int), Never> {
-        let request = buildURLRequest("members", params: [:], project: project)
+        let request = buildURLRequest("dummy", params: [:], project: project)
         let requestPub = URLSession.shared.dataTaskPublisher(for: request)
-            .tryMap { _, response -> Int in
+            .tryMap { data, response -> Int in
                 guard let httpResponse = response as? HTTPURLResponse else { print("Network Error"); return -1 }
                 return httpResponse.statusCode
             }
             .replaceError(with: -1)
         return Publishers.CombineLatest(Just(project), requestPub).eraseToAnyPublisher()
     }
-
-    func createProjectPublisher(_ project: Project, email: String) -> AnyPublisher<Bool, Never> {
-        let params = ["name": project.name, "id": project.name, "password": project.password, "contact_email": email]
-        let request = buildURLRequest("", params: params, project: project, httpMethod: "POST")
-
-        return URLSession.shared.dataTaskPublisher(for: request)
-            .tryMap { data, response -> Bool in
-                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode / 100 == 2 else {
-                    throw HTTPError.statuscode
-                }
-                guard let responseString = String(data: data, encoding: .utf8) else {
-                    return false
-                }
-
-                return responseString.contains(project.name)
-            }
-            .replaceError(with: false)
-            .eraseToAnyPublisher()
+    
+    func  getProjectName(_ project: Project) async throws -> Project {
+        let request = buildURLRequest("",params: [:], project: project)
+        print(request.url)
+        let (data,response) = try await URLSession.shared.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode / 100 == 2 else {
+            throw HTTPError.statuscode
+        }
+            let apiProject = try JSONDecoder().decode(APIProject.self, from: data)
+            print(apiProject)
+            print("🚀🚀🚀")
+            
+        return Project(name: apiProject.name, password: project.password, token: project.token, backend: project.backend, url: project.url)
+        
     }
 
     func postBillPublisher(bill: Bill) -> AnyPublisher<Bool, Never> {
@@ -157,21 +153,17 @@ class NetworkService {
             .eraseToAnyPublisher()
     }
 
-    private func baseURLFor(_ project: Project) -> URL {
-        switch project.backend {
-        case .cospend:
-            return project.url.appendingPathComponent("\(cospendStaticPath)/")
-        case .iHateMoney:
-            return project.url.appendingPathComponent("\(iHateMoneyStaticPath)")
-        }
-    }
-
     private func baseURLFor(_ project: Project, suffix: String) -> URL {
-        switch project.backend {
-        case .cospend:
-            return baseURLFor(project).appendingPathComponent("\(project.name.lowercased())/\(project.password)/\(suffix)")
-        case .iHateMoney:
-            return baseURLFor(project).appendingPathComponent("\(project.name.lowercased())/\(suffix)")
+        var url = project.url
+            .appendingPathComponent(project.backend.staticPath)
+            .appendingPathComponent(project.token.lowercased())
+        if project.backend == .cospend {
+            url = url.appendingPathComponent(project.password)
+        }
+        if suffix.isEmpty {
+            return url
+        } else {
+            return url.appendingPathComponent(suffix)
         }
     }
 
@@ -180,11 +172,7 @@ class NetworkService {
         let requestURL: URL
         var request: URLRequest
 
-        if !suffix.isEmpty {
-            baseURL = baseURLFor(project, suffix: suffix)
-        } else {
-            baseURL = baseURLFor(project)
-        }
+        baseURL = baseURLFor(project, suffix: suffix)
 
         if let cospendParams = params as? [String: String], project.backend == .cospend, !params.isEmpty {
             var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false)

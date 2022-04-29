@@ -45,7 +45,9 @@ class AddProjectManualViewModel: ObservableObject {
 
     func addProject() {
         guard let project = lastProjectTestedSuccessfully else { return }
-        if !ProjectManager.shared.addProject(project) {
+        do {
+            try ProjectManager.shared.addProject(project)
+        } catch {
             errorText = "Project already exists!"
         }
     }
@@ -131,10 +133,10 @@ class AddProjectManualViewModel: ObservableObject {
     var validatedInput: AnyPublisher<Project, Never> {
         return Publishers.CombineLatest3(validatedAddress, $projectName, $projectPassword)
             .debounce(for: 1, scheduler: DispatchQueue.main)
-            .compactMap { server, name, password in
-                if let address = server.address, address.isValidURL, !name.isEmpty, !password.isEmpty {
+            .compactMap { server, token, password in
+                if let address = server.address, address.isValidURL, !token.isEmpty, !password.isEmpty {
                     guard let url = URL(string: address) else { return nil }
-                    return Project(name: name.lowercased(), password: password, backend: server.0, url: url)
+                    return Project(name: token, password: password, token: token, backend: server.0, url: url)
                 } else {
                     return nil
                 }

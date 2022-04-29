@@ -108,9 +108,9 @@ struct ProjectList: View {
 
 struct ServerList_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectManager.shared.addProject(previewProjects[0])
-        ProjectManager.shared.addProject(previewProjects[1])
-        ProjectManager.shared.addProject(previewProjects[2])
+        try! ProjectManager.shared.addProject(previewProjects[0])
+        try! ProjectManager.shared.addProject(previewProjects[1])
+        try! ProjectManager.shared.addProject(previewProjects[2])
         return ProjectList()
     }
 }

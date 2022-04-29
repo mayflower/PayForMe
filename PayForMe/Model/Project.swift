@@ -11,6 +11,7 @@ import Foundation
 class Project: Codable, Identifiable {
     let name: String
     let password: String
+    let token: String
     let url: URL
     let id: Int?
     let backend: ProjectBackend
@@ -18,13 +19,14 @@ class Project: Codable, Identifiable {
     var members: [Int: Person]
     var bills: [Bill]
 
-    convenience init(name: String, password: String, backend: ProjectBackend, url: URL) {
-        self.init(name: name, password: password, backend: backend, url: url, id: nil)
+    convenience init(name: String, password: String, token: String, backend: ProjectBackend, url: URL) {
+        self.init(name: name, password: password, token: token, backend: backend, url: url, id: nil)
     }
 
-    fileprivate init(name: String, password: String, backend: ProjectBackend, url: URL, id: Int?) {
+    fileprivate init(name: String, password: String, token: String, backend: ProjectBackend, url: URL, id: Int?) {
         self.name = name
         self.password = password
+        self.token = token
         self.backend = backend
         self.url = url
         self.id = id
@@ -33,16 +35,23 @@ class Project: Codable, Identifiable {
     }
 }
 
+struct APIProject: Codable {
+    let name: String
+    let id: String
+}
+
 struct StoredProject: Codable {
     let name: String
     let password: String
+    let token: String
     let url: URL
     let backend: ProjectBackend
     var id: Int?
 
-    init(name: String, password: String, url: URL, backend: ProjectBackend) {
+    init(name: String, password: String, token: String, url: URL, backend: ProjectBackend) {
         self.name = name
         self.password = password
+        self.token = token
         self.url = url
         self.backend = backend
         id = nil
@@ -51,13 +60,14 @@ struct StoredProject: Codable {
     init(project: Project) {
         name = project.name
         password = project.password
+        token = project.token
         url = project.url
         backend = project.backend
         id = project.id
     }
 
     func toProject() -> Project {
-        Project(name: name, password: password, backend: backend, url: url, id: id!)
+        Project(name: name, password: password, token: token,  backend: backend, url: url, id: id!)
     }
 }
 
@@ -69,19 +79,28 @@ extension Project: Equatable {
 
 extension StoredProject: Equatable {
     static func == (lhs: StoredProject, rhs: StoredProject) -> Bool {
-        return lhs.url == rhs.url && lhs.name == rhs.name && lhs.backend == rhs.backend && lhs.password == rhs.password
+        return lhs.url == rhs.url && lhs.name == rhs.name && lhs.token == rhs.token && lhs.backend == rhs.backend && lhs.password == rhs.password
     }
 }
 
-enum ProjectBackend: Int, Codable, Equatable {
+enum ProjectBackend: Int, Codable {
     case cospend = 0
     case iHateMoney = 1
+    
+    var staticPath: String {
+        switch self {
+        case .cospend:
+            return "/index.php/apps/cospend/api/projects"
+        case .iHateMoney:
+            return "/api/projects"
+        }
+    }
 }
 
-let previewProject = Project(name: "TestProject", password: "TestPassword", backend: .cospend, url: URL(string: "https://testserver.de")!, id: 0)
+let previewProject = Project(name: "TestProject", password: "TestPassword", token: "asdasdas", backend: .cospend, url: URL(string: "https://testserver.de")!, id: 0)
 let previewProjects = [
     previewProject,
-    Project(name: "test1", password: "test23", backend: .cospend, url: URL(string: "https://testserver.de")!, id: 1),
-    Project(name: "test2", password: "test45", backend: .cospend, url: URL(string: "https://testserver.de")!, id: 2),
+    Project(name: "test1", password: "test23", token: "dasdasa", backend: .cospend, url: URL(string: "https://testserver.de")!, id: 1),
+    Project(name: "test2", password: "test45", token: "123123122", backend: .cospend, url: URL(string: "https://testserver.de")!, id: 2),
 ]
-let demoProject = Project(name: "study-group", password: "studying", backend: .cospend, url: URL(string: "https://intranet.mayflower.de")!, id: 1)
+let demoProject = Project(name: "study-group", password: "studying", token: "qwasdasd", backend: .cospend, url: URL(string: "https://intranet.mayflower.de")!, id: 1)

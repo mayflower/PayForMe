@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if AppDelegate.isUITestingOnboarding {
                 ProjectManager.shared.prepareUITestOnboarding()
             } else {
-                ProjectManager.shared.prepareUITest()
+                try! ProjectManager.shared.prepareUITest()
             }
         }
     }
