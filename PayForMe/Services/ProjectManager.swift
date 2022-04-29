@@ -55,21 +55,6 @@ class ProjectManager: ObservableObject {
 
     // MARK: Server Communication
 
-    private func createProjectOnServer(_ project: Project, email: String, completion: @escaping () -> Void) {
-        cancellable?.cancel()
-        cancellable = nil
-
-        cancellable = NetworkService.shared.createProjectPublisher(project, email: email)
-            .sink { success in
-                if success {
-                    print("Project \(project.name) created successfully")
-                } else {
-                    print("Error creating project \(project.name)")
-                }
-                completion()
-            }
-    }
-
     func loadBillsAndMembers() {
         let project = currentProject
 
@@ -171,20 +156,15 @@ class ProjectManager: ObservableObject {
     }
 }
 
+enum StoringError: Error {
+    case couldNotSave
+}
+
 extension ProjectManager {
-    func createProject(_ project: Project, email: String, completion: @escaping () -> Void) {
-        guard !projects.contains(project) else { print("project duplicate"); return }
-        let inceptedCompletion = {
-            self.addProject(project)
-            completion()
-        }
 
-        createProjectOnServer(project, email: email, completion: inceptedCompletion)
-    }
-
-    func addProject(_ project: Project) -> Bool {
+    func addProject(_ project: Project) throws {
         guard storageService.saveProject(project: project) else {
-            return false
+            throw StoringError.couldNotSave
         }
         projects = storageService.loadProjects()
 
@@ -193,7 +173,6 @@ extension ProjectManager {
         }
         openedByURL = nil
         print("project added")
-        return true
     }
 
     func deleteProject(_ project: Project) {
@@ -213,9 +192,9 @@ extension ProjectManager {
         projects.forEach { deleteProject($0) }
     }
 
-    func prepareUITest() {
+    func prepareUITest() throws {
         projects.forEach { deleteProject($0) }
-        addProject(demoProject)
+        try addProject(demoProject)
     }
 
     func saveBill(_ bill: Bill, completion: @escaping () -> Void) {
