@@ -12,19 +12,22 @@ import SwiftUI
 
 struct ShareProjectQRCode: View {
     let project: Project
+    
+    @State var dataString = ""
+    
     var body: some View {
         VStack {
-            Text(path).font(.caption)
-            CarBode.CBBarcodeView(data: .constant(path), barcodeType: .constant(.qrCode), orientation: .constant(.up))
+            Text(dataString).font(.caption)
+            CarBode.CBBarcodeView(data: $dataString, barcodeType: .constant(.qrCode), orientation: .constant(.up), onGenerated: nil)
                 .aspectRatio(contentMode: .fit)
         }
         .padding()
+        .onAppear {
+            let server = project.url.relativeString.replacingOccurrences(of: "https://", with: "")
+            dataString = "cospend://\(server)/\(project.name.lowercased())/\(project.password)"
+        }
     }
 
-    var path: String {
-        let server = project.url.relativeString.replacingOccurrences(of: "https://", with: "")
-        return "cospend://\(server)/\(project.name.lowercased())/\(project.password)"
-    }
 }
 
 struct ShareProjectQRCode_Previews: PreviewProvider {
