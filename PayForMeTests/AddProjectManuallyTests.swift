@@ -108,8 +108,23 @@ class AddProjectManuallyTests: XCTestCase {
         let exp = expectation(description: "Project created")
         viewmodel.validatedInput.sink { project in
             XCTAssertEqual(project.backend, .cospend)
-            XCTAssertEqual(project.name, "namexy")
+            XCTAssertEqual(project.name, "nameXY")
             XCTAssertEqual(project.password, "passwordXY")
+            XCTAssertEqual(project.url.absoluteString, "https://myserver.de")
+            exp.fulfill()
+        }.store(in: &subscriptions)
+        waitForExpectations(timeout: 2)
+    }
+    
+    func testProjectNewMethodCreation() throws {
+        viewmodel.serverAddress = "https://myserver.de/index.php/apps/cospend/02939asdasd12asdj23/no-pass"
+        viewmodel.projectType = .cospend
+        let exp = expectation(description: "Project created")
+        viewmodel.validatedInput.sink { project in
+            XCTAssertEqual(project.backend, .cospend)
+            XCTAssertEqual(project.name, "02939asdasd12asdj23")
+            XCTAssertEqual(project.token, "02939asdasd12asdj23")
+            XCTAssertEqual(project.password, "no-pass")
             XCTAssertEqual(project.url.absoluteString, "https://myserver.de")
             exp.fulfill()
         }.store(in: &subscriptions)
