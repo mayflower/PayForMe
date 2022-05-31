@@ -67,7 +67,7 @@ struct StoredProject: Codable {
     }
 
     func toProject() -> Project {
-        Project(name: name, password: password, token: token,  backend: backend, url: url, id: id!)
+        Project(name: name, password: password, token: token, backend: backend, url: url, id: id!)
     }
 }
 
@@ -86,7 +86,7 @@ extension StoredProject: Equatable {
 enum ProjectBackend: Int, Codable {
     case cospend = 0
     case iHateMoney = 1
-    
+
     var staticPath: String {
         switch self {
         case .cospend:

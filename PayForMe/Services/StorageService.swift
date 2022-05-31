@@ -23,7 +23,7 @@ class StorageService {
     init() {
         do {
             var migrator = DatabaseMigrator()
-            
+
             migrator.registerMigration("v1", migrate: { db in
                 try db.create(table: "storedProject", ifNotExists: true) { table in
                     table.autoIncrementedPrimaryKey("id")
@@ -40,10 +40,10 @@ class StorageService {
                 try db.execute(sql: "UPDATE storedProject SET token = name;")
 
             })
-//#if DEBUG
-//// Speed up development by nuking the database when migrations change
-//migrator.eraseDatabaseOnSchemaChange = true
-//#endif
+            // #if DEBUG
+            //// Speed up development by nuking the database when migrations change
+            // migrator.eraseDatabaseOnSchemaChange = true
+            // #endif
             dbQueue = try DatabaseQueue(path: databasePath.appendingPathComponent("payforme.sqlite").path)
             try migrator.migrate(dbQueue)
         } catch {

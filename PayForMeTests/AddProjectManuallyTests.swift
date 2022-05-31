@@ -115,7 +115,7 @@ class AddProjectManuallyTests: XCTestCase {
         }.store(in: &subscriptions)
         waitForExpectations(timeout: 2)
     }
-    
+
     func testProjectNewMethodCreation() throws {
         viewmodel.serverAddress = "https://myserver.de/index.php/apps/cospend/02939asdasd12asdj23/no-pass"
         viewmodel.projectType = .cospend

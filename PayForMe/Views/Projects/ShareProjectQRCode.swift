@@ -12,9 +12,9 @@ import SwiftUI
 
 struct ShareProjectQRCode: View {
     let project: Project
-    
+
     @State var dataString = ""
-    
+
     var body: some View {
         VStack {
             Text(dataString).font(.caption)
@@ -27,7 +27,6 @@ struct ShareProjectQRCode: View {
             dataString = "cospend://\(server)/\(project.name.lowercased())/\(project.password)"
         }
     }
-
 }
 
 struct ShareProjectQRCode_Previews: PreviewProvider {

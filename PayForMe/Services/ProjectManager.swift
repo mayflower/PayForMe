@@ -161,7 +161,6 @@ enum StoringError: Error {
 }
 
 extension ProjectManager {
-
     func addProject(_ project: Project) throws {
         guard storageService.saveProject(project: project) else {
             throw StoringError.couldNotSave
