@@ -96,8 +96,10 @@ struct ProjectList: View {
     }
 
     func deleteProject(at offsets: IndexSet) {
-        for index in offsets {
-            manager.deleteProject(manager.projects[index])
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+            for index in offsets {
+                manager.deleteProject(manager.projects[index])
+            }
         }
     }
 
