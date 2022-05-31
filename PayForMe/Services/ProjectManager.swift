@@ -166,13 +166,15 @@ extension ProjectManager {
         guard storageService.saveProject(project: project) else {
             throw StoringError.couldNotSave
         }
-        projects = storageService.loadProjects()
+        DispatchQueue.main.async { [self] in
+            projects = storageService.loadProjects()
 
-        if projects.count == 1 {
-            setCurrentProject(project)
+            if projects.count == 1 {
+                setCurrentProject(project)
+            }
+            openedByURL = nil
+            print("project added")
         }
-        openedByURL = nil
-        print("project added")
     }
 
     func deleteProject(_ project: Project) {
@@ -185,6 +187,8 @@ extension ProjectManager {
             if let nextProject = projects.first {
                 setCurrentProject(nextProject)
             }
+        } else {
+            currentProject = demoProject
         }
     }
 
