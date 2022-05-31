@@ -148,11 +148,17 @@ class AddProjectManualViewModel: ObservableObject {
     private var validatedServer: AnyPublisher<Int, Never> {
         validatedInput.flatMap {
             project in
-            NetworkService.shared.testProject(project)
-        }
-        .map { project, code in
-            self.lastProjectTestedSuccessfully = project
-            return code
+            Future { promise in
+                Task {
+                    do {
+                        let testedProject = try await NetworkService.shared.getProjectName(project)
+                        self.lastProjectTestedSuccessfully = testedProject
+                        promise(.success(200))
+                    } catch {
+                        promise(.success(-1))
+                    }
+                }
+            }
         }
         .removeDuplicates()
         .receive(on: RunLoop.main)
