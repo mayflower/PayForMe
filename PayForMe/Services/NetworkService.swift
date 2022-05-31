@@ -76,27 +76,23 @@ class NetworkService {
     func testProject(_ project: Project) -> AnyPublisher<(Project, Int), Never> {
         let request = buildURLRequest("dummy", params: [:], project: project)
         let requestPub = URLSession.shared.dataTaskPublisher(for: request)
-            .tryMap { data, response -> Int in
+            .tryMap { _, response -> Int in
                 guard let httpResponse = response as? HTTPURLResponse else { print("Network Error"); return -1 }
                 return httpResponse.statusCode
             }
             .replaceError(with: -1)
         return Publishers.CombineLatest(Just(project), requestPub).eraseToAnyPublisher()
     }
-    
-    func  getProjectName(_ project: Project) async throws -> Project {
-        let request = buildURLRequest("",params: [:], project: project)
-        print(request.url)
-        let (data,response) = try await URLSession.shared.data(for: request)
+
+    func getProjectName(_ project: Project) async throws -> Project {
+        let request = buildURLRequest("", params: [:], project: project)
+        let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode / 100 == 2 else {
             throw HTTPError.statuscode
         }
-            let apiProject = try JSONDecoder().decode(APIProject.self, from: data)
-            print(apiProject)
-            print("🚀🚀🚀")
-            
+        let apiProject = try JSONDecoder().decode(APIProject.self, from: data)
+
         return Project(name: apiProject.name, password: project.password, token: project.token, backend: project.backend, url: project.url)
-        
     }
 
     func postBillPublisher(bill: Bill) -> AnyPublisher<Bool, Never> {
