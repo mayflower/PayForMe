@@ -8,9 +8,9 @@
 
 import Combine
 import Foundation
+import GRDB
 import SlickLoadingSpinner
 import SwiftUI
-import GRDB
 
 class AddProjectQRViewModel: ObservableObject {
     @Published var scannedCode: URL?
@@ -60,7 +60,6 @@ class AddProjectQRViewModel: ObservableObject {
         .tryMap { project, statusCode in
             if statusCode == 200 {
                 do {
-                    
                     try ProjectManager.shared.addProject(project)
                     return withAnimation {
                         .success
@@ -72,12 +71,12 @@ class AddProjectQRViewModel: ObservableObject {
                     }
                 }
             }
-            print ("fail")
+            print("fail")
             return withAnimation {
                 .failure
             }
         }
-        .replaceError(with: withAnimation {.failure})
+        .replaceError(with: withAnimation { .failure })
         .eraseToAnyPublisher()
     }
 
