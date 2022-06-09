@@ -21,7 +21,6 @@ struct BalanceList: View {
     var body: some View {
         NavigationView {
             mainView
-                .navigationBarItems(trailing: !addingUser ? FancyButton(add: true, action: showAddUser, text: "") : nil)
                 .navigationBarTitle("Members")
                 .onAppear {
                     ProjectManager.shared.loadBillsAndMembers()
@@ -91,7 +90,7 @@ struct BalanceList_Previews: PreviewProvider {
         let vm = BalanceViewModel()
         vm.currentProject = previewProject
         vm.setBalances()
-        return BalanceList(viewModel: vm, addingUser: true)
+        return BalanceList(viewModel: vm, addingUser: false)
     }
 }
 
