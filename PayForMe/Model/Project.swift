@@ -103,4 +103,4 @@ let previewProjects = [
     Project(name: "test1", password: "test23", token: "dasdasa", backend: .cospend, url: URL(string: "https://testserver.de")!, id: 1),
     Project(name: "test2", password: "test45", token: "123123122", backend: .cospend, url: URL(string: "https://testserver.de")!, id: 2),
 ]
-let demoProject = Project(name: "study-group", password: "studying", token: "qwasdasd", backend: .cospend, url: URL(string: "https://intranet.mayflower.de")!, id: 1)
+let demoProject = Project(name: "study-group", password: "no-pass", token: "9da50e410157dc1ca63e594af022f3a2", backend: .cospend, url: URL(string: "https://intranet.mayflower.de")!, id: 1)

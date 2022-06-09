@@ -29,6 +29,7 @@ struct BalanceList: View {
         }.navigationViewStyle(StackNavigationViewStyle())
     }
 
+    @ViewBuilder
     var mainView: some View {
         VStack(alignment: .center) {
             if addingUser {
@@ -39,6 +40,7 @@ struct BalanceList: View {
         }
     }
 
+    @ViewBuilder
     var list: some View {
         List {
             ForEach(viewModel.balances.sorted(by: balanceSort(_:_:))) {
