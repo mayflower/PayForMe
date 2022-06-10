@@ -9,7 +9,6 @@
 import Combine
 import Foundation
 import SlickLoadingSpinner
-import UIKit
 
 class AddProjectManualViewModel: ObservableObject {
     @Published

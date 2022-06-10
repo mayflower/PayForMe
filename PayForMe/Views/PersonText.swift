@@ -18,7 +18,7 @@ struct PersonText: View {
             .background(colorOfPerson(person))
             .foregroundColor(Color.white)
             .cornerRadius(5)
-            .lineLimit(1)
+            //.lineLimit(1)
     }
 
     func colorOfPerson(_ person: Person) -> Color {
