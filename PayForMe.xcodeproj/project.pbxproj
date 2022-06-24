@@ -789,7 +789,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = PayForMe/PayForMe.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 102;
+				CURRENT_PROJECT_VERSION = 108;
 				DEVELOPMENT_ASSET_PATHS = "\"PayForMe/Preview Content\"";
 				DEVELOPMENT_TEAM = L79BTFY6FV;
 				ENABLE_PREVIEWS = YES;
@@ -799,7 +799,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.5;
+				MARKETING_VERSION = 2.3.6;
 				PRODUCT_BUNDLE_IDENTIFIER = de.mayflower.PayForMe;
 				PRODUCT_NAME = PayForMe;
 				SWIFT_VERSION = 5.0;
@@ -813,7 +813,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = PayForMe/PayForMe.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 102;
+				CURRENT_PROJECT_VERSION = 108;
 				DEVELOPMENT_ASSET_PATHS = "\"PayForMe/Preview Content\"";
 				DEVELOPMENT_TEAM = L79BTFY6FV;
 				ENABLE_PREVIEWS = YES;
@@ -823,7 +823,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.5;
+				MARKETING_VERSION = 2.3.6;
 				PRODUCT_BUNDLE_IDENTIFIER = de.mayflower.PayForMe;
 				PRODUCT_NAME = PayForMe;
 				SWIFT_VERSION = 5.0;
