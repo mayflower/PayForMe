@@ -799,7 +799,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.6;
+				MARKETING_VERSION = 2.3.7;
 				PRODUCT_BUNDLE_IDENTIFIER = de.mayflower.PayForMe;
 				PRODUCT_NAME = PayForMe;
 				SWIFT_VERSION = 5.0;
@@ -823,7 +823,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.6;
+				MARKETING_VERSION = 2.3.7;
 				PRODUCT_BUNDLE_IDENTIFIER = de.mayflower.PayForMe;
 				PRODUCT_NAME = PayForMe;
 				SWIFT_VERSION = 5.0;
