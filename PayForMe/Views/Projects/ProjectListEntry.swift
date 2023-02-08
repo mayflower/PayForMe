@@ -51,8 +51,12 @@ struct ProjectListEntry: View {
                 .foregroundColor(self.currentProject == project ? .accentColor : .primary)
             }
             if edit {
-                WhoPaidView(members: Array(project.members.values), selectedPayer: self.$me)
-                    .animation(.spring(), value: edit)
+                VStack(alignment: .leading) {
+                    Text("Add a default payer for new bills (e.g. yourself)")
+                        .font(.caption)
+                        .foregroundColor(.primary)
+                    WhoPaidView(members: Array(project.members.values), selectedPayer: self.$me)
+                }
             }
         })
         .onAppear {
