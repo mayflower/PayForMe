@@ -20,7 +20,7 @@ class BillDetailViewModel: ObservableObject {
     var amount = ""
 
     @Published
-    var selectedPayer = 1
+    var selectedPayer = 0
 
     @Published
     var currentProject: Project = demoProject
