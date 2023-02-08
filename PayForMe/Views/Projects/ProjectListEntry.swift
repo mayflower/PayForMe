@@ -65,7 +65,7 @@ struct ProjectListEntry: View {
         .onChange(of: me) { newValue in
             project.me = newValue
             manager.updateProject(project: project)
-            edit.toggle()
+            edit = false
         }
     }
 }
