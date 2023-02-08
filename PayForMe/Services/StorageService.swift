@@ -40,6 +40,11 @@ class StorageService {
                 try db.execute(sql: "UPDATE storedProject SET token = name;")
 
             })
+            migrator.registerMigration("v3") { db in
+                try db.alter(table: "storedProject", body: { table in
+                    table.add(column: "me")
+                })
+            }
             // #if DEBUG
             //// Speed up development by nuking the database when migrations change
             // migrator.eraseDatabaseOnSchemaChange = true
@@ -70,6 +75,21 @@ class StorageService {
         } catch {
             print("Couldn't store projects \(error.localizedDescription)")
             return false
+        }
+    }
+
+    func updateProject(project: Project) {
+        let storedProject = StoredProject(project: project)
+        do {
+            _ = try dbQueue.write { db -> Bool in
+                if try StoredProject.fetchAll(db).contains(storedProject) {
+                    try storedProject.save(db)
+                    return true
+                }
+                return false
+            }
+        } catch {
+            print("Couldn't updates projects \(error.localizedDescription)")
         }
     }
 

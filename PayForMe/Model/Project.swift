@@ -18,12 +18,13 @@ class Project: Codable, Identifiable {
 
     var members: [Int: Person]
     var bills: [Bill]
+    var me: Int?
 
     convenience init(name: String, password: String, token: String, backend: ProjectBackend, url: URL) {
         self.init(name: name, password: password, token: token, backend: backend, url: url, id: nil)
     }
 
-    fileprivate init(name: String, password: String, token: String, backend: ProjectBackend, url: URL, id: Int?) {
+    fileprivate init(name: String, password: String, token: String, backend: ProjectBackend, url: URL, id: Int?, me: Int? = nil) {
         self.name = name
         self.password = password
         self.token = token
@@ -32,6 +33,7 @@ class Project: Codable, Identifiable {
         self.id = id
         members = [:]
         bills = []
+        self.me = me
     }
 }
 
@@ -47,6 +49,7 @@ struct StoredProject: Codable {
     let url: URL
     let backend: ProjectBackend
     var id: Int?
+    let me: Int?
 
     init(name: String, password: String, token: String, url: URL, backend: ProjectBackend) {
         self.name = name
@@ -55,6 +58,7 @@ struct StoredProject: Codable {
         self.url = url
         self.backend = backend
         id = nil
+        me = nil
     }
 
     init(project: Project) {
@@ -64,10 +68,11 @@ struct StoredProject: Codable {
         url = project.url
         backend = project.backend
         id = project.id
+        me = project.me
     }
 
     func toProject() -> Project {
-        Project(name: name, password: password, token: token, backend: backend, url: url, id: id!)
+        Project(name: name, password: password, token: token, backend: backend, url: url, id: id!, me: me)
     }
 }
 
