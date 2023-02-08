@@ -184,7 +184,6 @@ class NetworkService {
         if project.backend == .iHateMoney {
             guard let authString = "\(project.name):\(project.password)".data(using: .utf8)?.base64EncodedString() else { fatalError("error generating authString. THIS SHOULD NOT HAPPEN") }
             request.setValue("Basic \(authString)", forHTTPHeaderField: "Authorization")
-            
 
             if !params.isEmpty {
                 request.httpBody = try? JSONSerialization.data(withJSONObject: params)

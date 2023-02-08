@@ -64,7 +64,7 @@ class AddProjectQRViewModel: ObservableObject {
                     return withAnimation {
                         .success
                     }
-                } catch let error {
+                } catch {
                     print(error)
                     return withAnimation {
                         .failure
@@ -103,7 +103,7 @@ class AddProjectQRViewModel: ObservableObject {
                             let apiProject = try await NetworkService.shared.getProjectName(project)
                             try ProjectManager.shared.addProject(apiProject)
                             self.isTestingSubject.send(.success)
-                        } catch let error {
+                        } catch {
                             print(codedUrl)
                             print()
                             print(error)
