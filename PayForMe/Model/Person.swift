@@ -37,3 +37,11 @@ let previewPersons = [
     3: Person(id: 3, weight: 1, name: "Bisasam", activated: true),
     4: Person(id: 4, weight: 1, name: "Glumanda", activated: true),
 ]
+let previewManyPersons = [
+    1: previewPerson,
+    2: Person(id: 2, weight: 1, name: "Schiggy", activated: true, color: PersonColor(r: 60, g: 110, b: 186)),
+    3: Person(id: 3, weight: 1, name: "Bisasam", activated: true),
+    4: Person(id: 4, weight: 1, name: "Glumanda", activated: true),
+    5: Person(id: 5, weight: 1, name: "Fukano", activated: true),
+    6: Person(id: 6, weight: 1, name: "Relaxo", activated: true),
+]

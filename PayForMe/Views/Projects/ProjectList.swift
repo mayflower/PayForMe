@@ -21,7 +21,7 @@ struct ProjectList: View {
             VStack {
                 List {
                     ForEach(manager.projects) { project in
-                        listRow(project: project)
+                        ProjectListEntry(project: project, currentProject: manager.currentProject, shareProject: self.$shareProject)
                     }
                     .onDelete(perform: deleteProject)
                 }
@@ -56,33 +56,6 @@ struct ProjectList: View {
         .navigationViewStyle(StackNavigationViewStyle())
     }
 
-    private func listRow(project: Project) -> some View {
-        Button(action: {
-            self.manager.setCurrentProject(project)
-        }, label: {
-            HStack {
-                VStack(alignment: .leading) {
-                    Text(project.name)
-                    Text(project.backend == .cospend ? "Cospend" : "iHateMoney").font(.caption).foregroundColor(Color.gray)
-                }
-                if self.manager.currentProject == project {
-                    Image(systemName: "checkmark").padding(.trailing)
-                }
-                Spacer()
-                if project.backend == .cospend {
-                    Button(action: {
-                        self.shareProject = project
-                    }, label: {
-                        HStack(spacing: 5) {
-                            Image(systemName: "square.and.arrow.up")
-                            Image(systemName: "qrcode")
-                        }
-                    })
-                }
-            }
-        })
-    }
-
     private enum AddingProjectMethod: Int, CaseIterable, Identifiable {
         var id: Int {
             switch self {
@@ -110,9 +83,6 @@ struct ProjectList: View {
 
 struct ServerList_Previews: PreviewProvider {
     static var previews: some View {
-        try! ProjectManager.shared.addProject(previewProjects[0])
-        try! ProjectManager.shared.addProject(previewProjects[1])
-        try! ProjectManager.shared.addProject(previewProjects[2])
         return ProjectList()
     }
 }

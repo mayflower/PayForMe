@@ -12,11 +12,11 @@ import SwiftUI
 extension View {
     func fancyStyle(active: Bool = true) -> some View {
         padding(10)
-            .background(active ? Color.blue : Color.gray)
+            .background(active ? Color.accentColor : Color.secondary)
             .foregroundColor(.white)
 
             .cornerRadius(10)
-            .shadow(color: (active ? Color.blue : Color.gray).opacity(0.5), radius: 4, x: 2, y: 2)
+            .shadow(color: (active ? Color.accentColor : Color.secondary).opacity(0.5), radius: 4, x: 2, y: 2)
     }
 
     func eraseToAnyView() -> AnyView {

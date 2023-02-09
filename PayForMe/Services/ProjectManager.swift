@@ -240,4 +240,8 @@ extension ProjectManager {
         loadBillsAndMembers()
         defaults.set(project.id, forKey: "projectID")
     }
+
+    func updateProject(project: Project) {
+        storageService.updateProject(project: project)
+    }
 }

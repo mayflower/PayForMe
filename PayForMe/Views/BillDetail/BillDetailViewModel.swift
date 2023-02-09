@@ -20,7 +20,7 @@ class BillDetailViewModel: ObservableObject {
     var amount = ""
 
     @Published
-    var selectedPayer = 1
+    var selectedPayer = 0
 
     @Published
     var currentProject: Project = demoProject
@@ -75,7 +75,7 @@ class BillDetailViewModel: ObservableObject {
             amount = String(currentBill.amount)
         }
 
-        selectedPayer = currentBill.payer_id
+        selectedPayer = currentBill.payer_id ==  -1 ? currentProject.me ?? 0 : currentBill.payer_id
         currentBill.owers.forEach { person in
             if let index = povm.members.firstIndex(of: person) {
                 povm.isOwing[index] = true
