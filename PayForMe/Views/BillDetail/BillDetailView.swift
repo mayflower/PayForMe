@@ -46,6 +46,11 @@ struct BillDetailView: View {
                     TextField("What was paid", text: self.$viewModel.topic)
                     TextField("How much", text: self.$viewModel.amount).keyboardType(.decimalPad)
                 }
+                Section(header: Text("Date")) {
+                    DatePicker(selection: self.$viewModel.billDate) {
+                        Label("Bill date", systemImage: "calendar").labelStyle(.iconOnly)
+                    }
+                }
                 Section(header: Text("Owers")) {
                     PotentialOwersView(vm: viewModel.povm)
                 }
