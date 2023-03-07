@@ -62,7 +62,6 @@ struct BillDetailView: View {
                 }
                 .padding()
         }
-        .background(Color.PFMBackground)
         .navigationBarTitle(navBarTitle, displayMode: .inline)
     }
 
