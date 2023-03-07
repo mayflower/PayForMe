@@ -65,7 +65,7 @@ class BillDetailViewModel: ObservableObject {
         }
 
         let billID = currentBill.id
-        let date = currentBill.date
+        let date = billDate
 
         let actualOwers = povm.actualOwers()
 

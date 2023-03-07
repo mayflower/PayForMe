@@ -47,7 +47,7 @@ struct BillDetailView: View {
                     TextField("How much", text: self.$viewModel.amount).keyboardType(.decimalPad)
                 }
                 Section(header: Text("Date")) {
-                    DatePicker(selection: self.$viewModel.billDate) {
+                    DatePicker(selection: self.$viewModel.billDate, displayedComponents: [.date]) {
                         Label("Bill date", systemImage: "calendar").labelStyle(.iconOnly)
                     }
                 }
