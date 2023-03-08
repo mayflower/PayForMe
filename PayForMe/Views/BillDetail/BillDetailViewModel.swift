@@ -27,6 +27,9 @@ class BillDetailViewModel: ObservableObject {
 
     @Published
     var currentBill: Bill
+    
+    @Published
+    var billDate: Date = Date()
 
     var povm: PotentialOwersViewModel
 
@@ -62,7 +65,7 @@ class BillDetailViewModel: ObservableObject {
         }
 
         let billID = currentBill.id
-        let date = currentBill.date
+        let date = billDate
 
         let actualOwers = povm.actualOwers()
 
@@ -81,5 +84,6 @@ class BillDetailViewModel: ObservableObject {
                 povm.isOwing[index] = true
             }
         }
+        billDate = currentBill.date
     }
 }
