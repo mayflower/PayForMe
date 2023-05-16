@@ -2,6 +2,8 @@
 iOS client for Cospend on Nextcloud & iHateMoney.org
 Download from the [Apple App Store](https://apps.apple.com/us/app/payforme/id1500428306?l=de&ls=1)
 
+Open beta with new features: https://testflight.apple.com/join/o6XAnU9g
+
 Using SwiftUI and Combine.
 Inspired by Moneybuster (https://gitlab.com/eneiluj/moneybuster).
 
