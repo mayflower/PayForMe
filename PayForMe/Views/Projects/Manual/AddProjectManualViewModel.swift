@@ -111,6 +111,7 @@ class AddProjectManualViewModel: ObservableObject {
             projectName = components[4]
         }
         if components.count == 5 {
+            projectPassword = "no-pass"
             projectName = components[4]
         }
     }
