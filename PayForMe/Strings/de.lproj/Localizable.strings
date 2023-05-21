@@ -5,14 +5,23 @@
 
 "Add Project" = "Projekt hinzufügen";
 
+
+"Add a default payer for new bills (e.g. yourself)" = "Setze einen voreingestellten Bezahler für neue Ausgaben (z.B. dich selbst)";
+
 /* AddMemberView.swift */
 "Add member" = "Mitglied hinzufügen";
+
+/*  */
+"Add project" = "Projekt hinzufügen";
 
 
 "All" = "Alle";
 
 /* BillList.swift */
 "Bills" = "Ausgaben";
+
+/*  */
+"Changed date" = "Geändertes Datum";
 
 
 "Cospend is a NextCloud app" = "Cospend ist eine NextCloud App";
@@ -22,6 +31,9 @@
 
 
 "Create Bill" = "Ausgabe hinzufügen";
+
+/*  */
+"Date" = "Datum";
 
 /*  */
 "Delete" = "Löschen";
@@ -41,6 +53,12 @@
 
 "Enter project password" = "Projekt Passwort eingeben";
 
+/*  */
+"Expense date" = "Datum der Aufwendung";
+
+/*  */
+"Finding Server" = "Server finden";
+
 
 "Go to settings" = "Geh zu den Einstellungen";
 
@@ -56,8 +74,6 @@
 
 "Member name" = "Mitglieder Name";
 
-"Add a default payer for new bills (e.g. yourself)" = "Setze einen voreingestellten Bezahler für neue Ausgaben (z.B. dich selbst)";
-
 /* BalanceList.swift */
 "Members" = "Mitglieder";
 
@@ -66,6 +82,9 @@
 
 
 "Owers" = "Schuldner";
+
+
+"Paste Link" = "Link einsetzen";
 
 
 "Payer" = "Zahler";
@@ -111,9 +130,6 @@
 
 
 "Update Bill" = "Ausgabe aktualisieren";
-
-
-"Paste Link" = "Link einsetzen";
 
 /* OnboardingView.swift */
 "Welcome to PayForMe!" = "Willkommen bei PayForMe!";

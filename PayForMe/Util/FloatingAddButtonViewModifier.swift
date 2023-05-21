@@ -29,7 +29,7 @@ private struct FloatingAddButtonView: View {
         Button(action: {
             sheetToggle.toggle()
         }) {
-            Label("Add bill", systemImage: "bag.badge.plus")
+            Label("Add Bill", systemImage: "bag.badge.plus")
                 .padding(10)
                 .font(.headline)
                 .background(Color.accentColor)
