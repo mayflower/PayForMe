@@ -112,6 +112,9 @@
 
 "Update Bill" = "Ausgabe aktualisieren";
 
+
+"Paste Link" = "Link einsetzen";
+
 /* OnboardingView.swift */
 "Welcome to PayForMe!" = "Willkommen bei PayForMe!";
 

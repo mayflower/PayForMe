@@ -111,6 +111,9 @@
 
 "Update Bill" = "Aktualizovat účet";
 
+
+"Paste Link" = "Vložit odkaz";
+
 /* OnboardingView.swift */
 "Welcome to PayForMe!" = "Vítejte v PayForMe!";
 
