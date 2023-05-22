@@ -101,6 +101,8 @@
 /*  */
 "Scan the Cospend QR code to proceed" = "Scannez le code QR de Cospend pour continuer";
 
+"Scan the QR code to proceed" = "Scannez le code QR pour continuer";
+
 /*
   Localizable.strings
   PayForMe

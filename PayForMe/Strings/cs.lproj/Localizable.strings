@@ -104,6 +104,8 @@
 /* AddProjectQRView.swift */
 "Scan the Cospend QR code to proceed" = "Pokud chcete pokračovat, naskenujte QR kód z Cospend";
 
+"Scan the QR code to proceed" = "Naskenujte kód QR a pokračujte";
+
 /* AddProjectManualView.swift */
 "Server Address" = "Adresa serveru";
 

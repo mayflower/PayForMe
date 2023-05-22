@@ -104,6 +104,8 @@
 /* AddProjectQRView.swift */
 "Scan the Cospend QR code to proceed" = "Scan the Cospend QR code to proceed";
 
+"Scan the QR code to proceed" = "Scan the QR code to proceed";
+
 /* AddProjectManualView.swift */
 "Server Address" = "Server Address";
 
