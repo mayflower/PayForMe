@@ -59,7 +59,6 @@ struct AddProjectManualView: View {
                 }
             }
             .id(viewmodel.projectType == .cospend ? "cospend" : "iHateMoney")
-            .frame(width: UIScreen.main.bounds.width, height: 220, alignment: .center)
             SlickLoadingSpinner(connectionState: viewmodel.validationProgress)
                 .frame(width: 50, height: 50)
             FancyButton(
@@ -84,13 +83,17 @@ struct AddProjectManualView: View {
     }
     
     private func pasteLink(pasteString: String) {
-        viewmodel.pasteAddress(address: pasteString)
+        DispatchQueue.main.async {
+            viewmodel.pasteAddress(address: pasteString)
+        }
     }
 
     private func pasteLink() {
-        if let pasteString = UIPasteboard.general.string {
-            print(pasteString)
-            viewmodel.pasteAddress(address: pasteString)
+        DispatchQueue.main.async {
+            if let pasteString = UIPasteboard.general.string {
+                print(pasteString)
+                viewmodel.pasteAddress(address: pasteString)
+            }
         }
     }
 }
