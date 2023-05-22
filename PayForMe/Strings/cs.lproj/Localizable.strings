@@ -89,6 +89,10 @@
 
 "Paste Link" = "Vložit odkaz";
 
+
+"Copy Link" = "Kopírovat odkaz";
+
+
 /* BillDetail.swift */
 "Payer" = "Plátce";
 

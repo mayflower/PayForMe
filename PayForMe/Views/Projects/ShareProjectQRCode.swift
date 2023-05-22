@@ -17,7 +17,15 @@ struct ShareProjectQRCode: View {
 
     var body: some View {
         VStack {
-            Text(dataString).font(.caption)
+            Button(action: {
+                let pasteboard = UIPasteboard.general
+                pasteboard.string = dataString
+            }, label: {
+                Text("Copy Link")
+            })
+            Text(dataString)
+                .padding()
+                .font(.caption)
             CarBode.CBBarcodeView(data: $dataString, barcodeType: .constant(.qrCode), orientation: .constant(.up), onGenerated: nil)
                 .aspectRatio(contentMode: .fit)
         }
