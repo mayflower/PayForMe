@@ -17,6 +17,13 @@ struct ProjectListEntry: View {
 
     @State var edit = false
     @State var me = 0
+    
+    func actionShare(url: String) {
+        guard let data = URL(string: url) else { return }
+        let av = UIActivityViewController(activityItems: [data], applicationActivities: nil)
+        UIApplication.shared.connectedScenes.flatMap { ($0 as? UIWindowScene)?.windows ?? [] }
+            .first { $0.isKeyWindow }?.rootViewController!.present(av, animated: true)
+    }
 
     var body: some View {
         Button(action: {
@@ -39,10 +46,16 @@ struct ProjectListEntry: View {
                     }
                     if project.backend == .cospend {
                         Button(action: {
-                            self.shareProject = project
+                            actionShare(url: project.url.absoluteString)
                         }, label: {
                             HStack(spacing: 5) {
                                 Image(systemName: "square.and.arrow.up")
+                            }
+                        })
+                        Button(action: {
+                            self.shareProject = project
+                        }, label: {
+                            HStack(spacing: 5) {
                                 Image(systemName: "qrcode")
                             }
                         })
