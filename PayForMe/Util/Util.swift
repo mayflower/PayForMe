@@ -197,7 +197,7 @@ extension URL {
         else {
             return (nil, nil, nil)
         }
-        return (URL(string: "https://\(host)"),
+        return (URL(string: "https://\(host)" + ((port != nil) ? ":\(port!)" :  "")),
                 pathComponents[1],
                 pathComponents[safe: 2])
     }

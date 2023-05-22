@@ -34,7 +34,7 @@ class AddProjectManualViewModel: ObservableObject {
         validatedInput.map { _ in LoadingState.connecting }.assign(to: &$validationProgress)
         validatedServer.map { $0 == 200 ? LoadingState.success : LoadingState.failure }.assign(to: &$validationProgress)
         errorTextPublisher.assign(to: &$errorText)
-        serverCheckUnsupportedPorts.assign(to: &$errorText)
+        serverCheckUnsupportedProtocoll.assign(to: &$errorText)
     }
 
     func reset() {
@@ -96,12 +96,10 @@ class AddProjectManualViewModel: ObservableObject {
             }.eraseToAnyPublisher()
     }
 
-    var serverCheckUnsupportedPorts: AnyPublisher<String, Never> {
+    var serverCheckUnsupportedProtocoll: AnyPublisher<String, Never> {
         serverAddressFormatted
             .map {
-                $0.contains("http://") ||
-                    String($0.suffix(from: $0.index($0.startIndex, offsetBy: 6))).contains(":") ?
-                    "PayForMe doesn't support http or custom ports" : ""
+                $0.contains("http://") ? "PayForMe doesn't support http" : ""
             }
             .removeDuplicates()
             .eraseToAnyPublisher()
@@ -113,6 +111,7 @@ class AddProjectManualViewModel: ObservableObject {
             projectName = components[4]
         }
         if components.count == 5 {
+            projectPassword = "no-pass"
             projectName = components[4]
         }
     }

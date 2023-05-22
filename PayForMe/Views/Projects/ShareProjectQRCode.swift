@@ -24,7 +24,7 @@ struct ShareProjectQRCode: View {
         .padding()
         .onAppear {
             let server = project.url.relativeString.replacingOccurrences(of: "https://", with: "")
-            dataString = "cospend://\(server)/\(project.name.lowercased())/\(project.password)"
+            dataString = "cospend://\(server)/\(project.token.lowercased())/\(project.password)"
         }
     }
 }
