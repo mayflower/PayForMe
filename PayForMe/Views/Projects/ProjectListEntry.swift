@@ -33,6 +33,8 @@ struct ProjectListEntry: View {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(project.name)
+                            .allowsTightening(true)
+                            .lineLimit(1)
                         Text(project.backend == .cospend ? "Cospend" : "iHateMoney").font(.caption).foregroundColor(Color.gray)
                     }
                     Spacer()
@@ -42,22 +44,19 @@ struct ProjectListEntry: View {
                         }, label: {
                             Image(systemName: "pencil")
                         })
-                        .padding(.trailing, 5)
+                        .padding(.trailing, 8)
                     }
                     if project.backend == .cospend {
                         Button(action: {
                             actionShare(url: project.url.absoluteString)
                         }, label: {
-                            HStack(spacing: 5) {
-                                Image(systemName: "square.and.arrow.up")
-                            }
+                            Image(systemName: "square.and.arrow.up")
                         })
+                        .padding(.trailing, 8)
                         Button(action: {
                             self.shareProject = project
                         }, label: {
-                            HStack(spacing: 5) {
-                                Image(systemName: "qrcode")
-                            }
+                            Image(systemName: "qrcode")
                         })
                     }
                 }

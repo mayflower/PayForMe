@@ -59,6 +59,7 @@ struct AddProjectManualView: View {
                 }
             }
             .id(viewmodel.projectType == .cospend ? "cospend" : "iHateMoney")
+            .frame(width: UIScreen.main.bounds.width, height: 220, alignment: .center)
             SlickLoadingSpinner(connectionState: viewmodel.validationProgress)
                 .frame(width: 50, height: 50)
             FancyButton(
