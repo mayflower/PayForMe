@@ -21,7 +21,7 @@ struct LoadingDots: View {
                 .stroke(lineWidth: 3)
                 .frame(width: 12, height: 12)
                 .scaleEffect(leftAnimates ? 1 : 0)
-                .animation(Animation.spring().repeatForever(autoreverses: false).speed(0.5))
+                .animation(Animation.spring().repeatForever(autoreverses: false).speed(0.5), value: self.leftAnimates)
                 .onAppear {
                     self.leftAnimates.toggle()
                 }
@@ -30,7 +30,7 @@ struct LoadingDots: View {
                 .stroke(lineWidth: 3)
                 .frame(width: 12, height: 12)
                 .scaleEffect(middleAnimates ? 1 : 0)
-                .animation(Animation.spring().repeatForever(autoreverses: false).speed(0.5).delay(0.15))
+                .animation(Animation.spring().repeatForever(autoreverses: false).speed(0.5).delay(0.15), value: self.middleAnimates)
                 .onAppear {
                     self.middleAnimates.toggle()
                 }
@@ -40,7 +40,7 @@ struct LoadingDots: View {
                 .stroke(lineWidth: 3)
                 .frame(width: 12, height: 12)
                 .scaleEffect(rightAnimates ? 1 : 0)
-                .animation(Animation.spring().repeatForever(autoreverses: false).speed(0.5).delay(0.25))
+                .animation(Animation.spring().repeatForever(autoreverses: false).speed(0.5).delay(0.25), value: rightAnimates)
                 .onAppear {
                     self.rightAnimates.toggle()
                 }
@@ -48,7 +48,7 @@ struct LoadingDots: View {
                 .stroke(lineWidth: 3)
                 .frame(width: 12, height: 12)
                 .scaleEffect(rightAnimates ? 1 : 0)
-                .animation(Animation.spring().repeatForever(autoreverses: false).speed(0.5).delay(0.35))
+                .animation(Animation.spring().repeatForever(autoreverses: false).speed(0.5).delay(0.35), value: rightAnimates)
                 .onAppear {
                     self.rightAnimates.toggle()
                 }
@@ -56,7 +56,7 @@ struct LoadingDots: View {
                 .stroke(lineWidth: 3)
                 .frame(width: 12, height: 12)
                 .scaleEffect(rightAnimates ? 1 : 0)
-                .animation(Animation.spring().repeatForever(autoreverses: false).speed(0.5).delay(0.45))
+                .animation(Animation.spring().repeatForever(autoreverses: false).speed(0.5).delay(0.45), value: rightAnimates)
                 .onAppear {
                     self.rightAnimates.toggle()
                 }
@@ -65,6 +65,7 @@ struct LoadingDots: View {
 }
 
 struct LoadingDots_Previews: PreviewProvider {
+    
     static var previews: some View {
         LoadingDots()
     }

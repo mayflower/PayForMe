@@ -107,7 +107,7 @@ class StorageService {
     func removeProject(project: Project) {
         let storedProject = StoredProject(project: project)
         do {
-            try dbQueue.write { db in
+            try _ = dbQueue.write { db in
                 try storedProject.delete(db)
             }
         } catch {

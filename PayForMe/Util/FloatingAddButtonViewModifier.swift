@@ -46,7 +46,7 @@ private struct FloatingAddButtonView: View {
 
 struct FloatingAddButtonViewModifier_Previews: PreviewProvider {
     static var previews: some View {
-        FloatingAddButtonView(sheetToggle: .constant(true))
+        // FloatingAddButtonView(sheetToggle: .constant(true))
         let viewModel = BillListViewModel()
         previewProject.members = previewPersons
         viewModel.currentProject = previewProject
