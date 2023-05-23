@@ -69,17 +69,15 @@ class AddProjectManualViewModel: ObservableObject {
             return
         }
         // If it is another url
-
-        let pathComponents = url.pathComponents
-        let pureUrl = url.deletingPathExtension().absoluteString
-        let trimmIndices = url.absoluteString.indices(of: "/")
-        if let cutIndex = trimmIndices[safe: 2] {
-            let trimmedUrl = pureUrl[...cutIndex]
-            serverAddress = String(trimmedUrl)
+        if url.scheme != nil && url.host != nil {
+            serverAddress = "\(url.scheme!)://\(url.host!)"
+            if url.port != nil {
+                serverAddress+=":\(url.port!)"
+            }
         } else {
-            serverAddress = pureUrl
+            serverAddress = url.deletingPathExtension().absoluteString
         }
-        fillFieldsFromComponents(components: pathComponents)
+        fillFieldsFromComponents(components: url.pathComponents)
     }
 
     var serverAddressFormatted: AnyPublisher<String, Never> {
