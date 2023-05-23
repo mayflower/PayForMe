@@ -76,7 +76,7 @@ class AddProjectManuallyTests: XCTestCase {
             exp2.fulfill()
         }.store(in: &subscriptions)
         viewmodel.$projectPassword.sink { password in
-            XCTAssertEqual("", password)
+            XCTAssertEqual("no-pass", password)
             exp3.fulfill()
         }.store(in: &subscriptions)
         waitForExpectations(timeout: 1)
@@ -124,7 +124,7 @@ class AddProjectManuallyTests: XCTestCase {
             XCTAssertEqual(project.backend, .cospend)
             XCTAssertEqual(project.name, "02939asdasd12asdj23")
             XCTAssertEqual(project.token, "02939asdasd12asdj23")
-            XCTAssertEqual(project.password, "")
+            XCTAssertEqual(project.password, "no-pass")
             XCTAssertEqual(project.url.absoluteString, "https://myserver.de")
             exp.fulfill()
         }.store(in: &subscriptions)
