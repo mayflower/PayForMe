@@ -18,9 +18,9 @@ struct ProjectListEntry: View {
     @State var edit = false
     @State var me = 0
     
-    func actionShare(url: String) {
-        guard let data = URL(string: url) else { return }
-        let av = UIActivityViewController(activityItems: [data], applicationActivities: nil)
+    func actionShare(project: Project) {
+        guard let data = URL(string: "\(project.url)/apps/cospend/s/\(project.token)") else { return }
+        let av = UIActivityViewController(activityItems: [data.absoluteString], applicationActivities: nil)
         UIApplication.shared.connectedScenes.flatMap { ($0 as? UIWindowScene)?.windows ?? [] }
             .first { $0.isKeyWindow }?.rootViewController!.present(av, animated: true)
     }
@@ -48,7 +48,7 @@ struct ProjectListEntry: View {
                     }
                     if project.backend == .cospend {
                         Button(action: {
-                            actionShare(url: project.url.absoluteString)
+                            actionShare(project: project)
                         }, label: {
                             Image(systemName: "square.and.arrow.up")
                         })
