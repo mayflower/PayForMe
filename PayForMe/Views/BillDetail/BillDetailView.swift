@@ -37,7 +37,7 @@ struct BillDetailView: View {
         VStack {
             Form {
                 Section(header: Text("Payer")) {
-                    WhoPaidView(members: Array(viewModel.currentProject.members.values), selectedPayer: self.$viewModel.selectedPayer).onAppear {
+                    WhoPaidView(members: Array(viewModel.currentProject.members.values).sorted{ $0.name < $1.name }, selectedPayer: self.$viewModel.selectedPayer).onAppear {
                         if self.viewModel.currentProject.members[self.viewModel.selectedPayer] == nil {
                             guard let id = self.viewModel.currentProject.members.first?.key else { return }
                             self.viewModel.selectedPayer = id

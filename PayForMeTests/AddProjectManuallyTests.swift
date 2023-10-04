@@ -124,7 +124,7 @@ class AddProjectManuallyTests: XCTestCase {
             XCTAssertEqual(project.backend, .cospend)
             XCTAssertEqual(project.name, "02939asdasd12asdj23")
             XCTAssertEqual(project.token, "02939asdasd12asdj23")
-            XCTAssertEqual(project.password, "no-pass")
+            XCTAssertEqual(project.password, "")
             XCTAssertEqual(project.url.absoluteString, "https://myserver.de")
             exp.fulfill()
         }.store(in: &subscriptions)
