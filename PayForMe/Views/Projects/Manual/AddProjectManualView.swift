@@ -84,13 +84,17 @@ struct AddProjectManualView: View {
     }
     
     private func pasteLink(pasteString: String) {
-        viewmodel.pasteAddress(address: pasteString)
+        DispatchQueue.main.async {
+            viewmodel.pasteAddress(address: pasteString)
+        }
     }
 
     private func pasteLink() {
-        if let pasteString = UIPasteboard.general.string {
-            print(pasteString)
-            viewmodel.pasteAddress(address: pasteString)
+        DispatchQueue.main.async {
+            if let pasteString = UIPasteboard.general.string {
+                print(pasteString)
+                viewmodel.pasteAddress(address: pasteString)
+            }
         }
     }
 }

@@ -102,12 +102,16 @@ class AddProjectQRViewModel: ObservableObject {
                         do {
                             let apiProject = try await NetworkService.shared.getProjectName(project)
                             try ProjectManager.shared.addProject(apiProject)
-                            self.isTestingSubject.send(.success)
+                            DispatchQueue.main.async {
+                                self.isTestingSubject.send(.success)
+                            }
                         } catch {
                             print(codedUrl)
                             print()
                             print(error)
-                            self.isTestingSubject.send(.failure)
+                            DispatchQueue.main.async {
+                                self.isTestingSubject.send(.failure)
+                            }
                         }
                     }
 //                    NetworkService.shared.testProject(project)

@@ -17,6 +17,13 @@ struct ProjectListEntry: View {
 
     @State var edit = false
     @State var me = 0
+    
+    func actionShare(project: Project) {
+        guard let data = URL(string: "\(project.url)/apps/cospend/s/\(project.token)") else { return }
+        let av = UIActivityViewController(activityItems: [data.absoluteString], applicationActivities: nil)
+        UIApplication.shared.connectedScenes.flatMap { ($0 as? UIWindowScene)?.windows ?? [] }
+            .first { $0.isKeyWindow }?.rootViewController!.present(av, animated: true)
+    }
 
     var body: some View {
         Button(action: {
@@ -26,6 +33,8 @@ struct ProjectListEntry: View {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(project.name)
+                            .allowsTightening(true)
+                            .lineLimit(1)
                         Text(project.backend == .cospend ? "Cospend" : "iHateMoney").font(.caption).foregroundColor(Color.gray)
                     }
                     Spacer()
@@ -35,16 +44,19 @@ struct ProjectListEntry: View {
                         }, label: {
                             Image(systemName: "pencil")
                         })
-                        .padding(.trailing, 5)
+                        .padding(.trailing, 8)
                     }
                     if project.backend == .cospend {
                         Button(action: {
+                            actionShare(project: project)
+                        }, label: {
+                            Image(systemName: "square.and.arrow.up")
+                        })
+                        .padding(.trailing, 8)
+                        Button(action: {
                             self.shareProject = project
                         }, label: {
-                            HStack(spacing: 5) {
-                                Image(systemName: "square.and.arrow.up")
-                                Image(systemName: "qrcode")
-                            }
+                            Image(systemName: "qrcode")
                         })
                     }
                 }

@@ -87,6 +87,9 @@
 "Paste Link" = "Вставить ссылку";
 
 
+"Copy Link" = "Копировать ссылку";
+
+
 "Payer" = "Кто платил";
 
 /*  */
@@ -100,6 +103,8 @@
 
 /*  */
 "Scan the Cospend QR code to proceed" = "Сканирование QR-кода Cospend для продолжения работы";
+
+"Scan the QR code to proceed" = "Сканируйте QR-код, чтобы продолжить";
 
 
 /*
